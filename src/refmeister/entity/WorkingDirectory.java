@@ -2,9 +2,9 @@ package refmeister.entity;
 
 public class WorkingDirectory {
 
-	private string path;
+	private String path;
 
-	public string getPath() {
+	public String getPath() {
 		return this.path;
 	}
 
@@ -12,7 +12,7 @@ public class WorkingDirectory {
 	 * 
 	 * @param path
 	 */
-	public void setPath(string path) {
+	public void setPath(String path) {
 		this.path = path;
 	}
 

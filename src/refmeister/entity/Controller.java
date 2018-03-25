@@ -1,6 +1,9 @@
 package refmeister.entity;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.nio.file.*;
+
 
 public class Controller {
 
@@ -12,9 +15,15 @@ public class Controller {
 	public void saveLibrary() {
 		if(libFile == null) {
 		    try {
-		        libFile = new File(workingDir.getPath()
+		        libFile = new File(workingDir.getPath() + currentLib.getTitle());
+            } catch(NullPointerException e) {
+                System.out.println("No Library title. This should not be possible.");
             }
         }
+        Path file = Paths.get(workingDir.getPath() + currentLib.getTitle());
+        try(BufferedWriter writer = Files.newBufferedWriter(file)) {
+		    writer.write(currentLib.getSaveString());
+        } catch {
 	    currentLib.getSaveString();
 
 		throw new UnsupportedOperationException();
@@ -29,8 +38,5 @@ public class Controller {
 		throw new UnsupportedOperationException();
 	}
 
-	public Editable traverseUp() {
-
-    }
 
 }

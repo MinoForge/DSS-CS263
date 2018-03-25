@@ -64,7 +64,7 @@ public class Library extends Editable {
                 return null;
             }
         }
-        Topic newTopic = new Topic(title, desc);
+        Topic newTopic = new Topic(title, desc, this);
         topics.add(newTopic);
         return newTopic;
 		//throw new UnsupportedOperationException();
@@ -83,32 +83,8 @@ public class Library extends Editable {
         }
 	}
 
-    public String getTitle() {
-	    return this.title;
-    }
-
-    public String getDescription() {
-	    return this.description;
-    }
-
-    /**
-     *
-     * @param newTitle
-     */
-    public void setTitle(String newTitle) {
-        this.title = newTitle;
-    }
-
-    /**
-     *
-     * @param newDesc
-     */
-    public void setDescription(String newDesc) {
-        this.description = newDesc;
-    }
-
     public String display() {
-
+        return null;
     }
 
     public ArrayList<Editable> getChildren() {

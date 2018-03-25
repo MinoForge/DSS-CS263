@@ -43,4 +43,28 @@ public abstract class Editable implements Displayable, Saveable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    /**
+     * Creates an XML tag for an editable object, given it's tag name.
+     * @param tagName   The tag name of this tag.
+     * @return          A formatted XML String.
+     */
+    protected String getSaveString(String tagName){
+        StringBuilder out = new StringBuilder();
+        out.append(String.format("<%s title=\"%s\" description=\"%s\">\n",
+                tagName, this.getTitle(), this.getDescription()));
+
+        for(Editable child : this.getChildren()){
+            String childString = child.getSaveString();
+            if(childString != null){
+                out.append("\t");
+                out.append(childString);
+            }
+        }
+
+        out.append("</");
+        out.append(tagName);
+        out.append(">\n");
+        return out.toString();
+    }
 }

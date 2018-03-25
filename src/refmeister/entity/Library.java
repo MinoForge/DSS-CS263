@@ -1,6 +1,7 @@
 package refmeister.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Library models a library which contains topics. It must have a
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class Library extends Editable {
 
     /** The Topics which are children of this Library. */
-    private ArrayList<Editable> topics;
+    private List<Editable> topics;
 
 
     /**
@@ -21,7 +22,7 @@ public class Library extends Editable {
      * @param description The String to be specified as this Library's description.
      * @param topics The ArrayList which is the list of this Library's topics.
      */
-    public Library(String title, String description, ArrayList<Editable> topics) {
+    public Library(String title, String description, List<Editable> topics) {
         this.setTitle(title);
         this.setDescription(description);
         this.topics = topics;
@@ -44,7 +45,7 @@ public class Library extends Editable {
      * @param title The String to be specified as this Library's title.
      */
     public Library(String title) {
-        this(title, "Unset Description", new ArrayList<Editable>());
+        this(title, "<<Unset Description>>", new ArrayList<Editable>());
     }
 
 	/**
@@ -99,7 +100,7 @@ public class Library extends Editable {
      * Returns a list of this library's XML children.
      * @return A list of all of this library's children
      */
-    public ArrayList<Editable> getChildren() {
+    public List<Editable> getChildren() {
         return topics;
     }
 
@@ -108,17 +109,7 @@ public class Library extends Editable {
      * @return The formatted XML save string.
      */
     public String getSaveString() {
-        StringBuilder out = new StringBuilder();
-        out.append(String.format("<library title=\"%s\" description=\"%s\">",
-                this.getTitle(), this.getDescription()));
-
-        for(Editable child : this.getChildren()){
-            out.append("\t");
-            out.append(child.getSaveString());
-        }
-
-        out.append("</library>");
-        return out.toString();
+        return super.getSaveString("library");
     }
 
 }

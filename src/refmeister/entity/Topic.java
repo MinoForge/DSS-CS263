@@ -64,27 +64,40 @@ public class Topic extends Editable {
 	}
 
     /**
-     * Gets a list of
-     * @return
+     * Gets a list of this topic's XML children
+     * @return A list of this topic's children.
      */
     public ArrayList<Editable> getChildren() {
         return themes;
     }
 
+    /**
+     * Sets the themes of this topic.
+     * @param themes A list of all themes that this topic should be
+     *               associated with.
+     */
     public void setThemes(ArrayList<Editable> themes) {
         this.themes = themes;
     }
 
+    /**
+     * Gets this topic's parent.
+     * @return the topic's parent.
+     */
     public Editable getParent() {
         return parent;
     }
 
+    /**
+     * Sets this editable's parent.
+     * @param parent The topic's new parent.
+     */
     public void setParent(Editable parent) {
         this.parent = parent;
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return "Topic{" +
                 "title='" + getTitle() + '\'' +
                 ", description='" + getDescription() + '\'' +
@@ -94,12 +107,12 @@ public class Topic extends Editable {
 
     @Override
     public String getSaveString() {
-        return null;
+        return super.getSaveString("topic");
     }
 
 
     @Override
-    public String display() {
-        return this.toString();
+    public String[] display() {
+        return null;
     }
 }

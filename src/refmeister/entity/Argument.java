@@ -1,5 +1,7 @@
 package refmeister.entity;
 
+import java.util.List;
+
 public class Argument extends Editable {
 
 	public void destroy() {
@@ -7,4 +9,18 @@ public class Argument extends Editable {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public String[] display() {
+		return new String[0];
+	}
+
+	@Override
+	public List<Editable> getChildren() {
+		return null;
+	}
+
+	@Override
+	public String getSaveString() {
+		return null;
+	}
 }

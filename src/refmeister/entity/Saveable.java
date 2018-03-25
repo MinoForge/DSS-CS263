@@ -1,10 +1,10 @@
 package refmeister.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface Saveable {
 
-	ArrayList<Editable> getChildren();
+	List<Editable> getChildren();
 
 	String getSaveString();
 

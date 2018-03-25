@@ -1,17 +1,38 @@
 package refmeister.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Argument extends Editable {
 
+	List<RefArg> arguments;
+
+	/**
+	 * TODO
+	 */
 	public void destroy() {
-		// TODO - implement Argument.destroy
-		throw new UnsupportedOperationException();
+		for(RefArg ra : arguments) {
+			ra.destroy();
+		}
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	@Override
 	public String[] display() {
-		return new String[0];
+		String[] results = new String[arguments.size() + 3];
+		results[0] = getTitle();
+		results[1] = getDescription();
+		int i = 3;
+		float avg = 0;
+		for(RefArg ra : arguments) {
+			avg += ra.getRating();
+			results[i++] = ra.getReference().getTitle();
+		}
+		results[3] = "" + (avg / arguments.size());
+		return results;
 	}
 
 	@Override

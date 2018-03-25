@@ -75,26 +75,25 @@ class RefArg {
 		this.rating = rating;
 	}
 
-	public float getRatingSum() {
-		//TODO have to get value of each RefArg's rating.
-		for(RefArg ra : this.argument.)
-	}
-
 	/**
 	 * Looks in both the Reference and Argument that are linked to this RefArg. When it finds the
 	 * RefArg that links them, it will remove the RefArg from that ArrayList.
 	 */
 	public void destroy() {
+		RefArg temp = new RefArg(null, null, 0);
 		for(RefArg ra : reference.getArguments()) {
 			if(this == ra) {
-				reference.getArguments().remove(this);
+				temp = ra;
 			}
 		}
-		for(RefArg ra : argument.getRefs()) {
+		reference.getArguments().remove(temp);
+
+		for(RefArg ra : argument.getRefArg()) {
 			if(this == ra) {
-				argument.getRefs().remove(this);
+				temp = ra;
 			}
 		}
+		reference.getArguments().remove(temp);
 	}
 
 }

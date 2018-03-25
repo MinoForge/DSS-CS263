@@ -1,9 +1,12 @@
 package refmeister.entity;
 
-public abstract class Editable implements Displayable {
+import java.util.ArrayList;
 
-	private int title;
-	private int description;
+public abstract class Editable implements Displayable, Saveable {
+
+	private String title;
+	private String description;
+    private ArrayList<Editable> children;
 
 	public String getTitle() {
 		// TODO - implement Editable.getTitle
@@ -19,7 +22,7 @@ public abstract class Editable implements Displayable {
 	 * 
 	 * @param newTitle
 	 */
-	public String setTitle(String newTitle) {
+	public void setTitle(String newTitle) {
 		// TODO - implement Editable.setTitle
 		throw new UnsupportedOperationException();
 	}
@@ -28,7 +31,7 @@ public abstract class Editable implements Displayable {
 	 * 
 	 * @param newDesc
 	 */
-	public String setDescription(String newDesc) {
+	public void setDescription(String newDesc) {
 		// TODO - implement Editable.setDescription
 		throw new UnsupportedOperationException();
 	}

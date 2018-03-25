@@ -1,9 +1,11 @@
 package refmeister.entity;
 
+import java.util.ArrayList;
+
 public interface Saveable {
 
-	Saveable[] getChildren();
+	ArrayList<Saveable> getChildren();
 
-	string getSaveString();
+	String getSaveString();
 
 }

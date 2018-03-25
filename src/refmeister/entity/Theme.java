@@ -98,4 +98,9 @@ public class Theme extends Editable {
 	public String display() {
 		return this.toString();
 	}
+
+	public void edit(String[] edits) {
+		setTitle(edits[0]);
+		setDescription(edits[1]);
+	}
 }

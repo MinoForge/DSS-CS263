@@ -1,11 +1,22 @@
 package refmeister.entity;
 
+import java.io.File;
+
 public class Controller {
 
 	private Editable selected;
+	private Library currentLib;
+	private WorkingDirectory workingDir;
+	private File libFile;
 
 	public void saveLibrary() {
-		// TODO - implement Controller.saveLibrary
+		if(libFile == null) {
+		    try {
+		        libFile = new File(workingDir.getPath()
+            }
+        }
+	    currentLib.getSaveString();
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -17,5 +28,9 @@ public class Controller {
 		// TODO - implement Controller.loadLibrary
 		throw new UnsupportedOperationException();
 	}
+
+	public Editable traverseUp() {
+
+    }
 
 }

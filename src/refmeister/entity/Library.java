@@ -6,21 +6,21 @@ public class Library extends Editable {
 
     private String title;
     private String description;
-    private ArrayList<Topic> topics;
+    private ArrayList<Editable> topics;
 
 
-    public Library(String title, String description, ArrayList<Topic> topics) {
+    public Library(String title, String description, ArrayList<Editable> topics) {
         this.title = title;
         this.description = description;
         this.topics = topics;
     }
 
     public Library(String title, String description) {
-        this(title, description, new ArrayList<Topic>());
+        this(title, description, new ArrayList<Editable>());
     }
 
     public Library(String title) {
-        this(title, "Unset Description", new ArrayList<Topic>());
+        this(title, "Unset Description", new ArrayList<Editable>());
     }
 
 	/**
@@ -30,7 +30,7 @@ public class Library extends Editable {
 	 */
 	public Topic addTopic(String title, String desc) {
 		// TODO - implement Library.addTopic
-        for(Topic t : topics) {
+        for(Editable t : topics) {
             if(t.getTitle().equals(title)) {
                 return null;
             }
@@ -42,7 +42,7 @@ public class Library extends Editable {
 	}
 
 	public void deleteTopic(String title) {
-	    for(Topic t : topics) {
+	    for(Editable t : topics) {
 	        if(t.getTitle().equals(title)) {
 	            topics.remove(t);
             }
@@ -77,12 +77,13 @@ public class Library extends Editable {
 
     }
 
-    public ArrayList<Saveable> getChildren() {
+    public ArrayList<Editable> getChildren() {
         return topics;
     }
 
     public String getSaveString() {
-        //TODO: Implement this.
+        throw new UnsupportedOperationException();
+        //TODO: Implement this with XML stuff.
     }
 
 }

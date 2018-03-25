@@ -1,6 +1,13 @@
 package refmeister.entity;
 
+import java.util.ArrayList;
+
 public class Theme extends Editable {
+
+	private ArrayList<Reference> refs;
+	private Topic parent;
+
+
 
 	public void moveTheme() {
 		// TODO - implement Theme.moveTheme

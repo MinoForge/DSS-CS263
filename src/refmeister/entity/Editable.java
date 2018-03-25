@@ -1,5 +1,6 @@
 package refmeister.entity;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 public abstract class Editable implements Displayable, Saveable {
@@ -8,32 +9,39 @@ public abstract class Editable implements Displayable, Saveable {
 	private String description;
     private ArrayList<Editable> children;
 
-	public String getTitle() {
-		// TODO - implement Editable.getTitle
-		throw new UnsupportedOperationException();
-	}
+    public String getAttribute(String attribute){
+        if(attribute == "title"){
+            return this.getTitle();
+        }
+        else if(attribute == "description"){
+            return this.getDescription();
+        }else{
+            return null;
+        }
+    }
+    public void setAttribute(String attribute, String contents){
+        if(attribute == "title"){
+            this.setTitle(contents);
+        }
+        else if(attribute == "description"){
+            this.setDescription(contents);
+        }else{
+            throw new InvalidParameterException();
+        }
+    }
+    public String getTitle() {
+        return title;
+    }
 
-	public String getDescription() {
-		// TODO - implement Editable.getDescription
-		throw new UnsupportedOperationException();
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	/**
-	 * 
-	 * @param newTitle
-	 */
-	public void setTitle(String newTitle) {
-		// TODO - implement Editable.setTitle
-		throw new UnsupportedOperationException();
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * 
-	 * @param newDesc
-	 */
-	public void setDescription(String newDesc) {
-		// TODO - implement Editable.setDescription
-		throw new UnsupportedOperationException();
-	}
-
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

@@ -1,5 +1,7 @@
 package refmeister.entity;
 
+import java.util.List;
+
 /**
  * This is an intermediate class modeling the links associating a Reference and an Idea.
  * @author Red Team/DevSquad Supreme
@@ -59,16 +61,20 @@ class RefIdea {
 	 * RefIdea that links them, it will remove the RefIdea from that ArrayList.
 	 */
 	public void destroy() {
+		RefIdea temp = new RefIdea(null, null);
 		for(RefIdea ri : reference.getIdeas()) {
 			if(this == ri) {
-				reference.getIdeas().remove(this);
+				temp = ri;
 			}
 		}
-		for(RefIdea ri : idea.getRefs()) {
+		reference.getIdeas().remove(temp);
+
+		for(RefIdea ri : idea.getRefIdea()) {
 			if(this == ri) {
-				idea.getRefs().remove(this);
+				temp = ri;
 			}
 		}
+		reference.getIdeas().remove(temp);
 	}
 
 }

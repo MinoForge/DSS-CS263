@@ -78,6 +78,11 @@ public class Library extends Editable {
         }
 	}
 
+    /**
+     * Gets an array of elements that this library has, with title being at
+     * index 0, description at index 1, and each child as a sub index.
+     * @return
+     */
     public String[] display() {
         String[] display = new String[2 + topics.size()];
 	    display[0] = getTitle();
@@ -90,13 +95,30 @@ public class Library extends Editable {
         return display;
     }
 
+    /**
+     * Returns a list of this library's XML children.
+     * @return A list of all of this library's children
+     */
     public ArrayList<Editable> getChildren() {
         return topics;
     }
 
+    /**
+     * Gets the XML String of this library, with all topics as it's children.
+     * @return The formatted XML save string.
+     */
     public String getSaveString() {
-        throw new UnsupportedOperationException();
-        //TODO: Implement this with XML stuff.
+        StringBuilder out = new StringBuilder();
+        out.append(String.format("<library title=\"%s\" description=\"%s\">",
+                this.getTitle(), this.getDescription()));
+
+        for(Editable child : this.getChildren()){
+            out.append("\t");
+            out.append(child.getSaveString());
+        }
+
+        out.append("</library>");
+        return out.toString();
     }
 
 }

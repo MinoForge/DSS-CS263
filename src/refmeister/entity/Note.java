@@ -57,9 +57,8 @@ public class Note extends Editable {
 	 * @return A String that contains the title and description of this Note.
 	 */
 	@Override
-	public String display() {
-		return 	"Title: " + getTitle() +
-				"Description: " + getDescription();
+	public String[] display() {
+		return new String[] {getTitle(), getDescription()};
 	}
 
 	/**

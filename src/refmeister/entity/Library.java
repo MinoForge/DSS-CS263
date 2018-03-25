@@ -10,10 +10,6 @@ import java.util.ArrayList;
  */
 public class Library extends Editable {
 
-    /** The title of this library. Must be specified*/
-    private String title;
-    /** The description of this library. */
-    private String description;
     /** The Topics which are children of this Library. */
     private ArrayList<Editable> topics;
 
@@ -26,8 +22,8 @@ public class Library extends Editable {
      * @param topics The ArrayList which is the list of this Library's topics.
      */
     public Library(String title, String description, ArrayList<Editable> topics) {
-        this.title = title;
-        this.description = description;
+        this.setTitle(title);
+        this.setDescription(description);
         this.topics = topics;
     }
 
@@ -57,7 +53,6 @@ public class Library extends Editable {
 	 * @param desc The description of the topic to be added.
 	 */
 	public Topic addTopic(String title, String desc) {
-		// TODO - implement Library.addTopic
         for(Editable t : topics) {
             // If a topic already has the same title of the one we are trying to add, don't add it.
             if(t.getTitle().equals(title)) {
@@ -84,7 +79,15 @@ public class Library extends Editable {
 	}
 
     public String[] display() {
-        return null;//TODO
+        String[] display = new String[2 + topics.size()];
+	    display[0] = getTitle();
+	    display[1] = getDescription();
+	    int i = 2;
+	    for(Editable e : topics) {
+	        display[i] = e.getTitle();
+	        i++;
+        }
+        return display;
     }
 
     public ArrayList<Editable> getChildren() {

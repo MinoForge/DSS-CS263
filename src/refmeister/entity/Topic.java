@@ -3,10 +3,10 @@ package refmeister.entity;
 import java.util.ArrayList;
 
 public class Topic extends Editable {
-    private ArrayList<Theme> themes;
-    private Library parent;
+    private ArrayList<Editable> themes;
+    private Editable parent;
 
-    public Topic(String title, String description, Library parent, ArrayList<Theme> themes){
+    public Topic(String title, String description, Library parent, ArrayList<Editable> themes){
         this.setTitle(title);
         this.setDescription(description);
         this.parent = parent;
@@ -14,11 +14,11 @@ public class Topic extends Editable {
     }
 
     public Topic(String title, String description, Library parent){
-        this(title, description, parent, new ArrayList<Theme>());
+        this(title, description, parent, new ArrayList<Editable>());
     }
 
     public Topic(String title, Library parent){
-        this(title, "Unset Description", parent, new ArrayList<Theme>());
+        this(title, "Unset Description", parent, new ArrayList<Editable>());
     }
 	/**
 	 * 
@@ -27,7 +27,7 @@ public class Topic extends Editable {
 	 */
 	public Theme addTheme(String title, String desc) {
 		// TODO - implement Topic.addTheme
-        for(Theme t : themes) {
+        for(Editable t : themes) {
             if(t.getTitle().equals(title)) {
                 return null;
             }
@@ -35,7 +35,6 @@ public class Topic extends Editable {
         Theme newTheme = new Theme(title, desc, this);
         themes.add(newTheme);
         return newTheme;
-		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -43,29 +42,26 @@ public class Topic extends Editable {
 	 * @param theme
 	 */
 	public void deleteTheme(String theme) {
-		// TODO - implement Topic.deleteTheme
-        for(Theme t : themes) {
+        for(Editable t : themes) {
             if(t.getTitle().equals(getTitle())) {
                 themes.remove(t);
             }
         }
-		throw new UnsupportedOperationException();
 	}
 
-
-    public ArrayList<Theme> getThemes() {
+    public ArrayList<Editable> getChildren() {
         return themes;
     }
 
-    public void setThemes(ArrayList<Theme> themes) {
+    public void setThemes(ArrayList<Editable> themes) {
         this.themes = themes;
     }
 
-    public Library getParent() {
+    public Editable getParent() {
         return parent;
     }
 
-    public void setParent(Library parent) {
+    public void setParent(Editable parent) {
         this.parent = parent;
     }
 
@@ -82,6 +78,7 @@ public class Topic extends Editable {
     public String getSaveString() {
         return null;
     }
+
 
     @Override
     public String display() {

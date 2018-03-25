@@ -32,7 +32,7 @@ public class Topic extends Editable {
                 return null;
             }
         }
-        Theme newTheme = new Theme(title, desc, );
+        Theme newTheme = new Theme(title, desc, this);
         themes.add(newTheme);
         return newTheme;
 		throw new UnsupportedOperationException();

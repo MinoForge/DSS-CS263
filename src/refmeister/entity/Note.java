@@ -3,8 +3,8 @@ package refmeister.entity;
 import java.util.*;
 
 /**
- * The Note class models a Reference's note. It must have a title and a
- * parent Reference, but does not need a description.
+ * The Note class models a Reference's note. It must have a title and a parent Reference, but
+ * does not need a description.
  * @author Red Team/DevSquad Supreme
  * @version 25, 3, 2018
  */
@@ -14,9 +14,8 @@ public class Note extends Editable {
 	private Reference parent;
 
 	/**
-	 * Constructor for the Note class. Takes a Reference object to be
-	 * specified as the parent, a String to be the title, and a String to be
-	 * the description.
+	 * Constructor for the Note class. Takes a Reference object to be specified as the parent, a
+	 * String to be the title, and a String to be the description.
 	 * @param parent The Reference to be set as this Note's parent.
 	 * @param title	The String to be specified as the title.
 	 * @param description The String to be specified as the description.

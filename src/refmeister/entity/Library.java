@@ -83,8 +83,8 @@ public class Library extends Editable {
         }
 	}
 
-    public String display() {
-        return null;
+    public String[] display() {
+        return null;//TODO
     }
 
     public ArrayList<Editable> getChildren() {

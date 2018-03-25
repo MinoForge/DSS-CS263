@@ -2,6 +2,7 @@ package refmeister.entity;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.*;
 
 
@@ -23,10 +24,9 @@ public class Controller {
         Path file = Paths.get(workingDir.getPath() + currentLib.getTitle());
         try(BufferedWriter writer = Files.newBufferedWriter(file)) {
 		    writer.write(currentLib.getSaveString());
-        } catch {
-	    currentLib.getSaveString();
-
-		throw new UnsupportedOperationException();
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
+        }
 	}
 
 	/**

@@ -7,7 +7,6 @@ public abstract class Editable implements Displayable, Saveable {
 
 	private String title;
 	private String description;
-    private ArrayList<Editable> children;
 
     public String getAttribute(String attribute){
         if(attribute.equals("title")){

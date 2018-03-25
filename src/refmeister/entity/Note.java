@@ -5,15 +5,13 @@ import java.util.*;
 /**
  * The Note class models a Reference's note. It must have a title and a
  * parent Reference, but does not need a description.
+ * @author Red Team/DevSquad Supreme
+ * @version 25, 3, 2018
  */
 public class Note extends Editable {
 
 	/** This Note's parent, which is a Reference. */
-	Reference parent;
-	/** This Note's title; Must be specified. */
-	private String title;
-	/** This Note's description; Does not have to be specified. */
-	private String description;
+	private Reference parent;
 
 	/**
 	 * Constructor for the Note class. Takes a Reference object to be
@@ -25,8 +23,8 @@ public class Note extends Editable {
 	 */
 	public Note(Reference parent, String title, String description) {
 		this.parent = parent;
-		this.title = title;
-		this.description = description;
+		setTitle(title);
+		setDescription(description);
 	}
 
 	/**
@@ -55,49 +53,13 @@ public class Note extends Editable {
 	}
 
 	/**
-	 * Retrieves this Note's title.
-	 * @return This Note's title.
-	 */
-	@Override
-	public String getTitle() {
-		return this.title;
-	}
-
-	/**
-	 * Sets this Note's parent to the specified String.
-	 * @param title The String to be set to this Note's title.
-	 */
-	@Override
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	/**
-	 * Retrieves this Note's description.
-	 * @return This Note's description.
-	 */
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
-
-	/**
-	 * Sets this Note's description to the specified String.
-	 * @param description The String to bes est to this Note's title.
-	 */
-	@Override
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	/**
 	 * Returns a String that contains the title and description of this Note.
 	 * @return A String that contains the title and description of this Note.
 	 */
 	@Override
 	public String display() {
-		return "Title: " + this.title +
-				"Description: " + this.description;
+		return 	"Title: " + getTitle() +
+				"Description: " + getDescription();
 	}
 
 	/**
@@ -106,12 +68,12 @@ public class Note extends Editable {
 	 * @return null, since Note's have no children.
 	 */
 	@Override
-	public ArrayList<Saveable> getChildren() {
+	public ArrayList<Editable> getChildren() {
 		return null;
 	}
 
 	/**
-	 * TODO Not exactly sure as of yet what this one will do.
+	 * TODO Add code to this at a later day
 	 * @return
 	 */
 	@Override

@@ -10,20 +10,20 @@ public abstract class Editable implements Displayable, Saveable {
     private ArrayList<Editable> children;
 
     public String getAttribute(String attribute){
-        if(attribute == "title"){
+        if(attribute.equals("title")){
             return this.getTitle();
         }
-        else if(attribute == "description"){
+        else if(attribute.equals("description")){
             return this.getDescription();
         }else{
             return null;
         }
     }
     public void setAttribute(String attribute, String contents){
-        if(attribute == "title"){
+        if(attribute.equals("title")){
             this.setTitle(contents);
         }
-        else if(attribute == "description"){
+        else if(attribute.equals("description")){
             this.setDescription(contents);
         }else{
             throw new InvalidParameterException();

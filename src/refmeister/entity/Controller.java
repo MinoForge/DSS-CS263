@@ -43,11 +43,6 @@ public class Controller {
             }
         }
         Path file = Paths.get(workingDir.getDirectory() + currentLib.getTitle());
-        try(BufferedWriter writer = Files.newBufferedWriter(file)) {
-		    //writer.write(currentLib.getSaveString());
-        } catch(IOException e) {
-            System.out.println(e.getMessage());
-        }
 	}
 
     /**

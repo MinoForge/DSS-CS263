@@ -95,10 +95,14 @@ public class Argument extends Editable {
 	 * @return null, since Arguments do not have children.
 	 */
 	@Override
-	public List<Editable> getChildren() {
+	public List<Saveable> getSaveableChildren() {
 		return null;
 	}
 
+	@Override
+	public List<Editable> getChildren() {
+		return null;
+	}
 	/**
 	 * TODO Will edit this later
 	 * @return

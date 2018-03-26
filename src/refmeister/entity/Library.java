@@ -54,10 +54,13 @@ public class Library extends Editable {
 	 * @param desc The description of the topic to be added.
 	 */
 	public Topic addTopic(String title, String desc) {
-        for(Editable t : topics) {
-            // If a topic already has the same title of the one we are trying to add, don't add it.
-            if(t.getTitle().equals(title)) {
-                return null;
+        for(Saveable s : topics) {
+            if(s instanceof Editable) {
+                Editable t = (Editable)s;
+                // If a topic already has the same title of the one we are trying to add, don't add it.
+                if(t.getTitle().equals(title)) {
+                    return null;
+                }
             }
         }
         Topic newTopic = new Topic(title, desc, this);
@@ -71,6 +74,7 @@ public class Library extends Editable {
      * @param title The title of the topic to be removed.
      */
 	public void deleteTopic(String title) {
+
         topics.removeIf(ed -> ed.getTitle().equals(title));
 	}
 
@@ -78,8 +82,12 @@ public class Library extends Editable {
      * Returns a list of this library's XML children.
      * @return A list of all of this library's children
      */
+    public List<Saveable> getSaveableChildren() {
+        return new ArrayList<>(topics);
+    }
+
     public List<Editable> getChildren() {
-        return topics;
+        return new ArrayList<>(topics);
     }
 
     /**

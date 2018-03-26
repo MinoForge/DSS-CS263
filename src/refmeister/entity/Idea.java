@@ -82,6 +82,11 @@ public class Idea extends Editable {
 	 * @return null, since Ideas do not have children.
 	 */
 	@Override
+	public List<Saveable> getSaveableChildren() {
+		return null;
+	}
+
+	@Override
 	public List<Editable> getChildren() {
 		return null;
 	}

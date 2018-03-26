@@ -1,11 +1,13 @@
 package refmeister.entity;
 
+import java.util.List;
+
 /**
  * This is an intermediate class modeling the links associating a Reference and an Argument.
  * @author Red Team/DevSquad Supreme
  * @version 25, 3, 2018
  */
-class RefArg {
+class RefArg implements Saveable {
 
 	/** The Reference to which this object is associating an Argument to. */
 	private Reference reference;
@@ -96,4 +98,13 @@ class RefArg {
 		reference.getArguments().remove(temp);
 	}
 
+    @Override
+    public List<Saveable> getSaveableChildren() {
+        return null;
+    }
+
+    @Override
+    public String getSaveString() {
+        return null;
+    }
 }

@@ -57,7 +57,7 @@ public class Note extends Editable {
 	 */
 	@Override
 	public String[] display() {
-		return new String[] {getTitle(), getDescription()};
+		return new String[] {getTitle(), getDescription(), null};
 	}
 
 	/**

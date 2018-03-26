@@ -78,13 +78,13 @@ public abstract class Editable implements Displayable, Saveable {
      * @return
      */
     public String[] display() {
-        String[] display = new String[2 + getSaveableChildren().size()];
-        display[0] = getTitle();
-        display[1] = getDescription();
-        int i = 2;
-        for(Saveable e : getSaveableChildren()) {
-            //display[i] = e.getTitle();
-            i++;
+        String[] display = new String[2 + getChildren().size()];
+        int i = 0;
+        display[i++] = getTitle();
+        display[i++] = getDescription();
+        display[i++] = null;
+        for(Editable e : getChildren()) {
+            display[i++] = e.getTitle();
         }
         return display;
     }

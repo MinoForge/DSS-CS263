@@ -67,4 +67,6 @@ public abstract class Editable implements Displayable, Saveable {
         out.append(">\n");
         return out.toString();
     }
+
+    public abstract void edit(String[] edits);
 }

@@ -84,16 +84,20 @@ class RefArg {
 	 * RefArg that links them, it will remove the RefArg from that ArrayList.
 	 */
 	public void destroy() {
+		RefArg temp = new RefArg(null, null, 0);
 		for(RefArg ra : reference.getArguments()) {
 			if(this == ra) {
-				reference.getArguments().remove(this);
+				temp = ra;
 			}
 		}
-		for(RefArg ra : argument.getRefs()) {
+		reference.getArguments().remove(temp);
+
+		for(RefArg ra : argument.getRefArg()) {
 			if(this == ra) {
-				argument.getRefs().remove(this);
+				temp = ra;
 			}
 		}
+		reference.getArguments().remove(temp);
 	}
 
 }

@@ -31,6 +31,15 @@ public class Controller {
         }
 	}
 
+	public void loadLibrary(String title) {
+	    for(File f : workingDir.getDirectory().listFiles()) {
+	        if(f.toString().equals(title)) {
+	            loadLibrary(f);
+	            return;
+            }
+        }
+    }
+
 	/**
 	 * 
 	 * @param file
@@ -64,6 +73,8 @@ public class Controller {
 	    selected = currentLib;
     }
 
-
+    public void edit(String[] edits) {
+	    selected.edit(edits);
+    }
 
 }

@@ -71,12 +71,7 @@ public class Library extends Editable {
      * @param title The title of the topic to be removed.
      */
 	public void deleteTopic(String title) {
-	    for(Editable t : topics) {
-	        // If the title of the topic is found, removed the topic from the list.
-	        if(t.getTitle().equals(title)) {
-	            topics.remove(t);
-            }
-        }
+        topics.removeIf(ed -> ed.getTitle().equals(title));
 	}
 
     /**
@@ -110,6 +105,11 @@ public class Library extends Editable {
      */
     public String getSaveString() {
         return super.getSaveString("library");
+    }
+
+    public void edit(String[] edits) {
+        setTitle(edits[0]);
+        setDescription(edits[1]);
     }
 
 }

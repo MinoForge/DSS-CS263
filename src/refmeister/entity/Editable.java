@@ -103,7 +103,5 @@ public abstract class Editable implements Displayable, Saveable {
         return display;
     }
 
-    public abstract void createChild(String title, String description);
-
     public abstract List<Editable> getChildren();
 }

@@ -6,12 +6,24 @@ import refmeister.XML.XMLManager;
 import java.security.InvalidParameterException;
 import java.util.List;
 
+/**
+ * @author
+ * @version
+ */
 public abstract class Editable implements Displayable, Saveable {
 
+    /**  */
 	private String title;
+	/**  */
 	private String description;
+	/**  */
 	private Editable parent;
 
+    /**
+     *
+     * @param attribute
+     * @return
+     */
     public String getAttribute(String attribute){
         if(attribute.equals("title")){
             return this.getTitle();
@@ -22,6 +34,12 @@ public abstract class Editable implements Displayable, Saveable {
             return null;
         }
     }
+
+    /**
+     *
+     * @param attribute
+     * @param contents
+     */
     public void setAttribute(String attribute, String contents){
         if(attribute.equals("title")){
             this.setTitle(contents);
@@ -33,26 +51,50 @@ public abstract class Editable implements Displayable, Saveable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Editable getParent() {
         return parent;
     }
 
+    /**
+     *
+     * @param parent
+     */
     public void setParent(Editable parent) {
         this.parent = parent;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     *
+     * @param title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
@@ -81,6 +123,10 @@ public abstract class Editable implements Displayable, Saveable {
         return out.toString();
     }
 
+    /**
+     *
+     * @param edits
+     */
     public void edit(String[] edits) {
         setTitle(edits[0]);
         setDescription(edits[1]);
@@ -107,7 +153,17 @@ public abstract class Editable implements Displayable, Saveable {
         return display;
     }
 
+    /**
+     *
+     * @param title
+     * @param description
+     * @return
+     */
     public abstract boolean createChild(String title, String description);
 
+    /**
+     *
+     * @return
+     */
     public abstract List<Editable> getChildren();
 }

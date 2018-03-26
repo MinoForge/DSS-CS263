@@ -4,18 +4,34 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.Scanner;
 
-
+/**
+ * TODO
+ * @author Peter Gardner
+ * @version 25, 3, 2018
+ */
 public class Controller {
 
+    /** The current object the controller is pointing to. */
 	private Editable selected;
+	/** The current library that selected is/located in. */
 	private Library currentLib;
+	/**  */
 	private WorkingDirectory workingDir;
+	/**  */
 	private File libFile;
 
+    /**
+     * TODO
+     * @param workingDir
+     */
 	public Controller(WorkingDirectory workingDir) {
 	    this.workingDir = workingDir;
     }
 
+    /**
+     * Saves the library and all of its children. If there is no specified libFile, then the
+     * method creates a new one to save the current library to.
+     */
 	public void saveLibrary() {
 		if(libFile == null) {
 		    try {
@@ -32,6 +48,10 @@ public class Controller {
         }
 	}
 
+    /**
+     * TODO
+     * @param title
+     */
 	public void loadLibrary(String title) {
 	    if(workingDir.getDirectory().listFiles() != null) {
             for (File f : workingDir.getDirectory().listFiles()) {
@@ -44,7 +64,7 @@ public class Controller {
     }
 
 	/**
-	 * 
+	 * TODO
 	 * @param file
 	 */
 	public void loadLibrary(File file) {
@@ -58,6 +78,10 @@ public class Controller {
         parseXML(reader);
 	}
 
+    /**
+     * TODO
+     * @param reader
+     */
 	public void parseXML(BufferedReader reader) {
 
 
@@ -69,6 +93,9 @@ public class Controller {
 
     }
 
+    /**
+     * TODO
+     */
     public void menu() {
 	    String[] menuItems = selected.display();
 	    int i = 0;
@@ -82,6 +109,11 @@ public class Controller {
 	    scanIn.nextInt();
     }
 
+    /**
+     * TODO
+     * @param title
+     * @param description
+     */
     public void createLibrary(String title, String description) {
 	    File file = new File(workingDir.getDirectory().getPath() + title + ".rl");
 	    currentLib = new Library(title, description);
@@ -89,6 +121,10 @@ public class Controller {
 	    selected = currentLib;
     }
 
+    /**
+     * TODO
+     * @param edits
+     */
     public void edit(String[] edits) {
 	    selected.edit(edits);
     }

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * The Library models a library which contains topics. It must have a
  * specified title.
- * @author Red Team/DevSquad Supreme
+ * @author Peter Gardner
  * @version 25, 3, 2018
  */
 public class Library extends Editable {

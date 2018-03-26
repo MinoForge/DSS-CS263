@@ -69,4 +69,21 @@ public abstract class Editable implements Displayable, Saveable {
     }
 
     public abstract void edit(String[] edits);
+
+    /**
+     * Gets an array of elements that this object has, with title being at
+     * index 0, description at index 1, and each child as a sub index.
+     * @return
+     */
+    public String[] display() {
+        String[] display = new String[2 + getChildren().size()];
+        display[0] = getTitle();
+        display[1] = getDescription();
+        int i = 2;
+        for(Editable e : getChildren()) {
+            display[i] = e.getTitle();
+            i++;
+        }
+        return display;
+    }
 }

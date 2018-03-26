@@ -94,11 +94,6 @@ public class Theme extends Editable {
 		return null;
 	}
 
-	@Override
-	public String[] display() {
-		return null;
-	}
-
 	public void edit(String[] edits) {
 		setTitle(edits[0]);
 		setDescription(edits[1]);

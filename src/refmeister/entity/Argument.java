@@ -44,4 +44,9 @@ public class Argument extends Editable {
 	public String getSaveString() {
 		return null;
 	}
+
+	public void edit(String[] edits) {
+		setTitle(edits[0]);
+		setDescription(edits[1]);
+	}
 }

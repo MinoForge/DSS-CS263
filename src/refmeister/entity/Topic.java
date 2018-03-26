@@ -112,18 +112,7 @@ public class Topic extends Editable {
     }
 
 
-    @Override
-    public String[] display() {
-	    String[] display = new String[2 + themes.size()];
-	    display[0] = getTitle();
-	    display[1] = getDescription();
-        int i = 2;
-        for(Editable e : themes) {
-            display[i] = e.getTitle();
-            i++;
-        }
-        return display;
-    }
+
 
     public void edit(String[] edits) {
         setTitle(edits[0]);

@@ -75,23 +75,6 @@ public class Library extends Editable {
 	}
 
     /**
-     * Gets an array of elements that this library has, with title being at
-     * index 0, description at index 1, and each child as a sub index.
-     * @return
-     */
-    public String[] display() {
-        String[] display = new String[2 + topics.size()];
-	    display[0] = getTitle();
-	    display[1] = getDescription();
-	    int i = 2;
-	    for(Editable e : topics) {
-	        display[i] = e.getTitle();
-	        i++;
-        }
-        return display;
-    }
-
-    /**
      * Returns a list of this library's XML children.
      * @return A list of all of this library's children
      */
@@ -111,5 +94,4 @@ public class Library extends Editable {
         setTitle(edits[0]);
         setDescription(edits[1]);
     }
-
 }

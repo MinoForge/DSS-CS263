@@ -81,7 +81,9 @@ public class Controller {
 	public void startUp() {
 	    //TODO: Make this functional to traverse folders and make libraries with user titles and
         //TODO: descriptions.
-	    createLibrary("Test", "TestDescription");
+	    createLibrary("TestLibrary", "TestLibraryDescription");
+	    selected.getChildren().add(new Topic("TopicName", currentLib));
+
 	    if(selected == null) {
 	        startUp();
         }
@@ -95,14 +97,18 @@ public class Controller {
     public void displayMenu() {
         String[] menuItems = selected.display();
 	    int i;
-	    for(i = 0; menuItems[i] != null; i++) {
+//        System.out.println(selected.display()[1]);
+        for(i = 0; menuItems[i] != null; i++) {
             System.out.println(menuItems[i]);
         }
         String[] choices = new String[selected.getChildren().size()];
-        int j;
-	    for(j = 0; i < menuItems.length; i++, j++) {
-            choices[j] = (menuItems[i]);
-            System.out.println(j + ": " + menuItems[i]);
+        int j = 0;
+        if(choices.length != 0) {
+            for (j = 0; i < menuItems.length; i++, j++) {
+                System.out.println(j);
+                choices[j] = (menuItems[i]);
+                System.out.println(j + ": " + menuItems[i]);
+            }
         }
         menuChoose(j, choices);
     }
@@ -141,19 +147,32 @@ public class Controller {
                     goodChoice = true;
                 }
             } else if(scanIn.hasNext()) {
-                String choiceString = scanIn.next();
-                if(choiceString.equals("e")) {
-                    editMenu();
-                } else if(choiceString.equals("u")) {
-                    traverseUp();
-                } else if(choiceString.equals("c")) {
-                    createChild();
-                }
+                goodChoice = choiceString(scanIn.nextLine());
+
+
             }else {
                 System.out.println("Error: Choice must be in range [0-" + (maxChoice - 1) + "]");
 
             }
         }
+    }
+
+    private boolean choiceString(String choice) {
+        boolean valid = false;
+        if(choice.equals("e") || choice.equals("u") || choice.equals("c") || choice.equals("q")) {
+            if (choice.equals("e")) {
+                editMenu();
+            } else if (choice.equals("u")) {
+                traverseUp();
+            } else if (choice.equals("c")) {
+                createChild();
+            } else if (choice.equals("q")) {
+                saveLibrary();
+                System.exit(0);
+            }
+            valid = true;
+        }
+        return valid;
     }
 
     public void createChild() {
@@ -192,12 +211,12 @@ public class Controller {
                 switch(choice) {
                     case 0:
                         System.out.print("New Title: ");
-                        edits[0] = scanIn.nextLine();
+                        edits[0] = scanIn.next();
                         selected.edit(edits);
                         return;
                     case 1:
                         System.out.print("New Description: "); //No line breaks, currently.
-                        edits[1] = scanIn.nextLine();
+                        edits[1] = scanIn.next();
                         selected.edit(edits);
                         return;
                     case 2:

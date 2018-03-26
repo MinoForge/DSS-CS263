@@ -92,10 +92,14 @@ public abstract class Editable implements Displayable, Saveable {
      * @return
      */
     public String[] display() {
-        String[] display = new String[3 + getChildren().size()];
+        String[] display = new String[7 + getChildren().size()];
         int i = 0;
         display[i++] = getTitle();
         display[i++] = getDescription();
+        display[i++] = "e: Edit this Object";
+        display[i++] = "u: Select Parent";
+        display[i++] = "c: Create a New Child";
+        display[i++] = "q: Quit RefMeister";
         display[i++] = null;
         for(Editable e : getChildren()) {
             display[i++] = e.getTitle();

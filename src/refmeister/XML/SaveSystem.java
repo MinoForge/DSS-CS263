@@ -15,21 +15,40 @@ import java.util.stream.Stream;
  */
 public class SaveSystem { //This is the second parser I've had to write this semester.
 
+    /**
+     * The library root for the system.
+     */
     private Library root;
-    private HashMap<String, Topic> topics;
-    private HashMap<String, Theme> themes;
+
+    /**
+     * A map of titles and their associated references
+     */
     private HashMap<String, Reference> references;
+
+    /**
+     * A map of argument titles and their associated arguments
+     */
     private HashMap<String, Argument> args;
+
+    /**
+     * A map of idea titles and their associated idea
+     */
     private HashMap<String, Idea> ideas;
 
+    /**
+     * Creates a save system.
+     */
     private SaveSystem(){
-        topics = new HashMap<>();
-        themes = new HashMap<>();
         references = new HashMap<>();
         args = new HashMap<>();
         ideas = new HashMap<>();
     }
 
+    /**
+     * Loads the given XML as a refmeister library.
+     * @param xml   An XML string
+     * @return      The library, fully loaded from string.
+     */
     public static Library loadLibrary(String xml){
         //Get every line as an array, trimmed.
         String[] lines = Stream.of(xml.split("\n")).map(String::trim).toArray(String[]::new);
@@ -57,18 +76,32 @@ public class SaveSystem { //This is the second parser I've had to write this sem
         return sys.root;
     }
 
+    /**
+     * Returns true if this tag is a refarg.
+     * @param tag the tag to check
+     * @return    true if this is a refarg tag, false otherwise
+     */
     private boolean isRefArg(String tag){
         Pattern tagType = Pattern.compile("^<refarg reference=\".*?\" argument=\".*?\" rating=\".*?\" />$");
         Matcher matcher = tagType.matcher(tag);
         return matcher.find();
     }
 
+    /**
+     * Returns true if this taf is a refidea
+     * @param tag the tag to check
+     * @return    true if this tag is a refidea, false otherwise
+     */
     private boolean isRefIdea(String tag){
         Pattern tagType = Pattern.compile("^<refidea reference=\".*?\" idea=\".*?\" />$");
         Matcher matcher = tagType.matcher(tag);
         return matcher.find();
     }
 
+    /**
+     * Makes a refarg from a tag
+     * @param tag the tag to make a ref arg from
+     */
     private void makeRefArg(String tag){
         Pattern tagType = Pattern.compile("^<refarg reference=\"(.*?)\" argument=\"(.*?)\" rating=\"(.*?)\" />$");
         Matcher matcher = tagType.matcher(tag);
@@ -80,6 +113,10 @@ public class SaveSystem { //This is the second parser I've had to write this sem
         }
     }
 
+    /**
+     * the tag to make a refidea from
+     * @param tag the tag to make from
+     */
     private void makeRefIdea(String tag){
         Pattern tagType = Pattern.compile("^<refidea reference=\"(.*?)\" idea=\"(.*?)\" />$");
         Matcher matcher = tagType.matcher(tag);
@@ -90,6 +127,11 @@ public class SaveSystem { //This is the second parser I've had to write this sem
         }
     }
 
+    /**
+     * Gets the tag type
+     * @param tag the tag
+     * @return    the name of the tag
+     */
     private String getTagType(String tag){
         Pattern tagType = Pattern.compile("^<(.*?) .*>$");
         Matcher matcher = tagType.matcher(tag);
@@ -100,6 +142,11 @@ public class SaveSystem { //This is the second parser I've had to write this sem
         return null;
     }
 
+    /**
+     * Returns true if this is an editable tag
+     * @param tag the tag
+     * @return    true if this tag is an editable
+     */
     private boolean isEditableTag(String tag){
         Pattern pat = Pattern.compile("^<.*title=\"(.*?)\" description=\"(.*?)\".*>$");
         //actual black magic
@@ -109,11 +156,11 @@ public class SaveSystem { //This is the second parser I've had to write this sem
 
     /**
      * Makes the requested object, and then returns it if it's a valid parent.
-     * @param type
-     * @param title
-     * @param desc
-     * @param parent
-     * @return
+     * @param type      The type of the tag
+     * @param title     the tag title
+     * @param desc      the editable's description
+     * @param parent    the parent of this editable
+     * @return          the new parent object, or null if the made object is not a valid parent
      */
     private Editable make(String type, String title, String desc, Editable parent){
         switch(type) {
@@ -124,16 +171,12 @@ public class SaveSystem { //This is the second parser I've had to write this sem
             case "topic":
                 if(!(parent instanceof Library))
                     throw new RuntimeException("Malformed XML Document: topic parent not library");
-                Topic top = new Topic(title, desc, (Library) parent);
-                topics.put(title, top);
-                return top;
+                return new Topic(title, desc, (Library) parent);
 
             case "theme":
                 if(!(parent instanceof Topic))
                     throw new RuntimeException("Malformed XML Document: theme parent not topic");
-                Theme the = new Theme(title, desc, (Topic) parent);
-                themes.put(title, the);
-                return the;
+                return new Theme(title, desc, (Topic) parent);
 
             case "reference":
                 if(!(parent instanceof Theme))
@@ -179,10 +222,6 @@ public class SaveSystem { //This is the second parser I've had to write this sem
             pair.two = descriptionMatcher.group(1);
             return pair;
         }
-        return null;
-    }
-
-    private String getTagName(String tag){
         return null;
     }
 

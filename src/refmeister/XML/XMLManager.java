@@ -11,6 +11,8 @@ import java.util.*;
  * four parts: A library, a list of arguments found in the library, a list of ideas found in the
  * library, and a list of association tags found in the library. Using the four of these, the
  * XMLManager wraps and formats a library into a nice XML output.
+ *
+ * @author Wesley Rogers
  */
 public class XMLManager {
     /**

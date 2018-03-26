@@ -4,6 +4,7 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -104,8 +105,8 @@ class RefArg implements Saveable {
 
     @Override
     public List<Saveable> getSaveableChildren() {
-        return new ArrayList<>();
-    }
+		return Collections.emptyList();
+	}
 
     @Override
     public String getSaveString(XMLManager manager) {

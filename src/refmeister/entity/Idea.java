@@ -86,7 +86,7 @@ public class Idea extends Editable {
 	 */
 	@Override
 	public List<Saveable> getSaveableChildren() {
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override

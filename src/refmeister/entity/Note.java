@@ -70,7 +70,7 @@ public class Note extends Editable {
 	 */
 	@Override
 	public List<Saveable> getSaveableChildren() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -79,13 +79,14 @@ public class Note extends Editable {
 	}
 
 	/**
-	 * TODO Add code to this at a later day
+	 *
 	 * @return
 	 * @param manager
 	 */
 	@Override
 	public String getSaveString(XMLManager manager) {
-		return super.getSaveString("note", manager);
+		return String.format("<note title=\"%s\" description=\"%s\" />\n",
+				getTitle(), getDescription());
 	}
 
 }

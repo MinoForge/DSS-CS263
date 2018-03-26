@@ -22,6 +22,7 @@ public class XMLSaveTest {
         r1.addArgument(arg, 5f);
         r1.addArgument(arg2, 0f);
         r2.addArgument(arg2, 2.5f);
+        r1.addNote("Ham is delicious", "Like really eat it all the time");
 
         System.out.println(SaveSystem.saveLibrary(lib));
     }

@@ -5,7 +5,33 @@ import java.util.List;
 
 public class Argument extends Editable {
 
-	List<RefArg> arguments;
+	/** ArrayList of RefArgs that show what this Argument instance is associated with. */
+	private List<RefArg> arguments;
+
+	/**
+	 * TODO
+	 * @param title
+	 * @param desc
+	 * @param arguments
+	 */
+	public Argument(String title, String desc, List<RefArg> arguments) {
+		setTitle(title);
+		setDescription(desc);
+		this.arguments = arguments;
+	}
+
+	/**
+	 * TODO
+	 * @param title
+	 * @param desc
+	 */
+	public Argument(String title, String desc) {
+		this(title, desc, new ArrayList<RefArg>());
+	}
+
+	public Argument(String title, List<RefIdea> ideas) {
+		this(title)
+	}
 
 	/**
 	 * TODO
@@ -14,25 +40,6 @@ public class Argument extends Editable {
 		for(RefArg ra : arguments) {
 			ra.destroy();
 		}
-	}
-
-	/**
-	 * TODO
-	 * @return
-	 */
-	@Override
-	public String[] display() {
-		String[] results = new String[arguments.size() + 3];
-		results[0] = getTitle();
-		results[1] = getDescription();
-		int i = 3;
-		float avg = 0;
-		for(RefArg ra : arguments) {
-			avg += ra.getRating();
-			results[i++] = ra.getReference().getTitle();
-		}
-		results[3] = "" + (avg / arguments.size());
-		return results;
 	}
 
 	@Override

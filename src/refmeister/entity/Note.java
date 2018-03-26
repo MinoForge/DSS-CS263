@@ -66,11 +66,11 @@ public class Note extends Editable {
 	/**
 	 * This Note does not have children, but it still needs to Override this
 	 * method.
-	 * @return null, since Note's have no children.
+	 * @return An empty list.
 	 */
 	@Override
 	public List<Saveable> getSaveableChildren() {
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	@Override

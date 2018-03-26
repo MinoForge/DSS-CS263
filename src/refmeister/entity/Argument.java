@@ -4,6 +4,7 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -99,7 +100,7 @@ public class Argument extends Editable {
 	 */
 	@Override
 	public List<Saveable> getSaveableChildren() {
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class Reference extends Editable {
 	}
 
 	public Reference(String title, String description, Theme parent) {
-		this(title, description, new String[], new ArrayList<RefIdea>(), new ArrayList<RefArg>(),
+		this(title, description, new String[12], new ArrayList<RefIdea>(), new ArrayList<RefArg>(),
 				new ArrayList<Note>(), parent);
 	}
 

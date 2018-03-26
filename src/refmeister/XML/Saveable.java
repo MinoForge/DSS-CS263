@@ -1,4 +1,4 @@
-package refmeister.entity;
+package refmeister.XML;
 
 import java.util.List;
 
@@ -6,6 +6,6 @@ public interface Saveable {
 
 	List<Saveable> getSaveableChildren();
 
-	String getSaveString();
+	String getSaveString(XMLManager manager);
 
 }

@@ -5,8 +5,7 @@ import java.nio.file.*;
 import java.util.Scanner;
 
 /**
- * The Controller class controls the flow of the program, saving and loading a full library, and
- * allows the user to communicate with the program using a menu.
+ * TODO
  * @author Peter Gardner
  * @version 25, 3, 2018
  */
@@ -16,15 +15,14 @@ public class Controller {
 	private Editable selected;
 	/** The current library that selected is/located in. */
 	private Library currentLib;
-	/** The current working directory for this controller. */
+	/**  */
 	private WorkingDirectory workingDir;
-	/** The File that a library is stored in. */
+	/**  */
 	private File libFile;
 
     /**
-     * Constructor for the Controller class. Sets a specified WorkingDirectory to the workingDir
-     * field.
-     * @param workingDir The specified WorkingDirectory to be set to workingDir.
+     * TODO
+     * @param workingDir
      */
 	public Controller(WorkingDirectory workingDir) {
 	    this.workingDir = workingDir;
@@ -43,27 +41,60 @@ public class Controller {
             }
         }
         Path file = Paths.get(workingDir.getDirectory() + currentLib.getTitle());
+        try(BufferedWriter writer = Files.newBufferedWriter(file)) {
+		    //writer.write(currentLib.getSaveString());
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
+        }
 	}
 
     /**
-     * Loads a library from a specified title.
-     * @param title The specified title to load from.
+     * TODO
+     * @param title
      */
 	public void loadLibrary(String title) {
-
+	    if(workingDir.getDirectory().listFiles() != null) {
+            for (File f : workingDir.getDirectory().listFiles()) {
+                if (f.toString().equals(title + ".rl")) {
+                    loadLibrary(f);
+                    return;
+                }
+            }
+        }
     }
 
 	/**
-	 * Loads a library from a specified file.
-	 * @param file The specified file to load from.
+	 * TODO
+	 * @param file
 	 */
 	public void loadLibrary(File file) {
+        BufferedReader reader = null;
+	    try {
+            reader = new BufferedReader(new FileReader(libFile));
+        } catch(FileNotFoundException fnfe) {
+            System.out.println("File Not Found. This should not be possible.");
+        }
 
+        parseXML(reader);
 	}
 
     /**
-     * Prints out a command-line menu that displays options based on what selected is. Then calls
-     * menuChoose to allow a user to select a menu option.
+     * TODO
+     * @param reader
+     */
+	public void parseXML(BufferedReader reader) {
+
+
+        Library loadedLib = new Library(libFile.getName());
+
+        // TODO: Write XML parser
+
+        this.currentLib = loadedLib;
+
+    }
+
+    /**
+     * TODO
      */
     public void displayMenu() {
 	    String[] menuItems = selected.display();
@@ -80,13 +111,7 @@ public class Controller {
         menuChoose(j, choices);
     }
 
-    /**
-     * Allows a user to select a menu option based on what selected is. The only way to access
-     * this method is through the displayMenu() method.
-     * @param maxChoice The last choice on a user's menu.
-     * @param choices An array of all of the choices you have.
-     */
-    private void menuChoose(int maxChoice, String[] choices) {
+    public void menuChoose(int maxChoice, String[] choices) {
         Scanner scanIn = new Scanner(System.in);
         boolean goodChoice = false;
         while(!goodChoice) {
@@ -110,19 +135,20 @@ public class Controller {
     }
 
     /**
-     * Creates a new library with a specified title and description.
-     * @param title The specified title for the new library.
-     * @param description The specified description for the new library.
+     * TODO
+     * @param title
+     * @param description
      */
     public void createLibrary(String title, String description) {
 	    File file = new File(workingDir.getDirectory().getPath() + title + ".rl");
 	    currentLib = new Library(title, description);
-	    saveLibrary();
+	    //saveLibrary();
 	    selected = currentLib;
     }
 
     /**
-     * Allows a user to edit a selected object.
+     * TODO
+     *
      */
     public void edit() {
 	    Scanner scanIn = new Scanner(System.in);

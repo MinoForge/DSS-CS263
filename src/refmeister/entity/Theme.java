@@ -1,6 +1,8 @@
 package refmeister.entity;
 
-import java.security.InvalidParameterException;
+import refmeister.XML.Saveable;
+import refmeister.XML.XMLManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,8 +89,8 @@ public class Theme extends Editable {
 
 
 	@Override
-	public String getSaveString() {
-		return super.getSaveString("theme");
+	public String getSaveString(XMLManager manager) {
+		return super.getSaveString("theme", manager);
 	}
 
 	@Override

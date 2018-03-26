@@ -1,5 +1,8 @@
 package refmeister.entity;
 
+import refmeister.XML.Saveable;
+import refmeister.XML.XMLManager;
+
 import java.util.*;
 
 /**
@@ -94,9 +97,10 @@ public class Idea extends Editable {
 	/**
 	 * TODO Will edit this later.
 	 * @return
+	 * @param manager
 	 */
 	@Override
-	public String getSaveString() {
-		return super.getSaveString("idea");
+	public String getSaveString(XMLManager manager) {
+		return String.format("<idea title=\"%s\" description=\"%s\">\n", getTitle(), getDescription());
 	}
 }

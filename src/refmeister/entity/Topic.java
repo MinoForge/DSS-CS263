@@ -1,5 +1,8 @@
 package refmeister.entity;
 
+import refmeister.XML.Saveable;
+import refmeister.XML.XMLManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,8 +107,8 @@ public class Topic extends Editable {
     }
 
     @Override
-    public String getSaveString() {
-        return super.getSaveString("topic");
+    public String getSaveString(XMLManager manager) {
+        return super.getSaveString("topic", manager);
     }
 
     /**

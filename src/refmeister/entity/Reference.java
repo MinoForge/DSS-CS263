@@ -1,6 +1,7 @@
 package refmeister.entity;
 
-import com.sun.org.apache.xpath.internal.Arg;
+import refmeister.XML.Saveable;
+import refmeister.XML.XMLManager;
 
 import java.util.*;
 
@@ -137,7 +138,10 @@ public class Reference extends Editable {
 
 	@Override
 	public List<Saveable> getSaveableChildren() {
-	    return new ArrayList<>(notes);
+        List<Saveable> out = new ArrayList<>(notes);
+        out.addAll(arguments);
+        out.addAll(ideas);
+	    return out;
 	}
 
 	public List<Editable> getChildren() {
@@ -145,7 +149,7 @@ public class Reference extends Editable {
 	}
 
 	@Override
-	public String getSaveString() {
-		return super.getSaveString("reference");
+	public String getSaveString(XMLManager manager) {
+		return super.getSaveString("reference", manager);
 	}
 }

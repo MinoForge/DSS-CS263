@@ -1,8 +1,7 @@
 package test;
 
+import refmeister.XML.XMLManager;
 import refmeister.entity.*;
-
-import java.util.Arrays;
 
 /**
  * Created by wesle on 3/25/2018.
@@ -23,6 +22,8 @@ public class XMLSaveTest {
         r1.addArgument(arg2, 0f);
         r2.addArgument(arg2, 2.5f);
 
-        System.out.println(lib.getSaveString());
+        XMLManager manager = new XMLManager(lib);
+
+        System.out.println(manager.getXML());
     }
 }

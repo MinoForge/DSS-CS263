@@ -1,5 +1,8 @@
 package refmeister.entity;
 
+import refmeister.XML.Saveable;
+import refmeister.XML.XMLManager;
+
 import java.security.InvalidParameterException;
 import java.util.List;
 
@@ -47,15 +50,16 @@ public abstract class Editable implements Displayable, Saveable {
     /**
      * Creates an XML tag for an editable object, given it's tag name.
      * @param tagName   The tag name of this tag.
+     * @param manager
      * @return          A formatted XML String.
      */
-    protected String getSaveString(String tagName){
+    protected String getSaveString(String tagName, XMLManager manager){
         StringBuilder out = new StringBuilder();
         out.append(String.format("<%s title=\"%s\" description=\"%s\">\n",
                 tagName, this.getTitle(), this.getDescription()));
 
         for(Saveable child : this.getSaveableChildren()){
-            String childString = child.getSaveString();
+            String childString = child.getSaveString(manager);
             if(childString != null){
                 out.append(childString);
             }

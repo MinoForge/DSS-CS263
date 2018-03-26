@@ -54,10 +54,9 @@ public class XMLParser { //This is the second parser I've had to write this seme
         String[] lines = Stream.of(xml.split("\n")).map(String::trim).toArray(String[]::new);
         XMLParser sys = new XMLParser();
 
-        ArrayDeque<Editable> parents = new ArrayDeque<>(); //A stack to keep track of parents
-        ArrayDeque<String> openedTags = new ArrayDeque<>();
-        for(String tag : lines){
-            // "<?" is the start of an XML version tag, which is not useful
+        ArrayDeque<Editable> parents = new ArrayDeque<>();  //A stack to keep track of parents
+        ArrayDeque<String> openedTags = new ArrayDeque<>(); // Another stack to make sure the tags
+        for(String tag : lines){                            // are aligned
             if(sys.isOpeningTag(tag)){
                 String tagType = sys.getTagType(tag);
                 if (tagType != null) {

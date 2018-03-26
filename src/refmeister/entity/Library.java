@@ -29,6 +29,7 @@ public class Library extends Editable {
         this.setTitle(title);
         this.setDescription(description);
         this.topics = topics;
+        this.setParent(null);
     }
 
     /**

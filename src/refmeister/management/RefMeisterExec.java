@@ -17,9 +17,11 @@ public class RefMeisterExec {
         if(!Files.exists(FileSystems.getDefault().getPath(DEFAULT_DIRECTORY))) {
             goodDir = directory.mkdir();
         }
+        Controller control = new Controller(null);
         if(goodDir) {
             WorkingDirectory workingDir = new WorkingDirectory(directory);
-            Controller control = new Controller(workingDir);
+            control.setWorkingDir(workingDir);
         }
+        control.displayMenu();
     }
 }

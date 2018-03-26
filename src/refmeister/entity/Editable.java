@@ -10,6 +10,7 @@ public abstract class Editable implements Displayable, Saveable {
 
 	private String title;
 	private String description;
+	private Editable parent;
 
     public String getAttribute(String attribute){
         if(attribute.equals("title")){
@@ -31,6 +32,15 @@ public abstract class Editable implements Displayable, Saveable {
             throw new InvalidParameterException();
         }
     }
+
+    public Editable getParent() {
+        return parent;
+    }
+
+    public void setParent(Editable parent) {
+        this.parent = parent;
+    }
+
     public String getTitle() {
         return title;
     }

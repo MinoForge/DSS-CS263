@@ -81,6 +81,18 @@ public class Controller {
     }
 
     /**
+     * Creates a new library with a specified title and description.
+     * @param title The specified title for the new library.
+     * @param description The specified description for the new library.
+     */
+    public void createLibrary(String title, String description) {
+        File file = new File(workingDir.getDirectory().getPath() + title + ".rl");
+        currentLib = new Library(title, description);
+        //saveLibrary();
+        selected = currentLib;
+    }
+
+    /**
      * Allows a user to select a menu option based on what selected is. The only way to access
      * this method is through the displayMenu() method.
      * @param maxChoice The last choice on a user's menu.
@@ -94,13 +106,19 @@ public class Controller {
             if (scanIn.hasNextInt()) {
                 int choice = scanIn.nextInt();
                 if (choice < maxChoice && choice >= 0) {
-
+                    for(Editable e : selected.getChildren()) {
+                        if(e.getTitle().equals(choices[choice])) {
+                            setSelected(e);
+                        }
+                    }
                     goodChoice = true;
                 }
             } else if(scanIn.hasNext()) {
                 String choiceString = scanIn.next();
                 if(choiceString.equals("e")) {
-                    edit();
+                    editMenu();
+                } else if(choiceString.equals("u")) {
+                    traverseUp();
                 }
             }else {
                 System.out.println("Error: Choice must be in range [0-" + (maxChoice - 1) + "]");
@@ -109,26 +127,51 @@ public class Controller {
         }
     }
 
-    /**
-     * Creates a new library with a specified title and description.
-     * @param title The specified title for the new library.
-     * @param description The specified description for the new library.
-     */
-    public void createLibrary(String title, String description) {
-	    File file = new File(workingDir.getDirectory().getPath() + title + ".rl");
-	    currentLib = new Library(title, description);
-	    //saveLibrary();
-	    selected = currentLib;
+    public void traverseUp() {
+        if(selected.getParent() != null) {
+            setSelected(selected.getParent());
+        }
+    }
+
+    public void setSelected(Editable newSelect) {
+        this.selected = newSelect;
+    }
+
+    public void setWorkingDir(WorkingDirectory workingDir) {
+        this.workingDir = workingDir;
     }
 
     /**
      * Allows a user to edit a selected object.
      */
-    public void edit() {
+    public void editMenu() {
+        String[] edits = {selected.getTitle(), selected.getDescription()};
 	    Scanner scanIn = new Scanner(System.in);
-        System.out.println("Please choose");
-        String[] edits = new String[2];
-        selected.edit(edits);
+        System.out.println("0: Edit Title\n1: Edit Description\n2: Go Back");
+        System.out.println("Please choose a number: ");
+        while(true) {
+            if(scanIn.hasNextInt()) {
+                int choice = scanIn.nextInt();
+                switch(choice) {
+                    case 0:
+                        System.out.print("New Title: ");
+                        edits[0] = scanIn.nextLine();
+                        selected.edit(edits);
+                        return;
+                    case 1:
+                        System.out.print("New Description: "); //No line breaks, currently.
+                        edits[1] = scanIn.nextLine();
+                        selected.edit(edits);
+                        return;
+                    case 2:
+                        return;
+                    default:
+
+                        break;
+                }
+            }
+            System.out.println("Please choose an integer in the range [0-2]");
+        }
     }
 
 }

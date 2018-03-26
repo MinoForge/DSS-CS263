@@ -118,6 +118,11 @@ public class Argument extends Editable {
 				getTitle(), getDescription());
 	}
 
+    @Override
+    public boolean createChild(String title, String description) {
+        return false;
+    }
+
     void registerRefArg(RefArg refArg) {
         this.arguments.add(refArg);
 	}

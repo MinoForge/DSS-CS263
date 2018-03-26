@@ -103,8 +103,9 @@ public class Controller {
         String[] choices = new String[selected.getChildren().size()];
         int j = 0;
         if(choices.length != 0) {
-            for (j = 0; i < menuItems.length; i++, j++) {
-                System.out.println(j);
+            for (j = 0; j < choices.length; i++, j++) {
+                System.out.println("j: " + j);
+                System.out.println("i: " + i);
                 choices[j] = (menuItems[i]);
                 System.out.println(j + ": " + menuItems[i]);
             }
@@ -163,13 +164,21 @@ public class Controller {
      */
     private boolean choiceString(String choice) {
         boolean valid = false;
-        if(choice.equals("e") || choice.equals("u") || choice.equals("c") || choice.equals("q")) {
+        if(choice.equals("e") || choice.equals("u") || choice.equals("q") || choice.equals("c")) {
             if (choice.equals("e")) {
                 editMenu();
             } else if (choice.equals("u")) {
                 traverseUp();
             } else if (choice.equals("c")) {
-                createChild();
+                if (selected.getChildren() != null) {
+                    createChild();
+                } else {
+                    return valid;
+                }
+            } else if (choice.equals("a")) {
+                if(selected instanceof Argument || selected instanceof Idea) {
+//                    attachToReference(); //TODO (1)
+                }
             } else if (choice.equals("q")) {
                 saveLibrary();
                 System.exit(0);
@@ -182,8 +191,31 @@ public class Controller {
     /**
      *
      */
-    public void createChild() {
+    //TODO (1) Make this work
+//    public void attachToReference() {
+//        Scanner scanIn = new Scanner(System.in);
+//        System.out.println("Choose title from the following:");
+//        int i = 0;
+//        for(Editable r : currentLib.getRefs()) {
+//            System.out.println("");
+//        }
+//        if(selected instanceof Argument) {
+//            Argument arg = (Argument)selected;
+//            arg.addToReference(String refTitle);
+//        } else {
+//            Idea idea = (Idea)selected;
+//            idea.addToReference(String refTitle)
+//        }
+//    }
 
+    public void createChild() {
+        Scanner scanIn = new Scanner(System.in);
+        System.out.print("Title: ");
+        String title = scanIn.nextLine();
+        System.out.print("Description: ");
+        String description = scanIn.nextLine();
+        selected.createChild(title, description);
+        scanIn.close();
     }
 
     /**
@@ -230,6 +262,7 @@ public class Controller {
         while(true) {
             if(scanIn.hasNextInt()) {
                 int choice = scanIn.nextInt();
+                scanIn.nextLine();
                 switch(choice) {
                     case 0:
                         System.out.print("New Title: ");

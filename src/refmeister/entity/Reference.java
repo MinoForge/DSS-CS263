@@ -22,6 +22,11 @@ public class Reference extends Editable {
 		this.arguments = arguments;
 		this.notes = notes;
 		this.parent = parent;
+		Editable lib = getParent().getParent().getParent();
+		if(lib instanceof Library) {
+		    Library myLib = (Library)lib;
+		    myLib.getRefs().add(this);
+        }
 		parent.register(this);
 	}
 

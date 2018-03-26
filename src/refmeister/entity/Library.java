@@ -16,6 +16,8 @@ public class Library extends Editable {
 
     /** The Topics which are children of this Library. */
     private List<Editable> topics;
+    /** All references used in this Library. */
+    private List<Editable> references;
 
 
     /**
@@ -30,6 +32,13 @@ public class Library extends Editable {
         this.setDescription(description);
         this.topics = topics;
         this.setParent(null);
+        this.references = new ArrayList<Editable>();
+        for(Editable top : getChildren()) {
+            for(Editable thm : top.getChildren()) {
+                this.references.addAll(thm.getChildren());
+            }
+        }
+
     }
 
     /**
@@ -96,6 +105,8 @@ public class Library extends Editable {
         return new ArrayList<>(topics);
     }
 
+
+
     /**
      * Gets the XML String of this library, with all topics as it's children.
      * @return The formatted XML save string.
@@ -103,5 +114,14 @@ public class Library extends Editable {
      */
     public String getSaveString(XMLManager manager) {
         return super.getSaveString("library", manager);
+    }
+
+    @Override
+    public boolean createChild(String title, String description) {
+        return (addTopic(title, description) != null);
+    }
+
+    public List<Editable> getRefs() {
+        return references;
     }
 }

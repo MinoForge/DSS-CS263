@@ -60,12 +60,34 @@ public class Reference extends Editable {
 		this.arguments = arguments;
 	}
 
+	/**
+	 * Adds a new note to this Reference's ArrayList of notes.
+	 * @param title The title of the note to be added.
+	 * @param desc The description of the note to be added.
+	 * @return If the note is not already in the list, return the new note. Otherwise, return null.
+	 */
+	public Note addNote(String title, String desc) {
+		for(Editable n : notes) {
+			// If a note already has the same title as the one we are trying to add, don't add it.
+			if(n.getTitle().equals(title)) {
+				return null;
+			}
+		}
+		Note newNote = new Note(this, title, desc);
+		notes.add(newNote);
+		return newNote;
+	}
+
 	public List<Note> getNotes() {
 		return notes;
 	}
 
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
+	}
+
+	public void deleteNote(String title) {
+		notes.removeIf(ed -> ed.getTitle().equals(title));
 	}
 
 	public Theme getParent() {

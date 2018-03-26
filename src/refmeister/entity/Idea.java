@@ -3,7 +3,9 @@ package refmeister.entity;
 import java.util.*;
 
 /**
- * The Idea class models
+ * The Idea class models an Idea that would be listed in one or multiple References.
+ * @author Brandon Townsend
+ * @version 25, 3, 2018
  */
 public class Idea extends Editable {
 

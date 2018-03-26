@@ -3,6 +3,11 @@ package refmeister.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Argument class models an argument that would be associated with one or multiple References.
+ * @author Brandon Townsend
+ * @version 25, 3, 2018
+ */
 public class Argument extends Editable {
 
 	/** ArrayList of RefArgs that show what this Argument instance is associated with. */

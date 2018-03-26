@@ -76,7 +76,7 @@ public class Note extends Editable {
 	 */
 	@Override
 	public String getSaveString() {
-		return null;
+		return super.getSaveString("note");
 	}
 
 }

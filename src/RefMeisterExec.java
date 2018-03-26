@@ -12,10 +12,13 @@ public class RefMeisterExec {
 
     public static void main(String[] args) {
         File directory = new File(DEFAULT_DIRECTORY);
+        boolean goodDir = true;
         if(!Files.exists(FileSystems.getDefault().getPath(DEFAULT_DIRECTORY))) {
-            directory.mkdir();
+            goodDir = directory.mkdir();
         }
-        WorkingDirectory workingDir = new WorkingDirectory(directory);
-        Controller control = new Controller(workingDir);
+        if(goodDir) {
+            WorkingDirectory workingDir = new WorkingDirectory(directory);
+            Controller control = new Controller(workingDir);
+        }
     }
 }

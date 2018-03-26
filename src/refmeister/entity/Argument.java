@@ -78,6 +78,6 @@ public class Argument extends Editable {
 
 	@Override
 	public String getSaveString() {
-		return null;
+		return super.getSaveString("argument");
 	}
 }

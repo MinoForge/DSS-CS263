@@ -4,14 +4,17 @@ import com.sun.corba.se.impl.io.TypeMismatchException;
 
 import java.io.File;
 import java.nio.file.AccessDeniedException;
-import java.rmi.AccessException;
 
 public class WorkingDirectory implements Displayable{
 
 	private File workingDir;
 
 	public WorkingDirectory(File dir) {
-	    setDirectory(dir);
+		try {
+			setDirectory(dir);
+		} catch(TypeMismatchException | AccessDeniedException e) {
+			System.out.println(e.getMessage());
+		}
     }
 
 	public File getDirectory() {
@@ -30,7 +33,7 @@ public class WorkingDirectory implements Displayable{
 	    	throw new AccessDeniedException("Cannot read from Directory.");
 		}
 		if(!file.canWrite()) {
-	    	throw new AccessDeniedException("");
+	    	throw new AccessDeniedException("Cannot write from Directory.");
 		}
 		workingDir = file;
 	}

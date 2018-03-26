@@ -112,6 +112,6 @@ public class Reference extends Editable {
 
 	@Override
 	public String getSaveString() {
-		return null;
+		return super.getSaveString("reference");
 	}
 }

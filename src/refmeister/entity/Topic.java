@@ -109,6 +109,5 @@ public class Topic extends Editable {
     @Override
     public String getSaveString() {
         return super.getSaveString("topic");
-        //TODO: XML stuff
     }
 }

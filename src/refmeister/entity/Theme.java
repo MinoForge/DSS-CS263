@@ -46,7 +46,7 @@ public class Theme extends Editable {
 				return null;
 			}
 		}
-		Reference newRef = new Reference(title, desc, this);
+		Reference newRef = new Reference(getTitle(), getDescription(), this);
 		refs.add(newRef);
 		return newRef;
 	}

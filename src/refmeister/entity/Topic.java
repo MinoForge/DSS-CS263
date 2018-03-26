@@ -21,6 +21,7 @@ public class Topic extends Editable {
         this.setTitle(title);
         this.setDescription(description);
         this.parent = parent;
+        parent.register(this);
         this.themes = themes;
     }
 
@@ -42,6 +43,10 @@ public class Topic extends Editable {
     public Topic(String title, Library parent){
         this(title, "<<Unset Description>>", parent, new ArrayList<Editable>());
     }
+
+    void register(Theme theme){
+        themes.add(theme);
+    }
 	/**
 	 * Adds a theme to this topic.
 	 * @param title The title of the topic
@@ -55,7 +60,6 @@ public class Topic extends Editable {
             }
         }
         Theme newTheme = new Theme(title, desc, this);
-        themes.add(newTheme);
         return newTheme;
 	}
 

@@ -27,6 +27,9 @@ class RefIdea implements Saveable {
 	public RefIdea(Reference ref, Idea idea) {
 		this.reference = ref;
 		this.idea = idea;
+
+		ref.registerRefIdea(this);
+		idea.registerRefIdea(this);
 	}
 
 	/**

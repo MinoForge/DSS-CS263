@@ -19,23 +19,24 @@ public class Note extends Editable {
 	/**
 	 * Constructor for the Note class. Takes a Reference object to be specified as the parent, a
 	 * String to be the title, and a String to be the description.
-	 * @param parent The Reference to be set as this Note's parent.
-	 * @param title	The String to be specified as the title.
+	 * @param title    The String to be specified as the title.
 	 * @param description The String to be specified as the description.
+	 * @param parent The Reference to be set as this Note's parent.
 	 */
-	public Note(Reference parent, String title, String description) {
+	public Note(String title, String description, Reference parent) {
 		this.parent = parent;
+		parent.registerNote(this);
 		setTitle(title);
 		setDescription(description);
 	}
 
 	/**
 	 * A more default constructor where the user does not specify a description.
-	 * @param parent The Reference to be set as this Note's parent.
 	 * @param title The String to be specified as the title.
+	 * @param parent The Reference to be set as this Note's parent.
 	 */
-	public Note(Reference parent, String title) {
-		this(parent, title, "Unset Description");
+	public Note(String title, Reference parent) {
+		this(title, "Unset Description", parent);
 	}
 
 	/**

@@ -31,6 +31,8 @@ class RefArg implements Saveable {
 	public RefArg(Reference ref, Argument argument, float rating) {
 		this.reference = ref;
 		this.argument = argument;
+		ref.registerRefArg(this);
+		argument.registerRefArg(this);
 		this.rating = rating;
 	}
 

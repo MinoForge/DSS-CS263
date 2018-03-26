@@ -22,6 +22,7 @@ public class Reference extends Editable {
 		this.arguments = arguments;
 		this.notes = notes;
 		this.parent = parent;
+		parent.register(this);
 	}
 
 	public Reference(String title, String desc, String[] refData, Theme parent) {
@@ -76,8 +77,7 @@ public class Reference extends Editable {
 				return null;
 			}
 		}
-		Note newNote = new Note(this, title, desc);
-		notes.add(newNote);
+		Note newNote = new Note(title, desc, this);
 		return newNote;
 	}
 
@@ -106,9 +106,13 @@ public class Reference extends Editable {
 	}
 
 	public RefArg addArgument(Argument arg, float rating){
-	    RefArg newRefArg = new RefArg(this, arg, rating);
-        arguments.add(newRefArg);
-        return newRefArg;
+		RefArg newRefArg = new RefArg(this, arg, rating);
+		return newRefArg;
+	}
+
+	public RefIdea addIdea(Idea idea){
+		RefIdea ri = new RefIdea(this, idea);
+		return ri;
 	}
 
 	@Override
@@ -152,4 +156,16 @@ public class Reference extends Editable {
 	public String getSaveString(XMLManager manager) {
 		return super.getSaveString("reference", manager);
 	}
+
+    void registerNote(Note note) {
+        this.notes.add(note);
+	}
+
+	void registerRefArg(RefArg ra){
+	    this.arguments.add(ra);
+    }
+
+    void registerRefIdea(RefIdea ri){
+	    this.ideas.add(ri);
+    }
 }

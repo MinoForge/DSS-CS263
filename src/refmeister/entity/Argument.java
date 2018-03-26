@@ -117,4 +117,8 @@ public class Argument extends Editable {
 		return String.format("<argument title=\"%s\" description=\"%s\" />\n",
 				getTitle(), getDescription());
 	}
+
+    void registerRefArg(RefArg refArg) {
+        this.arguments.add(refArg);
+	}
 }

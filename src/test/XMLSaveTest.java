@@ -27,12 +27,17 @@ public class XMLSaveTest {
         r2.addArgument(arg2, 2.5f);
         r1.addNote("Ham is delicious", "Like really eat it all the time");
 
+        String xml = SaveSystem.saveLibrary(lib);
+
         try {
             FileWriter writer = new FileWriter(new File("refmeister-wd/demo.rl"));
-            writer.write(SaveSystem.saveLibrary(lib));
+            writer.write(xml);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Library loaded = SaveSystem.loadLibrary(xml);
+        System.out.println(SaveSystem.saveLibrary(loaded));
     }
 }

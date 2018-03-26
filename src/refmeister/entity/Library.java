@@ -49,7 +49,11 @@ public class Library extends Editable {
      * @param title The String to be specified as this Library's title.
      */
     public Library(String title) {
-        this(title, "<<Unset Description>>", new ArrayList<Editable>());
+        this(title, "Unset Description", new ArrayList<Editable>());
+    }
+
+    void register(Topic t){
+        topics.add(t);
     }
 
 	/**
@@ -68,7 +72,6 @@ public class Library extends Editable {
             }
         }
         Topic newTopic = new Topic(title, desc, this);
-        topics.add(newTopic);
         return newTopic;
 	}
 

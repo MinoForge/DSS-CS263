@@ -103,4 +103,8 @@ public class Idea extends Editable {
 	public String getSaveString(XMLManager manager) {
 		return String.format("<idea title=\"%s\" description=\"%s\">\n", getTitle(), getDescription());
 	}
+
+    void registerRefIdea(RefIdea refIdea) {
+        this.ideas.add(refIdea);
+	}
 }

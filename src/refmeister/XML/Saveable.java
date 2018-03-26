@@ -7,6 +7,8 @@ import java.util.List;
  * traversal: Each element manages the XML of it's children, ending with references.
  * Additionally, Arguments, Ideas, and RefArgs/RefIdeas register with the XMLManager during
  * traversal to ensure that all elements are properly accounted for in the XML output.
+ *
+ * @author Wesley Rogers
  */
 public interface Saveable {
 

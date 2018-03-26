@@ -15,6 +15,7 @@ public class Theme extends Editable {
 		this.setDescription(desc);
 		this.refs = refs;
 		this.parent = parent;
+		parent.register(this);
 	}
 
 	public Theme(String title, String desc, Topic parent){
@@ -43,6 +44,10 @@ public class Theme extends Editable {
 		throw new InvalidParameterException("Topic does not exist");
 	}*/
 
+	void register(Reference ref){
+		this.refs.add(ref);
+	}
+
 	public Reference addReference(String title, String desc) {
 		for(Editable t : refs) {
 			if(t.getTitle().equals(getTitle())) {
@@ -50,7 +55,6 @@ public class Theme extends Editable {
 			}
 		}
 		Reference newRef = new Reference(title, desc, this);
-		refs.add(newRef);
 		return newRef;
 	}
 

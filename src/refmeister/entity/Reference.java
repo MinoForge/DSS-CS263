@@ -1,7 +1,5 @@
 package refmeister.entity;
 
-import java.lang.reflect.Array;
-import java.sql.Ref;
 import java.util.*;
 
 public class Reference extends Editable {
@@ -30,6 +28,11 @@ public class Reference extends Editable {
 
 	public Reference(String title, String[] refData, Theme parent) {
 		this(title, "Unset Description", refData, new ArrayList<RefIdea>(), new ArrayList<RefArg>(),
+				new ArrayList<Note>(), parent);
+	}
+
+	public Reference(String title, String description, Theme parent) {
+		this(title, description, new String[], new ArrayList<RefIdea>(), new ArrayList<RefArg>(),
 				new ArrayList<Note>(), parent);
 	}
 

@@ -20,7 +20,7 @@ public class WorkingDirectory implements Displayable{
 
 	/**
 	 * 
-	 * @param path
+	 * @param file
 	 */
 	public void setDirectory(File file) throws TypeMismatchException, AccessDeniedException {
 	    if(!file.isDirectory()) {
@@ -30,7 +30,7 @@ public class WorkingDirectory implements Displayable{
 	    	throw new AccessDeniedException("Cannot read from Directory.");
 		}
 		if(!file.canWrite()) {
-	    	throw new AccessDeniedException("")
+	    	throw new AccessDeniedException("");
 		}
 		workingDir = file;
 	}

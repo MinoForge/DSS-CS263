@@ -23,6 +23,7 @@ public class Theme extends Editable {
 		this(title, "Unset Description", parent, new ArrayList<Editable>());
 	}
 
+	/*
 	public void moveTheme(String topicTitle) throws InvalidParameterException {
 		for(Editable t : this.parent.getParent().getSaveableChildren()){
 			if(t.getTitle().equals(topicTitle)){
@@ -38,7 +39,7 @@ public class Theme extends Editable {
 			}
 		}
 		throw new InvalidParameterException("Topic does not exist");
-	}
+	}*/
 
 	public Reference addReference(String title, String desc) {
 		for(Editable t : refs) {
@@ -77,7 +78,7 @@ public class Theme extends Editable {
 
 	@Override
 	public java.lang.String toString() {
-		return "Topic{" +
+		return "Theme{" +
 				"title='" + getTitle() + '\'' +
 				", description='" + getDescription() + '\'' +
 				", references=" + refs +
@@ -87,7 +88,7 @@ public class Theme extends Editable {
 
 	@Override
 	public String getSaveString() {
-		return null;
+		return super.getSaveString("theme");
 	}
 
 	@Override

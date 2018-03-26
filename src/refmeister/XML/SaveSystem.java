@@ -1,18 +1,37 @@
 package refmeister.XML;
 
-import refmeister.entity.Library;
+import refmeister.entity.*;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
- * Created by wesle on 3/25/2018.
+ * A class managing the loading and saving of an instance of refmeister using the XML file format.
  */
-public class SaveSystem {
+public class SaveSystem { //This is the second parser I've had to write this semester.
+
+    private HashMap<String, Topic> topics;
+    private HashMap<String, Theme> themes;
+    private HashMap<String, Reference> references;
+    private HashMap<String, Argument> args;
+    private HashMap<String, Idea> ideas;
+
+    private SaveSystem(){
+        topics = new HashMap<>();
+        themes = new HashMap<>();
+        references = new HashMap<>();
+        args = new HashMap<>();
+        ideas = new HashMap<>();
+    }
 
     public static Library loadLibrary(String xml){
+        String[] lines = Stream.of(xml.split("\n")).map(String::trim).toArray(String[]::new);
         return null;
     }
+
+
 
     /**
      * Gets the title and description of a given XML tag.

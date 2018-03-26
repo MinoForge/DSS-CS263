@@ -1,11 +1,14 @@
 package test;
 
 import refmeister.XML.SaveSystem;
-import refmeister.XML.XMLManager;
 import refmeister.entity.*;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
- * Created by wesle on 3/25/2018.
+ * Test class to ensure that saving to XML works right
  */
 public class XMLSaveTest {
     public static void main(String[] args){
@@ -24,6 +27,12 @@ public class XMLSaveTest {
         r2.addArgument(arg2, 2.5f);
         r1.addNote("Ham is delicious", "Like really eat it all the time");
 
-        System.out.println(SaveSystem.saveLibrary(lib));
+        try {
+            FileWriter writer = new FileWriter(new File("refmeister-wd/demo.rl"));
+            writer.write(SaveSystem.saveLibrary(lib));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -25,9 +25,9 @@ public class Theme extends Editable {
 
 	/*
 	public void moveTheme(String topicTitle) throws InvalidParameterException {
-		for(Editable t : this.parent.getParent().getSaveableChildren()){
+		for(Editable t : this.parent.getParent().getChildren()){
 			if(t.getTitle().equals(topicTitle)){
-				for(Editable i : t.getSaveableChildren()){
+				for(Editable i : t.getChildren()){
 					if(i.getTitle().equals(this.getTitle())){
 						throw new InvalidParameterException("Theme already exists in chosen topic");
 					}
@@ -94,6 +94,10 @@ public class Theme extends Editable {
 	@Override
 	public List<Saveable> getSaveableChildren() {
 		return new ArrayList<>(refs);
+	}
+
+	public List<Editable> getChildren() {
+		return refs;
 	}
 
 }

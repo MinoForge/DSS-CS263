@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * The Note class models a Reference's note. It must have a title and a parent Reference, but
  * does not need a description.
- * @author Red Team/DevSquad Supreme
+ * @author Brandon Townsend
  * @version 25, 3, 2018
  */
 public class Note extends Editable {
@@ -67,6 +67,11 @@ public class Note extends Editable {
 	 */
 	@Override
 	public List<Saveable> getSaveableChildren() {
+		return null;
+	}
+
+	@Override
+	public List<Editable> getChildren() {
 		return null;
 	}
 

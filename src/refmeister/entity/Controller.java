@@ -2,6 +2,7 @@ package refmeister.entity;
 
 import java.io.*;
 import java.nio.file.*;
+import java.util.Scanner;
 
 
 public class Controller {
@@ -32,10 +33,12 @@ public class Controller {
 	}
 
 	public void loadLibrary(String title) {
-	    for(File f : workingDir.getDirectory().listFiles()) {
-	        if(f.toString().equals(title)) {
-	            loadLibrary(f);
-	            return;
+	    if(workingDir.getDirectory().listFiles() != null) {
+            for (File f : workingDir.getDirectory().listFiles()) {
+                if (f.toString().equals(title)) {
+                    loadLibrary(f);
+                    return;
+                }
             }
         }
     }
@@ -64,6 +67,19 @@ public class Controller {
 
         this.currentLib = loadedLib;
 
+    }
+
+    public void menu() {
+	    String[] menuItems = selected.display();
+	    int i = 0;
+	    for(i = 0; menuItems[i] != null; i++) {
+            System.out.println(menuItems[i]);
+        }
+        for(int j = 0; i < menuItems.length; i++, j++) {
+            System.out.println(j + ": " + menuItems[i]);
+        }
+        Scanner scanIn = new Scanner(System.in);
+	    scanIn.nextInt();
     }
 
     public void createLibrary(String title, String description) {

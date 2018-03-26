@@ -157,6 +157,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Executes a different menu option based on what String was passed to it.
+     * @param choice The String that determines what option to choose.
+     * @return true if choice was a valid character, false otherwise.
+     */
     private boolean choiceString(String choice) {
         boolean valid = false;
         if(choice.equals("e") || choice.equals("u") || choice.equals("c") || choice.equals("q")) {
@@ -175,30 +180,48 @@ public class Controller {
         return valid;
     }
 
+    /**
+     *
+     */
     public void createChild() {
 
     }
 
+    /**
+     * Sets selected to an object's parent, if that object has a parent.
+     */
     public void traverseUp() {
         if(selected.getParent() != null) {
             setSelected(selected.getParent());
         }
     }
 
+    /**
+     * Retrieves the current selected field.
+     * @return The current selected field.
+     */
     public Editable getSelected() {
         return selected;
     }
 
+    /**
+     * Sets the selected field to a specified Editable.
+     * @param newSelect The specified Editable to set to selected.
+     */
     public void setSelected(Editable newSelect) {
         this.selected = newSelect;
     }
 
+    /**
+     * Sets the workingDir field to a specified WorkingDirectory.
+     * @param workingDir The specified WorkingDirectory to assign to the field.
+     */
     public void setWorkingDir(WorkingDirectory workingDir) {
         this.workingDir = workingDir;
     }
 
     /**
-     * Allows a user to edit a selected object.
+     * Allows a user to edit a selected object's title and description.
      */
     public void editMenu() {
         String[] edits = {selected.getTitle(), selected.getDescription()};

@@ -78,12 +78,22 @@ public class Controller {
         this.currentLib = SaveSystem.loadLibrary(xml);
 	}
 
+	public void startUp() {
+	    //TODO: Make this functional to traverse folders and make libraries with user titles and
+        //TODO: descriptions.
+	    createLibrary("Test", "TestDescription");
+	    if(selected == null) {
+	        startUp();
+        }
+    }
+
+
     /**
-     * Prints out a command-line menu that displays options based on what selected is. Then calls
-     * menuChoose to allow a user to select a menu option.
+     * Prints out a command-line menu that displays options based on what array is passed.
+     * Then call menuChoose to allow a user to select a menu option.
      */
     public void displayMenu() {
-	    String[] menuItems = selected.display();
+        String[] menuItems = selected.display();
 	    int i;
 	    for(i = 0; menuItems[i] != null; i++) {
             System.out.println(menuItems[i]);
@@ -103,9 +113,9 @@ public class Controller {
      * @param description The specified description for the new library.
      */
     public void createLibrary(String title, String description) {
-        File file = new File(workingDir.getDirectory().getPath() + title + ".rl");
+        libFile = new File(workingDir.getDirectory().getPath() + title + ".rl");
         currentLib = new Library(title, description);
-        //saveLibrary();
+        saveLibrary();
         selected = currentLib;
     }
 
@@ -136,6 +146,8 @@ public class Controller {
                     editMenu();
                 } else if(choiceString.equals("u")) {
                     traverseUp();
+                } else if(choiceString.equals("c")) {
+                    createChild();
                 }
             }else {
                 System.out.println("Error: Choice must be in range [0-" + (maxChoice - 1) + "]");
@@ -144,10 +156,18 @@ public class Controller {
         }
     }
 
+    public void createChild() {
+
+    }
+
     public void traverseUp() {
         if(selected.getParent() != null) {
             setSelected(selected.getParent());
         }
+    }
+
+    public Editable getSelected() {
+        return selected;
     }
 
     public void setSelected(Editable newSelect) {

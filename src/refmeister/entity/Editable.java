@@ -92,7 +92,7 @@ public abstract class Editable implements Displayable, Saveable {
      * @return
      */
     public String[] display() {
-        String[] display = new String[2 + getChildren().size()];
+        String[] display = new String[3 + getChildren().size()];
         int i = 0;
         display[i++] = getTitle();
         display[i++] = getDescription();

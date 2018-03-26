@@ -21,7 +21,10 @@ public class RefMeisterExec {
         if(goodDir) {
             WorkingDirectory workingDir = new WorkingDirectory(directory);
             control.setWorkingDir(workingDir);
+            System.out.println("Hi");
         }
+
+        control.startUp();
         control.displayMenu();
     }
 }

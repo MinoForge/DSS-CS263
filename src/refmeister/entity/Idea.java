@@ -2,6 +2,9 @@ package refmeister.entity;
 
 import java.util.*;
 
+/**
+ * The Idea class models
+ */
 public class Idea extends Editable {
 
 	/** ArrayList of RefIdeas that show what this Idea instance is associated with. */
@@ -12,7 +15,7 @@ public class Idea extends Editable {
 	 * RefIdeas.
 	 * @param title The specified String to be set as this Idea's title.
 	 * @param desc The specified String to be set as this Idea's description.
-	 * @param ideas The specified ArrayList to be set to this Idea's ideas.
+	 * @param ideas The specified ArrayList to be set to ideas.
 	 */
 	public Idea(String title, String desc, List<RefIdea> ideas) {
 		setTitle(title);
@@ -48,23 +51,23 @@ public class Idea extends Editable {
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Retrieves the ArrayList of RefIdeas.
+	 * @return The ArrayList of RefIdeas.
 	 */
 	public List<RefIdea> getRefIdea() {
 		return ideas;
 	}
 
 	/**
-	 * TODO
-	 * @param ideas
+	 * Sets the ArrayList of RefIdeas to a specified List of RefIdea.
+	 * @param ideas The specified List of RefIdeas.
 	 */
 	public void setRefIdea(List<RefIdea> ideas) {
 		this.ideas = ideas;
 	}
 
 	/**
-	 * TODO
+	 * Disassociates all of this Idea's RefIdeas from this Idea.
 	 */
 	public void destroy() {
 		for(RefIdea ri : ideas) {
@@ -72,11 +75,19 @@ public class Idea extends Editable {
 		}
 	}
 
+	/**
+	 * Ideas should have no children, so this method should return null.
+	 * @return null, since Ideas do not have children.
+	 */
 	@Override
 	public List<Editable> getChildren() {
 		return null;
 	}
 
+	/**
+	 * TODO Will edit this later.
+	 * @return
+	 */
 	@Override
 	public String getSaveString() {
 		return super.getSaveString("idea");

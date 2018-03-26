@@ -63,8 +63,10 @@ public class WorkingDirectory implements Displayable{
     @Override
     public String[] display() {
 	    File[] list = workingDir.listFiles();
-        String[] display = new String[1 + list.length];
-        int i = 1;
+        String[] display = new String[2 + list.length];
+        int i = 0;
+        display[i++] = getDirectory().getPath();
+        display[i++] = null;
         for(File f : list) {
             if(f.isDirectory() || f.getName().matches(".*\\.rl"))
             display[i] = f.getName();

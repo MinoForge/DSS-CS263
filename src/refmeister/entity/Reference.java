@@ -148,7 +148,12 @@ public class Reference extends Editable {
 		return null;
 	}
 
-	@Override
+    @Override
+    public boolean createChild(String title, String description) {
+        return false;
+    }
+
+    @Override
 	public String getSaveString(XMLManager manager) {
 		return super.getSaveString("reference", manager);
 	}

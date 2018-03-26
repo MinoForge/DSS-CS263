@@ -204,22 +204,28 @@ public class Controller {
         String[] edits = {selected.getTitle(), selected.getDescription()};
 	    Scanner scanIn = new Scanner(System.in);
         System.out.println("0: Edit Title\n1: Edit Description\n2: Go Back");
-        System.out.println("Please choose a number: ");
+        System.out.print("Please choose a number: ");
         while(true) {
             if(scanIn.hasNextInt()) {
                 int choice = scanIn.nextInt();
                 switch(choice) {
                     case 0:
                         System.out.print("New Title: ");
-                        edits[0] = scanIn.next();
+                        edits[0] = scanIn.nextLine();
                         selected.edit(edits);
                         return;
                     case 1:
                         System.out.print("New Description: "); //No line breaks, currently.
-                        edits[1] = scanIn.next();
+                        edits[1] = scanIn.nextLine();
                         selected.edit(edits);
                         return;
                     case 2:
+                        System.out.println("New Title: ");
+                        edits[0] = scanIn.nextLine();
+                        System.out.println("New Description");
+                        edits[1] = scanIn.nextLine();
+                        return;
+                    case 3:
                         return;
                     default:
 

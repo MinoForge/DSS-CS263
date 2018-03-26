@@ -16,32 +16,32 @@ public class Controller {
 	    this.workingDir = workingDir;
     }
 
-	public void saveLibrary() {
-		if(libFile == null) {
-		    try {
-		        libFile = new File(workingDir.getDirectory() + currentLib.getTitle());
-            } catch(NullPointerException e) {
-                System.out.println("No Library title. This should not be possible.");
-            }
-        }
-        Path file = Paths.get(workingDir.getDirectory() + currentLib.getTitle());
-        try(BufferedWriter writer = Files.newBufferedWriter(file)) {
-		    writer.write(currentLib.getSaveString());
-        } catch(IOException e) {
-            System.out.println(e.getMessage());
-        }
-	}
-
-	public void loadLibrary(String title) {
-	    if(workingDir.getDirectory().listFiles() != null) {
-            for (File f : workingDir.getDirectory().listFiles()) {
-                if (f.toString().equals(title)) {
-                    loadLibrary(f);
-                    return;
-                }
-            }
-        }
-    }
+//	public void saveLibrary() {
+//		if(libFile == null) {
+//		    try {
+//		        libFile = new File(workingDir.getDirectory() + currentLib.getTitle());
+//            } catch(NullPointerException e) {
+//                System.out.println("No Library title. This should not be possible.");
+//            }
+//        }
+//        Path file = Paths.get(workingDir.getDirectory() + currentLib.getTitle());
+//        try(BufferedWriter writer = Files.newBufferedWriter(file)) {
+//		    writer.write(currentLib.getSaveString());
+//        } catch(IOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//	}
+//
+//	public void loadLibrary(String title) {
+//	    if(workingDir.getDirectory().listFiles() != null) {
+//            for (File f : workingDir.getDirectory().listFiles()) {
+//                if (f.toString().equals(title)) {
+//                    loadLibrary(f);
+//                    return;
+//                }
+//            }
+//        }
+//    }
 
 	/**
 	 * 
@@ -85,7 +85,7 @@ public class Controller {
     public void createLibrary(String title, String description) {
 	    File file = new File(workingDir.getDirectory().getPath() + title + ".rl");
 	    currentLib = new Library(title, description);
-	    saveLibrary();
+	    //saveLibrary();
 	    selected = currentLib;
     }
 

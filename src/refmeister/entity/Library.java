@@ -1,5 +1,8 @@
 package refmeister.entity;
 
+import refmeister.XML.Saveable;
+import refmeister.XML.XMLManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,8 +95,9 @@ public class Library extends Editable {
     /**
      * Gets the XML String of this library, with all topics as it's children.
      * @return The formatted XML save string.
+     * @param manager
      */
-    public String getSaveString() {
-        return super.getSaveString("library");
+    public String getSaveString(XMLManager manager) {
+        return super.getSaveString("library", manager);
     }
 }

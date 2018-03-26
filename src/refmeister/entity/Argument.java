@@ -1,5 +1,8 @@
 package refmeister.entity;
 
+import refmeister.XML.Saveable;
+import refmeister.XML.XMLManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +99,7 @@ public class Argument extends Editable {
 	 */
 	@Override
 	public List<Saveable> getSaveableChildren() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -106,9 +109,11 @@ public class Argument extends Editable {
 	/**
 	 * TODO Will edit this later
 	 * @return
+	 * @param manager
 	 */
 	@Override
-	public String getSaveString() {
-		return super.getSaveString("argument");
+	public String getSaveString(XMLManager manager) {
+		return String.format("<argument title=\"%s\" description=\"%s\" />\n",
+				getTitle(), getDescription());
 	}
 }

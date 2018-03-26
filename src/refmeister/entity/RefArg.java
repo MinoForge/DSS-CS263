@@ -1,5 +1,8 @@
 package refmeister.entity;
 
+import refmeister.XML.Saveable;
+import refmeister.XML.XMLManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,8 +108,12 @@ class RefArg implements Saveable {
     }
 
     @Override
-    public String getSaveString() {
-	    return String.format("<refarg reference=\"%s\" argument=\"%s\" rating=\"%f\" />",
+    public String getSaveString(XMLManager manager) {
+	    String xml = String.format("<refarg reference=\"%s\" argument=\"%s\" rating=\"%f\" />\n",
                 this.getReference().getTitle(), this.getArgument().getTitle(), this.getRating());
+
+	    manager.addArgument(getArgument());
+	    manager.addAssociation(xml);
+	    return null;
     }
 }

@@ -1,5 +1,8 @@
 package refmeister.entity;
 
+import refmeister.XML.Saveable;
+import refmeister.XML.XMLManager;
+
 import java.util.*;
 
 /**
@@ -78,10 +81,11 @@ public class Note extends Editable {
 	/**
 	 * TODO Add code to this at a later day
 	 * @return
+	 * @param manager
 	 */
 	@Override
-	public String getSaveString() {
-		return super.getSaveString("note");
+	public String getSaveString(XMLManager manager) {
+		return super.getSaveString("note", manager);
 	}
 
 }

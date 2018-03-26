@@ -1,5 +1,8 @@
 package refmeister.entity;
 
+import refmeister.XML.Saveable;
+import refmeister.XML.XMLManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +11,7 @@ import java.util.List;
  * @author Red Team/DevSquad Supreme
  * @version 25, 3, 2018
  */
-class RefIdea implements Saveable{
+class RefIdea implements Saveable {
 
 	/** The Reference to which this object is associating an Idea to. */
 	private Reference reference;
@@ -84,8 +87,12 @@ class RefIdea implements Saveable{
 	}
 
 	@Override
-	public String getSaveString() {
-		return String.format("<refarg reference=\"%s\" argument=\"%s\" />",
+	public String getSaveString(XMLManager manager) {
+		String xml = String.format("<refarg reference=\"%s\" argument=\"%s\" />\n",
 				this.getReference().getTitle(), this.getIdea().getTitle());
+
+		manager.addIdea(this.idea);
+		manager.addAssociation(xml);
+		return null;
 	}
 }

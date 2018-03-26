@@ -90,4 +90,8 @@ public class Note extends Editable {
 				getTitle(), getDescription());
 	}
 
+	@Override
+	public boolean createChild(String title, String description) {
+		return false;
+	}
 }

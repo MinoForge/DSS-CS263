@@ -150,7 +150,9 @@ public abstract class Editable implements Displayable, Saveable {
         display[i++] = getDescription();
         display[i++] = "e: Edit this Object";
         display[i++] = "u: Select Parent";
-        display[i++] = "c: Create a New Child";
+        if(getChildren() != null) {
+            display[i++] = "c: Create a New Child";
+        }
         display[i++] = "q: Quit RefMeister";
         display[i++] = null;
         for(Editable e : getChildren()) {

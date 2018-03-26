@@ -122,4 +122,9 @@ public class Topic extends Editable {
     public List<Saveable> getSaveableChildren() {
         return new ArrayList<>(themes);
     }
+
+    @Override
+    public boolean createChild(String title, String description) {
+        return (addTheme(title, description) != null);
+    }
 }

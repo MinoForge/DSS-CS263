@@ -94,6 +94,11 @@ public class Idea extends Editable {
 		return null;
 	}
 
+	@Override
+	public boolean createChild(String title, String description) {
+		return false;
+	}
+
 	/**
 	 * TODO Will edit this later.
 	 * @return

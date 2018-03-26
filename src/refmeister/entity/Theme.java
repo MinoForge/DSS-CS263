@@ -106,4 +106,8 @@ public class Theme extends Editable {
 		return refs;
 	}
 
+	@Override
+	public boolean createChild(String title, String description) {
+		return (addReference(title, description) != null);
+	}
 }

@@ -72,21 +72,6 @@ public class Idea extends Editable {
 		}
 	}
 
-	/**
-	 * TODO
-	 * @return
-	 */
-	public String[] display() {
-		String[] results = new String[ideas.size() + 2];
-		results[0] = getTitle();
-		results[1] = getDescription();
-		int i = 2;
-		for(RefIdea ri : ideas) {
-			results[i++] = ri.getReference().getTitle();
-		}
-		return results;
-	}
-
 	@Override
 	public List<Editable> getChildren() {
 		return null;

@@ -70,6 +70,11 @@ public class Note extends Editable {
 		return null;
 	}
 
+	@Override
+	public List<Editable> getChildren() {
+		return null;
+	}
+
 	/**
 	 * TODO Add code to this at a later day
 	 * @return

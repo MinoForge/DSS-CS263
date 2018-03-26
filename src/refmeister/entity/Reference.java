@@ -110,6 +110,10 @@ public class Reference extends Editable {
 		return null;
 	}
 
+	public List<Editable> getChildren() {
+		return null;
+	}
+
 	@Override
 	public String getSaveString() {
 		return super.getSaveString("reference");

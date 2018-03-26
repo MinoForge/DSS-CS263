@@ -84,6 +84,11 @@ public class Idea extends Editable {
 		return null;
 	}
 
+	@Override
+	public List<Editable> getChildren() {
+		return null;
+	}
+
 	/**
 	 * TODO Will edit this later.
 	 * @return

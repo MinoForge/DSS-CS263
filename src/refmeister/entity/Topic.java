@@ -110,4 +110,10 @@ public class Topic extends Editable {
     public String getSaveString() {
         return super.getSaveString("topic");
     }
+
+    @Override
+    public List<Editable> getChildren() {
+        return null;
+    }
+
 }

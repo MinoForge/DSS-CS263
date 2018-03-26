@@ -94,6 +94,10 @@ public class Argument extends Editable {
 		return null;
 	}
 
+	@Override
+	public List<Editable> getChildren() {
+		return null;
+	}
 	/**
 	 * TODO Will edit this later
 	 * @return

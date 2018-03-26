@@ -1,6 +1,7 @@
 package refmeister.entity;
 
 import java.security.InvalidParameterException;
+import java.util.List;
 
 public abstract class Editable implements Displayable, Saveable {
 
@@ -87,4 +88,6 @@ public abstract class Editable implements Displayable, Saveable {
         }
         return display;
     }
+
+    public abstract List<Editable> getChildren();
 }

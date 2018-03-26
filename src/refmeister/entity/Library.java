@@ -78,8 +78,8 @@ public class Library extends Editable {
      * Returns a list of this library's XML children.
      * @return A list of all of this library's children
      */
-    public List<Editable> getChildren() {
-        return topics;
+    public List<Saveable> getSaveableChildren() {
+        return new ArrayList<>(topics);
     }
 
     /**

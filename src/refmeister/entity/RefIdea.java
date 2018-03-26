@@ -7,7 +7,7 @@ import java.util.List;
  * @author Red Team/DevSquad Supreme
  * @version 25, 3, 2018
  */
-class RefIdea {
+class RefIdea implements Saveable{
 
 	/** The Reference to which this object is associating an Idea to. */
 	private Reference reference;
@@ -77,4 +77,13 @@ class RefIdea {
 		reference.getIdeas().remove(temp);
 	}
 
+	@Override
+	public List<Saveable> getSaveableChildren() {
+		return null;
+	}
+
+	@Override
+	public String getSaveString() {
+		return null;
+	}
 }

@@ -106,7 +106,7 @@ public class Reference extends Editable {
 	}
 
 	@Override
-	public ArrayList<Editable> getChildren() {
+	public List<Saveable> getSaveableChildren() {
 		return null;
 	}
 

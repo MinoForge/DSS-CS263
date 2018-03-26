@@ -73,7 +73,7 @@ public class Idea extends Editable {
 	}
 
 	@Override
-	public List<Editable> getChildren() {
+	public List<Saveable> getSaveableChildren() {
 		return null;
 	}
 

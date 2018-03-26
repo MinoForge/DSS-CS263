@@ -68,8 +68,8 @@ public class Topic extends Editable {
      * Gets a list of this topic's XML children
      * @return A list of this topic's children.
      */
-    public List<Editable> getChildren() {
-        return themes;
+    public List<Saveable> getSaveableChildren() {
+        return new ArrayList<>(themes);
     }
 
     /**

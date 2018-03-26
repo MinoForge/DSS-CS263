@@ -24,14 +24,14 @@ public class Theme extends Editable {
 	}
 
 	public void moveTheme(String topicTitle) throws InvalidParameterException {
-		for(Editable t : this.parent.getParent().getChildren()){
+		for(Editable t : this.parent.getParent().getSaveableChildren()){
 			if(t.getTitle().equals(topicTitle)){
-				for(Editable i : t.getChildren()){
+				for(Editable i : t.getSaveableChildren()){
 					if(i.getTitle().equals(this.getTitle())){
 						throw new InvalidParameterException("Theme already exists in chosen topic");
 					}
 				}
-				t.getChildren().add(this);
+				t.getSaveableChildren().add(this);
 				this.setParent((Topic)t);
 				this.parent.deleteTheme(this.getTitle());
 				return;
@@ -40,13 +40,13 @@ public class Theme extends Editable {
 		throw new InvalidParameterException("Topic does not exist");
 	}
 
-	public Reference addReference() {
+	public Reference addReference(String title, String desc) {
 		for(Editable t : refs) {
 			if(t.getTitle().equals(getTitle())) {
 				return null;
 			}
 		}
-		Reference newRef = new Reference(getTitle(), getDescription(), this);
+		Reference newRef = new Reference(title, desc, this);
 		refs.add(newRef);
 		return newRef;
 	}
@@ -91,8 +91,8 @@ public class Theme extends Editable {
 	}
 
 	@Override
-	public List<Editable> getChildren() {
-		return refs;
+	public List<Saveable> getSaveableChildren() {
+		return new ArrayList<>(refs);
 	}
 
 }

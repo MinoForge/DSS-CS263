@@ -66,7 +66,7 @@ public class Note extends Editable {
 	 * @return null, since Note's have no children.
 	 */
 	@Override
-	public List<Editable> getChildren() {
+	public List<Saveable> getSaveableChildren() {
 		return null;
 	}
 

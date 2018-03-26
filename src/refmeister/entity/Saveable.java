@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Saveable {
 
-	List<Editable> getChildren();
+	List<Saveable> getSaveableChildren();
 
 	String getSaveString();
 

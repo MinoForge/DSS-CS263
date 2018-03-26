@@ -53,10 +53,9 @@ public abstract class Editable implements Displayable, Saveable {
         out.append(String.format("<%s title=\"%s\" description=\"%s\">\n",
                 tagName, this.getTitle(), this.getDescription()));
 
-        for(Editable child : this.getChildren()){
+        for(Saveable child : this.getSaveableChildren()){
             String childString = child.getSaveString();
             if(childString != null){
-                out.append("\t");
                 out.append(childString);
             }
         }
@@ -78,12 +77,12 @@ public abstract class Editable implements Displayable, Saveable {
      * @return
      */
     public String[] display() {
-        String[] display = new String[2 + getChildren().size()];
+        String[] display = new String[2 + getSaveableChildren().size()];
         display[0] = getTitle();
         display[1] = getDescription();
         int i = 2;
-        for(Editable e : getChildren()) {
-            display[i] = e.getTitle();
+        for(Saveable e : getSaveableChildren()) {
+            //display[i] = e.getTitle();
             i++;
         }
         return display;

@@ -13,6 +13,8 @@ public class XMLSaveTest {
         Topic top = lib.addTopic("Topic1", "Description");
         Theme t1 = top.addTheme("Theme1", "Desc");
         Theme t2 = top.addTheme("Theme2", "desc2");
+        t1.addReference("Green Eggs and Ham", "Dr .Seuss");
+        t2.addReference("1984", "George Orwell");
 
         System.out.println(lib.getSaveString());
     }

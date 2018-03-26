@@ -34,8 +34,8 @@ public class XMLManager {
         associations.add(xml);
     }
 
-    public String getXML() {
-        StringBuilder out = new StringBuilder("<refmeister>\n");
+    private String getXMLUnformatted() {
+        StringBuilder out = new StringBuilder();
         out.append(lib.getSaveString(this));
 
         out.append("<arguments>\n");
@@ -56,7 +56,32 @@ public class XMLManager {
         }
         out.append("</associations>\n");
 
-        return out.append("</refmeister>").toString();
+        return out.toString();
+    }
+
+    public String getXML(){
+        String[] unformatted = getXMLUnformatted().split("\n");
+        StringBuilder builder = new StringBuilder("<?xml version=\"1.0\" " +
+                "encoding=\"UTF-8\"?>\n<refmeister>\n");
+        int indent = 1;
+        for(String line : unformatted){
+            if(line.matches("^</.*>$")){ //if line matches a close
+                indent--;
+            }
+
+            for(int i = 0; i < indent; i++){
+                builder.append("\t");
+            }
+            builder.append(line);
+            builder.append("\n");
+
+            if (line.matches("^<[^\\/].*[^\\/]>$")){ // if line matches open
+                indent++;
+            }
+        }
+
+        builder.append("</refmeister>");
+        return builder.toString();
     }
 
 }

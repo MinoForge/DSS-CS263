@@ -1,5 +1,6 @@
 package test;
 
+import refmeister.XML.SaveSystem;
 import refmeister.XML.XMLManager;
 import refmeister.entity.*;
 
@@ -22,8 +23,6 @@ public class XMLSaveTest {
         r1.addArgument(arg2, 0f);
         r2.addArgument(arg2, 2.5f);
 
-        XMLManager manager = new XMLManager(lib);
-
-        System.out.println(manager.getXML());
+        System.out.println(SaveSystem.saveLibrary(lib));
     }
 }

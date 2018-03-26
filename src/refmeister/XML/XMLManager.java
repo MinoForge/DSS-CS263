@@ -105,8 +105,7 @@ public class XMLManager {
      */
     public String getXML(){
         String[] unformatted = getXMLUnformatted().split("\n");
-        StringBuilder builder = new StringBuilder("<?xml version=\"1.0\" " +
-                "encoding=\"UTF-8\"?>\n<refmeister>\n");
+        StringBuilder builder = new StringBuilder("<refmeister>\n");
         int indent = 1;
         for(String line : unformatted){
             if(line.matches("^</.*>$")){ //if line matches a close

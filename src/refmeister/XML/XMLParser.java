@@ -13,7 +13,7 @@ import java.util.stream.Stream;
  *
  * @author Wesley Rogers
  */
-public class SaveSystem { //This is the second parser I've had to write this semester.
+public class XMLParser { //This is the second parser I've had to write this semester.
 
     /**
      * The library root for the system.
@@ -38,7 +38,7 @@ public class SaveSystem { //This is the second parser I've had to write this sem
     /**
      * Creates a save system.
      */
-    private SaveSystem(){
+    private XMLParser(){
         references = new HashMap<>();
         args = new HashMap<>();
         ideas = new HashMap<>();
@@ -52,10 +52,19 @@ public class SaveSystem { //This is the second parser I've had to write this sem
     public static Library loadLibrary(String xml){
         //Get every line as an array, trimmed.
         String[] lines = Stream.of(xml.split("\n")).map(String::trim).toArray(String[]::new);
-        SaveSystem sys = new SaveSystem();
+        XMLParser sys = new XMLParser();
 
         ArrayDeque<Editable> parents = new ArrayDeque<>(); //A stack to keep track of parents
+        ArrayDeque<String> openedTags = new ArrayDeque<>();
         for(String tag : lines){
+            // "<?" is the start of an XML version tag, which is not useful
+            if(sys.isOpeningTag(tag)){
+                String tagType = sys.getTagType(tag);
+                if (tagType != null) {
+                    openedTags.addLast(tagType);
+                }
+            }
+
             if(sys.isEditableTag(tag)) {
                 String type = sys.getTagType(tag);
                 Pair<String> pair = sys.getTitleDescription(tag);
@@ -71,9 +80,31 @@ public class SaveSystem { //This is the second parser I've had to write this sem
             } else if (sys.isRefIdea(tag)){
                 sys.makeRefIdea(tag);
             }
+
+            if(sys.isClosingTag(tag)) {
+                String tagType = sys.getTagType(tag);
+                String removed = openedTags.removeLast();
+                if(tagType != null && !tagType.equals(removed)){
+                    throw new MalformedXMLException("Parent tag and closing tag do not match",
+                            tagType, removed);
+                }
+            }
+        }
+
+        if (!openedTags.isEmpty()) {
+            String[] unclosed = openedTags.toArray(new String[0]);
+            throw new MalformedXMLException("Tag(s) not closed", unclosed);
         }
 
         return sys.root;
+    }
+
+    private boolean isOpeningTag(String s){
+        return s.matches("^<[^/].*>$");
+    }
+
+    private boolean isClosingTag(String s){
+        return s.startsWith("</") || s.endsWith(" />");
     }
 
     /**
@@ -133,10 +164,18 @@ public class SaveSystem { //This is the second parser I've had to write this sem
      * @return    the name of the tag
      */
     private String getTagType(String tag){
-        Pattern tagType = Pattern.compile("^<(.*?) .*>$");
-        Matcher matcher = tagType.matcher(tag);
-        if(matcher.find()){
-            return matcher.group(1);
+        if(tag.contains(" ")) {
+            Pattern tagType = Pattern.compile("^<?(.*?) .*>$");
+            Matcher matcher = tagType.matcher(tag);
+            if (matcher.find()) {
+                return matcher.group(1);
+            }
+        } else { //This is probably a closing tag then
+            Pattern tagType = Pattern.compile("^<\\/?(.*)>$");
+            Matcher matcher = tagType.matcher(tag);
+            if(matcher.find()){
+                return matcher.group(1);
+            }
         }
 
         return null;
@@ -170,24 +209,24 @@ public class SaveSystem { //This is the second parser I've had to write this sem
 
             case "topic":
                 if(!(parent instanceof Library))
-                    throw new RuntimeException("Malformed XML Document: topic parent not library");
+                    throw new MalformedXMLException("topic parent not library");
                 return new Topic(title, desc, (Library) parent);
 
             case "theme":
                 if(!(parent instanceof Topic))
-                    throw new RuntimeException("Malformed XML Document: theme parent not topic");
+                    throw new MalformedXMLException("theme parent not topic");
                 return new Theme(title, desc, (Topic) parent);
 
             case "reference":
                 if(!(parent instanceof Theme))
-                    throw new RuntimeException("Malformed XML Document: reference parent not theme");
+                    throw new MalformedXMLException("reference parent not theme");
                 Reference ref = new Reference(title, desc, (Theme) parent);
                 references.put(title, ref);
                 return ref;
 
             case "note":
                 if(!(parent instanceof Reference))
-                    throw new RuntimeException("Malformed XML Document: note parent not reference");
+                    throw new MalformedXMLException("note parent not reference");
                 Note note = new Note(title, desc, (Reference)parent);
                 return null;
 
@@ -202,7 +241,7 @@ public class SaveSystem { //This is the second parser I've had to write this sem
                 return null;
 
             default:
-                return null;
+                throw new MalformedXMLException("Unknown tag type: " + type);
         }
     }
 

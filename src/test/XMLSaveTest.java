@@ -1,6 +1,7 @@
 package test;
 
-import refmeister.XML.SaveSystem;
+import refmeister.XML.MalformedXMLException;
+import refmeister.XML.XMLParser;
 import refmeister.entity.*;
 
 import java.io.File;
@@ -27,7 +28,7 @@ public class XMLSaveTest {
         r2.addArgument(arg2, 2.5f);
         r1.addNote("Ham is delicious", "Like really eat it all the time");
 
-        String xml = SaveSystem.saveLibrary(lib);
+        String xml = XMLParser.saveLibrary(lib);
 
         try {
             FileWriter writer = new FileWriter(new File("refmeister-wd/demo.rl"));
@@ -37,7 +38,14 @@ public class XMLSaveTest {
             e.printStackTrace();
         }
 
-        Library loaded = SaveSystem.loadLibrary(xml);
-        System.out.println(SaveSystem.saveLibrary(loaded));
+        try {
+            Library loaded = XMLParser.loadLibrary(xml);
+            System.out.println(XMLParser.saveLibrary(loaded));
+        } catch (MalformedXMLException e){
+            System.out.println("Erroring tags: ");
+            for(String tag : e.getTags()){
+                System.out.println("\t" + tag);
+            }
+        }
     }
 }

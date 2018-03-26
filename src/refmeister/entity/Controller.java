@@ -1,9 +1,8 @@
 package refmeister.entity;
 
-import refmeister.XML.SaveSystem;
+import refmeister.XML.XMLParser;
 
 import java.io.*;
-import java.nio.file.*;
 import java.util.Scanner;
 
 /**
@@ -45,7 +44,7 @@ public class Controller {
             }
         }
 
-        String xml = SaveSystem.saveLibrary(currentLib);
+        String xml = XMLParser.saveLibrary(currentLib);
         try (FileWriter fileWriter = new FileWriter(libFile)) {
             fileWriter.write(xml);
         } catch (IOException e) {
@@ -75,7 +74,7 @@ public class Controller {
             e.printStackTrace();
         }
 
-        this.currentLib = SaveSystem.loadLibrary(xml);
+        this.currentLib = XMLParser.loadLibrary(xml);
 	}
 
 	public void startUp() {

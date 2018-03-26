@@ -1,9 +1,10 @@
 package refmeister.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Topic extends Editable {
-    private ArrayList<Editable> themes;
+    private List<Editable> themes;
     private Editable parent;
 
     /**
@@ -13,7 +14,7 @@ public class Topic extends Editable {
      * @param parent        This topic's parent
      * @param themes        A list of this topic's themes
      */
-    public Topic(String title, String description, Library parent, ArrayList<Editable> themes){
+    public Topic(String title, String description, Library parent, List<Editable> themes){
         this.setTitle(title);
         this.setDescription(description);
         this.parent = parent;
@@ -67,7 +68,7 @@ public class Topic extends Editable {
      * Gets a list of this topic's XML children
      * @return A list of this topic's children.
      */
-    public ArrayList<Editable> getChildren() {
+    public List<Editable> getChildren() {
         return themes;
     }
 
@@ -76,7 +77,7 @@ public class Topic extends Editable {
      * @param themes A list of all themes that this topic should be
      *               associated with.
      */
-    public void setThemes(ArrayList<Editable> themes) {
+    public void setThemes(List<Editable> themes) {
         this.themes = themes;
     }
 
@@ -109,13 +110,5 @@ public class Topic extends Editable {
     public String getSaveString() {
         return super.getSaveString("topic");
         //TODO: XML stuff
-    }
-
-
-
-
-    public void edit(String[] edits) {
-        setTitle(edits[0]);
-        setDescription(edits[1]);
     }
 }

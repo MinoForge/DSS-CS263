@@ -7,13 +7,13 @@ import java.util.*;
 public class Reference extends Editable {
 
 	private String[] refData;
-	private ArrayList<RefIdea> ideas;
-	private ArrayList<RefArg> arguments;
-	private ArrayList<Note> notes;
+	private List<RefIdea> ideas;
+	private List<RefArg> arguments;
+	private List<Note> notes;
 	private Theme parent;
 
-	public Reference(String title, String desc, String[] refData, ArrayList<RefIdea> ideas,
-					 ArrayList<RefArg> arguments, ArrayList<Note> notes, Theme parent) {
+	public Reference(String title, String desc, String[] refData, List<RefIdea> ideas,
+					 List<RefArg> arguments, List<Note> notes, Theme parent) {
 		setTitle(title);
 		setDescription(desc);
 		this.refData = refData;
@@ -41,27 +41,27 @@ public class Reference extends Editable {
 		this.refData = refData;
 	}
 
-	public ArrayList<RefIdea> getIdeas() {
+	public List<RefIdea> getIdeas() {
 		return ideas;
 	}
 
-	public void setIdeas(ArrayList<RefIdea> ideas) {
+	public void setIdeas(List<RefIdea> ideas) {
 		this.ideas = ideas;
 	}
 
-	public ArrayList<RefArg> getArguments() {
+	public List<RefArg> getArguments() {
 		return arguments;
 	}
 
-	public void setArguments(ArrayList<RefArg> arguments) {
+	public void setArguments(List<RefArg> arguments) {
 		this.arguments = arguments;
 	}
 
-	public ArrayList<Note> getNotes() {
+	public List<Note> getNotes() {
 		return notes;
 	}
 
-	public void setNotes(ArrayList<Note> notes) {
+	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
 

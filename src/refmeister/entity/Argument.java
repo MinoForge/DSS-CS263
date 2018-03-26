@@ -29,8 +29,37 @@ public class Argument extends Editable {
 		this(title, desc, new ArrayList<RefArg>());
 	}
 
-	public Argument(String title, List<RefIdea> ideas) {
-		this(title)
+	/**
+	 *
+	 * @param title
+	 * @param args
+	 */
+	public Argument(String title, List<RefArg> args) {
+		this(title, "Unset Description", args);
+	}
+
+	/**
+	 *
+	 * @param title
+	 */
+	public Argument(String title) {
+		this(title, "Unset Description", new ArrayList<RefArg>());
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public List<RefArg> getRefArg() {
+		return arguments;
+	}
+
+	/**
+	 *
+	 * @param args
+	 */
+	public void setRefArg(List<RefArg> args) {
+		this.arguments = args;
 	}
 
 	/**
@@ -50,10 +79,5 @@ public class Argument extends Editable {
 	@Override
 	public String getSaveString() {
 		return null;
-	}
-
-	public void edit(String[] edits) {
-		setTitle(edits[0]);
-		setDescription(edits[1]);
 	}
 }

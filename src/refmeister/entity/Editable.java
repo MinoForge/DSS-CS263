@@ -1,7 +1,6 @@
 package refmeister.entity;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 
 public abstract class Editable implements Displayable, Saveable {
 

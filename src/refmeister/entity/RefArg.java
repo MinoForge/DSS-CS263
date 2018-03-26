@@ -75,10 +75,6 @@ class RefArg {
 		this.rating = rating;
 	}
 
-	public float getRatingSum() {
-		//TODO have to get value of each RefArg's rating.
-	}
-
 	/**
 	 * Looks in both the Reference and Argument that are linked to this RefArg. When it finds the
 	 * RefArg that links them, it will remove the RefArg from that ArrayList.

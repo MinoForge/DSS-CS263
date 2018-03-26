@@ -2,12 +2,13 @@ package refmeister.entity;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Theme extends Editable {
-	private ArrayList<Editable> refs;
+	private List<Editable> refs;
 	private Topic parent;
 
-	public Theme(String title, String desc, Topic parent,  ArrayList<Editable> refs) {
+	public Theme(String title, String desc, Topic parent,  List<Editable> refs) {
 		this.setTitle(title);
 		this.setDescription(desc);
 		this.refs = refs;
@@ -58,11 +59,11 @@ public class Theme extends Editable {
 		}
 	}
 
-	public ArrayList<Editable> getRefs() {
+	public List<Editable> getRefs() {
 		return refs;
 	}
 
-	public void setRefs(ArrayList<Editable> refs) {
+	public void setRefs(List<Editable> refs) {
 		this.refs = refs;
 	}
 
@@ -90,12 +91,8 @@ public class Theme extends Editable {
 	}
 
 	@Override
-	public ArrayList<Editable> getChildren() {
+	public List<Editable> getChildren() {
 		return refs;
 	}
 
-	public void edit(String[] edits) {
-		setTitle(edits[0]);
-		setDescription(edits[1]);
-	}
 }

@@ -66,7 +66,7 @@ public class Note extends Editable {
 	 * @return null, since Note's have no children.
 	 */
 	@Override
-	public ArrayList<Editable> getChildren() {
+	public List<Editable> getChildren() {
 		return null;
 	}
 
@@ -79,8 +79,4 @@ public class Note extends Editable {
 		return null;
 	}
 
-	public void edit(String[] edits) {
-		setTitle(edits[0]);
-		setDescription(edits[1]);
-	}
 }

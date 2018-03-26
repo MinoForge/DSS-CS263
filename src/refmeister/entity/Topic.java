@@ -65,14 +65,6 @@ public class Topic extends Editable {
 	}
 
     /**
-     * Gets a list of this topic's XML children
-     * @return A list of this topic's children.
-     */
-    public List<Saveable> getSaveableChildren() {
-        return new ArrayList<>(themes);
-    }
-
-    /**
      * Sets the themes of this topic.
      * @param themes A list of all themes that this topic should be
      *               associated with.
@@ -98,6 +90,11 @@ public class Topic extends Editable {
     }
 
     @Override
+    public List<Editable> getChildren() {
+        return themes;
+    }
+
+    @Override
     public String toString() {
         return "Topic{" +
                 "title='" + getTitle() + '\'' +
@@ -111,9 +108,11 @@ public class Topic extends Editable {
         return super.getSaveString("topic");
     }
 
-    @Override
-    public List<Editable> getChildren() {
-        return null;
+    /**
+     * Gets a list of this topic's XML children
+     * @return A list of this topic's children.
+     */
+    public List<Saveable> getSaveableChildren() {
+        return new ArrayList<>(themes);
     }
-
 }

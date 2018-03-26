@@ -1,5 +1,6 @@
 package refmeister.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -79,11 +80,12 @@ class RefIdea implements Saveable{
 
 	@Override
 	public List<Saveable> getSaveableChildren() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override
 	public String getSaveString() {
-		return null;
+		return String.format("<refarg reference=\"%s\" argument=\"%s\" />",
+				this.getReference().getTitle(), this.getIdea().getTitle());
 	}
 }

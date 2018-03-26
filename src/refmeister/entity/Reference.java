@@ -1,5 +1,7 @@
 package refmeister.entity;
 
+import com.sun.org.apache.xpath.internal.Arg;
+
 import java.util.*;
 
 public class Reference extends Editable {
@@ -102,6 +104,12 @@ public class Reference extends Editable {
         return null;
 	}
 
+	public RefArg addArgument(Argument arg, float rating){
+	    RefArg newRefArg = new RefArg(this, arg, rating);
+        arguments.add(newRefArg);
+        return newRefArg;
+	}
+
 	@Override
 	public String[] display() {
 		String[] view = new String[notes.size() + ideas.size() +
@@ -129,7 +137,7 @@ public class Reference extends Editable {
 
 	@Override
 	public List<Saveable> getSaveableChildren() {
-		return null;
+	    return new ArrayList<>(notes);
 	}
 
 	public List<Editable> getChildren() {

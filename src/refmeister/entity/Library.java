@@ -66,7 +66,6 @@ public class Library extends Editable {
         Topic newTopic = new Topic(title, desc, this);
         topics.add(newTopic);
         return newTopic;
-		//throw new UnsupportedOperationException();
 	}
 
     /**

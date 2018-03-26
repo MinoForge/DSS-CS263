@@ -1,5 +1,7 @@
 package refmeister.entity;
 
+import refmeister.XML.SaveSystem;
+
 import java.io.*;
 import java.nio.file.*;
 import java.util.Scanner;
@@ -42,15 +44,21 @@ public class Controller {
                 System.out.println("No Library title. This should not be possible.");
             }
         }
-        Path file = Paths.get(workingDir.getDirectory() + currentLib.getTitle());
-	}
+
+        String xml = SaveSystem.saveLibrary(currentLib);
+        try (FileWriter fileWriter = new FileWriter(libFile)) {
+            fileWriter.write(xml);
+        } catch (IOException e) {
+            System.out.println("File is not writable! Please change your file name/directory.");
+        }
+    }
 
     /**
      * Loads a library from a specified title.
      * @param title The specified title to load from.
      */
 	public void loadLibrary(String title) {
-
+        loadLibrary(new File(title));
     }
 
 	/**
@@ -58,7 +66,16 @@ public class Controller {
 	 * @param file The specified file to load from.
 	 */
 	public void loadLibrary(File file) {
+	    String xml = null;
+        try {
+            Scanner fileReader = new Scanner(file);
+            fileReader.useDelimiter("\\Z");
+            xml = fileReader.next();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
+        this.currentLib = SaveSystem.loadLibrary(xml);
 	}
 
     /**

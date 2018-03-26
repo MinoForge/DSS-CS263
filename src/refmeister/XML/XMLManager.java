@@ -7,14 +7,36 @@ import refmeister.entity.Library;
 import java.util.*;
 
 /**
- * Created by wesle on 3/25/2018.
+ * A Class designed to assist in turning a library system into an XML file. The XMLManager has
+ * four parts: A library, a list of arguments found in the library, a list of ideas found in the
+ * library, and a list of association tags found in the library. Using the four of these, the
+ * XMLManager wraps and formats a library into a nice XML output.
  */
 public class XMLManager {
+    /**
+     * The library this XMLManager is wrapping.
+     */
     private Library lib;
+
+    /**
+     * A set of all arguments encountered when traversing the library.
+     */
     private Collection<Argument> args;
+
+    /**
+     * A set of all ideas encountered while traversing the library.
+     */
     private Collection<Idea> ideas;
+
+    /**
+     * A set of all ideas encountered while traversing the library.
+     */
     private Collection<String> associations;
 
+    /**
+     * Creates an XMLManager bound to the given library.
+     * @param lib The library to wrap into XML.
+     */
     public XMLManager(Library lib){
         this.lib = lib;
         args = new HashSet<>();
@@ -22,18 +44,34 @@ public class XMLManager {
         associations = new HashSet<>();
     }
 
+    /**
+     * Adds an argument to this Refmeister XML tag.
+     * @param arg The argument to add
+     */
     public void addArgument(Argument arg){
         args.add(arg);
     }
 
+    /**
+     * Adds an Idea to this Refmeister XML tag.
+     * @param idea The idea to add
+     */
     public void addIdea(Idea idea){
         ideas.add(idea);
     }
 
+    /**
+     * Adds an association XML tag.
+     * @param xml The XML association tag (RefArg or RefIdea) to add to the associations section.
+     */
     public void addAssociation(String xml){
         associations.add(xml);
     }
 
+    /**
+     * Gets the unformatted (unindented) XML code.
+     * @return The unformatted XML code.
+     */
     private String getXMLUnformatted() {
         StringBuilder out = new StringBuilder();
         out.append(lib.getSaveString(this));
@@ -59,6 +97,10 @@ public class XMLManager {
         return out.toString();
     }
 
+    /**
+     * Gets this XMLManager formatted as a XML 1.0 formatted string.
+     * @return The library wrapped by this XMLManager as an XML Document.
+     */
     public String getXML(){
         String[] unformatted = getXMLUnformatted().split("\n");
         StringBuilder builder = new StringBuilder("<?xml version=\"1.0\" " +

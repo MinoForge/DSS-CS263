@@ -74,46 +74,32 @@ public class Reference extends Editable {
 	}
 
 	public String generateCite(String format) {
-
+        return null;
 	}
 
 	@Override
 	public String[] display() {
-		return new String[] {getTitle(), getDescription(), "Notes", "Ideas", "Arguments", "Cite"};
-
-	}
-
-	@Override
-	public String[] display(ArrayList<Note> notes) {
-		String[] viewNotes = new String[notes.size() + 1];
+		String[] view = new String[notes.size() + ideas.size() +
+                arguments.size() + 5];
 		int i = 0;
-		viewNotes[i] = getTitle();
+		view[i] = getTitle();
+		view[++i] = getDescription();
+		view[++i] = "Notes:";
 		for(Note n : notes) {
-			viewNotes[++i] = n.getTitle();
+			view[++i] = n.getTitle();
 		}
-		return viewNotes;
-	}
 
-	@Override
-	public String[] display(ArrayList<RefIdea> ideas) {
-		String[] viewIdeas = new String[ideas.size() + 1];
-		int i = 0;
-		viewIdeas[i] = getTitle();
-		for(RefIdea idea : ideas) {
-			viewIdeas[++i] = idea.getIdea().getTitle();
-		}
-		return viewIdeas;
-	}
+		view[++i] = "Ideas:";
+        for(RefIdea idea : ideas) {
+            view[++i] = idea.getIdea().getTitle();
+        }
 
-	@Override
-	public String[] display(ArrayList<RefArg> arguments) {
-		String[] viewArgs = new String[arguments.size() + 1];
-		int i = 0;
-		viewArgs[i] = getTitle();
-		for(RefArg a : arguments) {
-			viewArgs[++i] = a.getArgument().getTitle();
-		}
-		return viewArgs;
+        view[++i] = "Arguments";
+        for(RefArg a : arguments) {
+            view[++i] = a.getArgument().getTitle();
+        }
+
+		return view;
 	}
 
 	@Override

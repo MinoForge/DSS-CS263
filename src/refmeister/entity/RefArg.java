@@ -77,7 +77,6 @@ class RefArg {
 
 	public float getRatingSum() {
 		//TODO have to get value of each RefArg's rating.
-		for(RefArg ra : this.argument.)
 	}
 
 	/**

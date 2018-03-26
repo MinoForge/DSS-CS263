@@ -95,7 +95,7 @@ public class Theme extends Editable {
 	}
 
 	@Override
-	public String display() {
-		return this.toString();
+	public String[] display() {
+		return null;
 	}
 }

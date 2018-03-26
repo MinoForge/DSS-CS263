@@ -89,9 +89,4 @@ public class Library extends Editable {
     public String getSaveString() {
         return super.getSaveString("library");
     }
-
-    public void edit(String[] edits) {
-        setTitle(edits[0]);
-        setDescription(edits[1]);
-    }
 }

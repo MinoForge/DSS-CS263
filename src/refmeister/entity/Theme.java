@@ -91,7 +91,7 @@ public class Theme extends Editable {
 
 	@Override
 	public ArrayList<Editable> getChildren() {
-		return null;
+		return refs;
 	}
 
 	public void edit(String[] edits) {

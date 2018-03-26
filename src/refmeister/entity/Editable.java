@@ -68,7 +68,10 @@ public abstract class Editable implements Displayable, Saveable {
         return out.toString();
     }
 
-    public abstract void edit(String[] edits);
+    public void edit(String[] edits) {
+        setTitle(edits[0]);
+        setDescription(edits[1]);
+    }
 
     /**
      * Gets an array of elements that this object has, with title being at

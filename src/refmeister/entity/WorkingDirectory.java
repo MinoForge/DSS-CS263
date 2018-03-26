@@ -3,13 +3,15 @@ package refmeister.entity;
 import com.sun.corba.se.impl.io.TypeMismatchException;
 
 import java.io.File;
+import java.nio.file.AccessDeniedException;
+import java.rmi.AccessException;
 
 public class WorkingDirectory implements Displayable{
 
 	private File workingDir;
 
 	public WorkingDirectory(File dir) {
-	    this.workingDir = dir;
+	    setDirectory(dir);
     }
 
 	public File getDirectory() {
@@ -20,10 +22,16 @@ public class WorkingDirectory implements Displayable{
 	 * 
 	 * @param path
 	 */
-	public void setDirectory(File file) throws TypeMismatchException {
+	public void setDirectory(File file) throws TypeMismatchException, AccessDeniedException {
 	    if(!file.isDirectory()) {
 	        throw new TypeMismatchException("Must select a Directory.");
         }
+        if(!file.canRead()) {
+	    	throw new AccessDeniedException("Cannot read from Directory.");
+		}
+		if(!file.canWrite()) {
+	    	throw new AccessDeniedException("")
+		}
 		workingDir = file;
 	}
 

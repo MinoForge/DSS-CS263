@@ -55,14 +55,7 @@ public class Note extends Editable {
 		this.parent = parent;
 	}
 
-	/**
-	 * Returns a String that contains the title and description of this Note.
-	 * @return A String that contains the title and description of this Note.
-	 */
-	@Override
-	public String[] display() {
-		return new String[] {getTitle(), getDescription(), null};
-	}
+
 
 	/**
 	 * This Note does not have children, but it still needs to Override this

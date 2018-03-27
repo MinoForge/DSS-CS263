@@ -17,8 +17,13 @@ import java.nio.file.Files;
  */
 public class RefMeisterExec {
 
+    /** The default directory, which is created relative to this class file when run. */
     public static final String DEFAULT_DIRECTORY = "refmeister-wd";
 
+    /**
+     * The main function, which starts and runs the Controller class.
+     * @param args Any commandline arguments which might be implemented.
+     */
     public static void main(String[] args) {
         File directory = new File(DEFAULT_DIRECTORY);
         boolean goodDir = true;

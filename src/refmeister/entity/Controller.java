@@ -77,6 +77,9 @@ public class Controller {
         this.currentLib = XMLParser.loadLibrary(xml);
 	}
 
+    /**
+     * Does initial setup when first run. Currently uses test code, rather than load functionality.
+     */
 	public void startUp() {
 	    //TODO: Make this functional to traverse folders and make libraries with user titles and
         //TODO: descriptions.
@@ -208,6 +211,10 @@ public class Controller {
 //        }
 //    }
 
+    /**
+     * Uses abstraction to tell the currently selected Editable to create and add a "Child" object.
+     * This was added to get working code done, but will need refactoring later.
+     */
     public void createChild() {
         Scanner scanIn = new Scanner(System.in);
         System.out.print("Title: ");
@@ -252,7 +259,7 @@ public class Controller {
     }
 
     /**
-     * Allows a user to edit a selected object's title and description.
+     * Allows a user to edit the selected object's title and description.
      */
     public void editMenu() {
         String[] edits = {selected.getTitle(), selected.getDescription()};

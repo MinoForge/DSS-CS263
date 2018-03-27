@@ -95,25 +95,27 @@ public class Argument extends Editable {
 	}
 
 	/**
-	 * Arguments should have no children, so this method should return null.
-	 * @return null, since Arguments do not have children.
+	 * Arguments should have no children, so this method should return an empty list.
+	 * @return An empty list, since Arguments do not have children.
 	 */
 	@Override
 	public List<Saveable> getSaveableChildren() {
 		return Collections.emptyList();
 	}
+
 	/**
-	 * Retrieves the list of this Editable's children.
-	 * @return The list of this Editable's children.
+	 * Arguments should have no children, so this method should return an empty list.
+	 * @return An empty  list, since Argurments do not have children.
 	 */
 	@Override
 	public List<Editable> getChildren() {
-		return null;
+		return Collections.emptyList();
 	}
+
 	/**
-	 * TODO Will edit this later
-	 * @return
-	 * @param manager
+	 * Gets the XML String of this argument.
+	 * @return The formatted XML save string.
+	 * @param manager The Manager which handles the XML formatting and parsing.
 	 */
 	@Override
 	public String getSaveString(XMLManager manager) {
@@ -121,6 +123,12 @@ public class Argument extends Editable {
 				getTitle(), getDescription());
 	}
 
+	/**
+	 *
+	 * @param title The title for the child.
+	 * @param description The description for the child.
+	 * @return
+	 */
     @Override
     public boolean createChild(String title, String description) {
         return false;

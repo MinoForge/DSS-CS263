@@ -118,14 +118,26 @@ public class Reference extends Editable {
 		return ideas;
 	}
 
+    /**
+     * Sets the ideas of this reference
+     * @param ideas the new idea list
+     */
 	public void setIdeas(List<RefIdea> ideas) {
 		this.ideas = ideas;
 	}
 
+    /**
+     * Gets the list of all arguments
+     * @return the list of arguments
+     */
 	public List<RefArg> getArguments() {
 		return arguments;
 	}
 
+    /**
+     * Sets the arguments of this references
+     * @param arguments the arguments of this reference
+     */
 	public void setArguments(List<RefArg> arguments) {
 		this.arguments = arguments;
 	}
@@ -147,35 +159,72 @@ public class Reference extends Editable {
 		return newNote;
 	}
 
+    /**
+     * Gets all notes of the reference
+     * @return a list of notes
+     */
 	public List<Note> getNotes() {
 		return notes;
 	}
 
+    /**
+     * Sets notes.
+     * @param notes sets all notes
+     */
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
 
+    /**
+     * Deletes a note with the given title.
+     * @param title the title of the note to delete.
+     */
 	public void deleteNote(String title) {
 		notes.removeIf(ed -> ed.getTitle().equals(title));
 	}
 
+    /**
+     * Gets this reference's parent
+     * @return the parent
+     */
 	public Theme getParent() {
 		return parent;
 	}
 
+    /**
+     * Sets this reference's parent
+     * @param parent the parent
+     */
 	public void setParent(Theme parent) {
 		this.parent = parent;
 	}
 
+    /**
+     * Generates a citation.
+     * <bold>CURRENTLY DOES NOT WORK.</bold>
+     * @param format the citation format
+     * @return       the formatted output
+     */
 	public String generateCite(String format) {
         return null;
 	}
 
+    /**
+     * Associates an argument with this reference
+     * @param arg       the argument to associate
+     * @param rating    the strength of the argument
+     * @return          the refarg created
+     */
 	public RefArg addArgument(Argument arg, float rating){
 		RefArg newRefArg = new RefArg(this, arg, rating);
 		return newRefArg;
 	}
 
+    /**
+     * Associates an idea.
+     * @param idea  the idea to associate
+     * @return      the created RefIdea
+     */
 	public RefIdea addIdea(Idea idea){
 		RefIdea ri = new RefIdea(this, idea);
 		return ri;
@@ -229,12 +278,24 @@ public class Reference extends Editable {
 	public List<Editable> getChildren() {
 		return null;
 	}
-
+	/**
+	 * Creates a child for this Editable.
+	 * @param title The title for the child.
+	 * @param description The description for the child.
+	 * @return true if the child was able to be created, false otherwise.
+	 */
     @Override
     public boolean createChild(String title, String description) {
         return false;
     }
-
+	/**
+	 * Gets the XML representation of this saveable object. Saveable objects that are association
+	 * classes should register their XML output with the XMLManager, and Argument/Ideas should
+	 * also register with the XMLManager.
+	 * @param manager   The XMLManager that this traversal is being used with.
+	 * @return          The XML representation of this Saveable, with appropriate associations
+	 *                  registered with the XML Manager.
+	 */
     @Override
 	public String getSaveString(XMLManager manager) {
 		return super.getSaveString("reference", manager);

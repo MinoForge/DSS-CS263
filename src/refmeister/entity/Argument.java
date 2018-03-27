@@ -102,6 +102,7 @@ public class Argument extends Editable {
 	public List<Saveable> getSaveableChildren() {
 		return Collections.emptyList();
 	}
+
 	/**
 	 * Arguments should have no children, so this method should return an empty list.
 	 * @return An empty  list, since Argurments do not have children.
@@ -110,6 +111,7 @@ public class Argument extends Editable {
 	public List<Editable> getChildren() {
 		return Collections.emptyList();
 	}
+
 	/**
 	 * Gets the XML representation of this saveable object. Saveable objects that are association
 	 * classes should register their XML output with the XMLManager, and Argument/Ideas should
@@ -128,14 +130,18 @@ public class Argument extends Editable {
 	 * Does nothing in Argument.
 	 * @param title The title for the child.
 	 * @param description The description for the child.
-	 * @return
+	 * @return true if the child was able to be created, false otherwise.
 	 */
     @Override
     public boolean createChild(String title, String description) {
         return false;
     }
 
-    void registerRefArg(RefArg refArg) {
+	/**
+	 * This method associates a refArg to this Argument.
+	 * @param refArg The refArg being associated.
+	 */
+	void registerRefArg(RefArg refArg) {
         this.arguments.add(refArg);
 	}
 }

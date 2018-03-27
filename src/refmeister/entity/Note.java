@@ -66,6 +66,7 @@ public class Note extends Editable {
 	public List<Saveable> getSaveableChildren() {
 		return Collections.emptyList();
 	}
+
 	/**
 	 * Retrieves the list of this Editable's children.
 	 * @return The list of this Editable's children.
@@ -88,6 +89,7 @@ public class Note extends Editable {
 		return String.format("<note title=\"%s\" description=\"%s\" />\n",
 				getTitle(), getDescription());
 	}
+
 	/**
 	 * Creates a child for this Editable.
 	 * @param title The title for the child.

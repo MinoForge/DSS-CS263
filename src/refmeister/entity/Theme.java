@@ -100,11 +100,7 @@ public class Theme extends Editable {
 	 * @param title String represeneting the title fo the Reference being removed
 	 */
 	public void deleteReference(String title) {
-		for(Editable t : refs) {
-			if(t.getTitle().equals(title)) {
-				refs.remove(t);
-			}
-		}
+		refs.removeIf(ed -> ed.getTitle().equals(title));
 	}
 
 	/**

@@ -181,6 +181,11 @@ public class Reference extends Editable {
 		return ri;
 	}
 
+	/**
+	 * Gets an array of elements that this object has, with title being at
+	 * index 0, description at index 1, and notes etc. also defined.
+	 * @return An array of Strings to be displayed by the Controller.
+	 */
 	@Override
 	public String[] display() {
 		String[] view = new String[notes.size() + ideas.size() +

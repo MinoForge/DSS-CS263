@@ -66,6 +66,7 @@ public class Note extends Editable {
 	public List<Saveable> getSaveableChildren() {
 		return Collections.emptyList();
 	}
+
 	/**
 	 * Retrieves the list of this Editable's children.
 	 * @return The list of this Editable's children.
@@ -76,15 +77,19 @@ public class Note extends Editable {
 	}
 
 	/**
-	 *
-	 * @return
-	 * @param manager
+	 * Gets the XML representation of this saveable object. Saveable objects that are association
+	 * classes should register their XML output with the XMLManager, and Argument/Ideas should
+	 * also register with the XMLManager.
+	 * @param manager   The XMLManager that this traversal is being used with.
+	 * @return          The XML representation of this Saveable, with appropriate associations
+	 *                  registered with the XML Manager.
 	 */
 	@Override
 	public String getSaveString(XMLManager manager) {
 		return String.format("<note title=\"%s\" description=\"%s\" />\n",
 				getTitle(), getDescription());
 	}
+
 	/**
 	 * Creates a child for this Editable.
 	 * @param title The title for the child.

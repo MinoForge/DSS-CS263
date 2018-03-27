@@ -61,6 +61,10 @@ public class Library extends Editable {
         this(title, "Unset Description", new ArrayList<Editable>());
     }
 
+    /**
+     *
+     * @param t
+     */
     void register(Topic t){
         topics.add(t);
     }
@@ -100,7 +104,10 @@ public class Library extends Editable {
     public List<Saveable> getSaveableChildren() {
         return new ArrayList<>(topics);
     }
-
+    /**
+     * Retrieves the list of this Editable's children.
+     * @return The list of this Editable's children.
+     */
     public List<Editable> getChildren() {
         return new ArrayList<>(topics);
     }

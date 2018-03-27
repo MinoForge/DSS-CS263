@@ -152,7 +152,10 @@ public class Reference extends Editable {
         out.addAll(ideas);
 	    return out;
 	}
-
+	/**
+	 * Retrieves the list of this Editable's children.
+	 * @return The list of this Editable's children.
+	 */
 	public List<Editable> getChildren() {
 		return null;
 	}

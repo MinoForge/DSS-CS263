@@ -41,7 +41,7 @@ public class Topic extends Editable {
      * @param parent    The parent library of this topic
      */
     public Topic(String title, Library parent){
-        this(title, "<<Unset Description>>", parent, new ArrayList<Editable>());
+        this(title, "Unset Description", parent, new ArrayList<Editable>());
     }
 
     void register(Theme theme){
@@ -53,7 +53,7 @@ public class Topic extends Editable {
 	 * @param desc  The description of the topic
 	 */
 	public Theme addTheme(String title, String desc) {
-		// TODO - implement Topic.addTheme
+
         for(Editable t : themes) {
             if(t.getTitle().equals(title)) {
                 return null;
@@ -95,7 +95,10 @@ public class Topic extends Editable {
     public void setParent(Editable parent) {
         this.parent = parent;
     }
-
+    /**
+     * Retrieves the list of this Editable's children.
+     * @return The list of this Editable's children.
+     */
     @Override
     public List<Editable> getChildren() {
         return themes;

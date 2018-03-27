@@ -85,7 +85,12 @@ public class Note extends Editable {
 		return String.format("<note title=\"%s\" description=\"%s\" />\n",
 				getTitle(), getDescription());
 	}
-
+	/**
+	 * Creates a child for this Editable.
+	 * @param title The title for the child.
+	 * @param description The description for the child.
+	 * @return true if the child was able to be created, false otherwise.
+	 */
 	@Override
 	public boolean createChild(String title, String description) {
 		return false;

@@ -96,7 +96,12 @@ public class Idea extends Editable {
 	public List<Editable> getChildren() {
 		return null;
 	}
-
+	/**
+	 * Does nothing in Idea
+	 * @param title The title for the child.
+	 * @param description The description for the child.
+	 * @return true if the child was able to be created, false otherwise.
+	 */
 	@Override
 	public boolean createChild(String title, String description) {
 		return false;

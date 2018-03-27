@@ -171,13 +171,19 @@ public class Theme extends Editable {
 		return new ArrayList<>(refs);
 	}
 	/**
-	 * Retrieves the list of this Editable's children.
+	 * Does nothing in Theme
 	 * @return The list of this Editable's children.
 	 */
 	public List<Editable> getChildren() {
 		return refs;
 	}
 
+	/**
+	 * Does nothing in Theme
+	 * @param title The title for the child.
+	 * @param description The description for the child.
+	 * @return
+	 */
 	@Override
 	public boolean createChild(String title, String description) {
 		return (addReference(title, description) != null);

@@ -55,14 +55,7 @@ public class Note extends Editable {
 		this.parent = parent;
 	}
 
-	/**
-	 * Returns a String that contains the title and description of this Note.
-	 * @return A String that contains the title and description of this Note.
-	 */
-	@Override
-	public String[] display() {
-		return new String[] {getTitle(), getDescription(), null};
-	}
+
 
 	/**
 	 * This Note does not have children, but it still needs to Override this
@@ -73,7 +66,10 @@ public class Note extends Editable {
 	public List<Saveable> getSaveableChildren() {
 		return Collections.emptyList();
 	}
-
+	/**
+	 * Retrieves the list of this Editable's children.
+	 * @return The list of this Editable's children.
+	 */
 	@Override
 	public List<Editable> getChildren() {
 		return null;
@@ -89,7 +85,12 @@ public class Note extends Editable {
 		return String.format("<note title=\"%s\" description=\"%s\" />\n",
 				getTitle(), getDescription());
 	}
-
+	/**
+	 * Creates a child for this Editable.
+	 * @param title The title for the child.
+	 * @param description The description for the child.
+	 * @return true if the child was able to be created, false otherwise.
+	 */
 	@Override
 	public boolean createChild(String title, String description) {
 		return false;

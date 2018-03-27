@@ -95,22 +95,30 @@ public class Argument extends Editable {
 	}
 
 	/**
-	 * Arguments should have no children, so this method should return null.
-	 * @return null, since Arguments do not have children.
+	 * Arguments should have no children, so this method should return an empty list.
+	 * @return An empty list, since Arguments do not have children.
 	 */
 	@Override
 	public List<Saveable> getSaveableChildren() {
 		return Collections.emptyList();
 	}
 
+	/**
+	 * Arguments should have no children, so this method should return an empty list.
+	 * @return An empty  list, since Argurments do not have children.
+	 */
 	@Override
 	public List<Editable> getChildren() {
-		return null;
+		return Collections.emptyList();
 	}
+
 	/**
-	 * TODO Will edit this later
-	 * @return
-	 * @param manager
+	 * Gets the XML representation of this saveable object. Saveable objects that are association
+	 * classes should register their XML output with the XMLManager, and Argument/Ideas should
+	 * also register with the XMLManager.
+	 * @param manager   The XMLManager that this traversal is being used with.
+	 * @return          The XML representation of this Saveable, with appropriate associations
+	 *                  registered with the XML Manager.
 	 */
 	@Override
 	public String getSaveString(XMLManager manager) {
@@ -118,12 +126,22 @@ public class Argument extends Editable {
 				getTitle(), getDescription());
 	}
 
+	/**
+	 * Does nothing in Argument.
+	 * @param title The title for the child.
+	 * @param description The description for the child.
+	 * @return true if the child was able to be created, false otherwise.
+	 */
     @Override
     public boolean createChild(String title, String description) {
         return false;
     }
 
-    void registerRefArg(RefArg refArg) {
+	/**
+	 * This method associates a refArg to this Argument.
+	 * @param refArg The refArg being associated.
+	 */
+	void registerRefArg(RefArg refArg) {
         this.arguments.add(refArg);
 	}
 }

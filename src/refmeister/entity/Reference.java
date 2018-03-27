@@ -144,7 +144,11 @@ public class Reference extends Editable {
 
 		return view;
 	}
-
+	/**
+	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
+	 * return null.
+	 * @return a list of all of this object's Saveable children.
+	 */
 	@Override
 	public List<Saveable> getSaveableChildren() {
         List<Saveable> out = new ArrayList<>(notes);
@@ -152,7 +156,10 @@ public class Reference extends Editable {
         out.addAll(ideas);
 	    return out;
 	}
-
+	/**
+	 * Retrieves the list of this Editable's children.
+	 * @return The list of this Editable's children.
+	 */
 	public List<Editable> getChildren() {
 		return null;
 	}

@@ -162,7 +162,8 @@ public abstract class Editable implements Displayable, Saveable {
     }
 
     /**
-     * Creates a child for this Editable.
+     * Creates a child for this Editable. This is very bad code smell, but was used to try to get
+     * valid working code.
      * @param title The title for the child.
      * @param description The description for the child.
      * @return true if the child was able to be created, false otherwise.

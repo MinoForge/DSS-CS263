@@ -113,6 +113,7 @@ class RefArg implements Saveable {
     public List<Saveable> getSaveableChildren() {
 		return Collections.emptyList();
 	}
+
 	/**
 	 * Gets the XML representation of this saveable object. Saveable objects that are association
 	 * classes should register their XML output with the XMLManager, and Argument/Ideas should

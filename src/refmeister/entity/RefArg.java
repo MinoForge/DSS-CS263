@@ -104,12 +104,23 @@ class RefArg implements Saveable {
 		}
 		reference.getArguments().remove(temp);
 	}
-
+	/**
+	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
+	 * return null.
+	 * @return a list of all of this object's Saveable children.
+	 */
     @Override
     public List<Saveable> getSaveableChildren() {
 		return Collections.emptyList();
 	}
-
+	/**
+	 * Gets the XML representation of this saveable object. Saveable objects that are association
+	 * classes should register their XML output with the XMLManager, and Argument/Ideas should
+	 * also register with the XMLManager.
+	 * @param manager   The XMLManager that this traversal is being used with.
+	 * @return          The XML representation of this Saveable, with appropriate associations
+	 *                  registered with the XML Manager.
+	 */
     @Override
     public String getSaveString(XMLManager manager) {
 	    String xml = String.format("<refarg reference=\"%s\" argument=\"%s\" rating=\"%f\" />\n",

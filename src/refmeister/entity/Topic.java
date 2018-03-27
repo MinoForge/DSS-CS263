@@ -112,7 +112,11 @@ public class Topic extends Editable {
                 ", themes=" + themes +
                 '}';
     }
-
+    /**
+     * Creates an XML tag for an editable object.
+     * @param manager   The XMLManager that this traversal is being used with.
+     * @return          A formatted XML String.
+     */
     @Override
     public String getSaveString(XMLManager manager) {
         return super.getSaveString("topic", manager);
@@ -125,7 +129,12 @@ public class Topic extends Editable {
     public List<Saveable> getSaveableChildren() {
         return new ArrayList<>(themes);
     }
-
+    /**
+     * Creates a child for this Editable.
+     * @param title The title for the child.
+     * @param description The description for the child.
+     * @return true if the child was able to be created, false otherwise.
+     */
     @Override
     public boolean createChild(String title, String description) {
         return (addTheme(title, description) != null);

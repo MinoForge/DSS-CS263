@@ -62,8 +62,8 @@ public class Library extends Editable {
     }
 
     /**
-     *
-     * @param t
+     * Makes sure there are no orphaned children in this Library.
+     * @param t the Topic the being added
      */
     void register(Topic t){
         topics.add(t);
@@ -122,12 +122,21 @@ public class Library extends Editable {
     public String getSaveString(XMLManager manager) {
         return super.getSaveString("library", manager);
     }
-
+    /**
+     * Creates a child for this Editable.
+     * @param title The title for the child.
+     * @param description The description for the child.
+     * @return true if the child was able to be created, false otherwise.
+     */
     @Override
     public boolean createChild(String title, String description) {
         return (addTopic(title, description) != null);
     }
 
+    /**
+     * retrieves the List of the References in this Library.
+     * @return returns the list of references
+     */
     public List<Editable> getRefs() {
         return references;
     }

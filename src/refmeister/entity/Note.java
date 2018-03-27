@@ -76,9 +76,12 @@ public class Note extends Editable {
 	}
 
 	/**
-	 *
-	 * @return
-	 * @param manager
+	 * Gets the XML representation of this saveable object. Saveable objects that are association
+	 * classes should register their XML output with the XMLManager, and Argument/Ideas should
+	 * also register with the XMLManager.
+	 * @param manager   The XMLManager that this traversal is being used with.
+	 * @return          The XML representation of this Saveable, with appropriate associations
+	 *                  registered with the XML Manager.
 	 */
 	@Override
 	public String getSaveString(XMLManager manager) {

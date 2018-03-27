@@ -141,7 +141,16 @@ public class XMLParser { //This is the second parser I've had to write this seme
         if(matcher.find()){
             Reference ref = references.get(matcher.group(1));
             Argument arg = args.get(matcher.group(2));
-            float weight = Float.parseFloat(matcher.group(3));
+
+            if(arg == null || ref == null)
+                throw new MalformedXMLException("RefArg references nonexistent reference or " +
+                        "argument", tag);
+            float weight = 0;
+            try {
+                weight = Float.parseFloat(matcher.group(3));
+            } catch(NumberFormatException e){
+                throw new MalformedXMLException("Reference Argument has malformed weight", tag);
+            }
             ref.addArgument(arg, weight);
         }
     }
@@ -156,6 +165,11 @@ public class XMLParser { //This is the second parser I've had to write this seme
         if(matcher.find()){
             Reference ref = references.get(matcher.group(1));
             Idea idea = ideas.get(matcher.group(2));
+
+            if(idea == null || ref == null)
+                throw new MalformedXMLException("RefIdea references nonexistent reference or " +
+                        "idea", tag);
+
             ref.addIdea(idea);
         }
     }

@@ -52,7 +52,7 @@ public class Theme extends Editable {
 		this(title, "Unset Description", parent, new ArrayList<Editable>());
 	}
 
-	/**
+	/*
 	 * This method will move a theme from one topic to another topic as long as
 	 * the theme is not already in the topic and if the topic exists. This reeks of code smells
 	 * needs to be altered
@@ -171,7 +171,7 @@ public class Theme extends Editable {
 		return new ArrayList<>(refs);
 	}
 	/**
-	 * Does nothing in Theme
+	 * Gets children of Theme.
 	 * @return The list of this Editable's children.
 	 */
 	public List<Editable> getChildren() {
@@ -179,10 +179,10 @@ public class Theme extends Editable {
 	}
 
 	/**
-	 * Does nothing in Theme
+	 * Creates a child for this Editable.
 	 * @param title The title for the child.
 	 * @param description The description for the child.
-	 * @return
+	 * @return true if the child was able to be created, false otherwise.
 	 */
 	@Override
 	public boolean createChild(String title, String description) {

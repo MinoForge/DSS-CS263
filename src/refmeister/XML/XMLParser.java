@@ -56,7 +56,10 @@ public class XMLParser { //This is the second parser I've had to write this seme
 
         ArrayDeque<Editable> parents = new ArrayDeque<>();  //A stack to keep track of parents
         ArrayDeque<String> openedTags = new ArrayDeque<>(); // Another stack to make sure the tags
-        for(String tag : lines){                            // are aligned
+        for(String tag : lines){// are aligned
+            if(!(tag.startsWith("<") && tag.endsWith(">")))
+                throw new MalformedXMLException("Non-tag in parsed file");
+
             if(sys.isOpeningTag(tag)){
                 String tagType = sys.getTagType(tag);
                 if (tagType != null) {
@@ -186,7 +189,7 @@ public class XMLParser { //This is the second parser I've had to write this seme
      * @return    true if this tag is an editable
      */
     private boolean isEditableTag(String tag){
-        Pattern pat = Pattern.compile("^<.*title=\"(.*?)\" description=\"(.*?)\".*>$");
+        Pattern pat = Pattern.compile("^<.* title=\"(.*?)\" description=\"(.*?)\".*>$");
         //actual black magic
         Matcher matcher = pat.matcher(tag);
         return matcher.find();
@@ -226,7 +229,7 @@ public class XMLParser { //This is the second parser I've had to write this seme
             case "note":
                 if(!(parent instanceof Reference))
                     throw new MalformedXMLException("note parent not reference");
-                Note note = new Note(title, desc, (Reference)parent);
+                Note note = new Note(title, desc, (Reference) parent);
                 return null;
 
             case "argument":
@@ -250,8 +253,8 @@ public class XMLParser { //This is the second parser I've had to write this seme
      * @return    A pair containing the title and description.
      */
     private Pair<String> getTitleDescription(String tag){
-        Pattern titlePattern = Pattern.compile("^<.*title=\"(.*?)\".*>$"); //actual black magic
-        Pattern descriptionPattern = Pattern.compile("^<.*description=\"(.*?)\".*>$");
+        Pattern titlePattern = Pattern.compile("^<.* title=\"(.*?)\".*>$"); //actual black magic
+        Pattern descriptionPattern = Pattern.compile("^<.* description=\"(.*?)\".*>$");
         Matcher titleMatcher = titlePattern.matcher(tag);
         Matcher descriptionMatcher = descriptionPattern.matcher(tag);
         if(titleMatcher.find() && descriptionMatcher.find()){

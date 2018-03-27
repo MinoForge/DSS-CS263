@@ -7,13 +7,43 @@ import java.util.*;
 
 public class Reference extends Editable {
 
+    /**
+     * The list containing all of reference's data, such as author, date of publication, etc. in
+     * (currently) no order.
+     */
 	private String[] refData;
+
+    /**
+     * A list containing associations to all ideas that this reference is associated with.
+     */
 	private List<RefIdea> ideas;
+
+    /**
+     * A list containing associations to all arguments that this reference is associated with.
+     */
 	private List<RefArg> arguments;
+
+    /**
+     * A list of all notes that have this reference as a parent.
+     */
 	private List<Note> notes;
+
+    /**
+     * The theme parent of this reference.
+     */
 	private Theme parent;
 
-	public Reference(String title, String desc, String[] refData, List<RefIdea> ideas,
+    /**
+     * Creates a reference
+     * @param title     the title of this reference
+     * @param desc      the description of this reference
+     * @param refData   the reference data of this reference
+     * @param ideas     a list of associations to ideas that this reference is associated with
+     * @param arguments a list of all associations to arguments this reference is associated with
+     * @param notes     a list of all notes with this reference as a parent
+     * @param parent    the parent of this reference
+     */
+	private Reference(String title, String desc, String[] refData, List<RefIdea> ideas,
 					 List<RefArg> arguments, List<Note> notes, Theme parent) {
 		setTitle(title);
 		setDescription(desc);
@@ -30,29 +60,60 @@ public class Reference extends Editable {
 		parent.register(this);
 	}
 
+    /**
+     * Creates a reference.
+     * @param title     the title of this reference
+     * @param desc      the description of this reference
+     * @param refData   A string containing all reference data
+     * @param parent    the parent of this reference
+     */
 	public Reference(String title, String desc, String[] refData, Theme parent) {
 		this(title, desc, refData, new ArrayList<RefIdea>(), new ArrayList<RefArg>(),
 				new ArrayList<Note>(), parent);
 	}
 
+    /**
+     * Creates a reference.
+     * @param title     the title of this reference
+     * @param refData   the reference data of this reference
+     * @param parent    the parent theme of this parent
+     */
 	public Reference(String title, String[] refData, Theme parent) {
 		this(title, "Unset Description", refData, new ArrayList<RefIdea>(), new ArrayList<RefArg>(),
 				new ArrayList<Note>(), parent);
 	}
 
+    /**
+     * Creates a reference.
+     * @param title         the title of this reference
+     * @param description   the description of this reference
+     * @param parent        the parent of this reference
+     */
 	public Reference(String title, String description, Theme parent) {
 		this(title, description, new String[12], new ArrayList<RefIdea>(), new ArrayList<RefArg>(),
 				new ArrayList<Note>(), parent);
 	}
 
+    /**
+     * Gets the reference data.
+     * @return the refdata
+     */
 	public String[] getRefData() {
 		return refData;
 	}
 
+    /**
+     * Sets the refdata
+     * @param refData the refdata
+     */
 	public void setRefData(String[] refData) {
 		this.refData = refData;
 	}
 
+    /**
+     * Gets the ideas of this class
+     * @return
+     */
 	public List<RefIdea> getIdeas() {
 		return ideas;
 	}
@@ -174,15 +235,29 @@ public class Reference extends Editable {
 		return super.getSaveString("reference", manager);
 	}
 
+	//These are to prevent orphaned notes
+
+	/**
+	 * Registers a note with this reference.
+	 * @param note the note to add to this reference's children
+	 */
     void registerNote(Note note) {
         this.notes.add(note);
 	}
 
+	/**
+	 * Registers a RefArg with this reference.
+	 * @param ra the RefArg to register
+	 */
 	void registerRefArg(RefArg ra){
 	    this.arguments.add(ra);
     }
 
-    void registerRefIdea(RefIdea ri){
+	/**
+	 * Registers a RefIdea with this reference
+	 * @param ri the RefIdea to register
+	 */
+	void registerRefIdea(RefIdea ri){
 	    this.ideas.add(ri);
     }
 }

@@ -229,12 +229,24 @@ public class Reference extends Editable {
 	public List<Editable> getChildren() {
 		return null;
 	}
-
+	/**
+	 * Creates a child for this Editable.
+	 * @param title The title for the child.
+	 * @param description The description for the child.
+	 * @return true if the child was able to be created, false otherwise.
+	 */
     @Override
     public boolean createChild(String title, String description) {
         return false;
     }
-
+	/**
+	 * Gets the XML representation of this saveable object. Saveable objects that are association
+	 * classes should register their XML output with the XMLManager, and Argument/Ideas should
+	 * also register with the XMLManager.
+	 * @param manager   The XMLManager that this traversal is being used with.
+	 * @return          The XML representation of this Saveable, with appropriate associations
+	 *                  registered with the XML Manager.
+	 */
     @Override
 	public String getSaveString(XMLManager manager) {
 		return super.getSaveString("reference", manager);

@@ -1,4 +1,4 @@
-package refmeister.entity;
+package refmeister.controllers;
 
 import com.sun.corba.se.impl.io.TypeMismatchException;
 import refmeister.entity.Interfaces.Displayable;

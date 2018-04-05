@@ -2,6 +2,7 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
+import refmeister.entityInterfaces.Editable;
 
 import java.util.ArrayList;
 import java.util.Collections;

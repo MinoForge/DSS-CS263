@@ -2,6 +2,8 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
+import refmeister.entityInterfaces.Editable;
+import refmeister.entityInterfaces.IdeaIF;
 
 import java.util.*;
 
@@ -10,7 +12,7 @@ import java.util.*;
  * @author Brandon Townsend
  * @version 25, 3, 2018
  */
-public class Idea extends Editable {
+public class Idea extends Editable implements IdeaIF{
 
 	/** ArrayList of RefIdeas that show what this Idea instance is associated with. */
 	private List<RefIdea> ideas;

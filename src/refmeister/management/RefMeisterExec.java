@@ -1,7 +1,7 @@
 package refmeister.management;
 
 import refmeister.controllers.Controller;
-import refmeister.entity.WorkingDirectory;
+import refmeister.controllers.WorkingDirectory;
 
 import java.io.File;
 import java.nio.file.FileSystems;

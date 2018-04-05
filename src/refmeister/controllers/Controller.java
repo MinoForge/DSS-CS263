@@ -1,6 +1,8 @@
-package refmeister.entity;
+package refmeister.controllers;
 
 import refmeister.XML.XMLParser;
+import refmeister.entity.*;
+import refmeister.entityInterfaces.Editable;
 
 import java.io.*;
 import java.util.Scanner;

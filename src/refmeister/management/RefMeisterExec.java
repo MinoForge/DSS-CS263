@@ -1,6 +1,6 @@
 package refmeister.management;
 
-import refmeister.entity.Controller;
+import refmeister.controllers.Controller;
 import refmeister.entity.WorkingDirectory;
 
 import java.io.File;

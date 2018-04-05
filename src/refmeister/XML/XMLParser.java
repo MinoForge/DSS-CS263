@@ -1,6 +1,7 @@
 package refmeister.XML;
 
 import refmeister.entity.*;
+import refmeister.entityInterfaces.Editable;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

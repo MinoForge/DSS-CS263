@@ -1,4 +1,4 @@
-package refmeister.entity;
+package refmeister.entityInterfaces;
 
 /**
  * This interface defines methods which must be implemented for the display of the program.

@@ -1,7 +1,7 @@
-package refmeister.entity;
+package refmeister.controllers;
 
 import com.sun.corba.se.impl.io.TypeMismatchException;
-import refmeister.entityInterfaces.Displayable;
+import refmeister.entity.Interfaces.Displayable;
 
 import java.io.File;
 import java.nio.file.AccessDeniedException;

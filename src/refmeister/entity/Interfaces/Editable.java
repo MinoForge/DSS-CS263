@@ -1,4 +1,4 @@
-package refmeister.entityInterfaces;
+package refmeister.entity.Interfaces;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;

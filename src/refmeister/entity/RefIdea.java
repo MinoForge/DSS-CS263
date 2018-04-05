@@ -12,7 +12,7 @@ import java.util.List;
  * @author Red Team/DevSquad Supreme
  * @version 25, 3, 2018
  */
-class RefIdea implements Saveable, Relation<Idea> {
+class RefIdea implements Saveable, Relation {
 
 	/** The Reference to which this object is associating an Idea to. */
 	private Reference reference;
@@ -28,8 +28,8 @@ class RefIdea implements Saveable, Relation<Idea> {
 		this.reference = ref;
 		this.idea = idea;
 
-		ref.registerRefIdea(this);
-		idea.registerRefIdea(this);
+		ref.registerRelation(this);
+		idea.registerRelation(this);
 	}
 
 	/**

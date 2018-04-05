@@ -13,7 +13,7 @@ import java.util.List;
  * @author Red Team/DevSquad Supreme
  * @version 25, 3, 2018
  */
-class RefArg implements Saveable, RatedRelation<Argument> {
+class RefArg implements Saveable, RatedRelation {
 
 	/** The Reference to which this object is associating an Argument to. */
 	private Reference reference;
@@ -32,7 +32,7 @@ class RefArg implements Saveable, RatedRelation<Argument> {
 	public RefArg(Reference ref, Argument argument, float rating) {
 		this.reference = ref;
 		this.argument = argument;
-		ref.registerRefArg(this);
+		ref.registerRelation(this);
 		argument.registerRefArg(this);
 		this.rating = rating;
 	}

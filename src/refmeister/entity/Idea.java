@@ -125,12 +125,22 @@ public class Idea extends Editable {
 	}
 
 	@Override
-	public <T> void registerRelation(Relation<T> r) {
+	public void registerRelation(Relation r) {
 
 	}
 
 	@Override
 	public void registerChild(Entity e) {
+
+	}
+
+	@Override
+	public void removeRelation(Relation r) {
+
+	}
+
+	@Override
+	public void removeChild(Entity e) {
 
 	}
 }

@@ -3,6 +3,6 @@ package refmeister.entity.Interfaces;
 /**
  * Created by wesle on 4/4/201.
  */
-public interface RatedRelation<T> extends Relation<T> {
+public interface RatedRelation extends Relation {
     float getRating();
 }

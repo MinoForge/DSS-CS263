@@ -2,8 +2,8 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
+import refmeister.entity.Interfaces.Relation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * @author Red Team/DevSquad Supreme
  * @version 25, 3, 2018
  */
-class RefIdea implements Saveable {
+class RefIdea implements Saveable, Relation<Idea> {
 
 	/** The Reference to which this object is associating an Idea to. */
 	private Reference reference;
@@ -52,7 +52,7 @@ class RefIdea implements Saveable {
 	 * Retrieves the Idea that is associated with this RefIdea's reference.
 	 * @return The Idea that is associated with this RefIdea's reference.
 	 */
-	public Idea getIdea() {
+	public Idea getEntity() {
 		return idea;
 	}
 
@@ -60,7 +60,7 @@ class RefIdea implements Saveable {
 	 * Associates this RefIdea's reference with a new specified idea.
 	 * @param idea The new specified idea.
 	 */
-	public void setIdea(Idea idea) {
+	public void setEntity(Idea idea) {
 		this.idea = idea;
 	}
 
@@ -69,20 +69,8 @@ class RefIdea implements Saveable {
 	 * RefIdea that links them, it will remove the RefIdea from that ArrayList.
 	 */
 	public void destroy() {
-		RefIdea temp = new RefIdea(null, null);
-		for(RefIdea ri : reference.getIdeas()) {
-			if(this == ri) {
-				temp = ri;
-			}
-		}
-		reference.getIdeas().remove(temp);
-
-		for(RefIdea ri : idea.getRefIdea()) {
-			if(this == ri) {
-				temp = ri;
-			}
-		}
-		reference.getIdeas().remove(temp);
+		reference.removeRelation(this);
+        idea.removeRelation(this);
 	}
 	/**
 	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
@@ -104,7 +92,7 @@ class RefIdea implements Saveable {
 	@Override
 	public String getSaveString(XMLManager manager) {
 		String xml = String.format("<refarg reference=\"%s\" argument=\"%s\" />\n",
-				this.getReference().getTitle(), this.getIdea().getTitle());
+				this.getReference().getTitle(), this.getEntity().getTitle());
 
 		manager.addIdea(this.idea);
 		manager.addAssociation(xml);

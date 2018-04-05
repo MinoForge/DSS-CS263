@@ -3,6 +3,8 @@ package refmeister.entity;
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Editable;
+import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Relation;
 
 import java.util.*;
 
@@ -17,12 +19,7 @@ public class Reference extends Editable {
     /**
      * A list containing associations to all ideas that this reference is associated with.
      */
-	private List<RefIdea> ideas;
-
-    /**
-     * A list containing associations to all arguments that this reference is associated with.
-     */
-	private List<RefArg> arguments;
+	private List<Relation> relations;
 
     /**
      * A list of all notes that have this reference as a parent.
@@ -40,17 +37,15 @@ public class Reference extends Editable {
      * @param desc      the description of this reference
      * @param refData   the reference data of this reference
      * @param ideas     a list of associations to ideas that this reference is associated with
-     * @param arguments a list of all associations to arguments this reference is associated with
      * @param notes     a list of all notes with this reference as a parent
      * @param parent    the parent of this reference
      */
-	private Reference(String title, String desc, String[] refData, List<RefIdea> ideas,
-					 List<RefArg> arguments, List<Note> notes, Theme parent) {
+	private Reference(String title, String desc, String[] refData, List<Relation> ideas,
+					 List<Note> notes, Theme parent) {
 		setTitle(title);
 		setDescription(desc);
 		this.refData = refData;
-		this.ideas = ideas;
-		this.arguments = arguments;
+		this.relations = ideas;
 		this.notes = notes;
 		this.parent = parent;
 		Editable lib = getParent().getParent().getParent();
@@ -69,7 +64,7 @@ public class Reference extends Editable {
      * @param parent    the parent of this reference
      */
 	public Reference(String title, String desc, String[] refData, Theme parent) {
-		this(title, desc, refData, new ArrayList<RefIdea>(), new ArrayList<RefArg>(),
+		this(title, desc, refData, new ArrayList<Relation>(),
 				new ArrayList<Note>(), parent);
 	}
 
@@ -80,7 +75,7 @@ public class Reference extends Editable {
      * @param parent    the parent theme of this parent
      */
 	public Reference(String title, String[] refData, Theme parent) {
-		this(title, "Unset Description", refData, new ArrayList<RefIdea>(), new ArrayList<RefArg>(),
+		this(title, "Unset Description", refData, new ArrayList<Relation>(),
 				new ArrayList<Note>(), parent);
 	}
 
@@ -91,7 +86,7 @@ public class Reference extends Editable {
      * @param parent        the parent of this reference
      */
 	public Reference(String title, String description, Theme parent) {
-		this(title, description, new String[12], new ArrayList<RefIdea>(), new ArrayList<RefArg>(),
+		this(title, description, new String[12], new ArrayList<Relation>(),
 				new ArrayList<Note>(), parent);
 	}
 
@@ -109,38 +104,6 @@ public class Reference extends Editable {
      */
 	public void setRefData(String[] refData) {
 		this.refData = refData;
-	}
-
-    /**
-     * Gets the ideas of this class
-     * @return
-     */
-	public List<RefIdea> getIdeas() {
-		return ideas;
-	}
-
-    /**
-     * Sets the ideas of this reference
-     * @param ideas the new idea list
-     */
-	public void setIdeas(List<RefIdea> ideas) {
-		this.ideas = ideas;
-	}
-
-    /**
-     * Gets the list of all arguments
-     * @return the list of arguments
-     */
-	public List<RefArg> getArguments() {
-		return arguments;
-	}
-
-    /**
-     * Sets the arguments of this references
-     * @param arguments the arguments of this reference
-     */
-	public void setArguments(List<RefArg> arguments) {
-		this.arguments = arguments;
 	}
 
 	/**
@@ -207,7 +170,7 @@ public class Reference extends Editable {
      * @return       the formatted output
      */
 	public String generateCite(String format) {
-        return null;
+        throw new RuntimeException("Not Implemented!");
 	}
 
     /**
@@ -231,12 +194,13 @@ public class Reference extends Editable {
 		return ri;
 	}
 
+	/*
 	/**
 	 * Gets an array of elements that this object has, with title being at
 	 * index 0, description at index 1, and notes etc. also defined.
 	 * @return An array of Strings to be displayed by the Controller.
-	 */
-	@Override
+	 *
+
 	public String[] display() {
 		String[] view = new String[notes.size() + ideas.size() +
                 arguments.size() + 5];
@@ -250,7 +214,7 @@ public class Reference extends Editable {
 
 		view[++i] = "Ideas:";
         for(RefIdea idea : ideas) {
-            view[++i] = idea.getIdea().getTitle();
+            view[++i] = idea.getEntity().getTitle();
         }
 
         view[++i] = "Arguments";
@@ -260,6 +224,8 @@ public class Reference extends Editable {
 
 		return view;
 	}
+	*/
+
 	/**
 	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
 	 * return null.
@@ -268,8 +234,7 @@ public class Reference extends Editable {
 	@Override
 	public List<Saveable> getSaveableChildren() {
         List<Saveable> out = new ArrayList<>(notes);
-        out.addAll(arguments);
-        out.addAll(ideas);
+        out.addAll(relations);
 	    return out;
 	}
 	/**
@@ -312,19 +277,23 @@ public class Reference extends Editable {
         this.notes.add(note);
 	}
 
-	/**
-	 * Registers a RefArg with this reference.
-	 * @param ra the RefArg to register
-	 */
-	void registerRefArg(RefArg ra){
-	    this.arguments.add(ra);
+    @Override
+    public void registerRelation(Relation r) {
+        this.relations.add(r);
     }
 
-	/**
-	 * Registers a RefIdea with this reference
-	 * @param ri the RefIdea to register
-	 */
-	void registerRefIdea(RefIdea ri){
-	    this.ideas.add(ri);
+    @Override
+    public void registerChild(Entity e) {
+
+    }
+
+    @Override
+    public void removeRelation(Relation r) {
+
+    }
+
+    @Override
+    public void removeChild(Entity e) {
+
     }
 }

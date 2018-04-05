@@ -2,6 +2,7 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
+import refmeister.entity.Interfaces.RatedRelation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Red Team/DevSquad Supreme
  * @version 25, 3, 2018
  */
-class RefArg implements Saveable {
+class RefArg implements Saveable, RatedRelation<Argument> {
 
 	/** The Reference to which this object is associating an Argument to. */
 	private Reference reference;
@@ -42,6 +43,11 @@ class RefArg implements Saveable {
 	 */
 	public Reference getReference() {
 		return this.reference;
+	}
+
+	@Override
+	public Argument getEntity() {
+		return null;
 	}
 
 	/**
@@ -89,20 +95,8 @@ class RefArg implements Saveable {
 	 * RefArg that links them, it will remove the RefArg from that ArrayList.
 	 */
 	public void destroy() {
-		RefArg temp = new RefArg(null, null, 0);
-		for(RefArg ra : reference.getArguments()) {
-			if(this == ra) {
-				temp = ra;
-			}
-		}
-		reference.getArguments().remove(temp);
-
-		for(RefArg ra : argument.getRefArg()) {
-			if(this == ra) {
-				temp = ra;
-			}
-		}
-		reference.getArguments().remove(temp);
+		reference.removeRelation(this);
+		argument.removeRelation(this);
 	}
 	/**
 	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>

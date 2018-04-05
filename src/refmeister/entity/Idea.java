@@ -2,8 +2,8 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entityInterfaces.Editable;
-import refmeister.entityInterfaces.IdeaIF;
+import refmeister.entity.Interfaces.Editable;
+import refmeister.entity.Interfaces.IdeaIF;
 
 import java.util.*;
 

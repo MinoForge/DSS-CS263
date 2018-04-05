@@ -42,7 +42,7 @@ public class XMLSaveTest {
             Library loaded = XMLParser.loadLibrary(xml);
             System.out.println(XMLParser.saveLibrary(loaded));
         } catch (MalformedXMLException e){
-            System.out.println("Erroring tags: ");
+            System.out.println("Erroring tags: " + e.getMessage());
             for(String tag : e.getTags()){
                 System.out.println("\t" + tag);
             }

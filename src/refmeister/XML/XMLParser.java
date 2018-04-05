@@ -3,7 +3,9 @@ package refmeister.XML;
 import refmeister.entity.*;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -35,6 +37,10 @@ public class XMLParser { //This is the second parser I've had to write this seme
      */
     private HashMap<String, Idea> ideas;
 
+    private List<String> themeNames; //note topic theme
+    private List<String> noteNames;
+    private List<String> topicNames;
+
     /**
      * Creates a save system.
      */
@@ -42,6 +48,9 @@ public class XMLParser { //This is the second parser I've had to write this seme
         references = new HashMap<>();
         args = new HashMap<>();
         ideas = new HashMap<>();
+        themeNames = new ArrayList<>();
+        noteNames = new ArrayList<>();
+        topicNames = new ArrayList<>();
     }
 
     /**
@@ -89,6 +98,8 @@ public class XMLParser { //This is the second parser I've had to write this seme
                 if(tagType != null && !tagType.equals(removed)){
                     throw new MalformedXMLException("Parent tag and closing tag do not match",
                             tagType, removed);
+                } else if("note".equals(tagType)){
+                    sys.noteNames.clear();
                 }
             }
         }
@@ -186,7 +197,7 @@ public class XMLParser { //This is the second parser I've had to write this seme
             if (matcher.find()) {
                 return matcher.group(1);
             }
-        } else { //This is probably a closing tag then
+        } else { //This is probably a closing tag or a section tag
             Pattern tagType = Pattern.compile("^<\\/?(.*)>$");
             Matcher matcher = tagType.matcher(tag);
             if(matcher.find()){
@@ -220,8 +231,12 @@ public class XMLParser { //This is the second parser I've had to write this seme
     private Editable make(String type, String title, String desc, Editable parent){
         switch(type) {
             case "library":
-                root = new Library(title, desc);
-                return root;
+                if(root == null) {
+                    root = new Library(title, desc);
+                    return root;
+                } else {
+                    throw new MalformedXMLException("Multiple Library XML Tags.");
+                }
 
             case "topic":
                 if(!(parent instanceof Library))
@@ -236,9 +251,13 @@ public class XMLParser { //This is the second parser I've had to write this seme
             case "reference":
                 if(!(parent instanceof Theme))
                     throw new MalformedXMLException("reference parent not theme");
-                Reference ref = new Reference(title, desc, (Theme) parent);
-                references.put(title, ref);
-                return ref;
+                if(references.get(title) == null){
+                    Reference ref = new Reference(title, desc, (Theme) parent);
+                    references.put(title, ref);
+                    return ref;
+                } else {
+                    throw new MalformedXMLException("Reference with same name already exists.");
+                }
 
             case "note":
                 if(!(parent instanceof Reference))
@@ -247,14 +266,22 @@ public class XMLParser { //This is the second parser I've had to write this seme
                 return null;
 
             case "argument":
-                Argument arg = new Argument(title, desc);
-                args.put(title, arg);
-                return null;
+                if(args.get(title) == null) {
+                    Argument arg = new Argument(title, desc);
+                    args.put(title, arg);
+                    return null;
+                } else {
+                    throw new MalformedXMLException("Argumment with given name already exists");
+                }
 
             case "idea":
-                Idea idea = new Idea(title, desc);
-                ideas.put(title, idea);
-                return null;
+                if(ideas.get(title) == null) {
+                    Idea idea = new Idea(title, desc);
+                    ideas.put(title, idea);
+                    return null;
+                } else {
+                    throw new MalformedXMLException("Idea with given name already exists.");
+                }
 
             default:
                 throw new MalformedXMLException("Unknown tag type: " + type);

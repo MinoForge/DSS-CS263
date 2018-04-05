@@ -5,3 +5,4 @@ Created entityInterfaces package.--Peter
 Created interface classes for each Entity class in entityInterfaces.--Peter
 Created interface class for Controller.--Peter
 Moved Editable, Displayable to entityInterfaces.--Peter
+Added exceptions to XMLParser if duplicate names are loaded from an XML File. --Wes

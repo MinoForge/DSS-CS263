@@ -28,7 +28,7 @@ public class Theme extends Editable {
 	 * @param parent The specified Topic that contains this theme
 	 * @param refs The ArrayList of references that this theme holds.
 	 */
-	public Theme(String title, String desc, Topic parent,  List<Editable> refs) {
+	public Theme(String title, String desc, Entity parent,  List<Entity> refs) {
 		this.setTitle(title);
 		this.setDescription(desc);
 		this.refs = refs;
@@ -43,7 +43,7 @@ public class Theme extends Editable {
 	 * @param parent The Topic that contains this Theme.
 	 */
 	public Theme(String title, String desc, Topic parent){
-		this(title, desc, parent, new ArrayList<Editable>());
+		this(title, desc, parent, new ArrayList<Entity>());
 	}
 	/**
 	 * Constructor which sets an empty ArrayList of references, and sets
@@ -52,7 +52,7 @@ public class Theme extends Editable {
 	 * @param parent The Topic that contains this Theme.
 	 */
 	public Theme(String title, Topic parent){
-		this(title, "Unset Description", parent, new ArrayList<Editable>());
+		this(title, "Unset Description", parent, new ArrayList<Entity>());
 	}
 
 	/*

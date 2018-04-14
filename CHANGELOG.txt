@@ -65,7 +65,12 @@ Entity Classes:
         - Removed the registerRelation and removeRelation methods.
         - Changed getChildren to getEntityChildren.
         - Changed addTheme to registerChild.
+        - Changed deleteTheme to removeChild.
 
+    Other Comments:
+        Removed the add method from all entity classes, now they all inherit
+        registerChild from Editable. This is also true of the remove methods,
+        they now all implement removeChild.
 Management:
     RefMeisterExec:
 
@@ -81,3 +86,4 @@ XML:
 
 Other:
     - Every Instance of Editable changed to an instance of Entity
+    - Remove Setters for Lists

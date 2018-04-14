@@ -12,14 +12,16 @@ import java.util.List;
  * @author Peter Gardner, Caleb Dinehart
  * @version 26, 3, 2018
  */
-public abstract class Editable implements Displayable, Saveable, Entity, Comparable<Editable>{
+public abstract class Editable implements Displayable, Saveable, Entity, Comparable<Entity>{
 
     /** The title for any Editable objects. */
 	private String title;
 	/** The description for any Editable objects. */
 	private String description;
 	/** The parent of an Editable object if it is specified to have a parent. */
-	private Editable parent;
+	private Entity parent;
+
+    private List<Entity> children;
 
     /**
      * Retrieves either the title, description, or null depending on the String passed to the
@@ -68,7 +70,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * Sets this Editable's parent.
      * @param parent The new Editable to be set to this.parent.
      */
-    public void setParent(Editable parent) {
+    public void setParent(Entity parent) {
         this.parent = parent;
     }
 
@@ -171,6 +173,9 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         return this.getTitle().compareTo(e.getTitle());
     }
 
+    public void registerChild(Entity e){
+        children.add(e);
+    }
 
     /**
      * Creates a child for this Editable. This is very bad code smell, but was used to try to get

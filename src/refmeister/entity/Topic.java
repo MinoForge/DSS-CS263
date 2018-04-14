@@ -9,7 +9,7 @@ import refmeister.entity.Interfaces.Relation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Topic extends Editable {
+public class Topic extends Editable implements Comparable<Entity> {
     private List<Entity> themes;
     private Entity parent;
 
@@ -20,7 +20,7 @@ public class Topic extends Editable {
      * @param parent        This topic's parent
      * @param themes        A list of this topic's themes
      */
-    public Topic(String title, String description, Library parent, List<Entity> themes){
+    public Topic(String title, String description, Entity parent, List<Entity> themes){
         this.setTitle(title);
         this.setDescription(description);
         this.parent = parent;
@@ -35,7 +35,7 @@ public class Topic extends Editable {
      * @param description   The description of this topic
      * @param parent        This topic's parent
      */
-    public Topic(String title, String description, Library parent){
+    public Topic(String title, String description, Entity parent){
         this(title, description, parent, new ArrayList<Entity>());
     }
 
@@ -44,45 +44,24 @@ public class Topic extends Editable {
      * @param title     The title of this topic
      * @param parent    The parent library of this topic
      */
-    public Topic(String title, Library parent){
+    public Topic(String title, Entity parent){
         this(title, "Unset Description", parent, new ArrayList<Entity>());
     }
 
-    void register(Entity theme){
-        themes.add(theme);
-    }
-	/**
-	 * Adds a theme to this topic.
-	 * @param e The Entity being registered
-	 *
-	 */
-	public void registerChild(Entity e) {
-
-        for(Entity t : themes) {
-            if(t.equals(e)) {
-                return;
-            }
-        }
-        Entity newTheme = new Theme(e.getTitle(), e.getDescription(), this);
-        themes.add(newTheme);
-	}
 
 	/**
 	 * Deletes a theme with the given title.
-	 * @param theme The title of the theme to remove.
+	 * @param e The title of the theme to remove.
 	 */
-	public void deleteTheme(String theme) {
-        themes.removeIf(ed -> ed.getTitle().equals(theme));
+	@Override
+	public void removeChild(Entity e) {
+        boolean result = themes.removeIf(ed -> ed.equals(e));
+        if(result){
+            ((Theme) e).setParent(null);
+        }
+
 	}
 
-    /**
-     * Sets the themes of this topic.
-     * @param themes A list of all themes that this topic should be
-     *               associated with.
-     */
-    public void setThemes(List<Entity> themes) {
-        this.themes = themes;
-    }
 
     /**
      * Gets this topic's parent.
@@ -92,11 +71,6 @@ public class Topic extends Editable {
         return parent;
     }
 
-
-    @Override
-    public void removeChild(Entity e) {
-
-    }
 
     /**
      * Sets this editable's parent.
@@ -110,7 +84,7 @@ public class Topic extends Editable {
      * @return The list of this Editable's children.
      */
     @Override
-    public List<Editable> getEntityChildren() {
+    public List<Entity> getEntityChildren() {
         return themes;
     }
 
@@ -147,7 +121,13 @@ public class Topic extends Editable {
      */
     @Override
     public boolean createChild(String title, String description) {
-        return (addTheme(title, description) != null);
+        for(Entity t : themes) {
+            if(t.getTitle().equals(title)) {
+                return false;
+            }
+        }
+        Entity newTheme = new Theme(title, description, this);
+        return true;
     }
 
 

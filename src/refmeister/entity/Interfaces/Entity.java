@@ -1,9 +1,11 @@
 package refmeister.entity.Interfaces;
 
+import refmeister.XML.Saveable;
+
 /**
  *
  */
-public interface Entity {
+public interface Entity extends Saveable{
     String getTitle();
     String getDescription();
 

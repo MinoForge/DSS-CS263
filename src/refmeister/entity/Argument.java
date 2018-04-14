@@ -81,6 +81,23 @@ public class Argument extends Editable {
 		}
 	}
 
+    /**
+     * Checks equality between this argument and a passed in object.
+     * @param o The object to have its equality is checked against this Argument.
+     * @return true if they are equal, false otherwise.
+     */
+	@Override
+	public boolean equals(Object o) {
+	    if(this == o) {
+	        return true;
+        }
+        if(o instanceof Argument) {
+	        Argument temp = (Argument) o;
+	        return this.getTitle().equals(temp.getTitle());
+        }
+        return false;
+    }
+
 	/**
 	 * Arguments should have no children, so this method should return an empty list.
 	 * @return An empty list, since Arguments do not have children.

@@ -2,8 +2,8 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Relation;
 
 import java.util.ArrayList;
@@ -16,10 +16,6 @@ import java.util.List;
  */
 
 public class Theme extends Editable {
-	/** List of references that are associated with this theme. */
-	private List<Editable> refs;
-	/** The Topic that contains this theme. */
-	private Topic parent;
 	/**
 	 * Constructor for an Theme that is given a specified title, description, and an ArrayList of
 	 * RefIdeas.
@@ -28,12 +24,12 @@ public class Theme extends Editable {
 	 * @param parent The specified Topic that contains this theme
 	 * @param refs The ArrayList of references that this theme holds.
 	 */
-	public Theme(String title, String desc, Topic parent,  List<Editable> refs) {
+	public Theme(String title, String desc, Entity parent,  List<Entity> refs) {
 		this.setTitle(title);
 		this.setDescription(desc);
-		this.refs = refs;
+		this.children = refs;
 		this.parent = parent;
-		parent.register(this);
+		parent.registerChild(this);
 	}
 	/**
 	 * Constructor which sets an empty ArrayList of references, while still passing
@@ -43,7 +39,7 @@ public class Theme extends Editable {
 	 * @param parent The Topic that contains this Theme.
 	 */
 	public Theme(String title, String desc, Topic parent){
-		this(title, desc, parent, new ArrayList<Editable>());
+		this(title, desc, parent, new ArrayList<Entity>());
 	}
 	/**
 	 * Constructor which sets an empty ArrayList of references, and sets
@@ -52,7 +48,7 @@ public class Theme extends Editable {
 	 * @param parent The Topic that contains this Theme.
 	 */
 	public Theme(String title, Topic parent){
-		this(title, "Unset Description", parent, new ArrayList<Editable>());
+		this(title, "Unset Description", parent, new ArrayList<Entity>());
 	}
 
     /**
@@ -69,9 +65,9 @@ public class Theme extends Editable {
 	 * @param topicTitle The title of the Topic the theme is being moved to.
 	/*
 	public void moveTheme(String topicTitle) throws InvalidParameterException {
-		for(Editable t : this.parent.getParent().getChildren()){
+		for(Entity t : this.parent.getParent().getEntityChildren()){
 			if(t.getTitle().equals(topicTitle)){
-				for(Editable i : t.getChildren()){
+				for(Entity i : t.getEntityChildren()){
 					if(i.getTitle().equals(this.getTitle())){
 						throw new InvalidParameterException("Theme already exists in chosen topic");
 					}
@@ -85,10 +81,6 @@ public class Theme extends Editable {
 		throw new InvalidParameterException("Topic does not exist");
 	}*/
 
-	void register(Reference ref){
-		this.refs.add(ref);
-	}
-
 	/**
 	 * Add a Reference to the ArrayList of References.
 	 * @param title the String representing the title of the reference
@@ -96,13 +88,12 @@ public class Theme extends Editable {
 	 * @return return the newly added Reference
 	 */
 	public Reference addReference(String title, String desc) {
-		for(Editable t : refs) {
+		for(Entity t : children) {
 			if(t.getTitle().equals(getTitle())) {
 				return null;
 			}
 		}
-		Reference newRef = new Reference(title, desc, this);
-		return newRef;
+		return new Reference(title, desc, this);
 	}
 
 	/**
@@ -110,51 +101,7 @@ public class Theme extends Editable {
 	 * @param title String represeneting the title fo the Reference being removed
 	 */
 	public void deleteReference(String title) {
-		refs.removeIf(ed -> ed.getTitle().equals(title));
-	}
-
-	/**
-	 * Getter for the list of references
-	 * @return returns the List of References
-	 */
-	public List<Editable> getRefs() {
-		return refs;
-	}
-
-	/**
-	 * Setter for the list of references
-	 * @param refs the list of references being set
-	 */
-	public void setRefs(List<Editable> refs) {
-		this.refs = refs;
-	}
-
-	/**
-	 * Getter to retrieve the parent
-	 * @return the Topic that is the Theme's parent
-	 */
-	public Topic getParent() {
-		return parent;
-	}
-
-	@Override
-	public void registerRelation(Relation r) {
-
-	}
-
-	@Override
-	public void registerChild(Entity e) {
-
-	}
-
-	@Override
-	public void removeRelation(Relation r) {
-
-	}
-
-	@Override
-	public void removeChild(Entity e) {
-
+		children.removeIf(ed -> ed.getTitle().equals(title));
 	}
 
 	/**
@@ -174,7 +121,7 @@ public class Theme extends Editable {
 		return "Theme{" +
 				"title='" + getTitle() + '\'' +
 				", description='" + getDescription() + '\'' +
-				", references=" + refs +
+				", references=" + children +
 				'}';
 	}
 
@@ -209,24 +156,24 @@ public class Theme extends Editable {
  	*/
 	@Override
 	public List<Saveable> getSaveableChildren() {
-		return new ArrayList<>(refs);
+		return new ArrayList<>(children);
 	}
 	/**
 	 * Gets children of Theme.
-	 * @return The list of this Editable's children.
+	 * @return The list of this Entity's children.
 	 */
-	public List<Editable> getChildren() {
-		return refs;
+	public List<Entity> getEntityChildren() {
+		return children;
 	}
 
 	/**
-	 * Creates a child for this Editable.
+	 * Creates a child for this Entity.
 	 * @param title The title for the child.
 	 * @param description The description for the child.
 	 * @return true if the child was able to be created, false otherwise.
 	 */
 	@Override
-	public boolean createChild(String title, String description) {
-		return (addReference(title, description) != null);
+	public Entity createChild(String title, String description) {
+		return addReference(title, description);
 	}
 }

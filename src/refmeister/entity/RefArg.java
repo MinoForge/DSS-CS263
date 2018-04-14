@@ -123,7 +123,7 @@ class RefArg implements Saveable, RatedRelation {
 	    String xml = String.format("<refarg reference=\"%s\" argument=\"%s\" rating=\"%f\" />\n",
                 this.getReference().getTitle(), this.getArgument().getTitle(), this.getRating());
 
-	    manager.addArgument(getArgument());
+	    manager.addEntity(getArgument());
 	    manager.addAssociation(xml);
 	    return null;
     }

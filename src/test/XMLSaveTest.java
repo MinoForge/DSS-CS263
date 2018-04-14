@@ -1,8 +1,10 @@
 package test;
 
 import refmeister.XML.MalformedXMLException;
+import refmeister.XML.SaveSystem;
 import refmeister.XML.XMLParser;
 import refmeister.entity.*;
+import refmeister.entity.Interfaces.Entity;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,8 +17,8 @@ public class XMLSaveTest {
     public static void main(String[] args){
         Library lib = new Library("GenericLibrary", "A demo library");
         Topic top = lib.addTopic("Topic1", "Description");
-        Theme t1 = top.addTheme("Theme1", "Desc");
-        Theme t2 = top.addTheme("Theme2", "desc2");
+        Theme t1 = (Theme) top.createChild("Theme1", "Desc");
+        Theme t2 = (Theme) top.createChild("Theme2", "desc2");
         Reference r1 = t1.addReference("Green Eggs and Ham", "Dr. Seuss");
         Reference r2 = t2.addReference("1984", "George Orwell");
 
@@ -28,24 +30,30 @@ public class XMLSaveTest {
         r2.addArgument(arg2, 2.5f);
         r1.addNote("Ham is delicious", "Like really eat it all the time");
 
-        String xml = XMLParser.saveLibrary(lib);
+        SaveSystem.FILE_SYSTEM.start();
+        SaveSystem.FILE_SYSTEM.setFileName("ssTest");
+        SaveSystem.FILE_SYSTEM.save(lib);
 
         try {
-            FileWriter writer = new FileWriter(new File("refmeister-wd/demo.rl"));
-            writer.write(xml);
-            writer.close();
-        } catch (IOException e) {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+        SaveSystem.FILE_SYSTEM.stop();
+
+
+        /*
         try {
             Library loaded = XMLParser.loadLibrary(xml);
             System.out.println(XMLParser.saveLibrary(loaded));
         } catch (MalformedXMLException e){
-            System.out.println("Erroring tags: " + e.getMessage());
-            for(String tag : e.getTags()){
-                System.out.println("\t" + tag);
-            }
-        }
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Erroring tags: ");
+            if(e.getTags() != null)
+                for(String tag : e.getTags()){
+                    System.out.println("\t" + tag);
+                }
+        }*/
     }
 }

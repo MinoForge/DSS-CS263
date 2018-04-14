@@ -2,13 +2,14 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Editable;
+import refmeister.entity.Interfaces.Relatable;
 import refmeister.entity.Interfaces.Relation;
 
 import java.util.*;
 
-public class Reference extends Editable {
+public class Reference extends Editable implements Relatable {
 
     /**
      * The list containing all of reference's data, such as author, date of publication, etc. in
@@ -20,11 +21,6 @@ public class Reference extends Editable {
      * A list containing associations to all ideas that this reference is associated with.
      */
 	private List<Relation> relations;
-
-    /**
-     * A list of all notes that have this reference as a parent.
-     */
-	private List<Note> notes;
 
     /**
      * The theme parent of this reference.
@@ -46,14 +42,8 @@ public class Reference extends Editable {
 		setDescription(desc);
 		this.refData = refData;
 		this.relations = ideas;
-		this.notes = notes;
 		this.parent = parent;
-		Entity lib = getParent().getParent().getParent();
-		if(lib instanceof Library) {
-		    Library myLib = (Library)lib;
-		    myLib.getRefs().add(this);
-        }
-		parent.register(this);
+		parent.registerChild(this);
 	}
 
     /**
@@ -104,7 +94,7 @@ public class Reference extends Editable {
      * @return the refdata
      */
 	public String[] getRefData() {
-		return refData;
+		return null;
 	}
 
     /**
@@ -122,30 +112,13 @@ public class Reference extends Editable {
 	 * @return If the note is not already in the list, return the new note. Otherwise, return null.
 	 */
 	public Note addNote(String title, String desc) {
-		for(Editable n : notes) {
+		for(Entity n : children) {
 			// If a note already has the same title as the one we are trying to add, don't add it.
 			if(n.getTitle().equals(title)) {
 				return null;
 			}
 		}
-		Note newNote = new Note(title, desc, this);
-		return newNote;
-	}
-
-    /**
-     * Gets all notes of the reference
-     * @return a list of notes
-     */
-	public List<Note> getNotes() {
-		return notes;
-	}
-
-    /**
-     * Sets notes.
-     * @param notes sets all notes
-     */
-	public void setNotes(List<Note> notes) {
-		this.notes = notes;
+		return new Note(title, desc, this);
 	}
 
     /**
@@ -153,23 +126,7 @@ public class Reference extends Editable {
      * @param title the title of the note to delete.
      */
 	public void deleteNote(String title) {
-		notes.removeIf(ed -> ed.getTitle().equals(title));
-	}
-
-    /**
-     * Gets this reference's parent
-     * @return the parent
-     */
-	public Theme getParent() {
-		return parent;
-	}
-
-    /**
-     * Sets this reference's parent
-     * @param parent the parent
-     */
-	public void setParent(Theme parent) {
-		this.parent = parent;
+		children.removeIf(ed -> ed.getTitle().equals(title));
 	}
 
     /**
@@ -241,8 +198,7 @@ public class Reference extends Editable {
      * @return          the RefArg created
      */
 	public RefArg addArgument(Argument arg, float rating){
-		RefArg newRefArg = new RefArg(this, arg, rating);
-		return newRefArg;
+		return new RefArg(this, arg, rating);
 	}
 
     /**
@@ -251,8 +207,7 @@ public class Reference extends Editable {
      * @return      the created RefIdea
      */
 	public RefIdea addIdea(Idea idea){
-		RefIdea ri = new RefIdea(this, idea);
-		return ri;
+		return new RefIdea(this, idea);
 	}
 
 	/*
@@ -294,26 +249,26 @@ public class Reference extends Editable {
 	 */
 	@Override
 	public List<Saveable> getSaveableChildren() {
-        List<Saveable> out = new ArrayList<>(notes);
+        List<Saveable> out = new ArrayList<>(children);
         out.addAll(relations);
 	    return out;
 	}
 	/**
-	 * Retrieves the list of this Editable's children.
-	 * @return The list of this Editable's children.
+	 * Retrieves the list of this Entity's children.
+	 * @return The list of this Entity's children.
 	 */
 	public List<Entity> getEntityChildren() {
-		return null;
+		return children;
 	}
 	/**
-	 * Creates a child for this Editable.
+	 * Creates a child for this Entity.
 	 * @param title The title for the child.
 	 * @param description The description for the child.
 	 * @return true if the child was able to be created, false otherwise.
 	 */
     @Override
-    public boolean createChild(String title, String description) {
-        return false;
+    public Entity createChild(String title, String description) {
+        return null;
     }
 	/**
 	 * Gets the XML representation of this saveable object. Saveable objects that are association
@@ -335,18 +290,9 @@ public class Reference extends Editable {
 	 * @param note the note to add to this reference's children
 	 */
     void registerNote(Note note) {
-        this.notes.add(note);
+        this.children.add(note);
 	}
 
-    @Override
-    public void registerChild(Entity e) {
-
-    }
-
-    @Override
-    public void removeChild(Entity e) {
-
-    }
     /**
      * Checks the equality between this Library and a passed in object.
      * @param o object to be checked
@@ -363,5 +309,15 @@ public class Reference extends Editable {
         }
         return false;
 
+    }
+
+    @Override
+    public void registerRelation(Relation r) {
+        this.relations.add(r);
+    }
+
+    @Override
+    public void removeRelation(Relation r) {
+        this.relations.removeIf(r::equals);
     }
 }

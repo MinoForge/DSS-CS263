@@ -4,6 +4,7 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Relatable;
 import refmeister.entity.Interfaces.Relation;
 
@@ -17,7 +18,7 @@ import java.util.*;
 public class Idea extends Editable implements Relatable {
 
 	/** ArrayList of RefIdeas that show what this Idea instance is associated with. */
-	private List<RefIdea> ideas;
+	private List<Relation> ideas;
 
 	/**
 	 * Constructor for an Idea that is given a specified title, description, and an ArrayList of
@@ -26,7 +27,7 @@ public class Idea extends Editable implements Relatable {
 	 * @param desc The specified String to be set as this Idea's description.
 	 * @param ideas The specified ArrayList to be set to ideas.
 	 */
-	public Idea(String title, String desc, List<RefIdea> ideas) {
+	public Idea(String title, String desc, List<Relation> ideas) {
 		setTitle(title);
 		setDescription(desc);
 		this.ideas = ideas;
@@ -39,7 +40,7 @@ public class Idea extends Editable implements Relatable {
 	 * @param desc The specified String to be set as this Idea's description.
 	 */
 	public Idea(String title, String desc) {
-		this(title, desc, new ArrayList<RefIdea>());
+		this(title, desc, new ArrayList<Relation>());
 	}
 
 	/**
@@ -47,7 +48,7 @@ public class Idea extends Editable implements Relatable {
 	 * @param title The specified String to be set as this Idea's title.
 	 * @param ideas The specified ArrayList to be set to this Idea's ideas.
 	 */
-	public Idea(String title, List<RefIdea> ideas) {
+	public Idea(String title, List<Relation> ideas) {
 		this(title, "Unset Description", ideas);
 	}
 
@@ -56,6 +57,7 @@ public class Idea extends Editable implements Relatable {
 	 * @param title The specified String to be set as this Idea's title.
 	 */
 	public Idea(String title) {
+		this(title, "Unset Description", new ArrayList<>());
 		this(title, "Unset Description", new ArrayList<RefIdea>());
 	}
 
@@ -85,7 +87,7 @@ public class Idea extends Editable implements Relatable {
 	 * Disassociates all of this Idea's RefIdeas from this Idea.
 	 */
 	public void destroy() {
-		for(RefIdea ri : ideas) {
+		for(Relation ri : ideas) {
 			ri.destroy();
 		}
 	}
@@ -116,11 +118,11 @@ public class Idea extends Editable implements Relatable {
 		return Collections.emptyList();
 	}
 	/**
-	 * Retrieves the list of this Editable's children.
-	 * @return The list of this Editable's children.
+	 * Retrieves the list of this Entity's children.
+	 * @return The list of this Entity's children.
 	 */
 	@Override
-	public List<Editable> getEntityChildren() {
+	public List<Entity> getEntityChildren() {
 		return null;
 	}
 	/**
@@ -130,8 +132,8 @@ public class Idea extends Editable implements Relatable {
 	 * @return true if the child was able to be created, false otherwise.
 	 */
 	@Override
-	public boolean createChild(String title, String description) {
-		return false;
+	public Entity createChild(String title, String description) {
+		return null;
 	}
 
 	/**
@@ -144,27 +146,13 @@ public class Idea extends Editable implements Relatable {
 		return String.format("<idea title=\"%s\" description=\"%s\">\n", getTitle(), getDescription());
 	}
 
-    void registerRefIdea(RefIdea refIdea) {
-        this.ideas.add(refIdea);
-	}
+    @Override
+    public void registerRelation(Relation r) {
+        this.ideas.add(r);
+    }
 
-	@Override
-	public void registerRelation(Relation r) {
-
-	}
-
-	@Override
-	public void registerChild(Entity e) {
-
-	}
-
-	@Override
-	public void removeRelation(Relation r) {
-
-	}
-
-	@Override
-	public void removeChild(Entity e) {
-
-	}
+    @Override
+    public void removeRelation(Relation r) {
+        this.ideas.removeIf(r::equals);
+    }
 }

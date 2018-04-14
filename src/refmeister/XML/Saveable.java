@@ -27,6 +27,16 @@ public interface Saveable {
      * @return          The XML representation of this Saveable, with appropriate associations
      *                  registered with the XML Manager.
      */
-	String getSaveString(XMLManager manager);
+    String getSaveString(XMLManager manager);
+
+    /**
+     * Gets whether this should be embedded late in the XML saving process or during library
+     * traversal.
+     * @return true if this should be embedded late, false otherwise
+     */
+    default boolean delayedEmbed(){
+        return false;
+    }
+
 
 }

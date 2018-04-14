@@ -3,6 +3,7 @@ package refmeister.controllers;
 import refmeister.XML.XMLParser;
 import refmeister.entity.*;
 import refmeister.entity.Interfaces.Editable;
+import refmeister.entity.Interfaces.Entity;
 
 import java.io.*;
 import java.util.Scanner;
@@ -16,7 +17,7 @@ import java.util.Scanner;
 public class SingleLibraryController implements Controller{
 
     /** The current object the controller is pointing to. */
-	private Editable selected;
+	private Entity selected;
 	/** The current library that selected is/located in. */
 	private Library currentLib;
 	/** The current working directory for this controller. */
@@ -86,7 +87,7 @@ public class SingleLibraryController implements Controller{
 	    //TODO: Make this functional to traverse folders and make libraries with user titles and
         //TODO: descriptions.
 	    createLibrary("TestLibrary", "TestLibraryDescription");
-	    selected.getChildren().add(new Topic("TopicName", currentLib));
+	    selected.getEntityChildren().add(new Topic("TopicName", currentLib));
 
 	    if(selected == null) {
 	        startUp();
@@ -105,7 +106,7 @@ public class SingleLibraryController implements Controller{
         for(i = 0; menuItems[i] != null; i++) {
             System.out.println(menuItems[i]);
         }
-        String[] choices = new String[selected.getChildren().size()];
+        String[] choices = new String[selected.getEntityChildren().size()];
         int j = 0;
         if(choices.length != 0) {
             for (j = 0; j < choices.length; i++, j++) {
@@ -144,7 +145,7 @@ public class SingleLibraryController implements Controller{
             if (scanIn.hasNextInt()) {
                 int choice = scanIn.nextInt();
                 if (choice < maxChoice && choice >= 0) {
-                    for(Editable e : selected.getChildren()) {
+                    for(Entity e : selected.getEntityChildren()) {
                         if(e.getTitle().equals(choices[choice])) {
                             setSelected(e);
                         }
@@ -175,7 +176,7 @@ public class SingleLibraryController implements Controller{
             } else if (choice.equals("u")) {
                 traverseUp();
             } else if (choice.equals("c")) {
-                if (selected.getChildren() != null) {
+                if (selected.getEntityChildren() != null) {
                     createChild();
                 } else {
                     return valid;
@@ -248,7 +249,7 @@ public class SingleLibraryController implements Controller{
      * Sets the selected field to a specified Editable.
      * @param newSelect The specified Editable to set to selected.
      */
-    public void setSelected(Editable newSelect) {
+    public void setSelected(Entity newSelect) {
         this.selected = newSelect;
     }
 

@@ -2,8 +2,8 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Editable;
 
 import java.util.*;
 
@@ -76,9 +76,14 @@ public class Note extends Editable {
 		return Collections.emptyList();
 	}
 
-	/**
-	 * Retrieves the list of this Editable's children.
-	 * @return The list of this Editable's children.
+    @Override
+    public Entity createChild(String title, String description) {
+        return null;
+    }
+
+    /**
+	 * Retrieves the list of this Entity's children.
+	 * @return The list of this Entity's children.
 	 */
 	@Override
 	public List<Entity> getEntityChildren() {

@@ -1,9 +1,13 @@
 package refmeister.entity.Interfaces;
 
+import refmeister.XML.Saveable;
+
+import java.util.List;
+
 /**
  *
  */
-public interface Entity {
+public interface Entity extends Saveable{
     String getTitle();
     String getDescription();
 
@@ -12,4 +16,5 @@ public interface Entity {
     void registerChild(Entity e);
     void removeChild(Entity e);
 
+    List<Entity> getEntityChildren();
 }

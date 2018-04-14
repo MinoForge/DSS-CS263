@@ -1,4 +1,4 @@
-package refmeister.controllers;
+package refmeister.entity;
 
 import com.sun.corba.se.impl.io.TypeMismatchException;
 import refmeister.entity.Interfaces.Displayable;
@@ -56,22 +56,13 @@ public class WorkingDirectory implements Displayable {
 		workingDir = file;
 	}
 
-    /**
-     * Retrieves a list of the directories and .rl files and places them into a String array.
-     * @return The String array where the names of the directories and .rl files are placed.
-     */
     @Override
-    public String[] display() {
-	    File[] list = workingDir.listFiles();
-        String[] display = new String[2 + list.length];
-        int i = 0;
-        display[i++] = getDirectory().getPath();
-        display[i++] = null;
-        for(File f : list) {
-            if(f.isDirectory() || f.getName().matches(".*\\.rl"))
-            display[i] = f.getName();
-            i++;
-        }
-        return display;
+    public String getAttribute(String attribute) {
+        return null;
+    }
+
+    @Override
+    public void setAttribute(String attribute, String contents) {
+
     }
 }

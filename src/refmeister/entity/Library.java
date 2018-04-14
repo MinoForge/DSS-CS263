@@ -2,8 +2,8 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Relation;
 
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ import java.util.List;
 public class Library extends Editable {
 
     /** The Topics which are children of this Library. */
-    private List<Editable> topics;
+    private List<Entity> topics;
     /** All references used in this Library. */
-    private List<Editable> references;
+    private List<Entity> references;
 
 
     /**
@@ -30,15 +30,15 @@ public class Library extends Editable {
      * @param description The String to be specified as this Library's description.
      * @param topics The ArrayList which is the list of this Library's topics.
      */
-    public Library(String title, String description, List<Editable> topics) {
+    public Library(String title, String description, List<Entity> topics) {
         this.setTitle(title);
         this.setDescription(description);
         this.topics = topics;
         this.setParent(null);
-        this.references = new ArrayList<Editable>();
-        for(Editable top : getChildren()) {
-            for(Editable thm : top.getChildren()) {
-                this.references.addAll(thm.getChildren());
+        this.references = new ArrayList<Entity>();
+        for(Entity top : getEntityChildren()) {
+            for(Entity thm : top.getEntityChildren()) {
+                this.references.addAll(thm.getEntityChildren());
             }
         }
 
@@ -52,7 +52,7 @@ public class Library extends Editable {
      *                    description.
      */
     public Library(String title, String description) {
-        this(title, description, new ArrayList<Editable>());
+        this(title, description, new ArrayList<Entity>());
     }
 
     /**
@@ -61,7 +61,7 @@ public class Library extends Editable {
      * @param title The String to be specified as this Library's title.
      */
     public Library(String title) {
-        this(title, "Unset Description", new ArrayList<Editable>());
+        this(title, "Unset Description", new ArrayList<Entity>());
     }
 
     /**
@@ -77,8 +77,8 @@ public class Library extends Editable {
 	 */
 	public Topic addTopic(String title, String desc) {
         for(Saveable s : topics) {
-            if(s instanceof Editable) {
-                Editable t = (Editable)s;
+            if(s instanceof Entity) {
+                Entity t = (Entity)s;
                 // If a topic already has the same title of the one we are trying to add, don't add it.
                 if(t.getTitle().equals(title)) {
                     return null;
@@ -106,10 +106,10 @@ public class Library extends Editable {
         return new ArrayList<>(topics);
     }
     /**
-     * Retrieves the list of this Editable's children.
-     * @return The list of this Editable's children.
+     * Retrieves the list of this Entity's children.
+     * @return The list of this Entity's children.
      */
-    public List<Editable> getChildren() {
+    public List<Entity> getEntityChildren() {
         return new ArrayList<>(topics);
     }
 
@@ -124,43 +124,24 @@ public class Library extends Editable {
         return super.getSaveString("library", manager);
     }
     /**
-     * Creates a child for this Editable.
+     * Creates a child for this Entity.
      * @param title The title for the child.
      * @param description The description for the child.
      * @return true if the child was able to be created, false otherwise.
      */
     @Override
-    public boolean createChild(String title, String description) {
-        return (addTopic(title, description) != null);
+    public Entity createChild(String title, String description) {
+        return addTopic(title, description);
     }
 
     /**
      * retrieves the List of the References in this Library.
      * @return returns the list of references
      */
-    public List<Editable> getRefs() {
+    public List<Entity> getRefs() {
         return references;
     }
 
-    @Override
-    public void registerRelation(Relation r) {
-
-    }
-
-    @Override
-    public void registerChild(Entity e) {
-
-    }
-
-    @Override
-    public void removeRelation(Relation r) {
-
-    }
-
-    @Override
-    public void removeChild(Entity e) {
-
-    }
     /**
      * Checks the equality between this Library and a passed in object
      * @param o object to be checked

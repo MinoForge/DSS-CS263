@@ -155,4 +155,20 @@ public class Library extends Editable {
     public void removeChild(Entity e) {
 
     }
+    /**
+     * Checks the equality between this Library and a passed in object
+     * @param o object to be checked
+     * @return boolean of
+     */
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(o instanceof Library){
+            Library temp = (Library) o;
+            return this.getTitle().equals(temp.getTitle());
+        }
+        return false;
+
+    }
 }

@@ -12,14 +12,16 @@ import java.util.List;
  * @author Peter Gardner, Caleb Dinehart
  * @version 26, 3, 2018
  */
-public abstract class Editable implements Displayable, Saveable, Entity {
+public abstract class Editable implements Displayable, Saveable, Entity, Comparable<Entity>{
 
     /** The title for any Editable objects. */
 	private String title;
 	/** The description for any Editable objects. */
 	private String description;
 	/** The parent of an Editable object if it is specified to have a parent. */
-	private Editable parent;
+	private Entity parent;
+
+    private List<Entity> children;
 
     /**
      * Retrieves either the title, description, or null depending on the String passed to the
@@ -60,7 +62,7 @@ public abstract class Editable implements Displayable, Saveable, Entity {
      * Retrieves this Editable's parent.
      * @return This Editable's parent.
      */
-    public Editable getParent() {
+    public Entity getParent() {
         return parent;
     }
 
@@ -68,7 +70,7 @@ public abstract class Editable implements Displayable, Saveable, Entity {
      * Sets this Editable's parent.
      * @param parent The new Editable to be set to this.parent.
      */
-    public void setParent(Editable parent) {
+    public void setParent(Entity parent) {
         this.parent = parent;
     }
 
@@ -144,21 +146,35 @@ public abstract class Editable implements Displayable, Saveable, Entity {
      * @return An array of Strings to be displayed by the Controller.
      */
     public String[] display() {
-        String[] display = new String[7 + getChildren().size()];
+        String[] display = new String[7 + getEntityChildren().size()];
         int i = 0;
         display[i++] = getTitle();
         display[i++] = getDescription();
         display[i++] = "e: Edit this Object";
         display[i++] = "u: Select Parent";
-        if(getChildren() != null) {
+        if(getEntityChildren() != null) {
             display[i++] = "c: Create a New Child";
         }
         display[i++] = "q: Quit RefMeister";
         display[i++] = null;
-        for(Editable e : getChildren()) {
+        for(Entity e : getEntityChildren()) {
             display[i++] = e.getTitle();
         }
         return display;
+    }
+
+    /**
+     * Method compares this Editable with another Editable
+     * @param e the Entity that is being compared
+     * @return a negative integer, zero, or a positive integer as this object
+     *          is less than, equal to, or greater than the specified object.
+     */
+    public int compareTo(Entity e){
+        return this.getTitle().compareTo(e.getTitle());
+    }
+
+    public void registerChild(Entity e){
+        children.add(e);
     }
 
     /**
@@ -174,5 +190,5 @@ public abstract class Editable implements Displayable, Saveable, Entity {
      * Retrieves the list of this Editable's children.
      * @return The list of this Editable's children.
      */
-    public abstract List<Editable> getChildren();
+    public abstract List<Entity> getEntityChildren();
 }

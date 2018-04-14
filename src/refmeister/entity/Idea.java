@@ -4,6 +4,7 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Relatable;
 import refmeister.entity.Interfaces.Relation;
 
 import java.util.*;
@@ -13,7 +14,7 @@ import java.util.*;
  * @author Brandon Townsend
  * @version 25, 3, 2018
  */
-public class Idea extends Editable {
+public class Idea extends Editable implements Relatable {
 
 	/** ArrayList of RefIdeas that show what this Idea instance is associated with. */
 	private List<RefIdea> ideas;
@@ -83,6 +84,23 @@ public class Idea extends Editable {
 		}
 	}
 
+    /**
+     * Checks equality between this Idea and a passed in object.
+     * @param o The object to have its equality is checked against this Idea.
+     * @return true if they are equal, false otherwise.
+     */
+	@Override
+	public boolean equals(Object o) {
+	    if(this == o) {
+	        return true;
+        }
+        if(o instanceof Idea) {
+	        Idea temp = (Idea) o;
+	        return this.getTitle().equals(temp.getTitle());
+        }
+        return false;
+    }
+
 	/**
 	 * Ideas should have no children, so this method should return null.
 	 * @return null, since Ideas do not have children.
@@ -96,7 +114,7 @@ public class Idea extends Editable {
 	 * @return The list of this Editable's children.
 	 */
 	@Override
-	public List<Editable> getChildren() {
+	public List<Editable> getEntityChildren() {
 		return null;
 	}
 	/**

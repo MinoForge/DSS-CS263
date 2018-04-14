@@ -56,6 +56,7 @@ class RefArg implements Saveable, RatedRelation {
 	 */
 	public void setReference(Reference reference) {
 		this.reference = reference;
+		reference.registerRelation(this);
 	}
 
 	/**
@@ -72,6 +73,7 @@ class RefArg implements Saveable, RatedRelation {
 	 */
 	public void setArgument(Argument argument) {
 		this.argument = argument;
+		argument.registerRelation(this);
 	}
 
 	/**

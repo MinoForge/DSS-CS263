@@ -4,6 +4,7 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Relatable;
 import refmeister.entity.Interfaces.Relation;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
  * @author Brandon Townsend
  * @version 25, 3, 2018
  */
-public class Argument extends Editable {
+public class Argument extends Editable implements Relatable {
 
 	/** ArrayList of RefArgs that show what this Argument instance is associated with. */
 	private List<RefArg> arguments;
@@ -80,6 +81,23 @@ public class Argument extends Editable {
 			ra.destroy();
 		}
 	}
+
+    /**
+     * Checks equality between this argument and a passed in object.
+     * @param o The object to have its equality is checked against this Argument.
+     * @return true if they are equal, false otherwise.
+     */
+	@Override
+	public boolean equals(Object o) {
+	    if(this == o) {
+	        return true;
+        }
+        if(o instanceof Argument) {
+	        Argument temp = (Argument) o;
+	        return this.getTitle().equals(temp.getTitle());
+        }
+        return false;
+    }
 
 	/**
 	 * Arguments should have no children, so this method should return an empty list.

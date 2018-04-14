@@ -4,7 +4,6 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Interfaces.Relation;
 
 import java.util.*;
 
@@ -75,7 +74,7 @@ public class Note extends Editable {
 	 * @return The list of this Editable's children.
 	 */
 	@Override
-	public List<Editable> getChildren() {
+	public List<Editable> getEntityChildren() {
 		return null;
 	}
 
@@ -104,23 +103,28 @@ public class Note extends Editable {
 		return false;
 	}
 
+    /**
+     * Removes a child from This Editable.
+     * @param e the Entity to be removed.
+     */
 	@Override
-	public void registerRelation(Relation r) {
+    public void removeChild(Entity e){
+    }
 
-	}
 
-	@Override
-	public void registerChild(Entity e) {
-
-	}
-
-	@Override
-	public void removeRelation(Relation r) {
-
-	}
-
-	@Override
-	public void removeChild(Entity e) {
-
+	/**
+	 * Checks the equality between this note and a passed in object
+	 * @param o object to be checked
+	 * @return boolean of whether
+	 */
+	public boolean equals(Object o){
+		if(this == o){
+			return true;
+		}
+		if(o instanceof Note){
+			Note temp = (Note) o;
+			return this.getTitle().equals(temp.getTitle());
+		}
+		return false;
 	}
 }

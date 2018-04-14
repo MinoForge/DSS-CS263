@@ -21,8 +21,8 @@ public class XMLSaveTest {
         Topic top = lib.addTopic("Topic1", "Description");
         Theme t1 = (Theme) top.createChild("Theme1", "Desc");
         Theme t2 = (Theme) top.createChild("Theme2", "desc2");
-        Reference r1 = t1.addReference("Green Eggs and Ham", "Dr. Seuss");
-        Reference r2 = t2.addReference("1984", "George Orwell");
+        Reference r1 = (Reference) t1.createChild("Green Eggs and Ham", "Dr. Seuss");
+        Reference r2 = (Reference) t2.createChild("1984", "George Orwell");
 
         Argument arg = new Argument("Ham is good");
         Argument arg2 = new Argument("Arg2");

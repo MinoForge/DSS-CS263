@@ -23,7 +23,7 @@ public class Note extends Editable {
 	 * @param parent The Reference to be set as this Note's parent.
 	 */
 	public Note(String title, String description, Reference parent) {
-		this.parent = parent;
+	    this.parent = parent;
 		parent.registerNote(this);
 		setTitle(title);
 		setDescription(description);

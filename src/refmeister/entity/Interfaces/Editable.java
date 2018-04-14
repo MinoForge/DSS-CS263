@@ -22,7 +22,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
 	/** The description for any Editable objects. */
 	private String description;
 	/** The parent of an Editable object if it is specified to have a parent. */
-	private Entity parent;
+	protected Entity parent;
 
     protected List<Entity> children;
 
@@ -187,10 +187,10 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
     public Entity removeChild(Entity e){
         if(e.getEntityChildren().isEmpty()){
             if(e instanceof Argument){
-                ((Argument) e).removeRelation();
+                //((Argument) e).removeRelation();
             }
             if(e instanceof Idea){
-                ((Idea) e).removeRelation();
+                //((Idea) e).removeRelation();
             }
             e.setParent(null);
             return this;

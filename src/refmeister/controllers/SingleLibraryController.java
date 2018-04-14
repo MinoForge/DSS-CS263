@@ -2,6 +2,7 @@ package refmeister.controllers;
 
 import refmeister.XML.XMLParser;
 import refmeister.entity.*;
+import refmeister.entity.Interfaces.Displayable;
 import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
 
@@ -25,6 +26,8 @@ public class SingleLibraryController implements Controller{
 	/** The File that a library is stored in. */
 	private File libFile;
 
+	private Displayable dispSelected;
+
     /**
      * Constructor for the Controller class. Sets a specified WorkingDirectory to the workingDir
      * field.
@@ -32,6 +35,12 @@ public class SingleLibraryController implements Controller{
      */
 	public SingleLibraryController(WorkingDirectory workingDir) {
 	    this.workingDir = workingDir;
+    }
+
+    @Override
+    //TODO
+    public String[] displaySelected() {
+        return new String[0];
     }
 
     /**
@@ -80,6 +89,12 @@ public class SingleLibraryController implements Controller{
         this.currentLib = XMLParser.loadLibrary(xml);
 	}
 
+    @Override
+    //TODO
+    public boolean choose(String choice) {
+        return false;
+    }
+
     /**
      * Does initial setup when first run. Currently uses test code, rather than load functionality.
      */
@@ -100,7 +115,7 @@ public class SingleLibraryController implements Controller{
      * Then call menuChoose to allow a user to select a menu option.
      */
     public void displayMenu() {
-        String[] menuItems = selected.display();
+        String[] menuItems = dispSelected.listOptions();
 	    int i;
 //        System.out.println(selected.display()[1]);
         for(i = 0; menuItems[i] != null; i++) {
@@ -193,26 +208,6 @@ public class SingleLibraryController implements Controller{
         }
         return valid;
     }
-
-    /**
-     *
-     */
-    //TODO (1) Make this work
-//    public void attachToReference() {
-//        Scanner scanIn = new Scanner(System.in);
-//        System.out.println("Choose title from the following:");
-//        int i = 0;
-//        for(Editable r : currentLib.getRefs()) {
-//            System.out.println("");
-//        }
-//        if(selected instanceof Argument) {
-//            Argument arg = (Argument)selected;
-//            arg.addToReference(String refTitle);
-//        } else {
-//            Idea idea = (Idea)selected;
-//            idea.addToReference(String refTitle)
-//        }
-//    }
 
     /**
      * Uses abstraction to tell the currently selected Editable to create and add a "Child" object.

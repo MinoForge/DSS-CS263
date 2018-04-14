@@ -12,19 +12,22 @@ TODO: //[Class]: [Method]: [Changes]
 Please specify the method you made changes to under the classes name
 Controllers:
     Controller:
-
+        Added method signatures to interface
     SingleLibraryController:
+        Wrote and implemented to Controller
 
     WorkingDirectory:
+        Moved to Entity package
+        Added default constructor
 
 
 Display:
     CLIDisplay:
-
+        Wrote all code in CLIDisplay
     Displayer:
-
+        Wrote all method signatures in Displayer
     GUIDisplay:
-
+        The Class exists now.
 Entity Interfaces:
     Displayable:
 
@@ -93,7 +96,8 @@ Entity Classes:
         - Removed each class's child list and moved it to Editable
 Management:
     RefMeisterExec:
-
+        Rewrote main()
+        Supports specifying directory via command-line
 
 XML:
     MalformedXMLException:

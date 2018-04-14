@@ -14,5 +14,6 @@ public interface Displayable {
 
 	String getAttribute(String attribute);
 	void setAttribute(String attribute, String contents);
+	String[] listOptions();
 
 	}

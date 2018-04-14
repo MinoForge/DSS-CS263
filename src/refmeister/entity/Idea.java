@@ -2,6 +2,7 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
+import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
 import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Relatable;
@@ -57,6 +58,29 @@ public class Idea extends Editable implements Relatable {
 	 */
 	public Idea(String title) {
 		this(title, "Unset Description", new ArrayList<>());
+		this(title, "Unset Description", new ArrayList<RefIdea>());
+	}
+
+    /**
+     * Default Constructor. At this time, we do not support this.
+     */
+	public Idea() {
+	    throw new UnsupportedOperationException("Must specify at least a title for this Idea.");
+    }
+	/**
+	 * Retrieves the ArrayList of RefIdeas.
+	 * @return The ArrayList of RefIdeas.
+	 */
+	public List<RefIdea> getRefIdea() {
+		return ideas;
+	}
+
+	/**
+	 * Sets the ArrayList of RefIdeas to a specified List of RefIdea.
+	 * @param ideas The specified List of RefIdeas.
+	 */
+	public void setRefIdea(List<RefIdea> ideas) {
+		this.ideas = ideas;
 	}
 
 	/**

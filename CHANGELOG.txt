@@ -54,23 +54,30 @@ Entity Classes:
     Argument:
         - Wrote an equals method.
         - Removed the registerRelation and removeRelation methods.
+        - Added a default constructor.
     Idea:
         - Wrote an equals method.
+        - Added a default constructor.
 
     Library:
         - Wrote the equals method.
+        - Added a default constructor.
 
     Note:
         - Wrote the equals method.
         - Changed getChildren to getEntityChildren.
+        - Added a default constructor.
     RefArg:
 
     Reference:
         - Wrote the equals method.
+        - Added code for generating MLA and APA citations.
+        - Added a default constructor.
     RefIdea:
 
     Theme:
         - Wrote the equals method.
+        - Added a default constructor.
     Topic:
         - Wrote the equals method.
         - Removed the registerRelation and removeRelation methods.
@@ -82,6 +89,7 @@ Entity Classes:
         Removed the add method from all entity classes, now they all inherit
         registerChild from Editable. This is also true of the remove methods,
         they now all implement removeChild.
+        - Added a default constructor.
 Management:
     RefMeisterExec:
 

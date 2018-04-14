@@ -81,6 +81,15 @@ public class Reference extends Editable implements Relatable {
 	}
 
     /**
+     * Default Constructor. At this time, we do not support creating a Reference without at least
+     * a title.
+     */
+	public Reference() {
+	    throw new UnsupportedOperationException("Must specify at least a title for this Reference" +
+                ".");
+    }
+
+    /**
      * Gets the reference data.
      * @return the refdata
      */

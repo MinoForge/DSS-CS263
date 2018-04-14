@@ -46,6 +46,9 @@ public class Topic extends Editable implements Comparable<Entity> {
         this(title, "Unset Description", parent, new ArrayList<Entity>());
     }
 
+    public Topic() {
+        throw new UnsupportedOperationException("Must specify at least a title for this Topic");
+    }
     /**
      * Retrieves the list of this Entity's children.
      * @return The list of this Entity's children.

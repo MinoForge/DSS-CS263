@@ -37,7 +37,13 @@ public class Note extends Editable {
 	public Note(String title, Reference parent) {
 		this(title, "Unset Description", parent);
 	}
-
+    /**
+     * Default constructor. As of right now, we do not support creating Note's without at least a
+     * title.
+     */
+    public Note() {
+        throw new UnsupportedOperationException("Must specify at least a title for a Note.");
+    }
 	/**
 	 * This Note does not have children, but it still needs to Override this
 	 * method.

@@ -64,6 +64,12 @@ public class Library extends Editable {
         this(title, "Unset Description", new ArrayList<Entity>());
     }
 
+    /**
+     * Default Constructor. At this time, we do not support creating a Library without a title.
+     */
+    public Library() {
+        throw new UnsupportedOperationException("Must specify at least a title for this Library.");
+    }
 	/**
 	 * Adds a new topic to this Library's ArrayList of topics.
 	 * @param title The title of the topic to be added.

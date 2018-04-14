@@ -4,6 +4,7 @@ import refmeister.XML.MalformedXMLException;
 import refmeister.XML.SaveSystem;
 import refmeister.XML.XMLParser;
 import refmeister.entity.*;
+import refmeister.entity.Interfaces.Entity;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,8 +17,8 @@ public class XMLSaveTest {
     public static void main(String[] args){
         Library lib = new Library("GenericLibrary", "A demo library");
         Topic top = lib.addTopic("Topic1", "Description");
-        Theme t1 = top.addTheme("Theme1", "Desc");
-        Theme t2 = top.addTheme("Theme2", "desc2");
+        Theme t1 = (Theme) top.createChild("Theme1", "Desc");
+        Theme t2 = (Theme) top.createChild("Theme2", "desc2");
         Reference r1 = t1.addReference("Green Eggs and Ham", "Dr. Seuss");
         Reference r2 = t2.addReference("1984", "George Orwell");
 

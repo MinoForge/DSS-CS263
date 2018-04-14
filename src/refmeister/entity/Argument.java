@@ -2,10 +2,7 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.Editable;
-import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Interfaces.Relatable;
-import refmeister.entity.Interfaces.Relation;
+import refmeister.entity.Interfaces.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +16,7 @@ import java.util.List;
 public class Argument extends Editable implements Relatable {
 
 	/** ArrayList of RefArgs that show what this Argument instance is associated with. */
-	private List<RefArg> arguments;
+	private List<Relation> arguments;
 
 	/**
 	 * Constructor for an Argument that is given a specified title, description and an ArrayList
@@ -28,7 +25,7 @@ public class Argument extends Editable implements Relatable {
 	 * @param desc The specified String to be set as this Argument's description.
 	 * @param arguments The specified ArrayList to be set to arguments.
 	 */
-	public Argument(String title, String desc, List<RefArg> arguments) {
+	public Argument(String title, String desc, List<Relation> arguments) {
 		setTitle(title);
 		setDescription(desc);
 		this.arguments = arguments;
@@ -41,7 +38,7 @@ public class Argument extends Editable implements Relatable {
 	 * @param desc The speicified String to be set as this Argument's description.
 	 */
 	public Argument(String title, String desc) {
-		this(title, desc, new ArrayList<RefArg>());
+		this(title, desc, new ArrayList<>());
 	}
 
 	/**
@@ -49,7 +46,7 @@ public class Argument extends Editable implements Relatable {
 	 * @param title The specified String to be set as this Argument's title.
 	 * @param args The specified ArrayList to be set to this Argument's title.
 	 */
-	public Argument(String title, List<RefArg> args) {
+	public Argument(String title, List<Relation> args) {
 		this(title, "Unset Description", args);
 	}
 
@@ -58,7 +55,7 @@ public class Argument extends Editable implements Relatable {
 	 * @param title The specified String to be set as this Argument's title.
 	 */
 	public Argument(String title) {
-		this(title, "Unset Description", new ArrayList<RefArg>());
+		this(title, "Unset Description", new ArrayList<>());
 	}
 
 	/**
@@ -67,8 +64,9 @@ public class Argument extends Editable implements Relatable {
 	 */
 	public float getArgAverage() {
 		float average = 0;
-		for(RefArg ra : arguments) {
-			average += ra.getRating();
+		for(Relation ra : arguments) {
+		    if(ra instanceof RatedRelation)
+			    average += ((RatedRelation) ra).getRating();
 		}
 		return average / arguments.size();
 	}
@@ -77,7 +75,7 @@ public class Argument extends Editable implements Relatable {
 	 * Disassociates all of this Argument's RefArgs from this argument.
 	 */
 	public void destroy() {
-		for(RefArg ra : arguments) {
+		for(Relation ra : arguments) {
 			ra.destroy();
 		}
 	}
@@ -112,8 +110,7 @@ public class Argument extends Editable implements Relatable {
 	 * Arguments should have no children, so this method should return an empty list.
 	 * @return An empty  list, since Argurments do not have children.
 	 */
-	@Override
-	public List<Editable> getChildren() {
+	public List<Entity> getEntityChildren() {
 		return Collections.emptyList();
 	}
 
@@ -138,8 +135,8 @@ public class Argument extends Editable implements Relatable {
 	 * @return true if the child was able to be created, false otherwise.
 	 */
     @Override
-    public boolean createChild(String title, String description) {
-        return false;
+    public Entity createChild(String title, String description) {
+        return null;
     }
 
 	/**
@@ -150,23 +147,13 @@ public class Argument extends Editable implements Relatable {
         this.arguments.add(refArg);
 	}
 
-	@Override
-	public void registerRelation(Relation r) {
+    @Override
+    public void registerRelation(Relation r) {
+        this.arguments.add(r);
+    }
 
-	}
-
-	@Override
-	public void registerChild(Entity e) {
-
-	}
-
-	@Override
-	public void removeRelation(Relation r) {
-
-	}
-
-	@Override
-	public void removeChild(Entity e) {
-
-	}
+    @Override
+    public void removeRelation(Relation r) {
+        this.arguments.removeIf(r::equals);
+    }
 }

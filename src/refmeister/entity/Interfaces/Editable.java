@@ -4,24 +4,29 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Editable is an abstract class which our other classes will implement. If the child class has a
- * title, description, etc. it will extend Editable.
+ * Entity is an abstract class which our other classes will implement. If the child class has a
+ * title, description, etc. it will extend Entity.
  * @author Peter Gardner, Caleb Dinehart
  * @version 26, 3, 2018
  */
 public abstract class Editable implements Displayable, Saveable, Entity, Comparable<Entity>{
 
-    /** The title for any Editable objects. */
+    /** The title for any Entity objects. */
 	private String title;
-	/** The description for any Editable objects. */
+	/** The description for any Entity objects. */
 	private String description;
-	/** The parent of an Editable object if it is specified to have a parent. */
-	private Entity parent;
+	/** The parent of an Entity object if it is specified to have a parent. */
+	protected Entity parent;
 
-    private List<Entity> children;
+    protected List<Entity> children;
+
+    public Editable(){
+        this.children = new ArrayList<>();
+    }
 
     /**
      * Retrieves either the title, description, or null depending on the String passed to the
@@ -59,31 +64,31 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
     }
 
     /**
-     * Retrieves this Editable's parent.
-     * @return This Editable's parent.
+     * Retrieves this Entity's parent.
+     * @return This Entity's parent.
      */
     public Entity getParent() {
         return parent;
     }
 
     /**
-     * Sets this Editable's parent.
-     * @param parent The new Editable to be set to this.parent.
+     * Sets this Entity's parent.
+     * @param parent The new Entity to be set to this.parent.
      */
     public void setParent(Entity parent) {
         this.parent = parent;
     }
 
     /**
-     * Retrieves this Editable's title.
-     * @return This Editable's title.
+     * Retrieves this Entity's title.
+     * @return This Entity's title.
      */
     public String getTitle() {
         return title;
     }
 
     /**
-     * Sets this Editable's title.
+     * Sets this Entity's title.
      * @param title The new String to be set to this.title.
      */
     public void setTitle(String title) {
@@ -91,15 +96,15 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
     }
 
     /**
-     * Retrieves this Editable's description.
-     * @return This Editable's description.
+     * Retrieves this Entity's description.
+     * @return This Entity's description.
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * Sets this Editable's description.
+     * Sets this Entity's description.
      * @param description The new String to be set to this.description.
      */
     public void setDescription(String description) {
@@ -133,7 +138,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
     /**
      * Sets title and description to the indices in edits.
      * @param edits An array of Strings which contains the new title and description for this
-     *              Editable.
+     *              Entity.
      */
     public void edit(String[] edits) {
         setTitle(edits[0]);
@@ -164,7 +169,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
     }
 
     /**
-     * Method compares this Editable with another Editable
+     * Method compares this Entity with another Entity
      * @param e the Entity that is being compared
      * @return a negative integer, zero, or a positive integer as this object
      *          is less than, equal to, or greater than the specified object.
@@ -177,18 +182,22 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         children.add(e);
     }
 
+    public void removeChild(Entity e){
+        //noop
+    }
+
     /**
-     * Creates a child for this Editable. This is very bad code smell, but was used to try to get
+     * Creates a child for this Entity. This is very bad code smell, but was used to try to get
      * valid working code.
      * @param title The title for the child.
      * @param description The description for the child.
      * @return true if the child was able to be created, false otherwise.
      */
-    public abstract boolean createChild(String title, String description);
+    public abstract Entity createChild(String title, String description);
 
     /**
-     * Retrieves the list of this Editable's children.
-     * @return The list of this Editable's children.
+     * Retrieves the list of this Entity's children.
+     * @return The list of this Entity's children.
      */
     public abstract List<Entity> getEntityChildren();
 }

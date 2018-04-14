@@ -2,8 +2,8 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Editable;
 
 import java.util.*;
 
@@ -69,12 +69,17 @@ public class Note extends Editable {
 		return Collections.emptyList();
 	}
 
-	/**
-	 * Retrieves the list of this Editable's children.
-	 * @return The list of this Editable's children.
+    @Override
+    public Entity createChild(String title, String description) {
+        return null;
+    }
+
+    /**
+	 * Retrieves the list of this Entity's children.
+	 * @return The list of this Entity's children.
 	 */
 	@Override
-	public List<Editable> getEntityChildren() {
+	public List<Entity> getEntityChildren() {
 		return null;
 	}
 
@@ -91,25 +96,6 @@ public class Note extends Editable {
 		return String.format("<note title=\"%s\" description=\"%s\" />\n",
 				getTitle(), getDescription());
 	}
-
-	/**
-	 * Creates a child for this Editable.
-	 * @param title The title for the child.
-	 * @param description The description for the child.
-	 * @return true if the child was able to be created, false otherwise.
-	 */
-	@Override
-	public boolean createChild(String title, String description) {
-		return false;
-	}
-
-    /**
-     * Removes a child from This Editable.
-     * @param e the Entity to be removed.
-     */
-	@Override
-    public void removeChild(Entity e){
-    }
 
 
 	/**

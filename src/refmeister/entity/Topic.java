@@ -2,16 +2,14 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Relation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Topic extends Editable implements Comparable<Entity> {
-    private List<Entity> themes;
-    private Entity parent;
 
     /**
      * Creates a topic.
@@ -25,7 +23,7 @@ public class Topic extends Editable implements Comparable<Entity> {
         this.setDescription(description);
         this.parent = parent;
         parent.registerChild(this);
-        this.themes = themes;
+        this.children = themes;
 
     }
 
@@ -55,7 +53,7 @@ public class Topic extends Editable implements Comparable<Entity> {
 	 */
 	@Override
 	public void removeChild(Entity e) {
-        boolean result = themes.removeIf(ed -> ed.equals(e));
+        boolean result = children.removeIf(ed -> ed.equals(e));
         if(result){
             ((Theme) e).setParent(null);
         }
@@ -76,16 +74,16 @@ public class Topic extends Editable implements Comparable<Entity> {
      * Sets this editable's parent.
      * @param parent The topic's new parent.
      */
-    public void setParent(Editable parent) {
+    public void setParent(Entity parent) {
         this.parent = parent;
     }
     /**
-     * Retrieves the list of this Editable's children.
-     * @return The list of this Editable's children.
+     * Retrieves the list of this Entity's children.
+     * @return The list of this Entity's children.
      */
     @Override
     public List<Entity> getEntityChildren() {
-        return themes;
+        return children;
     }
 
     @Override
@@ -93,7 +91,7 @@ public class Topic extends Editable implements Comparable<Entity> {
         return "Topic{" +
                 "title='" + getTitle() + '\'' +
                 ", description='" + getDescription() + '\'' +
-                ", themes=" + themes +
+                ", themes=" + children +
                 '}';
     }
     /**
@@ -111,23 +109,22 @@ public class Topic extends Editable implements Comparable<Entity> {
      * @return A list of this topic's children.
      */
     public List<Saveable> getSaveableChildren() {
-        return new ArrayList<>(themes);
+        return new ArrayList<>(children);
     }
     /**
-     * Creates a child for this Editable.
+     * Creates a child for this Entity.
      * @param title The title for the child.
      * @param description The description for the child.
-     * @return true if the child was able to be created, false otherwise.
+     * @return the new child if it was created, or the preexisting child.
      */
     @Override
-    public boolean createChild(String title, String description) {
-        for(Entity t : themes) {
+    public Entity createChild(String title, String description) {
+        for(Entity t : children) {
             if(t.getTitle().equals(title)) {
-                return false;
+                return t;
             }
         }
-        Entity newTheme = new Theme(title, description, this);
-        return true;
+        return new Theme(title, description, this);
     }
 
 

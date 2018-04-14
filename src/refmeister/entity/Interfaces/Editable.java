@@ -12,7 +12,7 @@ import java.util.List;
  * @author Peter Gardner, Caleb Dinehart
  * @version 26, 3, 2018
  */
-public abstract class Editable implements Displayable, Saveable, Entity {
+public abstract class Editable implements Displayable, Saveable, Entity, Comparable<Editable>{
 
     /** The title for any Editable objects. */
 	private String title;
@@ -144,22 +144,33 @@ public abstract class Editable implements Displayable, Saveable, Entity {
      * @return An array of Strings to be displayed by the Controller.
      */
     public String[] display() {
-        String[] display = new String[7 + getChildren().size()];
+        String[] display = new String[7 + getEntityChildren().size()];
         int i = 0;
         display[i++] = getTitle();
         display[i++] = getDescription();
         display[i++] = "e: Edit this Object";
         display[i++] = "u: Select Parent";
-        if(getChildren() != null) {
+        if(getEntityChildren() != null) {
             display[i++] = "c: Create a New Child";
         }
         display[i++] = "q: Quit RefMeister";
         display[i++] = null;
-        for(Editable e : getChildren()) {
+        for(Editable e : getEntityChildren()) {
             display[i++] = e.getTitle();
         }
         return display;
     }
+
+    /**
+     * Method compares this Editable with another Editable
+     * @param e the Editable that is being compared
+     * @return a negative integer, zero, or a positive integer as this object
+     *          is less than, equal to, or greater than the specified object.
+     */
+    public int compareTo(Editable e){
+        return this.getTitle().compareTo(e.getTitle());
+    }
+
 
     /**
      * Creates a child for this Editable. This is very bad code smell, but was used to try to get
@@ -174,5 +185,5 @@ public abstract class Editable implements Displayable, Saveable, Entity {
      * Retrieves the list of this Editable's children.
      * @return The list of this Editable's children.
      */
-    public abstract List<Editable> getChildren();
+    public abstract List<Editable> getEntityChildren();
 }

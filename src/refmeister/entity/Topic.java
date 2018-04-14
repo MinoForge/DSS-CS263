@@ -178,6 +178,6 @@ public class Topic extends Editable {
             return this.getTitle().equals(temp.getTitle());
         }
         return false;
-
     }
+
 }

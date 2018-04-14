@@ -241,7 +241,7 @@ public class Reference extends Editable {
 	 * Retrieves the list of this Editable's children.
 	 * @return The list of this Editable's children.
 	 */
-	public List<Editable> getChildren() {
+	public List<Editable> getEntityChildren() {
 		return null;
 	}
 	/**

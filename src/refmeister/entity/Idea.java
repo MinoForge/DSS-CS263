@@ -4,6 +4,7 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Relatable;
 import refmeister.entity.Interfaces.Relation;
 
 import java.util.*;
@@ -13,7 +14,7 @@ import java.util.*;
  * @author Brandon Townsend
  * @version 25, 3, 2018
  */
-public class Idea extends Editable {
+public class Idea extends Editable implements Relatable {
 
 	/** ArrayList of RefIdeas that show what this Idea instance is associated with. */
 	private List<RefIdea> ideas;
@@ -113,7 +114,7 @@ public class Idea extends Editable {
 	 * @return The list of this Editable's children.
 	 */
 	@Override
-	public List<Editable> getChildren() {
+	public List<Editable> getEntityChildren() {
 		return null;
 	}
 	/**

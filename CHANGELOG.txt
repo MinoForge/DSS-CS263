@@ -29,12 +29,15 @@ Entity Interfaces:
     Displayable:
 
     Editable:
-
+        - Wrote the compareTo method.
     Entity:
-
+        - Moved the registerRelation and removeRelation methods to the
+          Relatable interface.
     RatedRelation:
 
     Relation:
+
+    -- Created the Relatable interface.
 
 Entity Classes:
     Argument:

@@ -4,6 +4,7 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Relatable;
 import refmeister.entity.Interfaces.Relation;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
  * @author Brandon Townsend
  * @version 25, 3, 2018
  */
-public class Argument extends Editable {
+public class Argument extends Editable implements Relatable {
 
 	/** ArrayList of RefArgs that show what this Argument instance is associated with. */
 	private List<RefArg> arguments;

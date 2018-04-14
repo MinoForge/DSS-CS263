@@ -14,7 +14,7 @@ public class Reference extends Editable {
      * The list containing all of reference's data, such as author, date of publication, etc. in
      * (currently) no order.
      */
-	private String[] refData;
+	private String[][] refData;
 
     /**
      * A list containing associations to all ideas that this reference is associated with.
@@ -40,7 +40,7 @@ public class Reference extends Editable {
      * @param notes     a list of all notes with this reference as a parent
      * @param parent    the parent of this reference
      */
-	private Reference(String title, String desc, String[] refData, List<Relation> ideas,
+	private Reference(String title, String desc, String[][] refData, List<Relation> ideas,
 					 List<Note> notes, Theme parent) {
 		setTitle(title);
 		setDescription(desc);
@@ -63,7 +63,7 @@ public class Reference extends Editable {
      * @param refData   A string containing all reference data
      * @param parent    the parent of this reference
      */
-	public Reference(String title, String desc, String[] refData, Theme parent) {
+	public Reference(String title, String desc, String[][] refData, Theme parent) {
 		this(title, desc, refData, new ArrayList<Relation>(),
 				new ArrayList<Note>(), parent);
 	}
@@ -74,7 +74,7 @@ public class Reference extends Editable {
      * @param refData   the reference data of this reference
      * @param parent    the parent theme of this parent
      */
-	public Reference(String title, String[] refData, Theme parent) {
+	public Reference(String title, String[][] refData, Theme parent) {
 		this(title, "Unset Description", refData, new ArrayList<Relation>(),
 				new ArrayList<Note>(), parent);
 	}
@@ -86,7 +86,7 @@ public class Reference extends Editable {
      * @param parent        the parent of this reference
      */
 	public Reference(String title, String description, Theme parent) {
-		this(title, description, new String[12], new ArrayList<Relation>(),
+		this(title, description, new String[13][], new ArrayList<Relation>(),
 				new ArrayList<Note>(), parent);
 	}
 
@@ -102,7 +102,7 @@ public class Reference extends Editable {
      * Sets the refdata
      * @param refData the refdata
      */
-	public void setRefData(String[] refData) {
+	public void setRefData(String[][] refData) {
 		this.refData = refData;
 	}
 
@@ -170,14 +170,66 @@ public class Reference extends Editable {
      * @return       the formatted output
      */
 	public String generateCite(String format) {
-        throw new RuntimeException("Not Implemented!");
+	    String cite = "";
+	    if(format.toLowerCase().equals("mla")) {
+            cite = generateMLA();
+        } else if(format.toLowerCase().equals("apa")) {
+	        cite = generateAPA();
+        }
+        return cite;
 	}
+
+	public String generateMLA() {
+	    StringBuilder cite = new StringBuilder();
+	    for(int i = 0; i < refData[0].length; i++) {
+	        cite.append(refData[0][i]);
+	        cite.append(", ");
+	        if(!refData[1][i].equals("")) {
+	            cite.append(". ");
+            }
+            cite.append(refData[2][i]);
+	        cite.append(". ");
+        }
+        cite.append(refData[3][0]);
+	    cite.append(", \"");
+	    cite.append(refData[4][0]);
+	    cite.append("\". ");
+	    cite.append(refData[5][0]);
+	    for(int i = 6; i < refData.length; i++) {
+	        if(!refData[i][0].equals("")) {
+                cite.append(", ");
+                cite.append(refData[i][0]);
+            }
+        }
+        return cite.toString();
+    }
+
+    public String generateAPA() {
+	    StringBuilder cite = new StringBuilder();
+        for(int i = 0; i < refData[0].length; i++) {
+            cite.append(refData[0][i]);
+            cite.append(", ");
+            if(!refData[1][i].equals("")) {
+                cite.append(". ");
+            }
+            cite.append(refData[2][i]);
+            cite.append(". ");
+        }
+        cite.append("(");
+        cite.append(refData[8][0]);
+        cite.append(")");
+        cite.append(refData[3][0]);
+        cite.append(", ");
+        cite.append(refData[4][0]);
+        cite.append(". ");
+        return cite.toString();
+    }
 
     /**
      * Associates an argument with this reference
      * @param arg       the argument to associate
      * @param rating    the strength of the argument
-     * @return          the refarg created
+     * @return          the RefArg created
      */
 	public RefArg addArgument(Argument arg, float rating){
 		RefArg newRefArg = new RefArg(this, arg, rating);

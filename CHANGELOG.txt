@@ -42,19 +42,21 @@ Entity Classes:
     Idea:
 
     Library:
+        - Wrote the equals method.
 
     Note:
+        - Wrote the equals method.
 
     RefArg:
 
     Reference:
-
+        - Wrote the equals method.
     RefIdea:
 
     Theme:
-
+        - Wrote the equals method.
     Topic:
-
+        - Wrote the equals method.
 Management:
     RefMeisterExec:
 

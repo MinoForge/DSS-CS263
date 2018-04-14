@@ -171,7 +171,22 @@ public class Theme extends Editable {
 				'}';
 	}
 
+	/**
+	 * Checks the equality between this Library and a passed in object.
+	 * @param o object to be checked
+	 * @return boolean of
+	 */
+	public boolean equals(Object o){
+		if(this == o){
+			return true;
+		}
+		if(o instanceof Theme){
+			Theme temp = (Theme) o;
+			return this.getTitle().equals(temp.getTitle());
+		}
+		return false;
 
+	}
 	 /** Gets the XML String of this theme, with all references as it's children.
 	 * @return The formatted XML save string.
 	 * @param manager The XMLManager that handles the XML formatting and parsing.

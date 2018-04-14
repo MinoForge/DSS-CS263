@@ -103,15 +103,18 @@ public class Note extends Editable {
 	}
 
 	/**
-	 *
-	 * @param n the Note being checked
-	 * @return
+	 * Checks the equality between this note and a passed in object
+	 * @param o object to be checked
+	 * @return boolean of whether
 	 */
-	public boolean equals(Note n){
-		return this.getTitle() == n.getTitle();
-	}
-
 	public boolean equals(Object o){
-
+		if(this == o){
+			return true;
+		}
+		if(o instanceof Note){
+			Note temp = (Note) o;
+			return this.getTitle().equals(temp.getTitle());
+		}
+		return false;
 	}
 }

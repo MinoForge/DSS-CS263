@@ -296,4 +296,21 @@ public class Reference extends Editable {
     public void removeChild(Entity e) {
 
     }
+    /**
+     * Checks the equality between this Library and a passed in object.
+     * @param o object to be checked
+     * @return boolean of
+     */
+    //TODO: Citation
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(o instanceof Reference){
+            Reference temp = (Reference) o;
+            return this.getTitle().equals(temp.getTitle());
+        }
+        return false;
+
+    }
 }

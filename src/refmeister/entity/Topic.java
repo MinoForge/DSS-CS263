@@ -162,4 +162,22 @@ public class Topic extends Editable {
     public boolean createChild(String title, String description) {
         return (addTheme(title, description) != null);
     }
+
+
+    /**
+     * Checks the equality between this Library and a passed in object.
+     * @param o object to be checked
+     * @return boolean of
+     */
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(o instanceof Topic){
+            Topic temp = (Topic) o;
+            return this.getTitle().equals(temp.getTitle());
+        }
+        return false;
+
+    }
 }

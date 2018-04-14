@@ -11,6 +11,8 @@ public interface Displayable {
 	 * Gets a String array representing the object for printing to the command line
 	 * @return The String array.
 	 */
-	String[] display();
 
-}
+	String getAttribute(String attribute);
+	void setAttribute(String attribute, String contents);
+
+	}

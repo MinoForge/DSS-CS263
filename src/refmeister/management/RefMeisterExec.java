@@ -1,7 +1,7 @@
 package refmeister.management;
 
 import refmeister.controllers.Controller;
-import refmeister.entity.WorkingDirectory;
+import refmeister.controllers.WorkingDirectory;
 
 import java.io.File;
 import java.nio.file.FileSystems;
@@ -25,6 +25,7 @@ public class RefMeisterExec {
      * @param args Any commandline arguments which might be implemented.
      */
     public static void main(String[] args) {
+        /*
         File directory = new File(DEFAULT_DIRECTORY);
         boolean goodDir = true;
         if(!Files.exists(FileSystems.getDefault().getPath("./" + DEFAULT_DIRECTORY))) {
@@ -40,6 +41,6 @@ public class RefMeisterExec {
         control.startUp();
         while(true) {
             control.displayMenu();
-        }
+        }*/
     }
 }

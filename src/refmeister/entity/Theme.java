@@ -2,7 +2,9 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entityInterfaces.Editable;
+import refmeister.entity.Interfaces.Editable;
+import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Relation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,6 +128,26 @@ public class Theme extends Editable {
 	 */
 	public Topic getParent() {
 		return parent;
+	}
+
+	@Override
+	public void registerRelation(Relation r) {
+
+	}
+
+	@Override
+	public void registerChild(Entity e) {
+
+	}
+
+	@Override
+	public void removeRelation(Relation r) {
+
+	}
+
+	@Override
+	public void removeChild(Entity e) {
+
 	}
 
 	/**

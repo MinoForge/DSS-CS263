@@ -1,4 +1,4 @@
-package refmeister.entityInterfaces;
+package refmeister.entity.Interfaces;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author Peter Gardner, Caleb Dinehart
  * @version 26, 3, 2018
  */
-public abstract class Editable implements Displayable, Saveable {
+public abstract class Editable implements Displayable, Saveable, Entity {
 
     /** The title for any Editable objects. */
 	private String title;

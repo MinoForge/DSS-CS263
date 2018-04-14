@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Topic extends Editable {
-    private List<Editable> themes;
-    private Editable parent;
+    private List<Entity> themes;
+    private Entity parent;
 
     /**
      * Creates a topic.
@@ -20,12 +20,13 @@ public class Topic extends Editable {
      * @param parent        This topic's parent
      * @param themes        A list of this topic's themes
      */
-    public Topic(String title, String description, Library parent, List<Editable> themes){
+    public Topic(String title, String description, Library parent, List<Entity> themes){
         this.setTitle(title);
         this.setDescription(description);
         this.parent = parent;
         parent.registerChild(this);
         this.themes = themes;
+
     }
 
     /**
@@ -35,7 +36,7 @@ public class Topic extends Editable {
      * @param parent        This topic's parent
      */
     public Topic(String title, String description, Library parent){
-        this(title, description, parent, new ArrayList<Editable>());
+        this(title, description, parent, new ArrayList<Entity>());
     }
 
     /**
@@ -44,26 +45,26 @@ public class Topic extends Editable {
      * @param parent    The parent library of this topic
      */
     public Topic(String title, Library parent){
-        this(title, "Unset Description", parent, new ArrayList<Editable>());
+        this(title, "Unset Description", parent, new ArrayList<Entity>());
     }
 
-    void register(Theme theme){
+    void register(Entity theme){
         themes.add(theme);
     }
 	/**
 	 * Adds a theme to this topic.
-	 * @param title The title of the topic
-	 * @param desc  The description of the topic
+	 * @param e The Entity being registered
+	 *
 	 */
-	public Theme addTheme(String title, String desc) {
+	public void registerChild(Entity e) {
 
-        for(Editable t : themes) {
-            if(t.getTitle().equals(title)) {
-                return null;
+        for(Entity t : themes) {
+            if(t.equals(e)) {
+                return;
             }
         }
-        Theme newTheme = new Theme(title, desc, this);
-        return newTheme;
+        Entity newTheme = new Theme(e.getTitle(), e.getDescription(), this);
+        themes.add(newTheme);
 	}
 
 	/**
@@ -79,7 +80,7 @@ public class Topic extends Editable {
      * @param themes A list of all themes that this topic should be
      *               associated with.
      */
-    public void setThemes(List<Editable> themes) {
+    public void setThemes(List<Entity> themes) {
         this.themes = themes;
     }
 
@@ -87,24 +88,10 @@ public class Topic extends Editable {
      * Gets this topic's parent.
      * @return the topic's parent.
      */
-    public Editable getParent() {
+    public Entity getParent() {
         return parent;
     }
 
-    @Override
-    public void registerRelation(Relation r) {
-
-    }
-
-    @Override
-    public void registerChild(Entity e) {
-
-    }
-
-    @Override
-    public void removeRelation(Relation r) {
-
-    }
 
     @Override
     public void removeChild(Entity e) {
@@ -123,7 +110,7 @@ public class Topic extends Editable {
      * @return The list of this Editable's children.
      */
     @Override
-    public List<Editable> getChildren() {
+    public List<Editable> getEntityChildren() {
         return themes;
     }
 

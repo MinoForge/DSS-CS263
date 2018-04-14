@@ -42,7 +42,7 @@ Entity Interfaces:
 Entity Classes:
     Argument:
         - Wrote an equals method.
-
+        - Removed the registerRelation and removeRelation methods.
     Idea:
         - Wrote an equals method.
 
@@ -51,7 +51,7 @@ Entity Classes:
 
     Note:
         - Wrote the equals method.
-
+        - Changed getChildren to getEntityChildren.
     RefArg:
 
     Reference:
@@ -62,6 +62,10 @@ Entity Classes:
         - Wrote the equals method.
     Topic:
         - Wrote the equals method.
+        - Removed the registerRelation and removeRelation methods.
+        - Changed getChildren to getEntityChildren.
+        - Changed addTheme to registerChild.
+
 Management:
     RefMeisterExec:
 
@@ -75,3 +79,5 @@ XML:
 
     XMLParser:
 
+Other:
+    - Every Instance of Editable changed to an instance of Entity

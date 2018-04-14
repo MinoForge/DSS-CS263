@@ -6,3 +6,60 @@ Created interface classes for each Entity class in entityInterfaces.--Peter
 Created interface class for Controller.--Peter
 Moved Editable, Displayable to entityInterfaces.--Peter
 Added exceptions to XMLParser if duplicate names are loaded from an XML File. --Wes
+
+
+CONTROLLER:
+    ControlIf:
+
+    Controller:
+
+
+DISPLAY:
+    CLIDisplay:
+
+    Displayer:
+
+    GUIDisplay:
+
+
+ENTITY CLASSES:
+    Argument:
+
+    Idea:
+
+    Library:
+
+    Note:
+        -- Added equals method
+        --
+
+    RefArg:
+
+    Reference:
+
+    RefIdea:
+
+    Theme:
+
+    Topic:
+
+    WorkingDirectory:
+
+
+ENTITY INTERFACES:
+    Editable:
+
+
+MANAGEMENT:
+    RefmMeisterExec:
+
+
+XML:
+    MalformedXMLException:
+
+    Saveable:
+
+    XMLManager:
+
+    XMLParser:
+

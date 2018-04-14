@@ -101,4 +101,17 @@ public class Note extends Editable {
 	public boolean createChild(String title, String description) {
 		return false;
 	}
+
+	/**
+	 *
+	 * @param n the Note being checked
+	 * @return
+	 */
+	public boolean equals(Note n){
+		return this.getTitle() == n.getTitle();
+	}
+
+	public boolean equals(Object o){
+
+	}
 }

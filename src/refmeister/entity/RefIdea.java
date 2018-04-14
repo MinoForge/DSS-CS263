@@ -94,7 +94,7 @@ class RefIdea implements Saveable, Relation {
 		String xml = String.format("<refarg reference=\"%s\" argument=\"%s\" />\n",
 				this.getReference().getTitle(), this.getEntity().getTitle());
 
-		manager.addIdea(this.idea);
+		manager.addEntity(this.idea);
 		manager.addAssociation(xml);
 		return null;
 	}

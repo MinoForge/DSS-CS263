@@ -1,6 +1,7 @@
 package test;
 
 import refmeister.XML.MalformedXMLException;
+import refmeister.XML.SaveSystem;
 import refmeister.XML.XMLParser;
 import refmeister.entity.*;
 
@@ -28,15 +29,19 @@ public class XMLSaveTest {
         r2.addArgument(arg2, 2.5f);
         r1.addNote("Ham is delicious", "Like really eat it all the time");
 
-        String xml = XMLParser.saveLibrary(lib);
+        SaveSystem.FILE_SYSTEM.start();
+        SaveSystem.FILE_SYSTEM.setFileName("ssTest");
+        SaveSystem.FILE_SYSTEM.save(lib);
 
         try {
-            FileWriter writer = new FileWriter(new File("refmeister-wd/demo.rl"));
-            writer.write(xml);
-            writer.close();
-        } catch (IOException e) {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        SaveSystem.FILE_SYSTEM.stop();
+
+
         /*
         try {
             Library loaded = XMLParser.loadLibrary(xml);

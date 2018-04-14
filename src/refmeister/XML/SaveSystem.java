@@ -26,6 +26,7 @@ public enum SaveSystem{
         alive = false;
         fileThread = new Thread(this::runLoop);
         libraryLock = new ReentrantLock();
+        this.directory = new WorkingDirectory(new File("refmeister-wd"));
     }
 
     private void runLoop(){
@@ -34,20 +35,23 @@ public enum SaveSystem{
                 Thread.sleep(300000);
             } catch (InterruptedException e) {
                 // We just got told to save
+                //e.printStackTrace();
             }
-        }
-        //save
-        libraryLock.lock();
-        try {
-            XMLManager man = new XMLManager(library);
-            File autosave = File.createTempFile(fileName + "-autosave", "rl", directory.getDirectory());
-            FileWriter fw = new FileWriter(autosave);
-            fw.write(man.getXML());
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            libraryLock.unlock();
+
+            libraryLock.lock();
+            try {
+                System.out.println("Saving...");
+                XMLManager man = new XMLManager(library);
+                File autosave = File.createTempFile(fileName + "-autosave", ".rl", directory
+                        .getDirectory());
+                FileWriter fw = new FileWriter(autosave);
+                fw.write(man.getXML());
+                fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                libraryLock.unlock();
+            }
         }
 
     }
@@ -78,7 +82,16 @@ public enum SaveSystem{
     }
 
     public void stop(){
-        this.alive = false;
-        this.fileThread.interrupt();
+        this.libraryLock.lock();
+        try {
+            this.alive = false;
+            this.fileThread.interrupt();
+        } finally {
+            this.libraryLock.unlock();
+        }
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

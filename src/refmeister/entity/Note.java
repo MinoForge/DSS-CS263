@@ -3,6 +3,8 @@ package refmeister.entity;
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Editable;
+import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Relation;
 
 import java.util.*;
 
@@ -100,5 +102,25 @@ public class Note extends Editable {
 	@Override
 	public boolean createChild(String title, String description) {
 		return false;
+	}
+
+	@Override
+	public void registerRelation(Relation r) {
+
+	}
+
+	@Override
+	public void registerChild(Entity e) {
+
+	}
+
+	@Override
+	public void removeRelation(Relation r) {
+
+	}
+
+	@Override
+	public void removeChild(Entity e) {
+
 	}
 }

@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @author Peter Gardner
  * @version 25, 3, 2018
  */
-public class SingleLibraryController {
+public class SingleLibraryController implements Controller{
 
     /** The current object the controller is pointing to. */
 	private Editable selected;

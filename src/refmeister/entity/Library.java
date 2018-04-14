@@ -3,6 +3,8 @@ package refmeister.entity;
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Editable;
+import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Relation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,14 +62,6 @@ public class Library extends Editable {
      */
     public Library(String title) {
         this(title, "Unset Description", new ArrayList<Editable>());
-    }
-
-    /**
-     * Makes sure there are no orphaned children in this Library.
-     * @param t the Topic the being added
-     */
-    void register(Topic t){
-        topics.add(t);
     }
 
 	/**
@@ -140,5 +134,25 @@ public class Library extends Editable {
      */
     public List<Editable> getRefs() {
         return references;
+    }
+
+    @Override
+    public void registerRelation(Relation r) {
+
+    }
+
+    @Override
+    public void registerChild(Entity e) {
+
+    }
+
+    @Override
+    public void removeRelation(Relation r) {
+
+    }
+
+    @Override
+    public void removeChild(Entity e) {
+
     }
 }

@@ -2,7 +2,10 @@ Created CHANGELOG.txt to keep track of changes.--Peter
 Created controllers package.--Peter
 Moved Controller to Controllers.--Peter
 Created entityInterfaces package.--Peter
-Created interface classes for each Entity class in entityInterfaces.--Peter
+Created interface classes for each Entity class in entity/Interfaces.--Peter
 Created interface class for Controller.--Peter
 Moved Editable, Displayable to entityInterfaces.--Peter
 Added exceptions to XMLParser if duplicate names are loaded from an XML File. --Wes
+
+
+TODO: //[Class]: [Method]: [Changes]

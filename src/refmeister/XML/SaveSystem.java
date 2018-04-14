@@ -31,29 +31,35 @@ public enum SaveSystem{
 
     private void runLoop(){
         while(alive){
+            boolean interrupted = false;
             try {
                 Thread.sleep(300000);
             } catch (InterruptedException e) {
-                // We just got told to save
-                //e.printStackTrace();
+                interrupted = true;
             }
 
-            libraryLock.lock();
-            try {
-                System.out.println("Saving...");
-                XMLManager man = new XMLManager(library);
-                File autosave = File.createTempFile(fileName + "-autosave", ".rl", directory
-                        .getDirectory());
-                FileWriter fw = new FileWriter(autosave);
-                fw.write(man.getXML());
-                fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                libraryLock.unlock();
-            }
+            if(interrupted && alive)
+                saveWithName(fileName + ".rl");
+            else
+                saveWithName(fileName + "-autosave.rl");
         }
 
+    }
+
+    private void saveWithName(String s){
+        libraryLock.lock();
+        try {
+            System.out.println("Saving...");
+            XMLManager man = new XMLManager(library);
+            File autosave = new File(directory.getDirectory(), s);
+            FileWriter fw = new FileWriter(autosave);
+            fw.write(man.getXML());
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            libraryLock.unlock();
+        }
     }
 
     public void start(){
@@ -75,6 +81,7 @@ public enum SaveSystem{
         try {
             this.libraryLock.lock();
             this.library = l;
+
         } finally {
             this.libraryLock.unlock();
         }

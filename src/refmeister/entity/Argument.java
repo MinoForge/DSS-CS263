@@ -111,7 +111,7 @@ public class Argument extends Editable implements Relatable {
 	 * @return An empty  list, since Argurments do not have children.
 	 */
 	public List<Entity> getEntityChildren() {
-		return Collections.emptyList();
+        return Collections.emptyList();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class Argument extends Editable implements Relatable {
 	 */
 	@Override
 	public String getSaveString(XMLManager manager) {
-		return String.format("<argument title=\"%s\" description=\"%s\" />\n",
+        return String.format("<argument title=\"%s\" description=\"%s\" />",
 				getTitle(), getDescription());
 	}
 

@@ -7,8 +7,10 @@ import refmeister.entity.*;
 import refmeister.entity.Interfaces.Entity;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Test class to ensure that saving to XML works right
@@ -42,10 +44,10 @@ public class XMLSaveTest {
 
         SaveSystem.FILE_SYSTEM.stop();
 
-
-        /*
-        try {
-            Library loaded = XMLParser.loadLibrary(xml);
+        try (Scanner s = new Scanner(new File("refmeister-wd/ssTest.rl"))){
+            s.useDelimiter("\\Z");
+            XMLParser sys = new XMLParser();
+            Library loaded = sys.loadLibrary(s.next());
             System.out.println(XMLParser.saveLibrary(loaded));
         } catch (MalformedXMLException e){
             System.out.println("Error: " + e.getMessage());
@@ -54,6 +56,8 @@ public class XMLSaveTest {
                 for(String tag : e.getTags()){
                     System.out.println("\t" + tag);
                 }
-        }*/
+        } catch (IOException e) {
+            System.out.println("File failed");
+        }
     }
 }

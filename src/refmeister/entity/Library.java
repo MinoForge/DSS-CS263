@@ -4,7 +4,6 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Entity;
 import refmeister.entity.Interfaces.Editable;
-import refmeister.entity.Interfaces.Relation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +16,6 @@ import java.util.List;
  */
 public class Library extends Editable {
 
-    /** The Topics which are children of this Library. */
-    private List<Entity> topics;
     /** All references used in this Library. */
     private List<Entity> references;
 
@@ -33,7 +30,7 @@ public class Library extends Editable {
     public Library(String title, String description, List<Entity> topics) {
         this.setTitle(title);
         this.setDescription(description);
-        this.topics = topics;
+        this.children = topics;
         this.setParent(null);
         this.references = new ArrayList<Entity>();
         for(Entity top : getEntityChildren()) {
@@ -70,7 +67,7 @@ public class Library extends Editable {
 	 * @param desc The description of the topic to be added.
 	 */
 	public Topic addTopic(String title, String desc) {
-        for(Saveable s : topics) {
+        for(Saveable s : children) {
             if(s instanceof Entity) {
                 Entity t = (Entity)s;
                 // If a topic already has the same title of the one we are trying to add, don't add it.
@@ -89,7 +86,7 @@ public class Library extends Editable {
      */
 	public void deleteTopic(String title) {
 
-        topics.removeIf(ed -> ed.getTitle().equals(title));
+        children.removeIf(ed -> ed.getTitle().equals(title));
 	}
 
     /**
@@ -97,14 +94,14 @@ public class Library extends Editable {
      * @return A list of all of this library's children
      */
     public List<Saveable> getSaveableChildren() {
-        return new ArrayList<>(topics);
+        return new ArrayList<>(children);
     }
     /**
      * Retrieves the list of this Entity's children.
      * @return The list of this Entity's children.
      */
     public List<Entity> getEntityChildren() {
-        return new ArrayList<>(topics);
+        return new ArrayList<>(children);
     }
 
 

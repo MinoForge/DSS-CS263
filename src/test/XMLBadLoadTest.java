@@ -19,6 +19,5 @@ public class XMLBadLoadTest {
             e.printStackTrace();
         }
 
-        XMLParser.loadLibrary(badXML);
     }
 }

@@ -71,6 +71,8 @@ Entity Classes:
         Removed the add method from all entity classes, now they all inherit
         registerChild from Editable. This is also true of the remove methods,
         they now all implement removeChild.
+
+        Removed each class's child list and moved it to Editable
 Management:
     RefMeisterExec:
 

@@ -93,7 +93,7 @@ class RefIdea implements Saveable, Relation {
 	 */
 	@Override
 	public String getSaveString(XMLManager manager) {
-		String xml = String.format("<refarg reference=\"%s\" argument=\"%s\" />\n",
+		String xml = String.format("<refarg reference=\"%s\" entity=\"%s\" />\n",
 				this.getReference().getTitle(), this.getEntity().getTitle());
 
 		manager.addEntity(this.idea);

@@ -33,7 +33,7 @@ class RefArg implements Saveable, RatedRelation {
 		this.reference = ref;
 		this.argument = argument;
 		ref.registerRelation(this);
-		argument.registerRefArg(this);
+		argument.registerRelation(this);
 		this.rating = rating;
 	}
 
@@ -120,7 +120,7 @@ class RefArg implements Saveable, RatedRelation {
 	 */
     @Override
     public String getSaveString(XMLManager manager) {
-	    String xml = String.format("<refarg reference=\"%s\" argument=\"%s\" rating=\"%f\" />\n",
+	    String xml = String.format("<refarg reference=\"%s\" entity=\"%s\" rating=\"%f\" />\n",
                 this.getReference().getTitle(), this.getArgument().getTitle(), this.getRating());
 
 	    manager.addEntity(getArgument());

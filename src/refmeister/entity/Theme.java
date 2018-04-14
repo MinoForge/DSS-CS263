@@ -6,6 +6,7 @@ import refmeister.entity.Interfaces.Entity;
 import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Relation;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,10 @@ import java.util.List;
  */
 
 public class Theme extends Editable {
-	/**
+
+    private Entity library;
+
+    /**
 	 * Constructor for an Theme that is given a specified title, description, and an ArrayList of
 	 * RefIdeas.
 	 * @param title The specified String to be set as this Theme's title.
@@ -28,7 +32,7 @@ public class Theme extends Editable {
 		this.setTitle(title);
 		this.setDescription(desc);
 		this.children = refs;
-		this.parent = parent;
+		this.setParent(parent);
 		parent.registerChild(this);
 	}
 	/**
@@ -51,12 +55,20 @@ public class Theme extends Editable {
 		this(title, "Unset Description", parent, new ArrayList<Entity>());
 	}
 
+    /**
+     * Default Constructor. At this time, you must specify at least a title.
+     */
+	public Theme() {
+	    throw new UnsupportedOperationException("Must specify at least a title for this Theme.");
+    }
+
 	/*
 	 * This method will move a theme from one topic to another topic as long as
 	 * the theme is not already in the topic and if the topic exists. This reeks of code smells
 	 * needs to be altered
 	 * @param topicTitle The title of the Topic the theme is being moved to.
-	/*
+	*/
+	/**
 	public void moveTheme(String topicTitle) throws InvalidParameterException {
 		for(Entity t : this.parent.getParent().getEntityChildren()){
 			if(t.getTitle().equals(topicTitle)){
@@ -72,39 +84,8 @@ public class Theme extends Editable {
 			}
 		}
 		throw new InvalidParameterException("Topic does not exist");
-	}*/
-
-	/**
-	 * Add a Reference to the ArrayList of References.
-	 * @param title the String representing the title of the reference
-	 * @param desc the String representing the description of the reference
-	 * @return return the newly added Reference
-	 */
-	public Reference addReference(String title, String desc) {
-		for(Entity t : children) {
-			if(t.getTitle().equals(getTitle())) {
-				return null;
-			}
-		}
-		return new Reference(title, desc, this);
 	}
-
-	/**
-	 * Deletes the selected reference from the  ArrayList of References
-	 * @param title String represeneting the title fo the Reference being removed
-	 */
-	public void deleteReference(String title) {
-		children.removeIf(ed -> ed.getTitle().equals(title));
-	}
-
-	/**
-	 * Setter to set the parent
-	 * @param parent the Topic that will become the new parent of this theme
-	 */
-	public void setParent(Topic parent) {
-		this.parent = parent;
-	}
-
+    */
 	/**
 	 * Returns a String representation of this Class
 	 * @return the String representation of this Class
@@ -151,13 +132,6 @@ public class Theme extends Editable {
 	public List<Saveable> getSaveableChildren() {
 		return new ArrayList<>(children);
 	}
-	/**
-	 * Gets children of Theme.
-	 * @return The list of this Entity's children.
-	 */
-	public List<Entity> getEntityChildren() {
-		return children;
-	}
 
 	/**
 	 * Creates a child for this Entity.
@@ -167,6 +141,11 @@ public class Theme extends Editable {
 	 */
 	@Override
 	public Entity createChild(String title, String description) {
-		return addReference(title, description);
+		for(Entity t : children) {
+            if(t.getTitle().equals(title)) {
+                return t;
+            }
+        }
+        return new Reference(title, description, this);
 	}
 }

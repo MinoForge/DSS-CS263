@@ -2,7 +2,10 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.*;
+import refmeister.entity.Interfaces.Editable;
+import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Relatable;
+import refmeister.entity.Interfaces.Relation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,6 +61,13 @@ public class Argument extends Editable implements Relatable {
 		this(title, "Unset Description", new ArrayList<>());
 	}
 
+    /**
+     * Default Constructor. At this time, we do not support creating an argument without
+     * specifying at least a title.
+     */
+	public Argument() {
+	    throw new UnsupportedOperationException("Must specify at least a title for this Argument.");
+    }
 	/**
 	 * Calculates the average of the ratings of all the RefArgs in arguments.
 	 * @return The average of the ratings of all the RefArgs in arguments.

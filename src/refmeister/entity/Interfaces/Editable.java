@@ -2,25 +2,27 @@ package refmeister.entity.Interfaces;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
+import refmeister.entity.Argument;
+import refmeister.entity.Idea;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Entity is an abstract class which our other classes will implement. If the child class has a
- * title, description, etc. it will extend Entity.
+ * Editable is an abstract class which our other classes will implement. If the child class has a
+ * title, description, etc. it will extend Editable.
  * @author Peter Gardner, Caleb Dinehart
  * @version 26, 3, 2018
  */
 public abstract class Editable implements Displayable, Saveable, Entity, Comparable<Entity>{
 
-    /** The title for any Entity objects. */
+    /** The title for any Editable objects. */
 	private String title;
-	/** The description for any Entity objects. */
+	/** The description for any Editable objects. */
 	private String description;
-	/** The parent of an Entity object if it is specified to have a parent. */
-	protected Entity parent;
+	/** The parent of an Editable object if it is specified to have a parent. */
+	private Entity parent;
 
     protected List<Entity> children;
 
@@ -182,10 +184,23 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         children.add(e);
     }
 
-    public void removeChild(Entity e){
-        //noop
+    public Entity removeChild(Entity e){
+        if(e.getEntityChildren().isEmpty()){
+            if(e instanceof Argument){
+                ((Argument) e).removeRelation();
+            }
+            if(e instanceof Idea){
+                ((Idea) e).removeRelation();
+            }
+            e.setParent(null);
+            return this;
+        }
+        for(Entity t : children){
+            removeChild(t);
+        }
+        children.clear();
+        return this;
     }
-
     /**
      * Creates a child for this Entity. This is very bad code smell, but was used to try to get
      * valid working code.
@@ -199,5 +214,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * Retrieves the list of this Entity's children.
      * @return The list of this Entity's children.
      */
-    public abstract List<Entity> getEntityChildren();
+    public List<Entity> getEntityChildren(){
+        return children;
+    }
 }

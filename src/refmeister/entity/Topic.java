@@ -21,7 +21,7 @@ public class Topic extends Editable implements Comparable<Entity> {
     public Topic(String title, String description, Entity parent, List<Entity> themes){
         this.setTitle(title);
         this.setDescription(description);
-        this.parent = parent;
+        this.setParent(parent);
         parent.registerChild(this);
         this.children = themes;
 
@@ -46,36 +46,8 @@ public class Topic extends Editable implements Comparable<Entity> {
         this(title, "Unset Description", parent, new ArrayList<Entity>());
     }
 
-
-	/**
-	 * Deletes a theme with the given title.
-	 * @param e The title of the theme to remove.
-	 */
-	@Override
-	public void removeChild(Entity e) {
-        boolean result = children.removeIf(ed -> ed.equals(e));
-        if(result){
-            ((Theme) e).setParent(null);
-        }
-
-	}
-
-
-    /**
-     * Gets this topic's parent.
-     * @return the topic's parent.
-     */
-    public Entity getParent() {
-        return parent;
-    }
-
-
-    /**
-     * Sets this editable's parent.
-     * @param parent The topic's new parent.
-     */
-    public void setParent(Entity parent) {
-        this.parent = parent;
+    public Topic() {
+        throw new UnsupportedOperationException("Must specify at least a title for this Topic");
     }
     /**
      * Retrieves the list of this Entity's children.

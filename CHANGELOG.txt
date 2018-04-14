@@ -30,36 +30,54 @@ Entity Interfaces:
 
     Editable:
         - Wrote the compareTo method.
+        - Wrote registerChild method.
+        - Wrote removeChild method.
+        - Changed the field parent from private to protected.
+        - Added the protected field children.
+        - Added a getChildren method.
     Entity:
         - Moved the registerRelation and removeRelation methods to the
           Relatable interface.
+        - Added compareTo method.
+        - Added getEntityChildren method.
+        - Added setParent method.
+
     RatedRelation:
 
     Relation:
 
     -- Created the Relatable interface.
+    Relatable:
+        - Added
 
 Entity Classes:
     Argument:
         - Wrote an equals method.
         - Removed the registerRelation and removeRelation methods.
+        - Added a default constructor.
     Idea:
         - Wrote an equals method.
+        - Added a default constructor.
 
     Library:
         - Wrote the equals method.
+        - Added a default constructor.
 
     Note:
         - Wrote the equals method.
         - Changed getChildren to getEntityChildren.
+        - Added a default constructor.
     RefArg:
 
     Reference:
         - Wrote the equals method.
+        - Added code for generating MLA and APA citations.
+        - Added a default constructor.
     RefIdea:
 
     Theme:
         - Wrote the equals method.
+        - Added a default constructor.
     Topic:
         - Wrote the equals method.
         - Removed the registerRelation and removeRelation methods.
@@ -71,8 +89,8 @@ Entity Classes:
         Removed the add method from all entity classes, now they all inherit
         registerChild from Editable. This is also true of the remove methods,
         they now all implement removeChild.
-
-        Removed each class's child list and moved it to Editable
+        - Added a default constructor.
+        - Removed each class's child list and moved it to Editable
 Management:
     RefMeisterExec:
 

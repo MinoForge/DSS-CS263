@@ -15,9 +15,6 @@ import java.util.*;
  */
 public class Note extends Editable {
 
-	/** This Note's parent, which is a Reference. */
-	private Reference parent;
-
 	/**
 	 * Constructor for the Note class. Takes a Reference object to be specified as the parent, a
 	 * String to be the title, and a String to be the description.
@@ -40,25 +37,13 @@ public class Note extends Editable {
 	public Note(String title, Reference parent) {
 		this(title, "Unset Description", parent);
 	}
-
-	/**
-	 * Retrieves this Note's parent.
-	 * @return This Note's parent.
-	 */
-	public Reference getReference() {
-		return this.parent;
-	}
-
-	/**
-	 * Sets this Note's parent to the specified reference.
-	 * @param parent The Reference to be set to this Note's parent.
-	 */
-	public void setReference(Reference parent) {
-		this.parent = parent;
-	}
-
-
-
+    /**
+     * Default constructor. As of right now, we do not support creating Note's without at least a
+     * title.
+     */
+    public Note() {
+        throw new UnsupportedOperationException("Must specify at least a title for a Note.");
+    }
 	/**
 	 * This Note does not have children, but it still needs to Override this
 	 * method.
@@ -74,15 +59,6 @@ public class Note extends Editable {
         return null;
     }
 
-    /**
-	 * Retrieves the list of this Entity's children.
-	 * @return The list of this Entity's children.
-	 */
-	@Override
-	public List<Entity> getEntityChildren() {
-		return null;
-	}
-
 	/**
 	 * Gets the XML representation of this saveable object. Saveable objects that are association
 	 * classes should register their XML output with the XMLManager, and Argument/Ideas should
@@ -96,7 +72,6 @@ public class Note extends Editable {
 		return String.format("<note title=\"%s\" description=\"%s\" />\n",
 				getTitle(), getDescription());
 	}
-
 
 	/**
 	 * Checks the equality between this note and a passed in object

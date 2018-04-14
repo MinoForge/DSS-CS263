@@ -46,6 +46,7 @@ class RefIdea implements Saveable, Relation {
 	 */
 	public void setReference(Reference reference) {
 		this.reference = reference;
+		reference.registerRelation(this);
 	}
 
 	/**
@@ -62,6 +63,7 @@ class RefIdea implements Saveable, Relation {
 	 */
 	public void setEntity(Idea idea) {
 		this.idea = idea;
+		idea.registerRelation(this);
 	}
 
 	/**

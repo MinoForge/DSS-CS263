@@ -85,9 +85,9 @@ public class Idea extends Editable implements Relatable {
 	}
 
     /**
-     *
-     * @param o
-     * @return
+     * Checks equality between this Idea and a passed in object.
+     * @param o The object to have its equality is checked against this Idea.
+     * @return true if they are equal, false otherwise.
      */
 	@Override
 	public boolean equals(Object o) {

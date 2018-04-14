@@ -37,15 +37,17 @@ public class XMLSaveTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        /*
         try {
             Library loaded = XMLParser.loadLibrary(xml);
             System.out.println(XMLParser.saveLibrary(loaded));
         } catch (MalformedXMLException e){
-            System.out.println("Erroring tags: " + e.getMessage());
-            for(String tag : e.getTags()){
-                System.out.println("\t" + tag);
-            }
-        }
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Erroring tags: ");
+            if(e.getTags() != null)
+                for(String tag : e.getTags()){
+                    System.out.println("\t" + tag);
+                }
+        }*/
     }
 }

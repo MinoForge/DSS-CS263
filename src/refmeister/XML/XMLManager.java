@@ -2,6 +2,8 @@ package refmeister.XML;
 
 import refmeister.entity.Argument;
 import refmeister.entity.Idea;
+import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.Relation;
 import refmeister.entity.Library;
 
 import java.util.*;
@@ -21,14 +23,10 @@ public class XMLManager {
     private Library lib;
 
     /**
-     * A set of all arguments encountered when traversing the library.
+     * A set of all entities that request late embedding encountered when traversing the library.
      */
-    private Collection<Argument> args;
+    private Collection<Entity> entities;
 
-    /**
-     * A set of all ideas encountered while traversing the library.
-     */
-    private Collection<Idea> ideas;
 
     /**
      * A set of all ideas encountered while traversing the library.
@@ -41,25 +39,16 @@ public class XMLManager {
      */
     public XMLManager(Library lib){
         this.lib = lib;
-        args = new HashSet<>();
-        ideas = new HashSet<>();
+        entities = new HashSet<>();
         associations = new HashSet<>();
     }
 
     /**
-     * Adds an argument to this Refmeister XML tag.
-     * @param arg The argument to add
+     * Adds an entity to this Refmeister XML tag.
+     * @param ent The entity to add
      */
-    public void addArgument(Argument arg){
-        args.add(arg);
-    }
-
-    /**
-     * Adds an Idea to this Refmeister XML tag.
-     * @param idea The idea to add
-     */
-    public void addIdea(Idea idea){
-        ideas.add(idea);
+    public void addEntity(Entity ent){
+        entities.add(ent);
     }
 
     /**
@@ -78,23 +67,18 @@ public class XMLManager {
         StringBuilder out = new StringBuilder();
         out.append(lib.getSaveString(this));
 
-        out.append("<arguments>\n");
-        for(Argument arg : args){
-            out.append(arg.getSaveString(this));
+        out.append("<entity>\n");
+        for(Entity e : entities){
+            out.append(e.getSaveString(this));
+            out.append("\n");
         }
-        out.append("</arguments>\n");
+        out.append("</entity>\n");
 
-        out.append("<ideas>\n");
-        for(Idea idea : ideas){
-            out.append(idea.getSaveString(this));
+        out.append("<relation>\n");
+        for(String association : associations){
+            out.append(association);
         }
-        out.append("</ideas>\n");
-
-        out.append("<associations>\n");
-        for(String assoc : associations){
-            out.append(assoc);
-        }
-        out.append("</associations>\n");
+        out.append("</relation>\n");
 
         return out.toString();
     }

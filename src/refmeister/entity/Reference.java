@@ -330,17 +330,7 @@ public class Reference extends Editable {
 	}
 
     @Override
-    public void registerRelation(Relation r) {
-        this.relations.add(r);
-    }
-
-    @Override
     public void registerChild(Entity e) {
-
-    }
-
-    @Override
-    public void removeRelation(Relation r) {
 
     }
 

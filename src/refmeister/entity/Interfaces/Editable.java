@@ -60,7 +60,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * Retrieves this Editable's parent.
      * @return This Editable's parent.
      */
-    public Editable getParent() {
+    public Entity getParent() {
         return parent;
     }
 
@@ -155,7 +155,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         }
         display[i++] = "q: Quit RefMeister";
         display[i++] = null;
-        for(Editable e : getEntityChildren()) {
+        for(Entity e : getEntityChildren()) {
             display[i++] = e.getTitle();
         }
         return display;
@@ -163,11 +163,11 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
 
     /**
      * Method compares this Editable with another Editable
-     * @param e the Editable that is being compared
+     * @param e the Entity that is being compared
      * @return a negative integer, zero, or a positive integer as this object
      *          is less than, equal to, or greater than the specified object.
      */
-    public int compareTo(Editable e){
+    public int compareTo(Entity e){
         return this.getTitle().compareTo(e.getTitle());
     }
 
@@ -185,5 +185,5 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * Retrieves the list of this Editable's children.
      * @return The list of this Editable's children.
      */
-    public abstract List<Editable> getEntityChildren();
+    public abstract List<Entity> getEntityChildren();
 }

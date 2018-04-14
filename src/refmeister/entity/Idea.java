@@ -83,6 +83,23 @@ public class Idea extends Editable {
 		}
 	}
 
+    /**
+     *
+     * @param o
+     * @return
+     */
+	@Override
+	public boolean equals(Object o) {
+	    if(this == o) {
+	        return true;
+        }
+        if(o instanceof Idea) {
+	        Idea temp = (Idea) o;
+	        return this.getTitle().equals(temp.getTitle());
+        }
+        return false;
+    }
+
 	/**
 	 * Ideas should have no children, so this method should return null.
 	 * @return null, since Ideas do not have children.

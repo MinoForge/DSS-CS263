@@ -38,8 +38,10 @@ Entity Interfaces:
 
 Entity Classes:
     Argument:
+        - Wrote an equals method.
 
     Idea:
+        - Wrote an equals method.
 
     Library:
 

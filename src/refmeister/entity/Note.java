@@ -108,7 +108,7 @@ public class Note extends Editable {
 	 * @return
 	 */
 	public boolean equals(Note n){
-		return this.getTitle() == n.getTitle();
+		return this.getTitle().equals(n.getTitle());
 	}
 
 	public boolean equals(Object o){

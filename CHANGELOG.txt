@@ -9,3 +9,62 @@ Added exceptions to XMLParser if duplicate names are loaded from an XML File. --
 
 
 TODO: //[Class]: [Method]: [Changes]
+Please specify the method you made changes to under the classes name
+Controllers:
+    Controller:
+
+    SingleLibraryController:
+
+    WorkingDirectory:
+
+
+Display:
+    CLIDisplay:
+
+    Displayer:
+
+    GUIDisplay:
+
+Entity Interfaces:
+    Displayable:
+
+    Editable:
+
+    Entity:
+
+    RatedRelation:
+
+    Relation:
+
+Entity Classes:
+    Argument:
+
+    Idea:
+
+    Library:
+
+    Note:
+
+    RefArg:
+
+    Reference:
+
+    RefIdea:
+
+    Theme:
+
+    Topic:
+
+Management:
+    RefMeisterExec:
+
+
+XML:
+    MalformedXMLException:
+
+    Saveable:
+
+    XMLManager:
+
+    XMLParser:
+

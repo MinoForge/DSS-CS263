@@ -30,14 +30,25 @@ Entity Interfaces:
 
     Editable:
         - Wrote the compareTo method.
+        - Wrote registerChild method.
+        - Wrote removeChild method.
+        - Changed the field parent from private to protected.
+        - Added the protected field children.
+        - Added a getChildren method.
     Entity:
         - Moved the registerRelation and removeRelation methods to the
           Relatable interface.
+        - Added compareTo method.
+        - Added getEntityChildren method.
+        - Added setParent method.
+
     RatedRelation:
 
     Relation:
 
     -- Created the Relatable interface.
+    Relatable:
+        - Added
 
 Entity Classes:
     Argument:

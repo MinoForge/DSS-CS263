@@ -7,14 +7,17 @@ import java.util.List;
 /**
  *
  */
-public interface Entity extends Saveable{
+public interface Entity extends Saveable, Comparable<Entity>{
     String getTitle();
     String getDescription();
 
     Entity getParent();
 
     void registerChild(Entity e);
-    void removeChild(Entity e);
-
+    Entity removeChild(Entity e);
     List<Entity> getEntityChildren();
+    void setParent(Entity e);
+
+    @Override
+    int compareTo(Entity o);
 }

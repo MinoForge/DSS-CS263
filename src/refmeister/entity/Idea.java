@@ -59,6 +59,12 @@ public class Idea extends Editable implements Relatable {
 		this(title, "Unset Description", new ArrayList<RefIdea>());
 	}
 
+    /**
+     * Default Constructor. At this time, we do not support this.
+     */
+	public Idea() {
+	    throw new UnsupportedOperationException("Must specify at least a title for this Idea.");
+    }
 	/**
 	 * Retrieves the ArrayList of RefIdeas.
 	 * @return The ArrayList of RefIdeas.

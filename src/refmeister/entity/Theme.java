@@ -55,6 +55,13 @@ public class Theme extends Editable {
 		this(title, "Unset Description", parent, new ArrayList<Editable>());
 	}
 
+    /**
+     * Default Constructor. At this time, you must specify at least a title.
+     */
+	public Theme() {
+	    throw new UnsupportedOperationException("Must specify at least a title for this Theme.");
+    }
+
 	/*
 	 * This method will move a theme from one topic to another topic as long as
 	 * the theme is not already in the topic and if the topic exists. This reeks of code smells

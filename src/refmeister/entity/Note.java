@@ -41,6 +41,13 @@ public class Note extends Editable {
 		this(title, "Unset Description", parent);
 	}
 
+    /**
+     * Default constructor. As of right now, we do not support creating Note's without at least a
+     * title.
+     */
+	public Note() {
+	    throw new UnsupportedOperationException("Must specify at least a title for a Note.");
+    }
 	/**
 	 * Retrieves this Note's parent.
 	 * @return This Note's parent.
@@ -74,7 +81,7 @@ public class Note extends Editable {
 	 * @return The list of this Editable's children.
 	 */
 	@Override
-	public List<Editable> getEntityChildren() {
+	public List<Entity> getEntityChildren() {
 		return null;
 	}
 
@@ -102,6 +109,11 @@ public class Note extends Editable {
 	public boolean createChild(String title, String description) {
 		return false;
 	}
+
+    @Override
+    public void registerChild(Entity e) {
+
+    }
 
     /**
      * Removes a child from This Editable.

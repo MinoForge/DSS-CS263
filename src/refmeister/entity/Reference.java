@@ -48,7 +48,7 @@ public class Reference extends Editable {
 		this.relations = ideas;
 		this.notes = notes;
 		this.parent = parent;
-		Editable lib = getParent().getParent().getParent();
+		Entity lib = getParent().getParent().getParent();
 		if(lib instanceof Library) {
 		    Library myLib = (Library)lib;
 		    myLib.getRefs().add(this);
@@ -89,6 +89,15 @@ public class Reference extends Editable {
 		this(title, description, new String[13][], new ArrayList<Relation>(),
 				new ArrayList<Note>(), parent);
 	}
+
+    /**
+     * Default Constructor. At this time, we do not support creating a Reference without at least
+     * a title.
+     */
+	public Reference() {
+	    throw new UnsupportedOperationException("Must specify at least a title for this Reference" +
+                ".");
+    }
 
     /**
      * Gets the reference data.
@@ -293,7 +302,7 @@ public class Reference extends Editable {
 	 * Retrieves the list of this Editable's children.
 	 * @return The list of this Editable's children.
 	 */
-	public List<Editable> getEntityChildren() {
+	public List<Entity> getEntityChildren() {
 		return null;
 	}
 	/**

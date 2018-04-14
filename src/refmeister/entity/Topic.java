@@ -48,6 +48,10 @@ public class Topic extends Editable {
         this(title, "Unset Description", parent, new ArrayList<Entity>());
     }
 
+    public Topic() {
+        throw new UnsupportedOperationException("Must specify at least a title for this Topic");
+    }
+
     void register(Entity theme){
         themes.add(theme);
     }

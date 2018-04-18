@@ -1,14 +1,11 @@
 package test;
 
+import refmeister.XML.FileManager;
 import refmeister.XML.MalformedXMLException;
-import refmeister.XML.SaveSystem;
 import refmeister.XML.XMLParser;
 import refmeister.entity.*;
-import refmeister.entity.Interfaces.Entity;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -32,9 +29,9 @@ public class XMLSaveTest {
         r2.addArgument(arg2, 2.5f);
         r1.addNote("Ham is delicious", "Like really eat it all the time");
 
-        SaveSystem.FILE_SYSTEM.start();
-        SaveSystem.FILE_SYSTEM.setFileName("ssTest");
-        SaveSystem.FILE_SYSTEM.save(lib);
+        FileManager.getInstance().start();
+        FileManager.getInstance().setFileName("ssTest");
+        FileManager.getInstance().save(lib);
 
         try {
             Thread.sleep(1000);
@@ -42,7 +39,7 @@ public class XMLSaveTest {
             e.printStackTrace();
         }
 
-        SaveSystem.FILE_SYSTEM.stop();
+        FileManager.getInstance().stop();
 
         try (Scanner s = new Scanner(new File("refmeister-wd/ssTest.rl"))){
             s.useDelimiter("\\Z");

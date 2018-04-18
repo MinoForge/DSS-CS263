@@ -1,3 +1,26 @@
+*********** FOR CALEB -> REFLECTION FOR THE SPRINT *************
+- We didn't stick to our trello board backlog as much as we planned to.
+- Keeping a communal change log was a brilliant idea and super helpful/useful. That way, we didn't
+have to backtrack.
+- We(sley) learned a lot about file systems and interactions with threads.
+- We gained a better understanding of loose-coupling and while it was a large amount of code
+re-writing, it helped our program out in the end and will make future changes easier to implement.
+- We found that we did not need an interface for every entity class, we really only needed one
+interface for the entities.
+- Giving us feedback on our minutes early was very helpful for both the team morale and future
+planning in minutes.
+- ADD MORE?
+
+
+
+
+
+
+
+
+
+
+
 Created CHANGELOG.txt to keep track of changes.--Peter
 Created controllers package.--Peter
 Moved Controller to Controllers.--Peter
@@ -123,3 +146,4 @@ XML:
 Other:
     - Every Instance of Editable changed to an instance of Entity
     - Remove Setters for Lists
+    - Updated the UML Diagram for our Entity classes.

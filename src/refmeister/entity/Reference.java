@@ -9,6 +9,11 @@ import refmeister.entity.Interfaces.Relation;
 
 import java.util.*;
 
+/**
+ * TODO
+ * @author
+ * @version
+ */
 public class Reference extends Editable implements Relatable {
 
     /**
@@ -309,7 +314,6 @@ public class Reference extends Editable implements Relatable {
      * @param o object to be checked
      * @return boolean of
      */
-    //TODO: Citation
     public boolean equals(Object o){
         if(this == o){
             return true;
@@ -322,16 +326,28 @@ public class Reference extends Editable implements Relatable {
 
     }
 
+    /**
+     * TODO
+     * @param r
+     */
     @Override
     public void registerRelation(Relation r) {
         this.relations.add(r);
     }
 
+    /**
+     * TODO
+     * @param r
+     */
     @Override
     public void removeRelation(Relation r) {
         this.relations.removeIf(r::equals);
     }
 
+    /**
+     * Returns a list of strings that will be displayed for the menu.
+     * @return A list of strings that will be displayed for the menu.
+     */
     @Override
     public List<String> listOptions() {
         List<String> options = new ArrayList<>();

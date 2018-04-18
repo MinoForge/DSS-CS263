@@ -2,6 +2,7 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
+import refmeister.entity.Interfaces.Relatable;
 import refmeister.entity.Interfaces.Relation;
 
 import java.util.Collections;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * This is an intermediate class modeling the links associating a Reference and an Idea.
  * @author Red Team/DevSquad Supreme
- * @version 25, 3, 2018
+ * @version 17, 4, 2018
  */
 class RefIdea implements Saveable, Relation {
 
@@ -27,34 +28,34 @@ class RefIdea implements Saveable, Relation {
 	public RefIdea(Reference ref, Idea idea) {
 		this.reference = ref;
 		this.idea = idea;
-
-		ref.registerRelation(this);
-		idea.registerRelation(this);
+		this.reference.registerRelation(this);
+		this.idea.registerRelation(this);
 	}
 
 	/**
 	 * Retrieves the Reference that is associated with this RefIdea's idea.
 	 * @return The Reference that is associated with this RefIdea's idea.
 	 */
-	public Reference getReference() {
-		return reference;
-	}
+	public Relatable getReference() {
+	    return this.reference;
+    }
 
-	/**
+    /**
 	 * Associates this RefIdea's idea with a new specified reference.
 	 * @param reference The new specified reference.
 	 */
 	public void setReference(Reference reference) {
-		this.reference = reference;
-		reference.registerRelation(this);
+	    this.reference = reference;
+	    this.reference.registerRelation(this);
 	}
 
 	/**
 	 * Retrieves the Idea that is associated with this RefIdea's reference.
 	 * @return The Idea that is associated with this RefIdea's reference.
 	 */
-	public Idea getEntity() {
-		return idea;
+	@Override
+	public Relatable getEntity() {
+	    return this.idea;
 	}
 
 	/**
@@ -62,8 +63,8 @@ class RefIdea implements Saveable, Relation {
 	 * @param idea The new specified idea.
 	 */
 	public void setEntity(Idea idea) {
-		this.idea = idea;
-		idea.registerRelation(this);
+	    this.idea = idea;
+	    this.idea.registerRelation(this);
 	}
 
 	/**
@@ -71,8 +72,8 @@ class RefIdea implements Saveable, Relation {
 	 * RefIdea that links them, it will remove the RefIdea from that ArrayList.
 	 */
 	public void destroy() {
-		reference.removeRelation(this);
-        idea.removeRelation(this);
+	    this.reference.removeRelation(this);
+	    this.idea.removeRelation(this);
 	}
 	/**
 	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
@@ -94,7 +95,7 @@ class RefIdea implements Saveable, Relation {
 	@Override
 	public String getSaveString(XMLManager manager) {
 		String xml = String.format("<refarg reference=\"%s\" entity=\"%s\" />\n",
-				this.getReference().getTitle(), this.getEntity().getTitle());
+				this.reference.getTitle(), this.idea.getTitle());
 
 		manager.addEntity(this.idea);
 		manager.addAssociation(xml);

@@ -121,10 +121,10 @@ public class Idea extends Editable implements Relatable {
 	}
 
 	/**
-	 * TODO Will edit this later.
-	 * @return
-	 * @param manager
-	 */
+	 * Gets the save string.
+	 * @param manager   the XML manager to use
+     * @return          the save string of this object
+     */
 	@Override
 	public String getSaveString(XMLManager manager) {
 		return String.format("<idea title=\"%s\" description=\"%s\">\n", getTitle(), getDescription());

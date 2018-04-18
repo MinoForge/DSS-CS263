@@ -1,8 +1,6 @@
 package refmeister.management;
 
 
-import refmeister.display.CLIDisplay;
-import refmeister.display.Displayer;
 import refmeister.entity.WorkingDirectory;
 
 import java.io.File;
@@ -30,7 +28,7 @@ public class RefMeisterExec {
      */
     public static void main(String[] args) {
         String directory = DEFAULT_DIRECTORY;
-        Displayer display = null;
+        //Displayer display = null;
         WorkingDirectory wDir = null;
 
         int argIndex = 0;
@@ -48,12 +46,12 @@ public class RefMeisterExec {
             System.out.println(ade.getMessage());
         }
 
-        display = new CLIDisplay(wDir);
+        //display = new CLIDisplay(wDir);
 
         boolean quit = false;
         while(!quit) {
-            display.displayCurrent();
-            quit = display.pickOption();
+        //    display.displayCurrent();
+        //    quit = display.pickOption();
         }
     }
 }

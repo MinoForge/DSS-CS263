@@ -131,7 +131,7 @@ public class Reference extends Editable implements Relatable {
 
     /**
      * Generates a citation.
-     * <bold>CURRENTLY DOES NOT WORK.</bold>
+     * <b>CURRENTLY DOES NOT WORK.</b>
      * @param format the citation format
      * @return       the formatted output
      */
@@ -251,7 +251,7 @@ public class Reference extends Editable implements Relatable {
 	*/
 
 	/**
-	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
+	 * A list of all of this Saveable's saveable children. This method should <b>NEVER</b>
 	 * return null.
 	 * @return a list of all of this object's Saveable children.
 	 */
@@ -346,6 +346,11 @@ public class Reference extends Editable implements Relatable {
             options.add(e.getTitle());
         }
         return options;
+    }
+
+    @Override
+    public List<String> listAttributes() {
+        return null;
     }
 
     /**

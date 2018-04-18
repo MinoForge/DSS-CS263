@@ -106,7 +106,7 @@ class RefArg implements Saveable, RatedRelation {
 	}
 
 	/**
-	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
+	 * A list of all of this Saveable's saveable children. This method should <b>NEVER</b>
 	 * return null.
 	 * @return a list of all of this object's Saveable children.
 	 */

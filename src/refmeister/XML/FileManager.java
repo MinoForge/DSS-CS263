@@ -48,7 +48,7 @@ public final class FileManager {
     private String fileName;
 
     /**
-     * The libraryLock for managing access to the library. THIS SHOULD <bold>ALWAYS</bold> BE LOCKED
+     * The libraryLock for managing access to the library. THIS SHOULD <b>ALWAYS</b> BE LOCKED
      * WHEN READING OR WRITING TO THE LIBRARY TO ENSURE VALID LIBRARY STATE WHEN SAVING.
      */
     private Lock libraryLock;
@@ -150,6 +150,7 @@ public final class FileManager {
 
     /**
      * Saves the given library to the disk.
+     * @param l the library to save
      */
     public synchronized void save(Library l){
         try {
@@ -233,6 +234,7 @@ public final class FileManager {
      * Loads the given library on the calling thread, and forces the file thread to wait until
      * finished.
      * @param file  the file to load
+     * @return      true if the library loaded correctly, false otherwise
      */
     public boolean load(File file){
         boolean out = true;
@@ -263,8 +265,8 @@ public final class FileManager {
 
     /**
      * Gets the library this File Manager is currently bound to. The library currently used by
-     * the File Manager should <bold>ALWAYS</bold> be locked using using the provided lock when
-     * editing <italics>any</italics> child of this library, to ensure that the library isn't
+     * the File Manager should <b>ALWAYS</b> be locked using using the provided lock when
+     * editing <i>any</i> child of this library, to ensure that the library isn't
      * changed mid-save.
      * @return the library.
      */

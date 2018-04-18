@@ -138,8 +138,9 @@ public class XMLParser { //This is the second parser I've had to write this seme
 
     /**
      * Makes the requested object, and then returns it if it's a valid parent.
-     * @param tag the passed tag
-     * @param parent the parent of this tag, if it has one. Is null if no parent exists.
+     * @param tag       the passed tag
+     * @param parent    the parent of this tag, if it has one. Is null if no parent exists.
+     * @return          the entity made
      */
     private Entity makeEntity(String tag, Entity parent){
         String type = getTagType(tag);
@@ -295,19 +296,31 @@ public class XMLParser { //This is the second parser I've had to write this seme
         T two;
     }
 
+    /**
+     * Creates an entity given a tag and the entity created by this element's parent.
+     */
     @FunctionalInterface
     public interface EntityFactory {
         /**
          * Creates an entity from the given tag and parent, or returns null if it failed.
-         * @param tag
-         * @param parent
-         * @return
+         * @param tag       The tag being passed
+         * @param parent    The parent of this entity
+         * @return          The entity constructed, or null if the created entity is not a valid
+         *                      parent.
          */
         Entity makeEntity(String tag, Entity parent);
     }
 
+    /**
+     * Creates a relation given a tag.
+     */
     @FunctionalInterface
     public interface RelationFactory {
+        /**
+         * Makes a relation out of a tag.
+         * @param tag   the tag being passed
+         * @return      the relation
+         */
         Relation makeRelation(String tag);
     }
 }

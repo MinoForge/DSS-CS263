@@ -2,11 +2,8 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
+import refmeister.entity.Interfaces.*;
 import refmeister.entity.Interfaces.Editable;
-import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Interfaces.Editable;
-import refmeister.entity.Interfaces.Relatable;
-import refmeister.entity.Interfaces.Relation;
 
 import java.util.*;
 
@@ -170,4 +167,19 @@ public class Idea extends Editable implements Relatable {
     public void delete() {
     	destroy();
 	}
+
+    /**
+     * Returns the list of Relations for this idea.
+     * @return the List of Relations for this idea.
+     */
+    public List<Relation> getRelations(){
+        return this.ideas;
+    }
+    public void registerRatedRelation(RatedRelation r){
+        throw new UnsupportedOperationException();
+    }
+
+    public void removeRatedRelation(RatedRelation r){
+        throw new UnsupportedOperationException();
+    }
 }

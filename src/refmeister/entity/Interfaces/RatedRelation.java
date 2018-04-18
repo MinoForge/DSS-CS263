@@ -6,4 +6,5 @@ package refmeister.entity.Interfaces;
 public interface RatedRelation extends Relation {
     float getRating();
     void setRating(float rating);
+
 }

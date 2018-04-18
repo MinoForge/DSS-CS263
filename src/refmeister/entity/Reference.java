@@ -2,10 +2,7 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Interfaces.Editable;
-import refmeister.entity.Interfaces.Relatable;
-import refmeister.entity.Interfaces.Relation;
+import refmeister.entity.Interfaces.*;
 
 import java.util.*;
 
@@ -32,6 +29,12 @@ public class Reference extends Editable implements Relatable {
      */
 	private Entity parent;
 
+    private List<Entity> notes;
+
+    private List<Relation> ideas;
+
+    private List<RatedRelation> args;
+
     /**
      * Creates a reference
      * @param title     the title of this reference
@@ -39,16 +42,19 @@ public class Reference extends Editable implements Relatable {
      * @param refData   the reference data of this reference
      * @param ideas     a list of associations to ideas that this reference is associated with
      * @param notes     a list of all notes with this reference as a parent
+     * @param args      a list of all arguments
      * @param parent    the parent of this reference
      */
 	private Reference(String title, String desc, String[][] refData, List<Relation> ideas,
-					 List<Note> notes, Theme parent) {
+					 List<Entity> notes, List<RatedRelation> args, Theme parent) {
 		setTitle(title);
 		setDescription(desc);
 		this.refData = refData;
-		this.relations = ideas;
+		this.notes = notes;
 		this.parent = parent;
-		parent.registerChild(this);
+        this.ideas = ideas;
+        this.args = args;
+		this.parent.registerChild(this);
 	}
 
     /**
@@ -60,7 +66,7 @@ public class Reference extends Editable implements Relatable {
      */
 	public Reference(String title, String desc, String[][] refData, Theme parent) {
 		this(title, desc, refData, new ArrayList<Relation>(),
-				new ArrayList<Note>(), parent);
+                new ArrayList<Entity>(), new ArrayList<RatedRelation>(), parent);
 	}
 
     /**
@@ -71,7 +77,7 @@ public class Reference extends Editable implements Relatable {
      */
 	public Reference(String title, String[][] refData, Theme parent) {
 		this(title, "Unset Description", refData, new ArrayList<Relation>(),
-				new ArrayList<Note>(), parent);
+				new ArrayList<Entity>(), new ArrayList<RatedRelation>(), parent);
 	}
 
     /**
@@ -82,7 +88,7 @@ public class Reference extends Editable implements Relatable {
      */
 	public Reference(String title, String description, Theme parent) {
 		this(title, description, new String[13][], new ArrayList<Relation>(),
-				new ArrayList<Note>(), parent);
+				new ArrayList<Entity>(), new ArrayList<RatedRelation>(), parent);
 	}
 
     /**
@@ -190,6 +196,8 @@ public class Reference extends Editable implements Relatable {
 		return new RefArg(this, arg, rating);
 	}
 
+
+
     /**
      * Associates an idea.
      * @param idea  the idea to associate
@@ -241,7 +249,6 @@ public class Reference extends Editable implements Relatable {
                 return t;
             }
         }
-
         return new Argument(title, description);
     }
 
@@ -251,7 +258,7 @@ public class Reference extends Editable implements Relatable {
                 return t;
             }
         }
-        return new Argument(title, description);
+        return new Idea(title, description);
     }
 
     /**
@@ -304,6 +311,14 @@ public class Reference extends Editable implements Relatable {
         this.relations.removeIf(r::equals);
     }
 
+    public void registerRatedRelation(RatedRelation r){
+        this.args.add(r);
+    }
+
+    public void removeRatedRelation(RatedRelation r){
+        this.args.remove(r);
+    }
+
     @Override
     public List<String> listOptions() {
         List<String> options = new ArrayList<>();
@@ -312,7 +327,8 @@ public class Reference extends Editable implements Relatable {
         options.add("Add Note");
         options.add("Add Idea");
         options.add("Add Argument");
-        options.add("Generate Citation");
+        options.add("Generate MLA Citation");
+        options.add("Generate APA Citation");
         options.add("View Directory");
         for (Entity e : getEntityChildren()) {
             options.add(e.getTitle());
@@ -369,6 +385,57 @@ public class Reference extends Editable implements Relatable {
 
     private void destroy() {
         //TODO
+    }
+    /**
+     * Returns the list of Relations for this Reference
+     * @return the List of Relations for this Reference.
+     */
+    public List<Relation> getRelations(){
+        return this.relations;
+    }
+
+    /**
+     * Retrieves either the title, description, notes, ideas, arguments, or  null depending on the String passed to the
+     * method.
+     * @param attribute The String that determines what attribute to choose.
+     * @return this.getTitle() if attribute is "title", this.getDescription() if attribute is
+     * "description", or null otherwise.
+     */
+    public String getAttribute(String attribute){
+        if(attribute.equals("title")){
+            return this.getTitle();
+        }
+        else if(attribute.equals("description")) {
+            return this.getDescription();
+        }
+        else if(attribute.equals("notes")){
+            String result = "";
+            for(Entity note : notes){
+                result = note.getTitle() + "\n";
+            }
+            return result;
+        }
+        else if(attribute.equals("arguments")){
+            String result = "";
+            for(RatedRelation arg : args) {
+                if (arg instanceof Argument) {
+                    result = ((Argument) arg).getTitle() + "\n";
+                }
+            }
+            return result;
+        }
+        else if(attribute.equals("ideas")){
+            String result = "";
+            for(Relation idea : ideas) {
+                if (idea instanceof Idea) {
+                    result = ((Idea) idea).getTitle() + "\n";
+                }
+            }
+            return result;
+        }
+        else{
+            return null;
+        }
     }
 
 }

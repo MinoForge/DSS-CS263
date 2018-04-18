@@ -163,4 +163,23 @@ public class Argument extends Editable implements Relatable {
     public void removeRelation(Relation r) {
         this.arguments.removeIf(r::equals);
     }
+
+    public List<String> listOptions(){
+        List<String> options = new ArrayList();
+        options.add("Delete Argument");
+        options.add("Edit Argument");
+        options.add("Change Rating");
+        options.add("Change Relation");
+        options.add("View Directory");
+        options.add("Move Up");
+        return options;
+    }
+
+    public List<String> listAttributes(){
+        List<String> attr = new ArrayList();
+        attr.add(this.getTitle());
+        attr.add(this.getDescription());
+
+        return attr;
+    }
 }

@@ -139,4 +139,22 @@ public class Idea extends Editable implements Relatable {
     public void removeRelation(Relation r) {
         this.ideas.removeIf(r::equals);
     }
+
+    public List<String> listOptions(){
+        List<String> options = new ArrayList();
+        options.add("Delete Idea");
+        options.add("Edit Idea");
+        options.add("Change Relation");
+        options.add("View Directory");
+        options.add("Move Up");
+        return options;
+    }
+
+    public List<String> listAttributes(){
+        List<String> attr = new ArrayList();
+        attr.add(this.getTitle());
+        attr.add(this.getDescription());
+
+        return attr;
+    }
 }

@@ -25,7 +25,7 @@ public class Reference extends Editable implements Relatable {
     /**
      * The theme parent of this reference.
      */
-	private Theme parent;
+	private Entity parent;
 
     /**
      * Creates a reference
@@ -145,6 +145,10 @@ public class Reference extends Editable implements Relatable {
         return cite;
 	}
 
+	/**
+	 * Generates an MLA citation based on the information in refData.
+	 * @return A String containing the MLA citation.
+	 */
 	public String generateMLA() {
 	    StringBuilder cite = new StringBuilder();
 	    for(int i = 0; i < refData[0].length; i++) {
@@ -170,6 +174,10 @@ public class Reference extends Editable implements Relatable {
         return cite.toString();
     }
 
+    /**
+     * Generates and APA citation based on the information in refData.
+     * @return A String containing the APA citation.
+     */
     public String generateAPA() {
 	    StringBuilder cite = new StringBuilder();
         for(int i = 0; i < refData[0].length; i++) {
@@ -253,6 +261,7 @@ public class Reference extends Editable implements Relatable {
         out.addAll(relations);
 	    return out;
 	}
+
 	/**
 	 * Retrieves the list of this Entity's children.
 	 * @return The list of this Entity's children.
@@ -260,6 +269,7 @@ public class Reference extends Editable implements Relatable {
 	public List<Entity> getEntityChildren() {
 		return children;
 	}
+
 	/**
 	 * Creates a child for this Entity.
 	 * @param title The title for the child.
@@ -270,7 +280,8 @@ public class Reference extends Editable implements Relatable {
     public Entity createChild(String title, String description) {
         return null;
     }
-	/**
+
+    /**
 	 * Gets the XML representation of this saveable object. Saveable objects that are association
 	 * classes should register their XML output with the XMLManager, and Argument/Ideas should
 	 * also register with the XMLManager.
@@ -319,5 +330,50 @@ public class Reference extends Editable implements Relatable {
     @Override
     public void removeRelation(Relation r) {
         this.relations.removeIf(r::equals);
+    }
+
+    @Override
+    public List<String> listOptions() {
+        List<String> options = new ArrayList<>();
+        options.add("Delete Reference");
+        options.add("Edit Reference");
+        options.add("Add Note");
+        options.add("Add Idea");
+        options.add("Add Argument");
+        options.add("Generate Citation");
+        options.add("View Directory");
+        for (Entity e : getEntityChildren()) {
+            options.add(e.getTitle());
+        }
+        return options;
+    }
+
+    /**
+     * Sorts all of references children (Notes, Arguments and Ideas) in ascending or descending
+     * order based on their titles.
+     * @param order Specifies either ascending or descending order.
+     */
+    @Override
+    public void sort(String order) {
+         List<Entity> notes = new ArrayList<>();
+         List<Entity> args  = new ArrayList<>();
+         List<Entity> ideas = new ArrayList<>();
+         for(Entity e : getEntityChildren()) {
+             if(e instanceof Note)
+                 notes.add(e);
+             if(e instanceof Argument)
+                 args.add(e);
+             if(e instanceof Idea)
+                 ideas.add(e);
+         }
+         if(order.toLowerCase().equals("a-z")) {
+             notes.sort(Comparator.naturalOrder());
+             args.sort(Comparator.naturalOrder());
+             ideas.sort(Comparator.naturalOrder());
+         } else if(order.toLowerCase().equals("z-a")) {
+             notes.sort(Comparator.reverseOrder());
+             args.sort(Comparator.reverseOrder());
+             ideas.sort(Comparator.reverseOrder());
+         }
     }
 }

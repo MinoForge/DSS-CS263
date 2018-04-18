@@ -18,6 +18,7 @@ public interface Entity extends Saveable, Comparable<Entity>{
     List<Entity> getEntityChildren();
     void setParent(Entity e);
 
+    void sort(String order);
     @Override
     int compareTo(Entity o);
 }

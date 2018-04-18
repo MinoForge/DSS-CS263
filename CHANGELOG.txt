@@ -38,6 +38,7 @@ Entity Interfaces:
         - Changed the field parent from private to protected.
         - Added the protected field children.
         - Added a getChildren method.
+        - Added a sort method to sort children in ascending or descending order.
     Entity:
         - Moved the registerRelation and removeRelation methods to the
           Relatable interface.
@@ -71,16 +72,22 @@ Entity Classes:
         - Changed getChildren to getEntityChildren.
         - Added a default constructor.
     RefArg:
+        - Updated to fit with the new Relation interface.
 
     Reference:
         - Wrote the equals method.
         - Added code for generating MLA and APA citations.
         - Added a default constructor.
+        - Added the listOptions method.
     RefIdea:
+        - Updated to fit with the new Relation interface.
 
     Theme:
         - Wrote the equals method.
         - Added a default constructor.
+        - Added a field library that contains the library that the theme is
+          found in
+
     Topic:
         - Wrote the equals method.
         - Removed the registerRelation and removeRelation methods.
@@ -94,6 +101,10 @@ Entity Classes:
         they now all implement removeChild.
         - Added a default constructor.
         - Removed each class's child list and moved it to Editable
+        - Added a default constructor to all Entity Classes.
+        - Removed all getEntityChildren methods was added to Editable superclass
+        - Add to all entity classes a createChild class
+        - Implemented listOptions and listAttributes in all entity classes
 Management:
     RefMeisterExec:
         Rewrote main()

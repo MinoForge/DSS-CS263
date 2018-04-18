@@ -79,6 +79,7 @@ Entity Classes:
         - Added code for generating MLA and APA citations.
         - Added a default constructor.
         - Added the listOptions method.
+        - Added a sort method to sort each of the types of children independently.
     RefIdea:
         - Updated to fit with the new Relation interface.
 

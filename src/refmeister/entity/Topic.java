@@ -45,6 +45,10 @@ public class Topic extends Editable implements Comparable<Entity> {
         this(title, "Unset Description", parent, new ArrayList<Entity>());
     }
 
+    /**
+     * Default Constructor for a Topic. As of now, we are not allowing the creation of Topics
+     * without at least a title.
+     */
     public Topic() {
         throw new UnsupportedOperationException("Must specify at least a title for this Topic");
     }
@@ -57,6 +61,10 @@ public class Topic extends Editable implements Comparable<Entity> {
         return new ArrayList<>(children);
     }
 
+    /**
+     * Returns a string representation of this topic.
+     * @return a string representation of this topic.
+     */
     @Override
     public String toString() {
         return "Topic{" +
@@ -65,6 +73,7 @@ public class Topic extends Editable implements Comparable<Entity> {
                 ", themes=" + children +
                 '}';
     }
+
     /**
      * Creates an XML tag for an editable object.
      * @param manager   The XMLManager that this traversal is being used with.
@@ -82,6 +91,7 @@ public class Topic extends Editable implements Comparable<Entity> {
     public List<Saveable> getSaveableChildren() {
         return new ArrayList<>(children);
     }
+
     /**
      * Creates a child for this Entity.
      * @param title The title for the child.
@@ -97,7 +107,6 @@ public class Topic extends Editable implements Comparable<Entity> {
         }
         return new Theme(title, description, this);
     }
-
 
     /**
      * Checks the equality between this Library and a passed in object.
@@ -115,8 +124,12 @@ public class Topic extends Editable implements Comparable<Entity> {
         return false;
     }
 
+    /**
+     * Returns a list of strings that will be displayed for the menu.
+     * @return A list of strings that will be displayed for the menu.
+     */
     public List<String> listOptions(){
-        List<String> options = new ArrayList();
+        List<String> options = new ArrayList<>();
         options.add("Delete Topic");
         options.add("Edit Topic");
         options.add("Add Theme");
@@ -130,8 +143,12 @@ public class Topic extends Editable implements Comparable<Entity> {
         return options;
     }
 
+    /**
+     * Returns a list of attributes that contains the title and description of the topic.
+     * @return A list of attributes that contains the title and description of the topic.
+     */
     public List<String> listAttributes(){
-        List<String> attr = new ArrayList();
+        List<String> attr = new ArrayList<>();
         attr.add(this.getTitle());
         attr.add(this.getDescription());
 

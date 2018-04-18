@@ -68,6 +68,7 @@ public class Library extends Editable {
     public List<Saveable> getSaveableChildren() {
         return new ArrayList<>(children);
     }
+
     /**
      * Retrieves the list of this Entity's children.
      * @return The list of this Entity's children.
@@ -119,8 +120,12 @@ public class Library extends Editable {
 
     }
 
+    /**
+     * Returns a list of strings that will be displayed for the menu.
+     * @return A list of strings that will be displayed for the menu.
+     */
     public List<String> listOptions(){
-        List<String> options = new ArrayList();
+        List<String> options = new ArrayList<>();
         options.add("Delete Library");
         options.add("Edit Library");
         options.add("Add Topic");
@@ -133,8 +138,12 @@ public class Library extends Editable {
         return options;
     }
 
+    /**
+     * Returns a list of attributes that contains the title and description of a library.
+     * @return A list of attributes that contains the title and description of a library.
+     */
     public List<String> listAttributes(){
-        List<String> attr = new ArrayList();
+        List<String> attr = new ArrayList<>();
         attr.add(this.getTitle());
         attr.add(this.getDescription());
 

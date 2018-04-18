@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * The Idea class models an Idea that would be listed in one or multiple References.
  * @author Brandon Townsend
- * @version 25, 3, 2018
+ * @version 17, 4, 2018
  */
 public class Idea extends Editable implements Relatable {
 
@@ -140,8 +140,12 @@ public class Idea extends Editable implements Relatable {
         this.ideas.removeIf(r::equals);
     }
 
-    public List<String> listOptions(){
-        List<String> options = new ArrayList();
+	/**
+	 * Returns a list of strings that will be displayed for the menu.
+	 * @return A list of strings that will be displayed for the menu.
+	 */
+	public List<String> listOptions(){
+        List<String> options = new ArrayList<>();
         options.add("Delete Idea");
         options.add("Edit Idea");
         options.add("Change Relation");
@@ -150,8 +154,12 @@ public class Idea extends Editable implements Relatable {
         return options;
     }
 
+    /**
+     * Returns a list of attributes that contains the title and description of an idea.
+     * @return a list of attributes that contains the title and description of an idea.
+     */
     public List<String> listAttributes(){
-        List<String> attr = new ArrayList();
+        List<String> attr = new ArrayList<>();
         attr.add(this.getTitle());
         attr.add(this.getDescription());
 

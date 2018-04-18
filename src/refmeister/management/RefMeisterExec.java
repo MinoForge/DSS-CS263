@@ -1,6 +1,8 @@
 package refmeister.management;
 
 
+import refmeister.controllers.Controller;
+import refmeister.controllers.SingleLibraryController;
 import refmeister.display.CLIDisplay;
 import refmeister.display.Displayer;
 import refmeister.entity.WorkingDirectory;
@@ -48,7 +50,8 @@ public class RefMeisterExec {
             System.out.println(ade.getMessage());
         }
 
-        display = new CLIDisplay(wDir);
+        Controller control = new SingleLibraryController(wDir);
+        display = new CLIDisplay(control);
 
         boolean quit = false;
         while(!quit) {

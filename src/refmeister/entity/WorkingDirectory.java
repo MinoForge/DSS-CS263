@@ -7,6 +7,8 @@ import refmeister.management.RefMeisterExec;
 import java.io.File;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The WorkingDirectory class models the directory that a library will be added, modified, and
@@ -78,4 +80,22 @@ public class WorkingDirectory implements Displayable {
     public void setAttribute(String attribute, String contents) {
 
     }
+
+	@Override
+	public List<String> listOptions() {
+		List<String> options = new ArrayList<>();
+		if(workingDir.getParentFile().exists()) {
+		    options.add("Parent Directory");
+        }
+        File[] allFiles = workingDir.listFiles();
+        for(File f: allFiles) {
+		    if (f.isDirectory()) {
+		        options.add(f.getName());
+            }
+            if (f.isFile() && f.getName().endsWith(".rl")) {
+		        options.add(f.getName());
+            }
+        }
+        return options;
+	}
 }

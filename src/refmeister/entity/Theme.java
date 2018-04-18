@@ -17,6 +17,7 @@ import java.util.List;
 
 public class Theme extends Editable {
 
+	/** A field to hold the library parent that this theme belongs to. */
     private Entity library;
 
     /**
@@ -35,6 +36,7 @@ public class Theme extends Editable {
 		parent.registerChild(this);
 		library = parent.getParent();
 	}
+
 	/**
 	 * Constructor which sets an empty ArrayList of references, while still passing
 	 * the others.
@@ -45,6 +47,7 @@ public class Theme extends Editable {
 	public Theme(String title, String desc, Topic parent){
 		this(title, desc, parent, new ArrayList<Entity>());
 	}
+
 	/**
 	 * Constructor which sets an empty ArrayList of references, and sets
 	 * description to a default value while still passing the others.
@@ -67,7 +70,6 @@ public class Theme extends Editable {
 	 * the theme is not already in the topic and if the topic exists.
 	 * @param topicTitle The title of the Topic the theme is being moved to.
 	*/
-
 	public void moveTheme(String topicTitle) throws InvalidParameterException {
 		for(Entity t : this.library.getEntityChildren()){
 			if(t.getTitle().equals(topicTitle)){
@@ -114,7 +116,8 @@ public class Theme extends Editable {
 		return false;
 
 	}
-	 /** Gets the XML String of this theme, with all references as it's children.
+
+	/** Gets the XML String of this theme, with all references as it's children.
 	 * @return The formatted XML save string.
 	 * @param manager The XMLManager that handles the XML formatting and parsing.
 	 */
@@ -148,8 +151,12 @@ public class Theme extends Editable {
         return new Reference(title, description, this);
 	}
 
+    /**
+     * Returns a list of strings that will be displayed for the menu.
+     * @return A list of strings that will be displayed for the menu.
+     */
     public List<String> listOptions(){
-        List<String> options = new ArrayList();
+        List<String> options = new ArrayList<>();
         options.add("Delete Theme");
         options.add("Edit Theme");
         options.add("Add Reference");
@@ -163,8 +170,12 @@ public class Theme extends Editable {
         return options;
     }
 
+    /**
+     * Returns a list of attributes that contains the title and description of a theme.
+     * @return A list of attributes that contains the title and description of a theme.
+     */
     public List<String> listAttributes(){
-        List<String> attr = new ArrayList();
+        List<String> attr = new ArrayList<>();
         attr.add(this.getTitle());
         attr.add(this.getDescription());
 

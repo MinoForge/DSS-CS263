@@ -75,6 +75,7 @@ class RefIdea implements Saveable, Relation {
 	    this.reference.removeRelation(this);
 	    this.idea.removeRelation(this);
 	}
+
 	/**
 	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
 	 * return null.
@@ -84,6 +85,7 @@ class RefIdea implements Saveable, Relation {
 	public List<Saveable> getSaveableChildren() {
 		return Collections.emptyList();
 	}
+
 	/**
 	 * Gets the XML representation of this saveable object. Saveable objects that are association
 	 * classes should register their XML output with the XMLManager, and Argument/Ideas should

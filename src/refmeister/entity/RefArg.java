@@ -104,6 +104,7 @@ class RefArg implements Saveable, RatedRelation {
 		this.reference.removeRelation(this);
 		this.argument.removeRelation(this);
 	}
+
 	/**
 	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
 	 * return null.

@@ -37,14 +37,16 @@ public class Note extends Editable {
 	public Note(String title, Reference parent) {
 		this(title, "Unset Description", parent);
 	}
-    /**
+
+	/**
      * Default constructor. As of right now, we do not support creating Note's without at least a
      * title.
      */
     public Note() {
         throw new UnsupportedOperationException("Must specify at least a title for a Note.");
     }
-	/**
+
+    /**
 	 * This Note does not have children, but it still needs to Override this
 	 * method.
 	 * @return An empty list.
@@ -89,8 +91,12 @@ public class Note extends Editable {
 		return false;
 	}
 
+	/**
+	 * Returns a list of strings that will be displayed for the menu.
+	 * @return A list of strings that will be displayed for the menu.
+	 */
     public List<String> listOptions(){
-        List<String> options = new ArrayList();
+        List<String> options = new ArrayList<>();
         options.add("Delete Note");
         options.add("Edit Note");
         options.add("View Directory");
@@ -98,8 +104,12 @@ public class Note extends Editable {
         return options;
     }
 
+    /**
+     * Returns a list of attributes that contains the title and description of a note.
+     * @return A list of attributes that contains the title and description of a note.
+     */
     public List<String> listAttributes(){
-        List<String> attr = new ArrayList();
+        List<String> attr = new ArrayList<>();
         attr.add(this.getTitle());
         attr.add(this.getDescription());
 

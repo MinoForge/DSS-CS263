@@ -342,11 +342,11 @@ public class Reference extends Editable implements Relatable {
         options.add("Add Argument");
         options.add("Generate Citation");
         options.add("View Directory");
-        for(Entity e : getEntityChildren()) {
+        for (Entity e : getEntityChildren()) {
             options.add(e.getTitle());
         }
+        return options;
     }
-    return options;
 
     @Override
     public void sort(String order) {

@@ -221,7 +221,9 @@ public class CLIDisplay implements Displayer {
                 control.delete();
                 break;
             case "Rating": //TODO put in SLC
-                control.sendFunc("rate", "" + (getRating()));
+                //TODO Implement sub-menu to select relatable which we are rating
+                String relatTitle = ""; //replace this
+                control.sendFunc("rate", "" + (getRating()), relatTitle);
                 break;
             case "View Directory":
                 control.viewDir();
@@ -229,7 +231,7 @@ public class CLIDisplay implements Displayer {
             case "Change Relation": //TODO put in SLC
                 control.sendFunc("changeRelation", get("Name of new Relation"));
                 break;
-            case "AddRef": //TODO put in SLC
+            case "Add": //TODO put in SLC
                 control.sendFunc("add", getTD());
                 break;
             case "RefData": //TODO put in SLC

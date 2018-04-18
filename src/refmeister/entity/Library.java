@@ -151,5 +151,8 @@ public class Library extends Editable {
         return attr;
     }
 
-    public void delete() {};
+
+    public void delete() {
+        throw new UnsupportedOperationException();
+    }
 }

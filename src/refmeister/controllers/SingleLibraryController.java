@@ -1,5 +1,6 @@
 package refmeister.controllers;
 
+import com.sun.org.apache.regexp.internal.RE;
 import refmeister.XML.FileManager;
 import refmeister.XML.XMLParser;
 import refmeister.entity.*;
@@ -120,8 +121,8 @@ public class SingleLibraryController implements Controller{
      * Deletes a Library from memory and from the hard disk, and returns the view to the working
      * Directory.
      */
-    public void deleteRoot() { //TODO Wesley please implement this. Want to nuke the library file.
-//        FileManager.getInstance().deleteFile(); //TODO This line right here
+    public void deleteRoot() {
+        FileManager.getInstance().deleteFile();
         viewDir();
     }
 
@@ -138,16 +139,25 @@ public class SingleLibraryController implements Controller{
 
     public void sendFunc(String func, String[] param) {
         switch (func) {
-            case "delete": //TODO fix for relatables(Idea, Argument)
-                selected.delete();
+            case "delete":
+                Entity temp = selected;
+                traverseUp();
+                temp.delete();
                 break;
             case "sort":
                 selected.sort(param[0]);
                 break;
-//            case "rate"://TODO fix for rating? Don't even know how to mess with
-//                if(selected instanceof Relatable) {
-//                    Relatable rel = (Relatable)selected;
-//                }
+            case "rate"://TODO still needs submenu
+                if(selected instanceof Relatable) {
+                    Relatable rel = (Relatable)selected;
+                    List<Relation> listRelations = rel.getRelations();
+                    listRelations.removeIf(o-> !(o instanceof RatedRelation));
+                    listRelations.removeIf(o -> !(o.getEntity().getTitle().equals(param[1])));
+                    if(!listRelations.isEmpty()){
+                        RatedRelation r = (RatedRelation) listRelations.get(0);
+                        r.setRating(Float.parseFloat(param[0]));
+                    }
+                }
             case "":
 
                 break;
@@ -165,8 +175,16 @@ public class SingleLibraryController implements Controller{
      * Sets selected to an object's parent, if that object has a parent.
      */
     public void traverseUp() {
-        if(selected.getParent() != null) {
+        if (selected.getParent() != null && !(selected instanceof Relatable)) {
             setSelected(selected.getParent());
+        } else if(selected.getParent() != null && selected instanceof Relatable) {
+            Relatable r = (Relatable)selected;
+            for(Relation relate: r.getRelations().toArray(new Relation[0])) {
+                Entity parent = (Entity)relate.getEntity().getParent();
+                if (parent != null) {
+                    setSelected(parent);
+                }
+            }
         } else {
             viewDir();
         }

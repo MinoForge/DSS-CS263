@@ -5,8 +5,18 @@ import refmeister.entity.Interfaces.Displayable;
 
 public interface Displayer {
 
-    public void displayCurrent();
+    /**
+     * This method displays all current information and options for the currently selected Entity.
+     */
+    void displayCurrent();
 
-    public boolean pickOption();
+    void editMenu();
+
+
+    /**
+     * The method used to pick an option out of the choices available.
+     * @return true if "quit" is chosen. False otherwise.
+     */
+    boolean pickOption();
 
 }

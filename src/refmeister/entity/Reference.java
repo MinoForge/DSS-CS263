@@ -9,6 +9,11 @@ import refmeister.entity.Interfaces.Relation;
 
 import java.util.*;
 
+/**
+ * This class represents a reference in an academic setting
+ * @author  DevSquad Supreme (Red Team)
+ * @version 1.0
+ */
 public class Reference extends Editable implements Relatable {
 
     /**
@@ -105,33 +110,9 @@ public class Reference extends Editable implements Relatable {
 		this.refData = refData;
 	}
 
-	/**
-	 * Adds a new note to this Reference's ArrayList of notes.
-	 * @param title The title of the note to be added.
-	 * @param desc The description of the note to be added.
-	 * @return If the note is not already in the list, return the new note. Otherwise, return null.
-	 */
-	public Note addNote(String title, String desc) {
-		for(Entity n : children) {
-			// If a note already has the same title as the one we are trying to add, don't add it.
-			if(n.getTitle().equals(title)) {
-				return null;
-			}
-		}
-		return new Note(title, desc, this);
-	}
-
-    /**
-     * Deletes a note with the given title.
-     * @param title the title of the note to delete.
-     */
-	public void deleteNote(String title) {
-		children.removeIf(ed -> ed.getTitle().equals(title));
-	}
 
     /**
      * Generates a citation.
-     * <b>CURRENTLY DOES NOT WORK.</b>
      * @param format the citation format
      * @return       the formatted output
      */
@@ -218,38 +199,6 @@ public class Reference extends Editable implements Relatable {
 		return new RefIdea(this, idea);
 	}
 
-	/*
-	/**
-	 * Gets an array of elements that this object has, with title being at
-	 * index 0, description at index 1, and notes etc. also defined.
-	 * @return An array of Strings to be displayed by the Controller.
-	 *
-
-	public String[] display() {
-		String[] view = new String[notes.size() + ideas.size() +
-                arguments.size() + 5];
-		int i = 0;
-		view[i] = getTitle();
-		view[++i] = getDescription();
-		view[++i] = "Notes:";
-		for(Note n : notes) {
-			view[++i] = n.getTitle();
-		}
-
-		view[++i] = "Ideas:";
-        for(RefIdea idea : ideas) {
-            view[++i] = idea.getEntity().getTitle();
-        }
-
-        view[++i] = "Arguments";
-        for(RefArg a : arguments) {
-            view[++i] = a.getArgument().getTitle();
-        }
-
-		return view;
-	}
-	*/
-
 	/**
 	 * A list of all of this Saveable's saveable children. This method should <b>NEVER</b>
 	 * return null.
@@ -271,14 +220,38 @@ public class Reference extends Editable implements Relatable {
 	}
 
 	/**
-	 * Creates a child for this Entity.
+	 * Creates a child, specifically a Note for this Entity.
 	 * @param title The title for the child.
 	 * @param description The description for the child.
 	 * @return true if the child was able to be created, false otherwise.
 	 */
     @Override
     public Entity createChild(String title, String description) {
-        return null;
+        for(Entity t : children) {
+            if(t.getTitle().equals(title)) {
+                return t;
+            }
+        }
+        return new Note(title, description, this);
+    }
+
+    public Entity createArgument(String title, String description){
+        for(Entity t : children) {
+            if (t.getTitle().equals(title)) {
+                return t;
+            }
+        }
+
+        return new Argument(title, description);
+    }
+
+    public Entity createIdea(String title, String description){
+        for(Entity t : children){
+            if (t.getTitle().equals(title)) {
+                return t;
+            }
+        }
+        return new Argument(title, description);
     }
 
     /**
@@ -309,7 +282,6 @@ public class Reference extends Editable implements Relatable {
      * @param o object to be checked
      * @return boolean of
      */
-    //TODO: Citation
     public boolean equals(Object o){
         if(this == o){
             return true;
@@ -348,11 +320,6 @@ public class Reference extends Editable implements Relatable {
         return options;
     }
 
-    @Override
-    public List<String> listAttributes() {
-        return null;
-    }
-
     /**
      * Sorts all of references children (Notes, Arguments and Ideas) in ascending or descending
      * order based on their titles.
@@ -381,4 +348,19 @@ public class Reference extends Editable implements Relatable {
              ideas.sort(Comparator.reverseOrder());
          }
     }
+
+    /**
+     * Returns a list of attributes that contains the title and description of
+     * the reference.
+     * @return A list of attributes that contains the title and description of
+     * the reference.
+     */
+    public List<String> listAttributes() {
+        List<String> attr = new ArrayList<>();
+        attr.add(this.getTitle());
+        attr.add(this.getDescription());
+
+        return attr;
+    }
+
 }

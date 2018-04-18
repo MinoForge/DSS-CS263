@@ -8,14 +8,20 @@ import refmeister.entity.Interfaces.Editable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Topic class models a topic that is a child of a library and may have many themes for
+ * children.
+ * @author Caleb Dinehart
+ * @version 18, 4, 2018
+ */
 public class Topic extends Editable implements Comparable<Entity> {
 
     /**
-     * Creates a topic.
+     * Topic Constructor. Creates a topic.
      * @param title         The title of this topic
      * @param description   The description of this topic
-     * @param parent        This topic's parent
-     * @param themes        A list of this topic's themes
+     * @param parent        This topic's parent. As of now, should be a library
+     * @param themes        A list of this topic's children. As of now, they are themes.
      */
     public Topic(String title, String description, Entity parent, List<Entity> themes){
         this.setTitle(title);
@@ -27,7 +33,7 @@ public class Topic extends Editable implements Comparable<Entity> {
     }
 
     /**
-     * Creates a topic.
+     * Topic Constructor. Creates a topic, but no children have to be specified.
      * @param title         The title of this topic
      * @param description   The description of this topic
      * @param parent        This topic's parent
@@ -37,7 +43,7 @@ public class Topic extends Editable implements Comparable<Entity> {
     }
 
     /**
-     * Creates a topic.
+     * Topic Constructor. Creates a topic, but no description or children have to be specified.
      * @param title     The title of this topic
      * @param parent    The parent library of this topic
      */
@@ -52,6 +58,7 @@ public class Topic extends Editable implements Comparable<Entity> {
     public Topic() {
         throw new UnsupportedOperationException("Must specify at least a title for this Topic");
     }
+
     /**
      * Retrieves the list of this Entity's children.
      * @return The list of this Entity's children.
@@ -154,5 +161,6 @@ public class Topic extends Editable implements Comparable<Entity> {
 
         return attr;
     }
+
 
 }

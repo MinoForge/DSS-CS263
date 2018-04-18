@@ -8,6 +8,7 @@ import java.io.File;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,13 +78,21 @@ public class WorkingDirectory implements Displayable {
 
     }
 
-    @Override
-    public List<String> listOptions() {
-        return Arrays.asList("Change Dir", "Name Dir");
-    }
-
-    @Override
-    public List<String> listAttributes() {
-        return null;
-    }
+	@Override
+	public List<String> listOptions() {
+		List<String> options = new ArrayList<>();
+		if(workingDir.getParentFile().exists()) {
+		    options.add("Parent Directory");
+        }
+        File[] allFiles = workingDir.listFiles();
+        for(File f: allFiles) {
+		    if (f.isDirectory()) {
+		        options.add(f.getName());
+            }
+            if (f.isFile() && f.getName().endsWith(".rl")) {
+		        options.add(f.getName());
+            }
+        }
+        return options;
+	}
 }

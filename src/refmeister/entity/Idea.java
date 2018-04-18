@@ -158,6 +158,7 @@ public class Idea extends Editable implements Relatable {
      * Returns a list of attributes that contains the title and description of an idea.
      * @return a list of attributes that contains the title and description of an idea.
      */
+    @Override
     public List<String> listAttributes(){
         List<String> attr = new ArrayList<>();
         attr.add(this.getTitle());

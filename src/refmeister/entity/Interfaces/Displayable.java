@@ -29,11 +29,4 @@ public interface Displayable {
      * @return  a list of all options.
      */
 	List<String> listOptions();
-
-    /**
-     * Lists all attributes that this object supports.
-     * @return a list of all attributes.
-     */
-    List<String> listAttributes();
-
 }

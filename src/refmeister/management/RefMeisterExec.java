@@ -8,10 +8,8 @@ import refmeister.display.Displayer;
 import refmeister.entity.WorkingDirectory;
 
 import java.io.File;
-import java.nio.file.AccessDeniedException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.nio.file.*;
 
 
 /**
@@ -44,17 +42,29 @@ public class RefMeisterExec {
             argIndex++;
         }
 
+        File dir = new File(DEFAULT_DIRECTORY);
+
+        dir.mkdir();
+  //          System.out.println("exception1: " + e.getMessage());
+    //    }
+
         try {
-            wDir = new WorkingDirectory(Paths.get(directory).toFile());
-        } catch (AccessDeniedException ade) {
-            System.out.println(ade.getMessage());
+            wDir = new WorkingDirectory(dir);
+        } catch (AccessDeniedException e) {
+            System.out.println("exception2: " + e.getMessage());
         }
+
+        int i = 0;
 
         Controller control = new SingleLibraryController(wDir);
         display = new CLIDisplay(control);
 
+
         boolean quit = false;
         while(!quit) {
+            //testcode
+//            System.out.println(i++);
+
             display.displayCurrent();
             quit = display.pickOption();
         }

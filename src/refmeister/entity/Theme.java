@@ -182,4 +182,7 @@ public class Theme extends Editable {
         return attr;
     }
 
+    public void delete() {
+    	//TODO
+	}
 }

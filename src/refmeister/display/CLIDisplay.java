@@ -1,6 +1,7 @@
 package refmeister.display;
 
 import refmeister.controllers.Controller;
+import refmeister.entity.Interfaces.Entity;
 
 
 import java.io.IOException;
@@ -15,12 +16,16 @@ public class CLIDisplay implements Displayer {
     /** The current list of options as a String[] array. **/
     private List<String> itemList;
 
+    /** The scanner which may be accessed from everywhere, to avoid annoying Scanner behavior **/
+    private Scanner scanIn;
+
     /**
      * A constructor which starts a display connected to the controller passed to it.
      * @param control The controller being connected to.
      */
     public CLIDisplay(Controller control) {
         this.control = control;
+        this.scanIn = new Scanner(System.in);
     }
 
     /**
@@ -45,7 +50,7 @@ public class CLIDisplay implements Displayer {
     public boolean pickOption() {
         int choice = getChoice();
 
-        if(choice != -1) {
+        if(choice != -1 && choice < itemList.size()) {
             return choose(choice);
         }
         return false;
@@ -56,7 +61,10 @@ public class CLIDisplay implements Displayer {
     public void editMenu() {
         String[] newVals = editMenu(control.getAttributeTitles(), control.getAttributes());
         for(int i = 0; i < newVals.length; i++) {
-            control.editAttribute(newVals[i].toLowerCase(), newVals[++i]);
+            if(newVals[i] != null) {
+                System.out.println(newVals[i] + ": " + newVals[i+1]);
+                control.editAttribute(newVals[i].toLowerCase(), newVals[++i]);
+            }
         }
     }
 
@@ -67,8 +75,9 @@ public class CLIDisplay implements Displayer {
      * @return
      */
     private String[] editMenu(String[] optionNames, String[] currentValues) {
+        for(String str: optionNames)
+            System.out.println(str);
         clrscr();
-        Scanner scanIn = new Scanner(System.in);
         String[] nameAndVals = new String[optionNames.length*2];
         int j = 0;
         for(int i = 0; i < optionNames.length; i++) {
@@ -77,11 +86,10 @@ public class CLIDisplay implements Displayer {
             System.out.print("New Value: ");
             String newVal = scanIn.nextLine();
             if(!newVal.equals("")) {
-                nameAndVals[j] = optionNames[i];
-                nameAndVals[++j] = newVal;
+                nameAndVals[j++] = optionNames[i];
+                nameAndVals[j++] = newVal;
             }
         }
-        scanIn.close();
 
 
 
@@ -89,7 +97,8 @@ public class CLIDisplay implements Displayer {
     }
 
     private boolean choose(int choice) {
-        return control.functionality(itemList.get(choice));
+        System.out.println("Choice: " + itemList.get(choice));
+        return functionality(itemList.get(choice));
     }
 
 
@@ -98,22 +107,24 @@ public class CLIDisplay implements Displayer {
      * @return -1 if an invalid choice is picked. Otherwise returns the index of the choice.
      */
     private int getChoice() {
-        Scanner scanIn = new Scanner(System.in);
         String strChoice;
         int choice = -1;
 
         System.out.print("Please choose an option: ");
-        strChoice = scanIn.nextLine();
+        if(scanIn.hasNextLine()) {
+            strChoice = scanIn.nextLine();
+            try {
+                choice = Integer.parseInt(strChoice);
+                if (0 <= choice && choice < itemList.size()) {
+                    return choice;
+                }
+            } catch (NumberFormatException nfe) {
+            }
 
-        try {
-            choice = Integer.parseInt(strChoice);
-            if(0 <= choice && choice < itemList.size())
-            return choice;
-        } catch (NumberFormatException nfe) {}
-
-        for (int i = 0; i < itemList.size(); i++) {
-            if(strChoice.equals(itemList.get(i))) {
-                return i;
+            for (int i = 0; i < itemList.size(); i++) {
+                if (strChoice.equals(itemList.get(i))) {
+                    return i;
+                }
             }
         }
 
@@ -121,7 +132,7 @@ public class CLIDisplay implements Displayer {
     }
 
 
-    private static void clrscr(){
+    private static void clrscr() {
         try {
             if (System.getProperty("os.name").contains("Windows"))
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -129,42 +140,100 @@ public class CLIDisplay implements Displayer {
                 Runtime.getRuntime().exec("clear");
         } catch (IOException | InterruptedException ex) {
             clrscr();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 
 
+    public String[] getTD() {
+        return get("Title", "Description");
+    }
+
+    private String get(String desc) {
+        System.out.print(desc + ": ");
+        return scanIn.nextLine();
+    }
+
+    private String[] get(String... descs) {
+        String[] result = new String[descs.length];
+        for(int i = 0; i < descs.length; i++) {
+            result[i] = get(descs[i]);
+        }
+        return result;
+    }
+
+    public double getRating() {
+
+            String strChoice;
+            double choice = -1;
+
+            System.out.print("Please enter a real number x, such that 0<=x<=5 (If invalid input, "+
+                    "defaults to 3): ");
+            strChoice = scanIn.nextLine();
+            try {
+                choice = Integer.parseInt(strChoice);
+                if (0 <= choice && choice <= 5) {
+                    return choice;
+                }
+            } catch (NumberFormatException nfe) {}
+            return 3;
+    }
+
+    public String[][] getRefData() {
+        //TODO Brandon
+        String[][] refData = new String[30][30];
+        //scanIn is defined globally, just need the user input mapped into the right places and
+        //returned.
+        return refData;
+    }
+
+
+
+
+    /**
+     * @param choice The functionality being requested.
+     * @return true if "quit" is the choice
+     */
+    public boolean functionality (String choice) {
+        switch (choice) {
+            case "Quit":
+                return true;
+            case "Create Library":
+                String[] titleDescription = getTD();
+
+                control.createLibrary(titleDescription[0], titleDescription[1]);
+                break;
+            case "Edit":
+                editMenu();
+                break;
+            case "Move Up":
+                control.traverseUp();
+                break;
+            case "SortAlphA":
+                control.sendFunc("sort", "a-z");
+                break;
+            case "SortAlphD":
+                control.sendFunc("sort", "z-a");
+                break;
+            case "Delete":
+                control.delete();
+                break;
+            case "Rating": //TODO put in SLC
+                control.sendFunc("rate", "" + (getRating()));
+                break;
+            case "View Directory":
+                control.viewDir();
+                break;
+            case "Change Relation": //TODO put in SLC
+                control.sendFunc("changeRelation", get("Name of new Relation"));
+                break;
+            case "AddRef": //TODO put in SLC
+                control.sendFunc("add", getTD());
+                break;
+            case "RefData": //TODO put in SLC
+                control.sendFunc("");
+            }
+            return false;
+        }
+
+    //TODO CRY BECAUSE NOT SURE FUNCTIONALITY WILL BE DONE IN 18 HOURS WHEN I GO TO SLEEP
 }

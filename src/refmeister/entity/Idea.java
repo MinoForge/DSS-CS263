@@ -166,4 +166,8 @@ public class Idea extends Editable implements Relatable {
 
         return attr;
     }
+
+    public void delete() {
+    	destroy();
+	}
 }

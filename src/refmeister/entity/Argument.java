@@ -78,6 +78,12 @@ public class Argument extends Editable implements Relatable {
 		return average / arguments.size();
 	}
 
+
+	public void delete() {
+		destroy();
+	}
+
+
 	/**
 	 * Disassociates all of this Argument's RefArgs from this argument.
 	 */
@@ -171,7 +177,6 @@ public class Argument extends Editable implements Relatable {
         List<String> options = new ArrayList<>();
         options.add("Delete Argument");
         options.add("Edit Argument");
-        options.add("Change Rating");
         options.add("Change Relation");
         options.add("View Directory");
         options.add("Move Up");

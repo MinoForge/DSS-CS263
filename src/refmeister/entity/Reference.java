@@ -93,8 +93,8 @@ public class Reference extends Editable implements Relatable {
      * Gets the reference data.
      * @return the refdata
      */
-	public String[] getRefData() {
-		return null;
+	public String[][] getRefData() {
+		return refData;
 	}
 
     /**
@@ -357,6 +357,14 @@ public class Reference extends Editable implements Relatable {
         attr.add(this.getDescription());
 
         return attr;
+    }
+
+    public void delete() {
+        destroy();
+    }
+
+    private void destroy() {
+        //TODO
     }
 
 }

@@ -17,6 +17,7 @@ public interface Entity extends Saveable, Comparable<Entity>{
     Entity removeChild(Entity e);
     List<Entity> getEntityChildren();
     void setParent(Entity e);
+    void delete();
 
     void sort(String order);
     @Override

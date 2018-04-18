@@ -3,13 +3,10 @@ package refmeister.controllers;
 import refmeister.XML.FileManager;
 import refmeister.XML.XMLParser;
 import refmeister.entity.*;
-import refmeister.entity.Interfaces.Displayable;
-import refmeister.entity.Interfaces.Editable;
-import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.*;
 
 import java.io.*;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * The Controller class controls the flow of the program, saving and loading a full library, and
@@ -28,9 +25,11 @@ public class SingleLibraryController implements Controller{
 	/** The File that a library is stored in. */
 	private File libFile;
 
+	/** The current object the controller is pointing to, typecast as an Editable. */
 	private Editable edSelected;
-
+    /** The current object the controller is pointing to, typecast as a Displayable. */
 	private Displayable dispSelected;
+
 
     /**
      * Constructor for the Controller class. Sets a specified WorkingDirectory to the workingDir
@@ -47,6 +46,9 @@ public class SingleLibraryController implements Controller{
     public List<String> displaySelected() {
         return dispSelected.listOptions();
     }
+
+
+
 
     /**
      * Saves the library and all of its children. If there is no specified libFile, then the
@@ -82,19 +84,13 @@ public class SingleLibraryController implements Controller{
         edSelected.setAttribute(attrTitle, attrValue);
     }
 
-    /**
-     * //TODO Wesley please do magic
-     * @param choice The functionality being requested.
-     * @return true if "quit" is the choice
-     */
-    public boolean functionality (String choice) {
-        return false;
-    }
+
 
     @Override
     public String[] getAttributeTitles() {
-        return dispSelected.listAttributes().toArray(new String[0]);
+        return edSelected.listAttributeTitles().toArray(new String[0]);
     }
+
 
     @Override
     public String[] getAttributes() {
@@ -110,7 +106,58 @@ public class SingleLibraryController implements Controller{
     public void createLibrary(String title, String description) {
         currentLib = new Library(title, description);
         saveLibrary();
-        selected = currentLib;
+        setSelected(currentLib);
+    }
+
+    /**
+     * Creates a nice default library, for testing.
+     */
+    public void createLibrary() {
+        createLibrary("Default Library Title", "Default Library Description");
+    }
+
+    /**
+     * Deletes a Library from memory and from the hard disk, and returns the view to the working
+     * Directory.
+     */
+    public void deleteRoot() { //TODO Wesley please implement this. Want to nuke the library file.
+//        FileManager.getInstance().deleteFile(); //TODO This line right here
+        viewDir();
+    }
+
+
+
+    public void delete() {
+        if(selected.getParent() == null) {
+            deleteRoot();
+        } else {
+            sendFunc("delete", null);
+            setSelected(selected.getParent());
+        }
+    }
+
+    public void sendFunc(String func, String[] param) {
+        switch (func) {
+            case "delete": //TODO fix for relatables(Idea, Argument)
+                selected.delete();
+                break;
+            case "sort":
+                selected.sort(param[0]);
+                break;
+//            case "rate"://TODO fix for rating? Don't even know how to mess with
+//                if(selected instanceof Relatable) {
+//                    Relatable rel = (Relatable)selected;
+//                }
+            case "":
+
+                break;
+        }
+    }
+
+    public void viewDir() {
+        currentLib = null;
+        dispSelected = workingDir;
+        edSelected = null;
     }
 
 
@@ -120,6 +167,8 @@ public class SingleLibraryController implements Controller{
     public void traverseUp() {
         if(selected.getParent() != null) {
             setSelected(selected.getParent());
+        } else {
+            viewDir();
         }
     }
 

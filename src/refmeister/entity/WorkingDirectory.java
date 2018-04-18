@@ -84,9 +84,9 @@ public class WorkingDirectory implements Displayable {
 	@Override
 	public List<String> listOptions() {
 		List<String> options = new ArrayList<>();
-		if(workingDir.getParentFile().exists()) {
-		    options.add("Parent Directory");
-        }
+//		if(workingDir.getParentFile().exists()) { TODO
+//		    options.add("Parent Directory");
+//        }
         File[] allFiles = workingDir.listFiles();
         for(File f: allFiles) {
 		    if (f.isDirectory()) {
@@ -96,6 +96,10 @@ public class WorkingDirectory implements Displayable {
 		        options.add(f.getName());
             }
         }
+
+        options.add("Create Library");
+        options.add("Quit");
+
         return options;
 	}
 }

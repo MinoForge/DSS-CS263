@@ -37,12 +37,12 @@ class RefArg implements Saveable, RatedRelation {
 	}
 
     /**
-     * Default Constructor that constructs a new RefArg, but sets it to a default rating of zero.
+     * Default Constructor that constructs a new RefArg, but sets it to a default rating of three.
      * @param ref The specified Reference to be linked to an Argument.
      * @param argument The specified Argument to be linked to a Reference.
      */
 	public RefArg(Reference ref, Argument argument) {
-	    this(ref, argument, 0);
+	    this(ref, argument, 3);
     }
 
 	/**

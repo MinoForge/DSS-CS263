@@ -8,6 +8,7 @@ import refmeister.entity.Idea;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -62,7 +63,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         else if(attribute.equals("description")){
             this.setDescription(contents);
         }else{
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("No attribute: " + attribute);
         }
     }
 
@@ -138,7 +139,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         return out.toString();
     }
 
-    /**
+    /** TODO IS THIS NEEDED?
      * Sets title and description to the indices in edits.
      * @param edits An array of Strings which contains the new title and description for this
      *              Entity.
@@ -146,29 +147,6 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
     public void edit(String[] edits) {
         setTitle(edits[0]);
         setDescription(edits[1]);
-    }
-
-    /**
-     * Gets an array of elements that this object has, with title being at
-     * index 0, description at index 1, and each child as a sub index.
-     * @return An array of Strings to be displayed by the Controller.
-     */
-    public String[] display() {
-        String[] display = new String[7 + getEntityChildren().size()];
-        int i = 0;
-        display[i++] = getTitle();
-        display[i++] = getDescription();
-        display[i++] = "e: Edit this Object";
-        display[i++] = "u: Select Parent";
-        if(getEntityChildren() != null) {
-            display[i++] = "c: Create a New Child";
-        }
-        display[i++] = "q: Quit RefMeister";
-        display[i++] = null;
-        for(Entity e : getEntityChildren()) {
-            display[i++] = e.getTitle();
-        }
-        return display;
     }
 
     /**

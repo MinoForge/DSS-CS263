@@ -16,12 +16,26 @@ public interface Controller {
 
     void loadLibrary(File file);
 
-    boolean functionality(String choice);
-
     String[] getAttributeTitles();
 
     String[] getAttributes();
 
+    void createLibrary();
+
+    void createLibrary(String title, String description);
+
+    void deleteRoot();
+
+    void traverseUp();
+
+    void delete();
+
     void editAttribute(String attrTitle, String attrValue);
+
+    void sendFunc(String funcName, String... params);
+
+    void viewDir();
+
+
 
 }

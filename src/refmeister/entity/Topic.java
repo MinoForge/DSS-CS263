@@ -155,5 +155,8 @@ public class Topic extends Editable implements Comparable<Entity> {
         return attr;
     }
 
+    public void delete() {
+        //TODO
+    }
 
 }

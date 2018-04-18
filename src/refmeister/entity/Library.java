@@ -132,6 +132,7 @@ public class Library extends Editable {
         options.add("View Directory");
         options.add("Sort Topics A-Z");
         options.add("Sort Topics Z-A");
+        options.add("Quit");
         for(Entity child : children){
             options.add(child.getTitle());
         }
@@ -149,4 +150,6 @@ public class Library extends Editable {
 
         return attr;
     }
+
+    public void delete() {};
 }

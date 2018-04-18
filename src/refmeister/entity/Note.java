@@ -120,4 +120,8 @@ public class Note extends Editable {
 
         return attr;
     }
+
+    public void delete() {
+    	//TODO
+	}
 }

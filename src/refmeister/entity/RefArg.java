@@ -4,7 +4,6 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.RatedRelation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,6 +36,15 @@ class RefArg implements Saveable, RatedRelation {
 		this.rating = rating;
 	}
 
+    /**
+     * Default Constructor that constructs a new RefArg, but sets it to a default rating of zero.
+     * @param ref The specified Reference to be linked to an Argument.
+     * @param argument The specified Argument to be linked to a Reference.
+     */
+	public RefArg(Reference ref, Argument argument) {
+	    this(ref, argument, 0);
+    }
+
 	/**
 	 * Retrieves the Reference that is associated with this RefArg's argument
 	 * @return The Reference that is associated with this RefArg's argument.
@@ -45,9 +53,13 @@ class RefArg implements Saveable, RatedRelation {
 		return this.reference;
 	}
 
+    /**
+     * Retrieves the Argument that is associated with this RefArg's reference.
+     * @return The Argument that is associated with this RefArg's reference.
+     */
 	@Override
 	public Argument getEntity() {
-		return null;
+		return this.argument;
 	}
 
 	/**
@@ -60,18 +72,10 @@ class RefArg implements Saveable, RatedRelation {
 	}
 
 	/**
-	 * Retrieves the Argument that is associated with this RefArg's reference.
-	 * @return The Argument that is associated with this RefArg's reference.
-	 */
-	public Argument getArgument() {
-		return this.argument;
-	}
-
-	/**
 	 * Associates this RefArg's reference with a new specified argument.
 	 * @param argument The new specified argument.
 	 */
-	public void setArgument(Argument argument) {
+	public void setEntity(Argument argument) {
 		this.argument = argument;
 		argument.registerRelation(this);
 	}
@@ -97,8 +101,8 @@ class RefArg implements Saveable, RatedRelation {
 	 * RefArg that links them, it will remove the RefArg from that ArrayList.
 	 */
 	public void destroy() {
-		reference.removeRelation(this);
-		argument.removeRelation(this);
+		this.reference.removeRelation(this);
+		this.argument.removeRelation(this);
 	}
 	/**
 	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
@@ -121,9 +125,9 @@ class RefArg implements Saveable, RatedRelation {
     @Override
     public String getSaveString(XMLManager manager) {
 	    String xml = String.format("<refarg reference=\"%s\" entity=\"%s\" rating=\"%f\" />\n",
-                this.getReference().getTitle(), this.getArgument().getTitle(), this.getRating());
+                this.getReference().getTitle(), this.getEntity().getTitle(), this.getRating());
 
-	    manager.addEntity(getArgument());
+	    manager.addEntity(getEntity());
 	    manager.addAssociation(xml);
 	    return null;
     }

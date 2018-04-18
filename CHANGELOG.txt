@@ -71,12 +71,14 @@ Entity Classes:
         - Changed getChildren to getEntityChildren.
         - Added a default constructor.
     RefArg:
+        - Updated to fit with the new Relation interface.
 
     Reference:
         - Wrote the equals method.
         - Added code for generating MLA and APA citations.
         - Added a default constructor.
     RefIdea:
+        - Updated to fit with the new Relation interface.
 
     Theme:
         - Wrote the equals method.

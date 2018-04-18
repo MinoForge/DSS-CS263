@@ -112,12 +112,26 @@ Management:
 
 XML:
     MalformedXMLException:
+        - Thrown when an XML file is malformed
 
     Saveable:
 
     XMLManager:
+        - Changes in tag order to use the looser coupled interfaces in grouping tags.
 
     XMLParser:
+        - Changed to use a factory for creating entities and relations
+        - Removed the saveLibrary method, moved to FileManager
+        - Made loadLibrary not static, requires an instance to attempt to load a string
+
+    FileManager:
+        - Created
+        - Singleton with an alternate thread designed to allow the controller to not
+          stall while saving
+        - Locks implemented to prevent a library from being accessed mid-edit.
+        - Added code to allow for error logging
+        - Added code to allow errors to have a severity.
+        - Added lock to error logging to allow for errors to be logged.
 
 Other:
     - Every Instance of Editable changed to an instance of Entity

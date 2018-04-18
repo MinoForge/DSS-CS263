@@ -48,10 +48,15 @@ public final class FileManager {
     private String fileName;
 
     /**
-     * The lock for managing access to the library. THIS SHOULD <bold>ALWAYS</bold> BE LOCKED
+     * The libraryLock for managing access to the library. THIS SHOULD <bold>ALWAYS</bold> BE LOCKED
      * WHEN READING OR WRITING TO THE LIBRARY TO ENSURE VALID LIBRARY STATE WHEN SAVING.
      */
-    private Lock lock;
+    private Lock libraryLock;
+
+    /**
+     *
+     */
+    private Lock loggerLock;
 
     /**
      * A deque of actions to run on the file manager thread.
@@ -61,7 +66,8 @@ public final class FileManager {
     private FileManager(){
         alive = false;
         fileThread = new Thread(this::runLoop);
-        lock = new ReentrantLock();
+        libraryLock = new ReentrantLock();
+        loggerLock = new ReentrantLock();
         this.actions = new ArrayDeque<>();
         this.fileName = "default";
         try {
@@ -77,7 +83,7 @@ public final class FileManager {
      * @param msg   the message to write
      */
     private void writeError(Severity s, String msg){
-        lock.lock();
+        libraryLock.lock();
         try {
             File autosave = new File(directory.getDirectory(), "refmeister.log");
             FileWriter fw = new FileWriter(autosave, true);
@@ -87,7 +93,7 @@ public final class FileManager {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            lock.unlock();
+            libraryLock.unlock();
         }
     }
 
@@ -102,11 +108,13 @@ public final class FileManager {
                 //save
             }
 
-            lock.lock();
             for(Runnable r : this.actions){
                 r.run();
             }
-            lock.unlock();
+
+            libraryLock.lock();
+            saveWithName(this.fileName + "-autosave.rl");
+            libraryLock.unlock();
 
             this.actions.clear();
         }
@@ -118,7 +126,7 @@ public final class FileManager {
      * @param s the file name
      */
     private void saveWithName(String s){
-        lock.lock();
+        libraryLock.lock();
         try {
             XMLManager man = new XMLManager(library);
             File autosave = new File(directory.getDirectory(), s);
@@ -128,7 +136,7 @@ public final class FileManager {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            lock.unlock();
+            libraryLock.unlock();
         }
     }
 
@@ -145,11 +153,11 @@ public final class FileManager {
      */
     public synchronized void save(Library l){
         try {
-            this.lock.lock();
+            this.libraryLock.lock();
             this.library = l;
             this.actions.addFirst(() -> saveWithName(this.fileName + ".rl"));
         } finally {
-            this.lock.unlock();
+            this.libraryLock.unlock();
         }
     }
 
@@ -157,12 +165,12 @@ public final class FileManager {
      * Stops the file saving thread.
      */
     public synchronized void stop(){
-        this.lock.lock();
+        this.libraryLock.lock();
         try {
             this.alive = false;
             this.fileThread.interrupt();
         } finally {
-            this.lock.unlock();
+            this.libraryLock.unlock();
         }
     }
 
@@ -198,11 +206,11 @@ public final class FileManager {
      * @param msg       the message
      */
     public synchronized void log(Severity severity, String msg){
-        this.lock.lock();
+        this.loggerLock.lock();
         try{
             actions.addLast(() -> writeError(severity, msg));
         } finally {
-            lock.unlock();
+            this.loggerLock.unlock();
         }
     }
 
@@ -228,7 +236,7 @@ public final class FileManager {
      */
     public boolean load(File file){
         boolean out = true;
-        lock.lock();
+        libraryLock.lock();
         try{
             XMLParser p = new XMLParser();
             Scanner input;
@@ -236,7 +244,7 @@ public final class FileManager {
                 input = new Scanner(file);
             } catch (FileNotFoundException e) {
                 log(Severity.MAJOR_ERROR, e);
-                lock.unlock();
+                libraryLock.unlock();
                 return false;
             }
             input.useDelimiter("\\Z");
@@ -248,9 +256,29 @@ public final class FileManager {
                 out = false;
             }
         } finally {
-            lock.unlock();
+            libraryLock.unlock();
         }
         return out;
+    }
+
+    /**
+     * Gets the library this File Manager is currently bound to. The library currently used by
+     * the File Manager should <bold>ALWAYS</bold> be locked using using the provided lock when
+     * editing <italics>any</italics> child of this library, to ensure that the library isn't
+     * changed mid-save.
+     * @return the library.
+     */
+    public Library getLibrary(){
+        return library;
+    }
+
+    /**
+     * The libraryLock for the library. This (reentrant) lock should be locked any time an edit
+     * to the library is made. This prevents saving the library mid-change, and also allows
+     * @return the library lock
+     */
+    public Lock getLibraryLock(){
+        return libraryLock;
     }
 
     /**

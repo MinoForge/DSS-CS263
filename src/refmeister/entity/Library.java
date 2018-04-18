@@ -120,7 +120,7 @@ public class Library extends Editable {
     }
 
     public List<String> listOptions(){
-        List<String> options = new ArrayList();
+        List<String> options = new ArrayList<>();
         options.add("Delete Library");
         options.add("Edit Library");
         options.add("Add Topic");
@@ -134,7 +134,7 @@ public class Library extends Editable {
     }
 
     public List<String> listAttributes(){
-        List<String> attr = new ArrayList();
+        List<String> attr = new ArrayList<>();
         attr.add(this.getTitle());
         attr.add(this.getDescription());
 

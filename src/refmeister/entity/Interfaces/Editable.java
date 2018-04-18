@@ -7,6 +7,7 @@ import refmeister.entity.Idea;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -216,5 +217,19 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      */
     public List<Entity> getEntityChildren(){
         return children;
+    }
+
+    /**
+     * Sorts an Entities children in ascending or descending order based on their titles.
+     * @param order Specifies either ascending or descending order.
+     */
+    @Override
+    public void sort(String order) {
+        List<Entity> kids = getEntityChildren();
+        if(order.toLowerCase().equals("a-z")) {
+            kids.sort(Comparator.naturalOrder());
+        } else if(order.toLowerCase().equals("z-a")) {
+            kids.sort(Comparator.reverseOrder());
+        }
     }
 }

@@ -287,15 +287,6 @@ public class XMLParser { //This is the second parser I've had to write this seme
     }
 
     /**
-     * Saves the given library into an XML file.
-     * @param lib the library to save to an XML file.
-     * @return    A string representing the given XML file.
-     */
-    public static String saveLibrary(Library lib){
-        return new XMLManager(lib).getXML();
-    }
-
-    /**
      * A simple pair class, used to pair a title and description from a tag.
      * @param <T> The pair type
      */

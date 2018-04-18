@@ -4,18 +4,24 @@ import refmeister.entity.Interfaces.Displayable;
 import refmeister.entity.Interfaces.Editable;
 
 import java.io.File;
+import java.util.List;
 
 public interface Controller {
 
-    public String[] displaySelected();
+    List<String> displaySelected();
 
-    public void saveLibrary();
+    void saveLibrary();
 
-    public void loadLibrary(String title);
+    void loadLibrary(String title);
 
-    public void loadLibrary(File file);
+    void loadLibrary(File file);
 
-    public boolean choose(String choice);
+    boolean functionality(String choice);
 
+    String[] getAttributeTitles();
+
+    String[] getAttributes();
+
+    void editAttribute(String attrTitle, String attrValue);
 
 }

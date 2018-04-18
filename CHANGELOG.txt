@@ -35,25 +35,29 @@ TODO: //[Class]: [Method]: [Changes]
 Please specify the method you made changes to under the classes name
 Controllers:
     Controller:
-        Added method signatures to interface
+        - Added method signatures to interface
     SingleLibraryController:
-        Wrote and implemented to Controller
+        - Wrote and implemented to Controller
+        - Mostly deleted old code because it was very tightly coupled, and doing display stuff
+            that is now handled by CLIDisplay.
 
     WorkingDirectory:
-        Moved to Entity package
-        Added default constructor
+        - Moved to Entity package
+        - Added default constructor
+        - Implemented new methods in Displayable.
 
 
 Display:
     CLIDisplay:
-        Wrote all code in CLIDisplay
+        - Wrote all code in CLIDisplay
     Displayer:
-        Wrote all method signatures in Displayer
+        - Wrote all method signatures in Displayer
     GUIDisplay:
-        The Class exists now.
+        - The Class exists now.
 Entity Interfaces:
     Displayable:
-
+        - Added listAttributes method signature.
+        - Added listOptions method signature.
     Editable:
         - Wrote the compareTo method.
         - Wrote registerChild method.
@@ -62,9 +66,11 @@ Entity Interfaces:
         - Added the protected field children.
         - Added a getChildren method.
         - Added a sort method to sort children in ascending or descending order.
+        - Added listAttributeTitles method
+
     Entity:
-        - Moved the registerRelation and removeRelation methods to the
-          Relatable interface.
+        - Moved the registerRelation and removeRelation method signatures
+          to the Relatable interface.
         - Added compareTo method.
         - Added getEntityChildren method.
         - Added setParent method.
@@ -136,12 +142,26 @@ Management:
 
 XML:
     MalformedXMLException:
+        - Thrown when an XML file is malformed
 
     Saveable:
 
     XMLManager:
+        - Changes in tag order to use the looser coupled interfaces in grouping tags.
 
     XMLParser:
+        - Changed to use a factory for creating entities and relations
+        - Removed the saveLibrary method, moved to FileManager
+        - Made loadLibrary not static, requires an instance to attempt to load a string
+
+    FileManager:
+        - Created
+        - Singleton with an alternate thread designed to allow the controller to not
+          stall while saving
+        - Locks implemented to prevent a library from being accessed mid-edit.
+        - Added code to allow for error logging
+        - Added code to allow errors to have a severity.
+        - Added lock to error logging to allow for errors to be logged.
 
 Other:
     - Every Instance of Editable changed to an instance of Entity

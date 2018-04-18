@@ -1,5 +1,6 @@
 package refmeister.display;
 
+import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
 import refmeister.entity.Interfaces.Entity;
 
@@ -119,6 +120,8 @@ public class CLIDisplay implements Displayer {
                     return choice;
                 }
             } catch (NumberFormatException nfe) {
+                FileManager.getInstance().log(FileManager.Severity.LOG, "User input invalid " +
+                        "number: " + strChoice);
             }
 
             for (int i = 0; i < itemList.size(); i++) {

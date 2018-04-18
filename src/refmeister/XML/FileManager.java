@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -21,16 +23,6 @@ public final class FileManager {
      * The singular instance of the FileManager
      */
     private static FileManager instance;
-
-    /**
-     * A boolean whether the save system should be alive and waiting for requests.
-     */
-    private boolean alive;
-
-    /**
-     * The thread managing file reading and library traversal.
-     */
-    private Thread fileThread;
 
     /**
      * The library being saved.
@@ -54,21 +46,16 @@ public final class FileManager {
     private Lock libraryLock;
 
     /**
-     *
+     * The lock for the l
      */
     private Lock loggerLock;
 
-    /**
-     * A deque of actions to run on the file manager thread.
-     */
-    private Deque<Runnable> actions;
+    private ScheduledThreadPoolExecutor executor;
 
     private FileManager(){
-        alive = false;
-        fileThread = new Thread(this::runLoop);
         libraryLock = new ReentrantLock();
         loggerLock = new ReentrantLock();
-        this.actions = new ArrayDeque<>();
+        this.executor = new ScheduledThreadPoolExecutor(1);
         this.fileName = "default";
         try {
             this.directory = new WorkingDirectory();
@@ -83,7 +70,7 @@ public final class FileManager {
      * @param msg   the message to write
      */
     private void writeError(Severity s, String msg){
-        libraryLock.lock();
+        loggerLock.lock();
         try {
             File autosave = new File(directory.getDirectory(), "refmeister.log");
             FileWriter fw = new FileWriter(autosave, true);
@@ -93,32 +80,8 @@ public final class FileManager {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            libraryLock.unlock();
+            loggerLock.unlock();
         }
-    }
-
-    /**
-     * The run loop for the other thread.
-     */
-    private void runLoop(){
-        while(alive){
-            try {
-                Thread.sleep(30000);
-            } catch (InterruptedException e) {
-                //save
-            }
-
-            for(Runnable r : this.actions){
-                r.run();
-            }
-
-            libraryLock.lock();
-            saveWithName(this.fileName + "-autosave.rl");
-            libraryLock.unlock();
-
-            this.actions.clear();
-        }
-
     }
 
     /**
@@ -144,8 +107,11 @@ public final class FileManager {
      * Starts teh file thread.
      */
     public void start(){
-        this.alive = true;
-        this.fileThread.start();
+        this.executor.schedule(() -> {
+            libraryLock.lock();
+            this.saveWithName(fileName + "-autosave.rl");
+            libraryLock.unlock();
+        }, 30, TimeUnit.SECONDS);
     }
 
     /**
@@ -156,7 +122,7 @@ public final class FileManager {
         try {
             this.libraryLock.lock();
             this.library = l;
-            this.actions.addFirst(() -> saveWithName(this.fileName + ".rl"));
+            this.executor.execute(() -> saveWithName(this.fileName + ".rl"));
         } finally {
             this.libraryLock.unlock();
         }
@@ -168,8 +134,8 @@ public final class FileManager {
     public synchronized void stop(){
         this.libraryLock.lock();
         try {
-            this.alive = false;
-            this.fileThread.interrupt();
+            this.executor.shutdown();
+            this.executor.shutdownNow();
         } finally {
             this.libraryLock.unlock();
         }
@@ -209,7 +175,7 @@ public final class FileManager {
     public synchronized void log(Severity severity, String msg){
         this.loggerLock.lock();
         try{
-            actions.addLast(() -> writeError(severity, msg));
+            this.executor.submit(() -> writeError(severity, msg));
         } finally {
             this.loggerLock.unlock();
         }
@@ -239,24 +205,15 @@ public final class FileManager {
     public boolean load(File file){
         boolean out = true;
         libraryLock.lock();
-        try{
-            XMLParser p = new XMLParser();
-            Scanner input;
-            try{
-                input = new Scanner(file);
-            } catch (FileNotFoundException e) {
-                log(Severity.MAJOR_ERROR, e);
-                libraryLock.unlock();
-                return false;
-            }
+
+        XMLParser p = new XMLParser();
+        try(Scanner input = new Scanner(file)){
             input.useDelimiter("\\Z");
-            try {
-                String xml = input.next();
-                this.library = p.loadLibrary(xml);
-            } catch (MalformedXMLException|NoSuchElementException e){
-                log(Severity.MAJOR_ERROR, e);
-                out = false;
-            }
+            String xml = input.next();
+            this.library = p.loadLibrary(xml);
+        } catch (FileNotFoundException|MalformedXMLException e) {
+            log(Severity.MINOR_ERROR, e);
+            out = false;
         } finally {
             libraryLock.unlock();
         }
@@ -284,15 +241,57 @@ public final class FileManager {
     }
 
     /**
+     * Deletes the autosave and regular save file for the current file.
+     */
+    public void deleteFile(){
+        executor.submit(() -> {
+            loggerLock.lock();
+            try {
+                File save = new File(directory.getDirectory(), fileName + ".rl");
+                File autosave = new File(directory.getDirectory(), fileName + "-autosave.rl");
+                if(!save.delete())
+                    log(Severity.MINOR_ERROR, "Failed deleting file: " + fileName + ".rl");
+                if(autosave.delete())
+                    log(Severity.MINOR_ERROR, "Failed deleting file: " + fileName + "-autosave.rl");
+            } catch (SecurityException e){
+                log(Severity.MAJOR_ERROR, e);
+            }
+            loggerLock.unlock();
+        });
+    }
+
+    /**
      * The severity of a given error.
      */
     public enum Severity {
+        /**
+         * Severity level indicating debug logs messages, like method entries, etc.
+         */
         DEBUG("[DEBUG]"),
+
+        /**
+         * Used for basic logging messages.
+         */
         LOG("[LOG]"),
+
+        /**
+         * Used for minor, recoverable exceptions. These should be addressed, but the method can
+         * still succeed in doing it's function.
+         */
         MINOR_ERROR("[MINOR ERROR]"),
+
+        /**
+         * Used for major errors, such as a library failing to load. This severity level
+         * indicates a nonrecoverable error, as such the method should not return a "success"
+         * result under any circumstances.
+         */
         MAJOR_ERROR("[MAJOR ERROR]");
 
+        /**
+         * The log name of the severity type
+         */
         private String name;
+
         private Severity(String s){
             this.name = s;
         }

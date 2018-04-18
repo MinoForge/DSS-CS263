@@ -1,13 +1,16 @@
 package refmeister.management;
 
 
+import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
 import refmeister.controllers.SingleLibraryController;
 import refmeister.display.CLIDisplay;
 import refmeister.display.Displayer;
+import refmeister.display.GUIDisplay;
 import refmeister.entity.WorkingDirectory;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.*;
 
@@ -51,14 +54,17 @@ public class RefMeisterExec {
         try {
             wDir = new WorkingDirectory(dir);
         } catch (AccessDeniedException e) {
-            System.out.println("exception2: " + e.getMessage());
+            FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, e);
         }
 
         int i = 0;
 
         Controller control = new SingleLibraryController(wDir);
         display = new CLIDisplay(control);
+        display.displayCurrent();
 
+        FileManager.getInstance().start();
+        FileManager.getInstance().log(FileManager.Severity.DEBUG, "Application Started");
 
         boolean quit = false;
         while(!quit) {
@@ -68,5 +74,8 @@ public class RefMeisterExec {
             display.displayCurrent();
             quit = display.pickOption();
         }
+
+        FileManager.getInstance().log(FileManager.Severity.DEBUG, "Application Stop");
+        FileManager.getInstance().stop();
     }
 }

@@ -159,10 +159,19 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         return this.getTitle().compareTo(e.getTitle());
     }
 
+    /**
+     * Registers a child entity of the object
+     * @param e the new child entity
+     */
     public void registerChild(Entity e){
         children.add(e);
     }
 
+    /**
+     * Removes the given child. <b>Currently broken?</b>
+     * @param e the entity to remove
+     * @return  this object
+     */
     public Entity removeChild(Entity e){
         if(e.getEntityChildren().isEmpty()){
             if(e instanceof Argument){

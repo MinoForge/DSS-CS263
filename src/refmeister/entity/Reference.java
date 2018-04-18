@@ -9,6 +9,11 @@ import refmeister.entity.Interfaces.Relation;
 
 import java.util.*;
 
+/**
+ * This class represents a reference in an academic setting
+ * @author  DevSquad Supreme (Red Team)
+ * @version 1.0
+ */
 public class Reference extends Editable implements Relatable {
 
     /**
@@ -175,7 +180,6 @@ public class Reference extends Editable implements Relatable {
         return cite.toString();
     }
 
-
     /**
      * Associates an argument with this reference
      * @param arg       the argument to associate
@@ -195,9 +199,8 @@ public class Reference extends Editable implements Relatable {
 		return new RefIdea(this, idea);
 	}
 
-
 	/**
-	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
+	 * A list of all of this Saveable's saveable children. This method should <b>NEVER</b>
 	 * return null.
 	 * @return a list of all of this object's Saveable children.
 	 */
@@ -345,6 +348,7 @@ public class Reference extends Editable implements Relatable {
              ideas.sort(Comparator.reverseOrder());
          }
     }
+
     /**
      * Returns a list of attributes that contains the title and description of
      * the reference.

@@ -82,7 +82,7 @@ public class Library extends Editable {
     /**
      * Gets the XML String of this library, with all topics as it's children.
      * @return The formatted XML save string.
-     * @param manager
+     * @param manager the XML manager to use.
      */
     public String getSaveString(XMLManager manager) {
         return super.getSaveString("library", manager);

@@ -76,11 +76,6 @@ class RefIdea implements Saveable, Relation {
 	    this.idea.removeRelation(this);
 	}
 
-	/**
-	 * A list of all of this Saveable's saveable children. This method should <bold>NEVER</bold>
-	 * return null.
-	 * @return a list of all of this object's Saveable children.
-	 */
 	@Override
 	public List<Saveable> getSaveableChildren() {
 		return Collections.emptyList();

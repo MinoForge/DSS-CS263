@@ -33,7 +33,8 @@ Display:
         - The Class exists now.
 Entity Interfaces:
     Displayable:
-        -
+        - Added listAttributes method signature.
+        - Added listOptions method signature.
     Editable:
         - Wrote the compareTo method.
         - Wrote registerChild method.
@@ -42,9 +43,11 @@ Entity Interfaces:
         - Added the protected field children.
         - Added a getChildren method.
         - Added a sort method to sort children in ascending or descending order.
+        - Added listAttributeTitles method
+
     Entity:
-        - Moved the registerRelation and removeRelation methods to the
-          Relatable interface.
+        - Moved the registerRelation and removeRelation method signatures
+          to the Relatable interface.
         - Added compareTo method.
         - Added getEntityChildren method.
         - Added setParent method.

@@ -203,13 +203,18 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         return this;
     }
     /**
-     * Creates a child for this Entity. This is very bad code smell, but was used to try to get
-     * valid working code.
+     * Creates a child for this Entity.
      * @param title The title for the child.
      * @param description The description for the child.
      * @return true if the child was able to be created, false otherwise.
      */
     public abstract Entity createChild(String title, String description);
+
+    /**
+     * Gives a list of the attributes that can be displayed for this entity.
+     * @return the list of strings of the attributes
+     */
+    public abstract List<String> listAttributes();
 
     /**
      * Retrieves the list of this Entity's children.
@@ -220,10 +225,11 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
     }
 
     /**
-     * Sorts an Entities children in ascending or descending order based on their titles.
+     * Sorts an Entities children in ascending or descending order based on
+     * their titles.
      * @param order Specifies either ascending or descending order.
      */
-    @Override
+
     public void sort(String order) {
         List<Entity> kids = getEntityChildren();
         if(order.toLowerCase().equals("a-z")) {
@@ -231,5 +237,16 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         } else if(order.toLowerCase().equals("z-a")) {
             kids.sort(Comparator.reverseOrder());
         }
+    }
+
+    /**
+     * Returns an Array List of the attribute labels
+     * @return the Array List of Strings of the labels
+     */
+    public List<String> listAttributeTitles(){
+        List<String> labels = new ArrayList<>();
+        labels.add("Title");
+        labels.add("Description");
+        return labels;
     }
 }

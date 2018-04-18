@@ -163,9 +163,12 @@ public class Argument extends Editable implements Relatable {
     public void removeRelation(Relation r) {
         this.arguments.removeIf(r::equals);
     }
-
+    /**
+     * Returns a list of strings that will be displayed for the menu.
+     * @return A list of strings that will be displayed for the menu.
+     */
     public List<String> listOptions(){
-        List<String> options = new ArrayList();
+        List<String> options = new ArrayList<>();
         options.add("Delete Argument");
         options.add("Edit Argument");
         options.add("Change Rating");
@@ -174,12 +177,31 @@ public class Argument extends Editable implements Relatable {
         options.add("Move Up");
         return options;
     }
-
+    /**
+     * Returns a list of attributes that contains the title and description of
+     * the argument.
+     * @return A list of attributes that contains the title and description of
+     * the argument.
+     */
+    @Override
     public List<String> listAttributes(){
-        List<String> attr = new ArrayList();
+        List<String> attr = new ArrayList<>();
         attr.add(this.getTitle());
         attr.add(this.getDescription());
 
         return attr;
     }
-}
+
+    /**
+     * /**
+     * Returns an Array List of the attribute labels
+     * @return the Array List of Strings of the labels
+     */
+    @Override
+    public List<String> listAttributeTitles(){
+        List<String> labels = new ArrayList<>();
+        labels.add("Title");
+        labels.add("Description");
+        labels.add("Rating");
+        return labels;
+    }}

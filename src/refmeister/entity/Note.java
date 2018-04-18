@@ -61,6 +61,10 @@ public class Note extends Editable {
         return null;
     }
 
+    @Override
+    public List<Entity> getEntityChildren(){
+        return null;
+    }
 	/**
 	 * Gets the XML representation of this saveable object. Saveable objects that are association
 	 * classes should register their XML output with the XMLManager, and Argument/Ideas should
@@ -108,6 +112,7 @@ public class Note extends Editable {
      * Returns a list of attributes that contains the title and description of a note.
      * @return A list of attributes that contains the title and description of a note.
      */
+    @Override
     public List<String> listAttributes(){
         List<String> attr = new ArrayList<>();
         attr.add(this.getTitle());

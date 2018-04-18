@@ -6,7 +6,7 @@ import refmeister.controllers.Controller;
 import refmeister.controllers.SingleLibraryController;
 import refmeister.display.CLIDisplay;
 import refmeister.display.Displayer;
-import refmeister.display.GUIDisplay;
+//import refmeister.display.GUIDisplay;
 import refmeister.entity.WorkingDirectory;
 
 import java.io.File;

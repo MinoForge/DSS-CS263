@@ -147,7 +147,7 @@ public class SingleLibraryController implements Controller{
             case "sort":
                 selected.sort(param[0]);
                 break;
-            case "rate"://TODO still needs submenu
+            case "rate"://TODO could replace with a call to arg.changeRating
                 if(selected instanceof Relatable) {
                     Relatable rel = (Relatable)selected;
                     List<Relation> listRelations = rel.getRelations();
@@ -170,6 +170,19 @@ public class SingleLibraryController implements Controller{
         edSelected = null;
     }
 
+    @Override
+    public List<Relatable> getRatedRelatables() {
+        if(selected instanceof Relatable) {
+            Relatable tempRelatable = (Relatable)selected;
+            List<Relatable> result = new ArrayList<Relatable>();
+            for(Relation r: tempRelatable.getRelations()) {
+                result.add(r.getReference());
+            }
+            return result;
+        }
+        return null;
+    }
+
 
     /**
      * Sets selected to an object's parent, if that object has a parent.
@@ -180,7 +193,7 @@ public class SingleLibraryController implements Controller{
         } else if(selected.getParent() != null && selected instanceof Relatable) {
             Relatable r = (Relatable)selected;
             for(Relation relate: r.getRelations().toArray(new Relation[0])) {
-                Entity parent = (Entity)relate.getEntity().getParent();
+                Entity parent = relate.getEntity().getParent();
                 if (parent != null) {
                     setSelected(parent);
                 }

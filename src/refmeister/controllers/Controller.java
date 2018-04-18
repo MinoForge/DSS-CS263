@@ -2,6 +2,7 @@ package refmeister.controllers;
 
 import refmeister.entity.Interfaces.Displayable;
 import refmeister.entity.Interfaces.Editable;
+import refmeister.entity.Interfaces.Relatable;
 
 import java.io.File;
 import java.util.List;
@@ -35,6 +36,8 @@ public interface Controller {
     void sendFunc(String funcName, String... params);
 
     void viewDir();
+
+    List<Relatable> getRatedRelatables();
 
 
 

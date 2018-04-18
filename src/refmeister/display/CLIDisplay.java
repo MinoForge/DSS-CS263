@@ -3,9 +3,12 @@ package refmeister.display;
 import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Interfaces.RatedRelation;
+import refmeister.entity.Interfaces.Relatable;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -49,7 +52,7 @@ public class CLIDisplay implements Displayer {
      */
     @Override
     public boolean pickOption() {
-        int choice = getChoice();
+        int choice = getChoice(itemList);
 
         if(choice != -1 && choice < itemList.size()) {
             return choose(choice);
@@ -107,7 +110,7 @@ public class CLIDisplay implements Displayer {
      * This method gets the user's choice as an int from the User.
      * @return -1 if an invalid choice is picked. Otherwise returns the index of the choice.
      */
-    private int getChoice() {
+    private int getChoice(List<String> items) {
         String strChoice;
         int choice = -1;
 
@@ -116,7 +119,7 @@ public class CLIDisplay implements Displayer {
             strChoice = scanIn.nextLine();
             try {
                 choice = Integer.parseInt(strChoice);
-                if (0 <= choice && choice < itemList.size()) {
+                if (0 <= choice && choice < items.size()) {
                     return choice;
                 }
             } catch (NumberFormatException nfe) {
@@ -124,8 +127,8 @@ public class CLIDisplay implements Displayer {
                         "number: " + strChoice);
             }
 
-            for (int i = 0; i < itemList.size(); i++) {
-                if (strChoice.equals(itemList.get(i))) {
+            for (int i = 0; i < items.size(); i++) {
+                if (strChoice.equals(items.get(i))) {
                     return i;
                 }
             }
@@ -220,10 +223,9 @@ public class CLIDisplay implements Displayer {
             case "Delete":
                 control.delete();
                 break;
-            case "Rating": //TODO put in SLC
-                //TODO Implement sub-menu to select relatable which we are rating
-                String relatTitle = ""; //replace this
-                control.sendFunc("rate", "" + (getRating()), relatTitle);
+            case "Change Rating":
+                String relateTitle = selectFromRelatable(); //replace this
+                control.sendFunc("rate", "" + (getRating()), relateTitle);
                 break;
             case "View Directory":
                 control.viewDir();
@@ -236,9 +238,23 @@ public class CLIDisplay implements Displayer {
                 break;
             case "RefData": //TODO put in SLC
                 control.sendFunc("");
+                break;
             }
             return false;
         }
+
+    private String selectFromRelatable() {
+        List<Relatable> relatables = control.getRatedRelatables();
+        List<String> titles = new ArrayList<String>();
+        for(Relatable r: relatables) {
+            titles.add(r.getTitle());
+        }
+        int choice = getChoice(titles);
+        return titles.get(choice);
+
+    }
+
+
 
     //TODO CRY BECAUSE NOT SURE FUNCTIONALITY WILL BE DONE IN 18 HOURS WHEN I GO TO SLEEP
 }

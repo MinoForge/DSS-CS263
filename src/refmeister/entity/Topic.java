@@ -4,7 +4,6 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Entity;
 import refmeister.entity.Interfaces.Editable;
-import refmeister.entity.Interfaces.Relation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +54,7 @@ public class Topic extends Editable implements Comparable<Entity> {
      */
     @Override
     public List<Entity> getEntityChildren() {
-        return children;
+        return new ArrayList<>(children);
     }
 
     @Override
@@ -114,6 +113,29 @@ public class Topic extends Editable implements Comparable<Entity> {
             return this.getTitle().equals(temp.getTitle());
         }
         return false;
+    }
+
+    public List<String> listOptions(){
+        List<String> options = new ArrayList();
+        options.add("Delete Topic");
+        options.add("Edit Topic");
+        options.add("Add Theme");
+        options.add("View Directory");
+        options.add("Sort Themes A-Z");
+        options.add("Sort Themes Z-A");
+        options.add("Move Up");
+        for(Entity child : children){
+            options.add(child.getTitle());
+        }
+        return options;
+    }
+
+    public List<String> listAttributes(){
+        List<String> attr = new ArrayList();
+        attr.add(this.getTitle());
+        attr.add(this.getDescription());
+
+        return attr;
     }
 
 }

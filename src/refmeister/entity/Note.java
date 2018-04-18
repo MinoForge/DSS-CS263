@@ -23,7 +23,7 @@ public class Note extends Editable {
 	 * @param parent The Reference to be set as this Note's parent.
 	 */
 	public Note(String title, String description, Reference parent) {
-	    this.parent = parent;
+		this.setParent(parent);
 		parent.registerNote(this);
 		setTitle(title);
 		setDescription(description);
@@ -88,4 +88,21 @@ public class Note extends Editable {
 		}
 		return false;
 	}
+
+    public List<String> listOptions(){
+        List<String> options = new ArrayList();
+        options.add("Delete Note");
+        options.add("Edit Note");
+        options.add("View Directory");
+        options.add("Move Up");
+        return options;
+    }
+
+    public List<String> listAttributes(){
+        List<String> attr = new ArrayList();
+        attr.add(this.getTitle());
+        attr.add(this.getDescription());
+
+        return attr;
+    }
 }

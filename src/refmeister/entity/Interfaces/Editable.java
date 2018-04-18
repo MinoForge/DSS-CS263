@@ -216,7 +216,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * @return The list of this Entity's children.
      */
     public List<Entity> getEntityChildren(){
-        return children;
+        return new ArrayList<Entity>(children);
     }
 
     /**

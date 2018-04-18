@@ -85,6 +85,9 @@ Entity Classes:
     Theme:
         - Wrote the equals method.
         - Added a default constructor.
+        - Added a field library that contains the library that the theme is
+          found in
+
     Topic:
         - Wrote the equals method.
         - Removed the registerRelation and removeRelation methods.
@@ -98,6 +101,10 @@ Entity Classes:
         they now all implement removeChild.
         - Added a default constructor.
         - Removed each class's child list and moved it to Editable
+        - Added a default constructor to all Entity Classes.
+        - Removed all getEntityChildren methods was added to Editable superclass
+        - Add to all entity classes a createChild class
+        - Implemented listOptions and listAttributes in all entity classes
 Management:
     RefMeisterExec:
         Rewrote main()

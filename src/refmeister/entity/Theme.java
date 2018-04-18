@@ -4,7 +4,6 @@ import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.Entity;
 import refmeister.entity.Interfaces.Editable;
-import refmeister.entity.Interfaces.Relation;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -34,6 +33,7 @@ public class Theme extends Editable {
 		this.children = refs;
 		this.setParent(parent);
 		parent.registerChild(this);
+		library = parent.getParent();
 	}
 	/**
 	 * Constructor which sets an empty ArrayList of references, while still passing
@@ -62,34 +62,33 @@ public class Theme extends Editable {
 	    throw new UnsupportedOperationException("Must specify at least a title for this Theme.");
     }
 
-	/*
+	/**
 	 * This method will move a theme from one topic to another topic as long as
-	 * the theme is not already in the topic and if the topic exists. This reeks of code smells
-	 * needs to be altered
+	 * the theme is not already in the topic and if the topic exists.
 	 * @param topicTitle The title of the Topic the theme is being moved to.
 	*/
-	/**
+
 	public void moveTheme(String topicTitle) throws InvalidParameterException {
-		for(Entity t : this.parent.getParent().getEntityChildren()){
+		for(Entity t : this.library.getEntityChildren()){
 			if(t.getTitle().equals(topicTitle)){
 				for(Entity i : t.getEntityChildren()){
 					if(i.getTitle().equals(this.getTitle())){
-						throw new InvalidParameterException("Theme already exists in chosen topic");
+						throw new InvalidParameterException("Theme already exists in chosen topic.");
 					}
 				}
-				t.getSaveableChildren().add(this);
-				this.setParent((Topic)t);
-				this.parent.deleteTheme(this.getTitle());
+				t.getEntityChildren().add(this);
+				this.setParent(t);
+				this.parent.removeChild(this);
 				return;
 			}
 		}
-		throw new InvalidParameterException("Topic does not exist");
+		throw new InvalidParameterException("Topic does not exist.");
 	}
-    */
+
 	/**
 	 * Returns a String representation of this Class
 	 * @return the String representation of this Class
-	 */
+	*/
 	@Override
 	public java.lang.String toString() {
 		return "Theme{" +
@@ -148,4 +147,28 @@ public class Theme extends Editable {
         }
         return new Reference(title, description, this);
 	}
+
+    public List<String> listOptions(){
+        List<String> options = new ArrayList();
+        options.add("Delete Theme");
+        options.add("Edit Theme");
+        options.add("Add Reference");
+        options.add("View Directory");
+        options.add("Sort References A-Z");
+        options.add("Sort References Z-A");
+        options.add("Move Up");
+        for(Entity child : children){
+            options.add(child.getTitle());
+        }
+        return options;
+    }
+
+    public List<String> listAttributes(){
+        List<String> attr = new ArrayList();
+        attr.add(this.getTitle());
+        attr.add(this.getDescription());
+
+        return attr;
+    }
+
 }

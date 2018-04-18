@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * The Library models a library which contains topics. It must have a
  * specified title.
- * @author Peter Gardner
+ * @author Peter Gardner, Caleb Dinehart
  * @version 25, 3, 2018
  */
 public class Library extends Editable {
@@ -32,13 +32,6 @@ public class Library extends Editable {
         this.setDescription(description);
         this.children = topics;
         this.setParent(null);
-        this.references = new ArrayList<Entity>();
-        for(Entity top : getEntityChildren()) {
-            for(Entity thm : top.getEntityChildren()) {
-                this.references.addAll(thm.getEntityChildren());
-            }
-        }
-
     }
 
     /**
@@ -67,33 +60,6 @@ public class Library extends Editable {
     public Library() {
         throw new UnsupportedOperationException("Must specify at least a title for this Library.");
     }
-	/**
-	 * Adds a new topic to this Library's ArrayList of topics.
-	 * @param title The title of the topic to be added.
-	 * @param desc The description of the topic to be added.
-	 */
-	public Topic addTopic(String title, String desc) {
-        for(Saveable s : children) {
-            if(s instanceof Entity) {
-                Entity t = (Entity)s;
-                // If a topic already has the same title of the one we are trying to add, don't add it.
-                if(t.getTitle().equals(title)) {
-                    return null;
-                }
-            }
-        }
-        Topic newTopic = new Topic(title, desc, this);
-        return newTopic;
-	}
-
-    /**
-     * Deletes a topic for this Library's ArrayList of topics.
-     * @param title The title of the topic to be removed.
-     */
-	public void deleteTopic(String title) {
-
-        children.removeIf(ed -> ed.getTitle().equals(title));
-	}
 
     /**
      * Returns a list of this library's XML children.
@@ -128,15 +94,12 @@ public class Library extends Editable {
      */
     @Override
     public Entity createChild(String title, String description) {
-        return addTopic(title, description);
-    }
-
-    /**
-     * retrieves the List of the References in this Library.
-     * @return returns the list of references
-     */
-    public List<Entity> getRefs() {
-        return references;
+        for(Entity t : children) {
+            if(t.getTitle().equals(title)) {
+                return t;
+            }
+        }
+        return new Topic(title, description, this);
     }
 
     /**
@@ -154,5 +117,27 @@ public class Library extends Editable {
         }
         return false;
 
+    }
+
+    public List<String> listOptions(){
+        List<String> options = new ArrayList();
+        options.add("Delete Library");
+        options.add("Edit Library");
+        options.add("Add Topic");
+        options.add("View Directory");
+        options.add("Sort Topics A-Z");
+        options.add("Sort Topics Z-A");
+        for(Entity child : children){
+            options.add(child.getTitle());
+        }
+        return options;
+    }
+
+    public List<String> listAttributes(){
+        List<String> attr = new ArrayList();
+        attr.add(this.getTitle());
+        attr.add(this.getDescription());
+
+        return attr;
     }
 }

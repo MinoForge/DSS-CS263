@@ -348,8 +348,32 @@ public class Reference extends Editable implements Relatable {
         return options;
     }
 
+    /**
+     * Sorts all of references children (Notes, Arguments and Ideas) in ascending or descending
+     * order based on their titles.
+     * @param order Specifies either ascending or descending order.
+     */
     @Override
     public void sort(String order) {
-
+         List<Entity> notes = new ArrayList<>();
+         List<Entity> args  = new ArrayList<>();
+         List<Entity> ideas = new ArrayList<>();
+         for(Entity e : getEntityChildren()) {
+             if(e instanceof Note)
+                 notes.add(e);
+             if(e instanceof Argument)
+                 args.add(e);
+             if(e instanceof Idea)
+                 ideas.add(e);
+         }
+         if(order.toLowerCase().equals("a-z")) {
+             notes.sort(Comparator.naturalOrder());
+             args.sort(Comparator.naturalOrder());
+             ideas.sort(Comparator.naturalOrder());
+         } else if(order.toLowerCase().equals("z-a")) {
+             notes.sort(Comparator.reverseOrder());
+             args.sort(Comparator.reverseOrder());
+             ideas.sort(Comparator.reverseOrder());
+         }
     }
 }

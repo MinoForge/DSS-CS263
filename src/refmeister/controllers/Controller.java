@@ -1,7 +1,5 @@
 package refmeister.controllers;
 
-import refmeister.entity.Interfaces.Displayable;
-import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Relatable;
 
 import java.io.File;

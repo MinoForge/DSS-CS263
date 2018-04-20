@@ -1,13 +1,11 @@
 package refmeister.entity;
 
-import com.sun.corba.se.impl.io.TypeMismatchException;
 import refmeister.entity.Interfaces.Displayable;
 import refmeister.management.RefMeisterExec;
 
 import java.io.File;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +16,7 @@ import java.util.List;
  * @author Peter Gardner
  * @version 25, 3, 2018
  */
+
 public class WorkingDirectory implements Displayable {
 
     /** The directory that is to be set as our directory for a library. */

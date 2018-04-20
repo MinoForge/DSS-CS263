@@ -1,8 +1,6 @@
 package refmeister.controllers;
 
-import com.sun.org.apache.regexp.internal.RE;
 import refmeister.XML.FileManager;
-import refmeister.XML.XMLParser;
 import refmeister.entity.*;
 import refmeister.entity.Interfaces.*;
 
@@ -15,6 +13,7 @@ import java.util.*;
  * @author Peter Gardner
  * @version 25, 3, 2018
  */
+
 public class SingleLibraryController implements Controller{
 
     /** The current object the controller is pointing to. */
@@ -65,7 +64,6 @@ public class SingleLibraryController implements Controller{
      */
 	public void loadLibrary(String title) {
         loadLibrary(new File(title));
-
     }
 
 	/**
@@ -125,8 +123,6 @@ public class SingleLibraryController implements Controller{
         FileManager.getInstance().deleteFile();
         viewDir();
     }
-
-
 
     public void delete() {
         if(selected.getParent() == null) {

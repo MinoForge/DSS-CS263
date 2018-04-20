@@ -8,7 +8,6 @@ import refmeister.entity.Idea;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,6 +16,7 @@ import java.util.List;
  * @author Peter Gardner, Caleb Dinehart
  * @version 26, 3, 2018
  */
+
 public abstract class Editable implements Displayable, Saveable, Entity, Comparable<Entity>{
 
     /** The title for any Editable objects. */
@@ -40,13 +40,13 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * "description", or null otherwise.
      */
     public String getAttribute(String attribute){
-        if(attribute.equals("title")){
-            return this.getTitle();
-        }
-        else if(attribute.equals("description")){
-            return this.getDescription();
-        }else{
-            return null;
+        switch (attribute) {
+            case "title":
+                return this.getTitle();
+            case "description":
+                return this.getDescription();
+            default:
+                return null;
         }
     }
 
@@ -57,13 +57,15 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * @param contents The value to be set to a specified attribute.
      */
     public void setAttribute(String attribute, String contents){
-        if(attribute.equals("title")){
-            this.setTitle(contents);
-        }
-        else if(attribute.equals("description")){
-            this.setDescription(contents);
-        }else{
-            throw new InvalidParameterException("No attribute: " + attribute);
+        switch (attribute) {
+            case "title":
+                this.setTitle(contents);
+                break;
+            case "description":
+                this.setDescription(contents);
+                break;
+            default:
+                throw new InvalidParameterException("No attribute: " + attribute);
         }
     }
 

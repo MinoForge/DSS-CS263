@@ -67,6 +67,7 @@ Entity Interfaces:
         - Added a getChildren method.
         - Added a sort method to sort children in ascending or descending order.
         - Added listAttributeTitles method
+        - Added abstract method getFunc
 
     Entity:
         - Moved the registerRelation and removeRelation method signatures
@@ -76,12 +77,16 @@ Entity Interfaces:
         - Added setParent method.
 
     RatedRelation:
-
+        - Everything in this interface was made this sprint
+        - Note: RefArg is the only class that implements this interface
     Relation:
+        - Everything in this interface was made this sprint
+        - Note: RefIdea and RefArg are the only classes that implent this interface
 
     -- Created the Relatable interface.
     Relatable:
-        - Added
+        - Everything added in this interface
+        - References, Ideas, and Arguments implement this interface
 
 Entity Classes:
     Argument:
@@ -109,6 +114,8 @@ Entity Classes:
         - Added a default constructor.
         - Added the listOptions method.
         - Added a sort method to sort each of the types of children independently.
+        - Added generateCitation methods but they are not fully implemented.
+        - Added
     RefIdea:
         - Updated to fit with the new Relation interface.
 
@@ -127,7 +134,7 @@ Entity Classes:
 
     Other Comments:
         Removed the add method from all entity classes, now they all inherit
-        registerChild from Editable. This is also true of the remove methods,
+        registerChild and createChild from Editable. This is also true of the remove methods,
         they now all implement removeChild.
         - Added a default constructor.
         - Removed each class's child list and moved it to Editable
@@ -135,10 +142,12 @@ Entity Classes:
         - Removed all getEntityChildren methods was added to Editable superclass
         - Add to all entity classes a createChild class
         - Implemented listOptions and listAttributes in all entity classes
+        - getFunc was added to every entity class
+        - listOptions was added to every class
 Management:
     RefMeisterExec:
-        Rewrote main()
-        Supports specifying directory via command-line
+        - Rewrote main()
+        - Supports specifying directory via command-line
 
 XML:
     MalformedXMLException:
@@ -165,5 +174,5 @@ XML:
 
 Other:
     - Every Instance of Editable changed to an instance of Entity
-    - Remove Setters for Lists
-    - Updated the UML Diagram for our Entity classes.
+    - Remove Setters for Lists, except for References
+    - Updated the UML Diagrams00p--=p for our Entity classes.

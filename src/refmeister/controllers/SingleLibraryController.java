@@ -210,7 +210,7 @@ public class SingleLibraryController implements Controller{
      * Sets selected to an object's parent, if that object has a parent.
      */
     public void traverseUp() {
-        if (selected.getParent() != null && !(selected instanceof Relatable)) {
+        if (selected.getParent() != null) {
             setSelected(selected.getParent());
         } else if(selected.getParent() != null && selected instanceof Relatable) {
             Relatable r = (Relatable)selected;

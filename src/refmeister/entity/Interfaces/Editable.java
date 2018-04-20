@@ -216,8 +216,12 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         } else if(order.toLowerCase().equals("z-a")) {
             kids.sort(Comparator.reverseOrder());
         }
+        this.setChildren(kids);
     }
 
+    public void setChildren(List<Entity> kids){
+        this.children = kids;
+    }
     /**
      * Returns an Array List of the attribute labels
      * @return the Array List of Strings of the labels

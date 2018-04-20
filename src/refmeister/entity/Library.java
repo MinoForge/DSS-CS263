@@ -150,9 +150,9 @@ public class Library extends Editable {
         funcs.add("delete");
         funcs.add("edit");
         funcs.add("add");
-        funcs.add("view");
         funcs.add("sortAlphA");
         funcs.add("sortAlphD");
+        funcs.add("view");
         funcs.add("quit");
 
         return funcs;

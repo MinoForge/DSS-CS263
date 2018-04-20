@@ -43,13 +43,16 @@ public class CLIDisplay implements Displayer {
     @Override
     public void displayCurrent() {
         clrscr();
+        displayAttributes();
         itemList = control.displaySelected();
-
-        for(int i = 0; i < itemList.size(); i++) {
-            System.out.printf("%-3d" + ": " + itemList.get(i) + "\n", i);
-        }
+        printList(itemList);
     }
 
+    private void printList(List<String> list) {
+        for(int i = 0; i < list.size(); i++) {
+            System.out.printf("%-3d" + ": " + list.get(i) + "\n", i);
+        }
+    }
 
     /**
      * The publicly facing method which is used to pick an option out of those available.
@@ -80,10 +83,13 @@ public class CLIDisplay implements Displayer {
      * and description of an entity.
      */
     public void displayAttributes() {
+
         String[] attrTitles = control.getAttributeTitles();
-        String[] atts = control.getAttributes();
-        for(int i = 0; i < atts.length; i++) {
-            System.out.println("Current " + attrTitles[i] + ": " + atts[i]);
+        if(attrTitles != null) {
+            String[] atts = control.getAttributes();
+            for(int i = 0; i < atts.length; i++) {
+                System.out.println("Current " + attrTitles[i] + ": " + atts[i]);
+            }
         }
     }
 
@@ -94,14 +100,14 @@ public class CLIDisplay implements Displayer {
      * @return              The new values
      */
     private String[] editMenu(String[] optionNames, String[] currentValues) {
-        //for(String str: optionNames)
-           // System.out.println(str);
+
         clrscr();
+        for(String str: optionNames) {
+            System.out.println(str);
+        }
         String[] nameAndVals = new String[optionNames.length*2];
         int j = 0;
         for(int i = 0; i < optionNames.length; i++) {
-            //System.out.println(optionNames[i]);
-            //System.out.println(currentValues[i]);
             System.out.print("New Value: ");
             String newVal = scanIn.nextLine();
             if(!newVal.equals("")) {
@@ -123,16 +129,20 @@ public class CLIDisplay implements Displayer {
     private boolean choose(int choice) {
         System.out.println("Choice: " + itemList.get(choice));
         List<String> funcList = control.getFuncs();
-//
-//        for(String str: itemList)
-//        System.out.println(str);
-//
-//        for(String str: funcList)
-//        System.out.println(str);
+        if(funcList.size() < choice) {
+            List<String> children = new ArrayList<String>();
+            for(int i = choice; i < itemList.size(); i++) {
+                children.add(itemList.get(i));
+            }
+            control.sendFunc("select", "" + children.get(choice - funcList.size()));
+            return false;
+        }
 
 
         return functionality(funcList.get(choice));
     }
+
+
 
 
     /**
@@ -264,7 +274,7 @@ public class CLIDisplay implements Displayer {
             case "quit":
                 return true;
             case "load":
-                //todo
+
                 break;
             case "create":
                 String[] titleDescription = getTD();
@@ -275,6 +285,12 @@ public class CLIDisplay implements Displayer {
                 control.sendFunc("edit", newVals);
                 break;
             case "move":
+//                //Commented code is attempted work-around for Relatables without parents.
+//
+//                if(control.getRatedRelatables() != null) { //this line checks if control.selected
+//                    String relates = selectFromRelatable();//is Relatable.
+//                    control.sendFunc("select", relates);
+//                }
                 control.traverseUp();
                 break;
             case "sortAlphA":
@@ -299,6 +315,12 @@ public class CLIDisplay implements Displayer {
             case "add":
                 control.sendFunc("add", getTD());
                 break;
+            case "addA":
+                control.sendFunc("addA", getTD());
+                break;
+            case "addI":
+                control.sendFunc("addI", getTD());
+                break;
             case "refdata": //TODO put in SLC
                 control.sendFunc("refdata", getRefData());
                 break;
@@ -319,6 +341,7 @@ public class CLIDisplay implements Displayer {
             titles.add(e.getTitle());
         }
         int choice = getChoice(titles);
+        System.out.println(titles.get(choice));
         return titles.get(choice);
     }
 
@@ -332,6 +355,7 @@ public class CLIDisplay implements Displayer {
         for(Relatable r: relatables) {
             titles.add(r.getTitle());
         }
+        printList(titles);
         int choice = getChoice(titles);
         return titles.get(choice);
 

@@ -96,7 +96,10 @@ public class SingleLibraryController implements Controller{
      */
     @Override
     public String[] getAttributeTitles() {
-        return edSelected.listAttributeTitles().toArray(new String[0]);
+	    if(edSelected != null) {
+            return edSelected.listAttributeTitles().toArray(new String[0]);
+        }
+        return null;
     }
 
     /**
@@ -154,6 +157,13 @@ public class SingleLibraryController implements Controller{
      */
     public void sendFunc(String func, String[] param) {
         switch (func) {
+            case "select":
+                for(Entity e: selected.getEntityChildren()) {
+                    if(e.getTitle().equals(param[0])) {
+                        setSelected(e);
+                    }
+                }
+            break;
             case "delete":
                 Entity temp = selected;
                 traverseUp();
@@ -176,6 +186,22 @@ public class SingleLibraryController implements Controller{
                 break;
             case "add":
                 Entity ent = edSelected.createChild(param[0], param[1]);
+                setSelected(ent);
+                break;
+            case "addA":
+                ent = null;
+                if(selected instanceof Reference) {//hard-code
+                    Reference rel = (Reference)selected;
+                    ent = (rel.createIdea(param[0], param[1]));
+                }
+                setSelected(ent);
+                break;
+            case "addI":
+                ent = null;
+                if(selected instanceof Reference) {//hard-code
+                    Reference rel = (Reference)selected;
+                    ent = (rel.createIdea(param[0], param[1]));
+                }
                 setSelected(ent);
                 break;
             case "edit":
@@ -242,7 +268,7 @@ public class SingleLibraryController implements Controller{
     public void traverseUp() {
         if (selected.getParent() != null) {
             setSelected(selected.getParent());
-        } else if(selected.getParent() != null && selected instanceof Relatable) {
+        } else if(selected instanceof Relatable) {
             Relatable r = (Relatable)selected;
             for(Relation relate: r.getRelations().toArray(new Relation[0])) {
                 Entity parent = relate.getEntity().getParent();

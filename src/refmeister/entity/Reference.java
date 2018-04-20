@@ -248,7 +248,9 @@ public class Reference extends Editable implements Relatable {
                 return t.getEntity();
             }
         }
-        return new Argument(title, description);
+        Argument arg = new Argument(title, description);
+        registerRatedRelation(new RefArg(this, arg));
+        return arg;
     }
 
     public Entity createIdea(String title, String description){
@@ -257,7 +259,9 @@ public class Reference extends Editable implements Relatable {
                 return t.getEntity();
             }
         }
-        return new Idea(title, description);
+        Idea idea = new Idea(title, description);
+        registerRelation(new RefIdea(this, idea));
+        return idea;
     }
 
     /**
@@ -304,9 +308,10 @@ public class Reference extends Editable implements Relatable {
      * Associates a Relation to this Reference.
      * @param r The Relation to associate.
      */
+//TODO MAY HAVE BROKEN SAVE
     @Override
     public void registerRelation(Relation r) {
-        this.relations.add(r);
+        this.ideas.add(r);
     }
 
     /**
@@ -315,7 +320,7 @@ public class Reference extends Editable implements Relatable {
      */
     @Override
     public void removeRelation(Relation r) {
-        this.relations.removeIf(r::equals);
+        this.ideas.removeIf(r::equals);
     }
 
     /**

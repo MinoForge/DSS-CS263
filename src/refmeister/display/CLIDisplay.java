@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class CLIDisplay implements Displayer {
 
     /** The main controller for the program. **/
@@ -186,11 +185,23 @@ public class CLIDisplay implements Displayer {
             return 3;
     }
 
-    public String[][] getRefData() {
+    /**
+     * Scans in input from the user and sets it as a reference's data.
+     *
+     */
+    public String[] getRefData() {
         //TODO Brandon
         //scanIn is defined globally, just need the user input mapped into the right places and
         //returned.
-        return new String[30][30];
+        String[] result = get("Enter section number > ", "Enter title of the paper > ",
+                              "Enter publication > ", "Enter location > ",
+                              "Enter publisher's name > ", "Enter publication date > ",
+                              "Enter the page range > ", "Enter the URL > ",
+                              "Enter the file path > ", "Enter the last accessed date > ",
+                              "Enter the author(s) name [Last][MI][First] > ");
+                                // ^^ TODO PETER loop through the end to get all the others.
+                                //  with <3 - Brandon & with </3 - Caleb
+        return result;
     }
 
 

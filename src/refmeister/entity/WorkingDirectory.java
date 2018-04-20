@@ -99,7 +99,7 @@ public class WorkingDirectory implements Displayable {
         return options;
 	}
 
-	public List<String> getFuncs() {
+	public List<String> getFunc() {
 		List<String> funcs = new ArrayList<String>();
 		funcs.add("create");
 		return funcs;

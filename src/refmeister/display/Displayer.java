@@ -10,7 +10,7 @@ public interface Displayer {
      */
     void displayCurrent();
 
-    void editMenu();
+    String[] editMenu();
 
 
     /**

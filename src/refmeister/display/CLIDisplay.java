@@ -62,14 +62,8 @@ public class CLIDisplay implements Displayer {
     }
 
     //TODO
-    public void editMenu() {
-        String[] newVals = editMenu(control.getAttributeTitles(), control.getAttributes());
-        for(int i = 0; i < newVals.length; i++) {
-            if(newVals[i] != null) {
-                System.out.println(newVals[i] + ": " + newVals[i+1]);
-                control.editAttribute(newVals[i].toLowerCase(), newVals[++i]);
-            }
-        }
+    public String[] editMenu() {
+        return editMenu(control.getAttributeTitles(), control.getAttributes());
     }
 
     /**
@@ -184,9 +178,9 @@ public class CLIDisplay implements Displayer {
             return 3;
     }
 
-    public String[][] getRefData() {
+    public String[] getRefData() {
         //TODO Brandon
-        String[][] refData = new String[30][30];
+        String[] refData = new String[30];
         //scanIn is defined globally, just need the user input mapped into the right places and
         //returned.
         return refData;
@@ -203,45 +197,57 @@ public class CLIDisplay implements Displayer {
         switch (choice) {
             case "Quit":
                 return true;
-            case "Create Library":
+            case "create":
                 String[] titleDescription = getTD();
-
                 control.createLibrary(titleDescription[0], titleDescription[1]);
                 break;
-            case "Edit":
-                editMenu();
+            case "edit":
+                String[] newVals = editMenu();
+                control.sendFunc("edit", newVals);
                 break;
-            case "Move Up":
+            case "move":
                 control.traverseUp();
                 break;
-            case "SortAlphA":
+            case "sortAlphA":
                 control.sendFunc("sort", "a-z");
                 break;
-            case "SortAlphD":
+            case "sortAlphD":
                 control.sendFunc("sort", "z-a");
                 break;
-            case "Delete":
+            case "delete":
                 control.delete();
                 break;
-            case "Change Rating":
+            case "rate":
                 String relateTitle = selectFromRelatable(); //replace this
                 control.sendFunc("rate", "" + (getRating()), relateTitle);
                 break;
-            case "View Directory":
+            case "view":
                 control.viewDir();
                 break;
-            case "Change Relation": //TODO put in SLC
-                control.sendFunc("changeRelation", get("Name of new Relation"));
+            case "change": //TODO put in SLC
+                control.sendFunc("change", get("Name of new Relation"));
                 break;
-            case "Add": //TODO put in SLC
+            case "add":
                 control.sendFunc("add", getTD());
                 break;
-            case "RefData": //TODO put in SLC
-                control.sendFunc("");
+            case "refdata": //TODO put in SLC
+                control.sendFunc("refdata", getRefData());
                 break;
+            case "moveTheme":
+                control.sendFunc("moveTheme", selectFromTopics());
             }
+
             return false;
         }
+
+    private String selectFromTopics() {
+        List<String> titles = new ArrayList<String>();
+        for(Entity e: control.getParentEntities()) {
+            titles.add(e.getTitle());
+        }
+        int choice = getChoice(titles);
+        return titles.get(choice);
+    }
 
     private String selectFromRelatable() {
         List<Relatable> relatables = control.getRatedRelatables();

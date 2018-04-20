@@ -158,6 +158,12 @@ public class SingleLibraryController implements Controller{
                         r.setRating(Float.parseFloat(param[0]));
                     }
                 }
+                break;
+            case "add":
+                if(selected instanceof Editable) {
+                    ((Editable) selected).createChild(param[0], param[1]);
+                }
+                break;
             case "":
 
                 break;
@@ -238,5 +244,12 @@ public class SingleLibraryController implements Controller{
     }
 
 
+    public List<Entity> getParentEntities() {
+        Entity temp = selected;
+        traverseUp();
+        traverseUp();
+        List<Entity> list = selected.getEntityChildren();
+        return list;
+    }
 
 }

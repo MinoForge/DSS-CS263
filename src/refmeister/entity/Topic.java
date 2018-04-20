@@ -28,8 +28,8 @@ public class Topic extends Editable implements Comparable<Entity> {
         this.setTitle(title);
         this.setDescription(description);
         this.setParent(parent);
-        parent.registerChild(this);
         this.children = themes;
+        parent.registerChild(this);
     }
 
     /**

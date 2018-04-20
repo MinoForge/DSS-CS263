@@ -221,6 +221,8 @@ public class SingleLibraryController implements Controller{
                 }
             }
         } else {
+            System.out.println("Failed to move up: currently in: " + selected);
+            System.out.println("Has parent: " + selected.getParent());
             viewDir();
         }
     }

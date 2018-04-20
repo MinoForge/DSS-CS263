@@ -6,6 +6,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import refmeister.controllers.Controller;
 
+/**
+ * TODO Have not done the GUI yet -> On track to complete this the third sprint.
+ */
 public class GUIDisplay extends Application implements Displayer{
     private Controller c;
 

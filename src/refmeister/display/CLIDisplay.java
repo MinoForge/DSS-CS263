@@ -75,6 +75,10 @@ public class CLIDisplay implements Displayer {
         return editMenu(control.getAttributeTitles(), control.getAttributes());
     }
 
+    /**
+     * Prints out the current attributes of a specified entity. This will usually be the title
+     * and description of an entity.
+     */
     public void displayAttributes() {
         String[] attrTitles = control.getAttributeTitles();
         String[] atts = control.getAttributes();
@@ -195,9 +199,10 @@ public class CLIDisplay implements Displayer {
     }
 
     /**
-     *
-     * @param descs
-     * @return
+     * Returns an array of strings passed on the strings that are passed in. Calls on the get()
+     * method above to read a line of input from the user.
+     * @param descs The strings passed in.
+     * @return A string array built on user input from the get() method above.
      */
     private String[] get(String... descs) {
         String[] result = new String[descs.length];
@@ -208,8 +213,8 @@ public class CLIDisplay implements Displayer {
     }
 
     /**
-     *
-     * @return
+     * Prompts the user for input for a rating to give to a RelatedRelation.
+     * @return The float double that that user entered, or 3.
      */
     public double getRating() {
 
@@ -304,6 +309,10 @@ public class CLIDisplay implements Displayer {
             return false;
         }
 
+    /**
+     * Selects
+     * @return
+     */
     private String selectFromTopics() {
         List<String> titles = new ArrayList<String>();
         for(Entity e: control.getParentEntities()) {
@@ -314,7 +323,7 @@ public class CLIDisplay implements Displayer {
     }
 
     /**
-     *
+     * Selects
      * @return
      */
     private String selectFromRelatable() {
@@ -328,11 +337,12 @@ public class CLIDisplay implements Displayer {
 
     }
 
+    /**
+     * TODO Gets the library to load.
+     * @return
+     */
     private String getLibToLoad() {
         return null; //TODO
     }
 
-
-
-    //TODO CRY BECAUSE NOT SURE FUNCTIONALITY WILL BE DONE IN 18 HOURS WHEN I GO TO SLEEP
 }

@@ -70,7 +70,16 @@ public class CLIDisplay implements Displayer {
      * Allows the menu to be edited based on the attributes passed to it.
      */
     public String[] editMenu() {
+        displayAttributes();
         return editMenu(control.getAttributeTitles(), control.getAttributes());
+    }
+
+    public void displayAttributes() {
+        String[] attrTitles = control.getAttributeTitles();
+        String[] atts = control.getAttributes();
+        for(int i = 0; i < atts.length; i++) {
+            System.out.println(attrTitles + ": " + atts);
+        }
     }
 
     /**
@@ -109,12 +118,13 @@ public class CLIDisplay implements Displayer {
     private boolean choose(int choice) {
         System.out.println("Choice: " + itemList.get(choice));
         List<String> funcList = control.getFuncs();
-
-        for(String str: itemList)
-        System.out.println(str);
-
-        for(String str: funcList)
-        System.out.println(str);
+        funcList.add("quit");
+//
+//        for(String str: itemList)
+//        System.out.println(str);
+//
+//        for(String str: funcList)
+//        System.out.println(str);
 
 
         return functionality(funcList.get(choice));
@@ -248,6 +258,9 @@ public class CLIDisplay implements Displayer {
         switch (choice) {
             case "Quit":
                 return true;
+            case "load":
+                //todo
+                break;
             case "create":
                 String[] titleDescription = getTD();
                 control.createLibrary(titleDescription[0], titleDescription[1]);
@@ -313,6 +326,10 @@ public class CLIDisplay implements Displayer {
         int choice = getChoice(titles);
         return titles.get(choice);
 
+    }
+
+    private String getLibToLoad() {
+        return null; //TODO
     }
 
 

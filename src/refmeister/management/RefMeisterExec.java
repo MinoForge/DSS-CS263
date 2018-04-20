@@ -46,8 +46,6 @@ public class RefMeisterExec {
         File dir = new File(DEFAULT_DIRECTORY);
 
         dir.mkdir();
-  //          System.out.println("exception1: " + e.getMessage());
-    //    }
 
         try {
             wDir = new WorkingDirectory(dir);
@@ -55,11 +53,8 @@ public class RefMeisterExec {
             FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, e);
         }
 
-        int i = 0;
-
         Controller control = new SingleLibraryController(wDir);
         display = new CLIDisplay(control);
-        display.displayCurrent();
 
         FileManager.getInstance().start();
         FileManager.getInstance().log(FileManager.Severity.DEBUG, "Application Started");
@@ -67,9 +62,6 @@ public class RefMeisterExec {
         try {
             boolean quit = false;
             while (!quit) {
-                //testcode
-//            System.out.println(i++);
-
                 display.displayCurrent();
                 quit = display.pickOption();
             }

@@ -76,6 +76,10 @@ class RefIdea implements Saveable, Relation {
 	    this.idea.removeRelation(this);
 	}
 
+    /**
+     * Returns an empty list, since RefIdea can't have children.
+     * @return an empty list.
+     */
 	@Override
 	public List<Saveable> getSaveableChildren() {
 		return Collections.emptyList();

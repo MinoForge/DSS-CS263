@@ -9,9 +9,8 @@ import java.util.*;
 /**
  * This class represents a reference in an academic setting
  * @author  DevSquad Supreme (Red Team)
- * @version 1.0
+ * @version 20 April 2018
  */
-
 public class Reference extends Editable implements Relatable {
 
     /**
@@ -301,20 +300,36 @@ public class Reference extends Editable implements Relatable {
 
     }
 
+    /**
+     * Associates a Relation to this Reference.
+     * @param r The Relation to associate.
+     */
     @Override
     public void registerRelation(Relation r) {
         this.relations.add(r);
     }
 
+    /**
+     * Disassociates a Relation from this Reference.
+     * @param r The Relation to disassociate.
+     */
     @Override
     public void removeRelation(Relation r) {
         this.relations.removeIf(r::equals);
     }
 
+    /**
+     * Associates a RatedRelation to this Reference.
+     * @param r The RatedRelation to associated.
+     */
     public void registerRatedRelation(RatedRelation r){
         this.args.add(r);
     }
 
+    /**
+     * Disassociates a RatedRelation from this Reference.
+     * @param r The RatedRelation to disassociate.
+     */
     public void removeRatedRelation(RatedRelation r){
         this.args.remove(r);
     }
@@ -351,13 +366,11 @@ public class Reference extends Editable implements Relatable {
         return attr;
     }
 
+    /**
+     * Removes this Reference from it's parents child list.
+     */
     public void delete() {
         this.parent.removeChild(this);
-    }
-
-    private void destroy() {
-        //TODO
-
     }
 
     /**
@@ -433,6 +446,10 @@ public class Reference extends Editable implements Relatable {
         return funcs;
     }
 
+    /**
+     * Returns a list of strings that display options the user can choose.
+     * @return a list of strings that display options the user can choose.
+     */
     @Override
     public List<String> listOptions() {
         List<String> options = new ArrayList<>();

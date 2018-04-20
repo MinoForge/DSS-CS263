@@ -181,6 +181,9 @@ public class Topic extends Editable implements Comparable<Entity> {
         return attr;
     }
 
+    /**
+     * Removes this topic from it's parent's list of children.
+     */
     public void delete() {
         this.getParent().removeChild(this);
     }

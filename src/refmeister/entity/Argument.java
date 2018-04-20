@@ -14,7 +14,6 @@ import java.util.List;
  * @author Brandon Townsend
  * @version 17, 4, 2018
  */
-
 public class Argument extends Editable implements Relatable {
 
 	/** ArrayList of RefArgs that show what this Argument instance is associated with. */
@@ -149,20 +148,36 @@ public class Argument extends Editable implements Relatable {
         return null;
     }
 
+    /**
+     * Sets up a RatedRelation to be associated with the refArgs list.
+     * @param r the RatedRelation to be associated.
+     */
 	public void registerRatedRelation(RatedRelation r){
         this.refArgs.add(r);
     }
 
+    /**
+     * Arguments must have a rating at this time, therefore we are not supporting this method.
+     * @param r A Relation to be passed in, if we were supporting this method.
+     */
     @Override
     public void registerRelation(Relation r) {
         throw new UnsupportedOperationException("no no no");
     }
 
+    /**
+     * Arguments must have a rating at this time, therefore we are not supporting this method.
+     * @param r A Relation to be passed in, if we were supporting this method.
+     */
     @Override
     public void removeRelation(Relation r) {
         throw new UnsupportedOperationException("nope not today");
     }
 
+    /**
+     * Removes a RatedRelation to be disassociated with the refArgs list.
+     * @param r The RatedRelated to be disassociated with the refArgs list.
+     */
     public void removeRatedRelation(RatedRelation r){
         this.refArgs.removeIf(r::equals);
     }

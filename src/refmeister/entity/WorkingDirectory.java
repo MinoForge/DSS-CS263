@@ -67,16 +67,30 @@ public class WorkingDirectory implements Displayable {
 		workingDir = file;
 	}
 
+    /**
+     * Returns null, as WorkingDirectory has no attributes to retrieve.
+     * @param attribute the attribute to retrieve.
+     * @return null.
+     */
     @Override
     public String getAttribute(String attribute) {
         return null;
     }
 
+    /**
+     * Sets nothing, as WorkingDirectory has no attributes to set.
+     * @param attribute the attribute to set
+     * @param contents  the new value of the attribute
+     */
     @Override
     public void setAttribute(String attribute, String contents) {
 
     }
 
+    /**
+     * Returns a list of options the user can select when they are "in" a WorkingDirectory object.
+     * @return a list of options the user can select when they are "in" a WorkingDirectory object.
+     */
 	@Override
 	public List<String> listOptions() {
 		List<String> options = new ArrayList<>();
@@ -99,6 +113,11 @@ public class WorkingDirectory implements Displayable {
         return options;
 	}
 
+    /**
+     * Returns a list of strings where the user determines whether to create a library or quit
+     * the program.
+     * @return a list of strings.
+     */
 	public List<String> getFunc() {
 		List<String> funcs = new ArrayList<String>();
 		funcs.add("create");

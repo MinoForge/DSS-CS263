@@ -56,11 +56,21 @@ public class Note extends Editable {
 		return Collections.emptyList();
 	}
 
+    /**
+     * Notes cannot have children at this time, therefore it returns null.
+     * @param title The title for the child.
+     * @param description The description for the child.
+     * @return null, since notes cannot have children at this time.
+     */
     @Override
     public Entity createChild(String title, String description) {
         return null;
     }
 
+    /**
+     * Notes cannot have children at this time, therefore it returns null.
+     * @return null, since notes cannot have children at this time.
+     */
     @Override
     public List<Entity> getEntityChildren(){
         return null;
@@ -137,7 +147,10 @@ public class Note extends Editable {
         return attr;
     }
 
+    /**
+     * Removes the reference to this child in its parent.
+     */
     public void delete() {
-    	//TODO
+    	getParent().removeChild(this);
 	}
 }

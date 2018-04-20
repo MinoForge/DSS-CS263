@@ -41,8 +41,11 @@ public class SingleLibraryController implements Controller{
 	    this.dispSelected = workingDir;
     }
 
+    /**
+     * Returns a list of options for the display that is currently selected.
+     * @return a list of options for the display that is currently selected.
+     */
     @Override
-    //TODO
     public List<String> displaySelected() {
         return dispSelected.listOptions();
     }
@@ -77,17 +80,29 @@ public class SingleLibraryController implements Controller{
         }
 	}
 
-
+    /**
+     * Sets the attribute of an entity to a string passed in.
+     * @param attrTitle a string to specify what attribute we're editing.
+     * @param attrValue the string to set our attribute to.
+     */
     @Override
     public void editAttribute(String attrTitle, String attrValue) {
         edSelected.setAttribute(attrTitle, attrValue);
     }
 
+    /**
+     * Returns an array of strings that contain the titles of the entities.
+     * @return an array of strings that contain the titles of the entities.
+     */
     @Override
     public String[] getAttributeTitles() {
         return edSelected.listAttributeTitles().toArray(new String[0]);
     }
 
+    /**
+     * Returns an array of strings that contain the actual values of the attributes.
+     * @return an array of strings that contain the actual values of the attributes.
+     */
     @Override
     public String[] getAttributes() {
         return edSelected.listAttributes().toArray(new String[0]);
@@ -120,6 +135,9 @@ public class SingleLibraryController implements Controller{
         viewDir();
     }
 
+    /**
+     * Calls helper functions to delete the currently selected entity.
+     */
     public void delete() {
         if(selected.getParent() == null) {
             deleteRoot();
@@ -129,6 +147,11 @@ public class SingleLibraryController implements Controller{
         }
     }
 
+    /**
+     * Sends user input to our controller.
+     * @param func the tags which specify the type of input.
+     * @param param all the information that the user sends in.
+     */
     public void sendFunc(String func, String[] param) {
         switch (func) {
             case "delete":
@@ -186,12 +209,19 @@ public class SingleLibraryController implements Controller{
         }
     }
 
+    /**
+     * Sets currentLib to null, dispSelected to workingDir and edSelected to null.
+     */
     public void viewDir() {
         currentLib = null;
         dispSelected = workingDir;
         edSelected = null;
     }
 
+    /**
+     * Returns a list of rated relatables.
+     * @return a list of rated relatables.
+     */
     @Override
     public List<Relatable> getRatedRelatables() {
         if(selected instanceof Relatable) {
@@ -261,6 +291,10 @@ public class SingleLibraryController implements Controller{
         this.workingDir = workingDir;
     }
 
+    /**
+     * Returns a list of entities that are parents to a given entity.
+     * @return a list of entities that are parents to a given entity.
+     */
     public List<Entity> getParentEntities() {
         Entity temp = selected;
         traverseUp();
@@ -269,6 +303,10 @@ public class SingleLibraryController implements Controller{
         return list;
     }
 
+    /**
+     * Returns a list of strings that is returned from dispSelected's getFunc() method.
+     * @return a list of strings that is returned from dispSelected's getFunc() method.
+     */
     public List<String> getFuncs() {
         return dispSelected.getFunc();
     }

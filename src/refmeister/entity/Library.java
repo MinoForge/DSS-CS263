@@ -169,7 +169,9 @@ public class Library extends Editable {
         return attr;
     }
 
-
+    /**
+     * Deleting libraries from a library class in unsupported at this time.
+     */
     public void delete() {
         throw new UnsupportedOperationException();
     }

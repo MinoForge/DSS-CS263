@@ -29,7 +29,7 @@ Created interface classes for each Entity class in entity/Interfaces.--Peter
 Created interface class for Controller.--Peter
 Moved Editable, Displayable to entityInterfaces.--Peter
 Added exceptions to XMLParser if duplicate names are loaded from an XML File. --Wes
-
+Added comments to all of the new code/code that is updated.
 
 TODO: //[Class]: [Method]: [Changes]
 Please specify the method you made changes to under the classes name

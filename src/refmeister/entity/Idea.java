@@ -127,11 +127,19 @@ public class Idea extends Editable implements Relatable {
 		return String.format("<idea title=\"%s\" description=\"%s\">\n", getTitle(), getDescription());
 	}
 
+    /**
+     * Associates a relation between an idea and a reference.
+     * @param r The relation to be associated.
+     */
     @Override
     public void registerRelation(Relation r) {
         this.ideas.add(r);
     }
 
+    /**
+     * Disassociates a relation between an idea and a reference.
+     * @param r The relation to be disassociated.
+     */
     @Override
     public void removeRelation(Relation r) {
         this.ideas.removeIf(r::equals);
@@ -194,6 +202,10 @@ public class Idea extends Editable implements Relatable {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Ideas can't be rated at this time, so there is no need to associate it with a rating.
+     * @param r Would be the RatedRelation, if we supported this operation.
+     */
     public void removeRatedRelation(RatedRelation r){
         throw new UnsupportedOperationException();
     }

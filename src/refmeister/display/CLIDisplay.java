@@ -95,7 +95,16 @@ public class CLIDisplay implements Displayer {
 
     private boolean choose(int choice) {
         System.out.println("Choice: " + itemList.get(choice));
-        return functionality(itemList.get(choice));
+        List<String> funcList = control.getFuncs();
+
+        for(String str: itemList)
+        System.out.println(str);
+
+        for(String str: funcList)
+        System.out.println(str);
+
+
+        return functionality(funcList.get(choice));
     }
 
 

@@ -271,4 +271,8 @@ public class SingleLibraryController implements Controller{
         return list;
     }
 
+    public List<String> getFuncs() {
+        return getFuncs();
+    }
+
 }

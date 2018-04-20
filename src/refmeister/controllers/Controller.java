@@ -42,6 +42,6 @@ public interface Controller {
 
     List<Entity> getParentEntities();
 
-
+    List<String> getFuncs();
 
 }

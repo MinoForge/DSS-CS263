@@ -25,8 +25,8 @@ public class GUIDisplay extends Application implements Displayer{
     }
 
     @Override
-    public void editMenu() {
-
+    public String[] editMenu() {
+        return null;
     }
 
     @Override

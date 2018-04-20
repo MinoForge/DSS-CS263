@@ -272,7 +272,7 @@ public class SingleLibraryController implements Controller{
     }
 
     public List<String> getFuncs() {
-        return getFuncs();
+        return dispSelected.getFunc();
     }
 
 }

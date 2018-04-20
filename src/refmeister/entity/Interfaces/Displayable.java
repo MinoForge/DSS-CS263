@@ -29,4 +29,6 @@ public interface Displayable {
      * @return  a list of all options.
      */
 	List<String> listOptions();
+
+	List<String> getFunc();
 }

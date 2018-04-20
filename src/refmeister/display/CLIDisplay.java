@@ -189,6 +189,10 @@ public class CLIDisplay implements Displayer {
             return 3;
     }
 
+    /**
+     * Scans in input from the user and sets it as a reference's data.
+     * @return the reference data
+     */
     public String[] getRefData() {
         String[] result = get("Enter section number > ", "Enter title of the paper > ",
                               "Enter publication > ", "Enter location > ",

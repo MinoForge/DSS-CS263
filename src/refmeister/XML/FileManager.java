@@ -93,7 +93,7 @@ public final class FileManager {
         try {
             XMLManager man = new XMLManager(library);
             File autosave = new File(directory.getDirectory(), s);
-            FileWriter fw = new FileWriter(autosave, true);
+            FileWriter fw = new FileWriter(autosave);
             fw.write(man.getXML());
             fw.close();
         } catch (IOException e) {
@@ -106,12 +106,14 @@ public final class FileManager {
     /**
      * Starts teh file thread.
      */
-    public void start(){
-        this.executor.schedule(() -> {
-            libraryLock.lock();
-            this.saveWithName(fileName + "-autosave.rl");
-            libraryLock.unlock();
-        }, 30, TimeUnit.SECONDS);
+    public void start(boolean autosave){
+        if(autosave) {
+            this.executor.schedule(() -> {
+                libraryLock.lock();
+                this.saveWithName(fileName + "-autosave.rl");
+                libraryLock.unlock();
+            }, 30, TimeUnit.SECONDS);
+        }
     }
 
     /**
@@ -186,7 +188,7 @@ public final class FileManager {
      * @param severity  the severity of the exception
      * @param e         the exception
      */
-    public void log(Severity severity, Exception e){
+    public void log(Severity severity, Throwable e){
         StringBuilder s = new StringBuilder(e.toString());
         for(StackTraceElement st : e.getStackTrace()){
             s.append("\n\t");

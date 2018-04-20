@@ -40,7 +40,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * "description", or null otherwise.
      */
     public String getAttribute(String attribute){
-        switch (attribute) {
+        switch (attribute.toLowerCase()) {
             case "title":
                 return this.getTitle();
             case "description":
@@ -57,7 +57,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * @param contents The value to be set to a specified attribute.
      */
     public void setAttribute(String attribute, String contents){
-        switch (attribute) {
+        switch (attribute.toLowerCase()) {
             case "title":
                 this.setTitle(contents);
                 break;

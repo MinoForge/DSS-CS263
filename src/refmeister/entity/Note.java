@@ -119,6 +119,7 @@ public class Note extends Editable {
         funcs.add("edit");
         funcs.add("view");
         funcs.add("move");
+		funcs.add("quit");
 
         return funcs;
     }

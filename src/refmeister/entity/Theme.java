@@ -187,6 +187,7 @@ public class Theme extends Editable {
         funcs.add("view");
         funcs.add("move");
         funcs.add("moveTheme");
+		funcs.add("quit");
 
         return funcs;
     }

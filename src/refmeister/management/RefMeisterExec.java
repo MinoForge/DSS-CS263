@@ -64,6 +64,7 @@ public class RefMeisterExec {
             while (!quit) {
                 display.displayCurrent();
                 quit = display.pickOption();
+//                System.out.println(quit);
             }
         } catch (Exception e){
             FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, "Catastrophic error!");

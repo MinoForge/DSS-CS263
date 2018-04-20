@@ -163,6 +163,7 @@ public class Idea extends Editable implements Relatable {
         funcs.add("change");
         funcs.add("view");
         funcs.add("move");
+		funcs.add("quit");
 
         return funcs;
     }

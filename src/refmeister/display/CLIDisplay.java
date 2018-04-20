@@ -2,9 +2,8 @@ package refmeister.display;
 
 import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
-import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Interfaces.RatedRelation;
 import refmeister.entity.Interfaces.Relatable;
+import refmeister.entity.Interfaces.Entity;
 
 
 import java.io.IOException;
@@ -68,9 +67,9 @@ public class CLIDisplay implements Displayer {
 
     /**
      * This method is used to edit an array of variables which are passed to it.
-     * @param optionNames The names of the items you are editing.
+     * @param optionNames   The names of the items you are editing.
      * @param currentValues The values of the items you are editing, before they have been touched.
-     * @return
+     * @return              The new values
      */
     private String[] editMenu(String[] optionNames, String[] currentValues) {
         for(String str: optionNames)
@@ -164,7 +163,7 @@ public class CLIDisplay implements Displayer {
     public double getRating() {
 
             String strChoice;
-            double choice = -1;
+            double choice;
 
             System.out.print("Please enter a real number x, such that 0<=x<=5 (If invalid input, "+
                     "defaults to 3): ");
@@ -174,16 +173,23 @@ public class CLIDisplay implements Displayer {
                 if (0 <= choice && choice <= 5) {
                     return choice;
                 }
-            } catch (NumberFormatException nfe) {}
+            } catch (NumberFormatException nfe) {
+                FileManager.getInstance().log(FileManager.Severity.LOG, "User input invalid " +
+                        "number, got: " + strChoice);
+            }
             return 3;
     }
 
     public String[] getRefData() {
-        //TODO Brandon
-        String[] refData = new String[30];
-        //scanIn is defined globally, just need the user input mapped into the right places and
-        //returned.
-        return refData;
+        String[] result = get("Enter section number > ", "Enter title of the paper > ",
+                              "Enter publication > ", "Enter location > ",
+                              "Enter publisher's name > ", "Enter publication date > ",
+                              "Enter the page range > ", "Enter the URL > ",
+                              "Enter the file path > ", "Enter the last accessed date > ",
+                              "Enter the author(s) name [Last][MI][First] > ");
+                                // ^^ TODO PETER loop through the end to get all the others.
+                                //  with <3 - Brandon & with </3 - Caleb
+        return result;
     }
 
 

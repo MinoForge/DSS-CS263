@@ -116,7 +116,7 @@ Entity Classes:
         - Wrote the equals method.
         - Added a default constructor.
         - Added a field library that contains the library that the theme is
-          found in
+          found in.
 
     Topic:
         - Wrote the equals method.

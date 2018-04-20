@@ -5,6 +5,7 @@ package refmeister.XML;
  *
  * @author Wesley Rogers
  */
+
 public class MalformedXMLException extends RuntimeException {
     /**
      * A list of all offending tags.

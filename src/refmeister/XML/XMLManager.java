@@ -1,9 +1,6 @@
 package refmeister.XML;
 
-import refmeister.entity.Argument;
-import refmeister.entity.Idea;
 import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Interfaces.Relation;
 import refmeister.entity.Library;
 
 import java.util.*;
@@ -102,7 +99,7 @@ public class XMLManager {
             builder.append(line);
             builder.append("\n");
 
-            if (line.matches("^<[^\\/].*[^\\/]>$")){ // if line matches open
+            if (line.matches("^<[^/].*[^/]>$")){ // if line matches open
                 indent++;
             }
         }

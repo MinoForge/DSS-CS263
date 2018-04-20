@@ -1,8 +1,6 @@
 package refmeister.controllers;
 
-import com.sun.org.apache.regexp.internal.RE;
 import refmeister.XML.FileManager;
-import refmeister.XML.XMLParser;
 import refmeister.entity.*;
 import refmeister.entity.Interfaces.*;
 
@@ -15,6 +13,7 @@ import java.util.*;
  * @author Peter Gardner
  * @version 25, 3, 2018
  */
+
 public class SingleLibraryController implements Controller{
 
     /** The current object the controller is pointing to. */
@@ -86,7 +85,6 @@ public class SingleLibraryController implements Controller{
     }
 
 
-
     @Override
     public String[] getAttributeTitles() {
         return edSelected.listAttributeTitles().toArray(new String[0]);
@@ -126,8 +124,6 @@ public class SingleLibraryController implements Controller{
         viewDir();
     }
 
-
-
     public void delete() {
         if(selected.getParent() == null) {
             deleteRoot();
@@ -160,13 +156,36 @@ public class SingleLibraryController implements Controller{
                 }
                 break;
             case "add":
-                if(selected instanceof Editable) {
-                    ((Editable) selected).createChild(param[0], param[1]);
+                edSelected.createChild(param[0], param[1]);
+                break;
+            case "edit":
+                for(int i = 0; i < param.length; i++) {
+                    editAttribute(param[i], param[++i]);
                 }
+//                edSelected.setTitle(param[0]);
+//                edSelected.setDescription(param[1]);
                 break;
-            case "":
+            case "moveTheme":
+                temp = selected;
+                traverseUp();
+                traverseUp();
+                List<Entity> topics = selected.getEntityChildren();
+                for(Entity e: topics) {
+                    if(e.getTitle().equals(param[0])) {
+                        e.registerChild(temp);
+                    }
+                }
+                setSelected(temp);
+                break;
+            case "change":
+                System.out.println("Not implemented yet. Will be able to reassign entities which are related," +
+                        "to be related to other entities.");
+                break;//TODO
+            case "generate":
+                System.out.println("Not implemented yet.");
+                break; //TODO
 
-                break;
+
         }
     }
 

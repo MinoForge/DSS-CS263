@@ -11,6 +11,7 @@ import java.util.*;
  * @author  DevSquad Supreme (Red Team)
  * @version 1.0
  */
+
 public class Reference extends Editable implements Relatable {
 
     /**
@@ -23,11 +24,6 @@ public class Reference extends Editable implements Relatable {
      * A list containing associations to all ideas that this reference is associated with.
      */
 	private List<Relation> relations;
-
-    /**
-     * The theme parent of this reference.
-     */
-	private Entity parent;
 
     private List<Entity> notes;
 
@@ -330,6 +326,7 @@ public class Reference extends Editable implements Relatable {
         options.add("Generate MLA Citation");
         options.add("Generate APA Citation");
         options.add("View Directory");
+        options.add("Move Up");
         for (Entity e : getEntityChildren()) {
             options.add(e.getTitle());
         }
@@ -343,25 +340,24 @@ public class Reference extends Editable implements Relatable {
      */
     @Override
     public void sort(String order) {
-         List<Entity> notes = new ArrayList<>();
-         List<Entity> args  = new ArrayList<>();
-         List<Entity> ideas = new ArrayList<>();
          for(Entity e : getEntityChildren()) {
              if(e instanceof Note)
                  notes.add(e);
              if(e instanceof Argument)
-                 args.add(e);
+                 if(e instanceof RatedRelation)
+                    args.add((RatedRelation) e);
              if(e instanceof Idea)
-                 ideas.add(e);
+                 if(e instanceof Relation)
+                    ideas.add((Relation) e);
          }
          if(order.toLowerCase().equals("a-z")) {
              notes.sort(Comparator.naturalOrder());
-             args.sort(Comparator.naturalOrder());
-             ideas.sort(Comparator.naturalOrder());
+             args.sort((ra, rb) -> ra.getEntity().compareTo(rb.getEntity()));
+             ideas.sort((ra, rb) -> ra.getEntity().compareTo(rb.getEntity()));
          } else if(order.toLowerCase().equals("z-a")) {
              notes.sort(Comparator.reverseOrder());
-             args.sort(Comparator.reverseOrder());
-             ideas.sort(Comparator.reverseOrder());
+             args.sort((ra, rb) -> -ra.getEntity().compareTo(rb.getEntity()));
+             ideas.sort((ra, rb) -> -ra.getEntity().compareTo(rb.getEntity()));
          }
     }
 
@@ -380,12 +376,14 @@ public class Reference extends Editable implements Relatable {
     }
 
     public void delete() {
-        destroy();
+        this.parent.removeChild(this);
     }
 
     private void destroy() {
         //TODO
+
     }
+
     /**
      * Returns the list of Relations for this Reference
      * @return the List of Relations for this Reference.
@@ -402,40 +400,58 @@ public class Reference extends Editable implements Relatable {
      * "description", or null otherwise.
      */
     public String getAttribute(String attribute){
-        if(attribute.equals("title")){
-            return this.getTitle();
-        }
-        else if(attribute.equals("description")) {
-            return this.getDescription();
-        }
-        else if(attribute.equals("notes")){
-            String result = "";
-            for(Entity note : notes){
-                result = note.getTitle() + "\n";
-            }
-            return result;
-        }
-        else if(attribute.equals("arguments")){
-            String result = "";
-            for(RatedRelation arg : args) {
-                if (arg instanceof Argument) {
-                    result = ((Argument) arg).getTitle() + "\n";
+        switch (attribute) {
+            case "title":
+                return this.getTitle();
+            case "description":
+                return this.getDescription();
+            case "notes": {
+                String result = "";
+                for (Entity note : notes) {
+                    result = note.getTitle() + "\n";
                 }
+                return result;
             }
-            return result;
-        }
-        else if(attribute.equals("ideas")){
-            String result = "";
-            for(Relation idea : ideas) {
-                if (idea instanceof Idea) {
-                    result = ((Idea) idea).getTitle() + "\n";
+            case "arguments": {
+                String result = "";
+                for (RatedRelation arg : args) {
+                    if (arg instanceof Argument) {
+                        result = ((Argument) arg).getTitle() + "\n";
+                    }
                 }
+                return result;
             }
-            return result;
+            case "ideas": {
+                String result = "";
+                for (Relation idea : ideas) {
+                    if (idea instanceof Idea) {
+                        result = ((Idea) idea).getTitle() + "\n";
+                    }
+                }
+                return result;
+            }
+            default:
+                return null;
         }
-        else{
-            return null;
-        }
+    }
+
+    /**
+     * Returns the list of functions the class can perform.
+     * @return String Array List of the functions this Editable can perform.
+     */
+    @Override
+    public List<String> getFunc(){
+        List<String> funcs = new ArrayList<>();
+        funcs.add("delete");
+        funcs.add("add");
+        funcs.add("edit");
+        funcs.add("sortAlphA");
+        funcs.add("sortAlphD");
+        funcs.add("view");
+        funcs.add("move");
+        funcs.add("generate");
+
+        return funcs;
     }
 
 }

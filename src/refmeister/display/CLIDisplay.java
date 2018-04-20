@@ -79,7 +79,7 @@ public class CLIDisplay implements Displayer {
         String[] attrTitles = control.getAttributeTitles();
         String[] atts = control.getAttributes();
         for(int i = 0; i < atts.length; i++) {
-            System.out.println(attrTitles + ": " + atts);
+            System.out.println("Current " + attrTitles[i] + ": " + atts[i]);
         }
     }
 
@@ -90,14 +90,14 @@ public class CLIDisplay implements Displayer {
      * @return              The new values
      */
     private String[] editMenu(String[] optionNames, String[] currentValues) {
-        for(String str: optionNames)
-            System.out.println(str);
+        //for(String str: optionNames)
+           // System.out.println(str);
         clrscr();
         String[] nameAndVals = new String[optionNames.length*2];
         int j = 0;
         for(int i = 0; i < optionNames.length; i++) {
-            System.out.println(optionNames[i]);
-            System.out.println(currentValues[i]);
+            //System.out.println(optionNames[i]);
+            //System.out.println(currentValues[i]);
             System.out.print("New Value: ");
             String newVal = scanIn.nextLine();
             if(!newVal.equals("")) {

@@ -330,6 +330,7 @@ public class Reference extends Editable implements Relatable {
         options.add("Generate MLA Citation");
         options.add("Generate APA Citation");
         options.add("View Directory");
+        options.add("Move Up");
         for (Entity e : getEntityChildren()) {
             options.add(e.getTitle());
         }
@@ -343,25 +344,24 @@ public class Reference extends Editable implements Relatable {
      */
     @Override
     public void sort(String order) {
-         List<Entity> notes = new ArrayList<>();
-         List<Entity> args  = new ArrayList<>();
-         List<Entity> ideas = new ArrayList<>();
          for(Entity e : getEntityChildren()) {
              if(e instanceof Note)
                  notes.add(e);
              if(e instanceof Argument)
-                 args.add(e);
+                 if(e instanceof RatedRelation)
+                    args.add((RatedRelation) e);
              if(e instanceof Idea)
-                 ideas.add(e);
+                 if(e instanceof Relation)
+                    ideas.add((Relation) e);
          }
          if(order.toLowerCase().equals("a-z")) {
              notes.sort(Comparator.naturalOrder());
-             args.sort(Comparator.naturalOrder());
-             ideas.sort(Comparator.naturalOrder());
+             args.sort((ra, rb) -> ra.getEntity().compareTo(rb.getEntity()));
+             ideas.sort((ra, rb) -> ra.getEntity().compareTo(rb.getEntity()));
          } else if(order.toLowerCase().equals("z-a")) {
              notes.sort(Comparator.reverseOrder());
-             args.sort(Comparator.reverseOrder());
-             ideas.sort(Comparator.reverseOrder());
+             args.sort((ra, rb) -> -ra.getEntity().compareTo(rb.getEntity()));
+             ideas.sort((ra, rb) -> -ra.getEntity().compareTo(rb.getEntity()));
          }
     }
 
@@ -380,7 +380,7 @@ public class Reference extends Editable implements Relatable {
     }
 
     public void delete() {
-        destroy();
+        this.parent.removeChild(this);
     }
 
     private void destroy() {
@@ -436,6 +436,25 @@ public class Reference extends Editable implements Relatable {
         else{
             return null;
         }
+    }
+
+    /**
+     * Returns the list of functions the class can perform.
+     * @return String Array List of the functions this Editable can perform.
+     */
+    @Override
+    public List<String> getFunc(){
+        List<String> funcs = new ArrayList<>();
+        funcs.add("delete");
+        funcs.add("add");
+        funcs.add("edit");
+        funcs.add("sortAlphA");
+        funcs.add("sortAlphD");
+        funcs.add("view");
+        funcs.add("move");
+        funcs.add("generate");
+
+        return funcs;
     }
 
 }

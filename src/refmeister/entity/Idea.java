@@ -152,6 +152,22 @@ public class Idea extends Editable implements Relatable {
     }
 
     /**
+     * Returns the list of functions the class can perform.
+     * @return String Array List of the functions this Editable can perform.
+     */
+    @Override
+    public List<String> getFunc(){
+        List<String> funcs = new ArrayList<>();
+        funcs.add("delete");
+        funcs.add("edit");
+        funcs.add("change");
+        funcs.add("view");
+        funcs.add("move");
+
+        return funcs;
+    }
+
+    /**
      * Returns a list of attributes that contains the title and description of an idea.
      * @return a list of attributes that contains the title and description of an idea.
      */
@@ -165,7 +181,8 @@ public class Idea extends Editable implements Relatable {
     }
 
     public void delete() {
-    	destroy();
+    	for(Relation ri : ideas)
+            ri.destroy();
 	}
 
     /**

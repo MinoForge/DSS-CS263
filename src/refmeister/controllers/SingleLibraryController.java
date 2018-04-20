@@ -86,7 +86,6 @@ public class SingleLibraryController implements Controller{
     }
 
 
-
     @Override
     public String[] getAttributeTitles() {
         return edSelected.listAttributeTitles().toArray(new String[0]);
@@ -158,9 +157,38 @@ public class SingleLibraryController implements Controller{
                         r.setRating(Float.parseFloat(param[0]));
                     }
                 }
-            case "":
-
                 break;
+            case "add":
+                edSelected.createChild(param[0], param[1]);
+                break;
+            case "edit":
+                for(int i = 0; i < param.length; i++) {
+                    editAttribute(param[i], param[++i]);
+                }
+//                edSelected.setTitle(param[0]);
+//                edSelected.setDescription(param[1]);
+                break;
+            case "moveTheme":
+                temp = selected;
+                traverseUp();
+                traverseUp();
+                List<Entity> topics = selected.getEntityChildren();
+                for(Entity e: topics) {
+                    if(e.getTitle().equals(param[0])) {
+                        e.registerChild(temp);
+                    }
+                }
+                setSelected(temp);
+                break;
+            case "change":
+                System.out.println("Not implemented yet. Will be able to reassign entities which are related," +
+                        "to be related to other entities.");
+                break;//TODO
+            case "generate":
+                System.out.println("Not implemented yet.");
+                break; //TODO
+
+
         }
     }
 

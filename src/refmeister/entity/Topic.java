@@ -163,7 +163,7 @@ public class Topic extends Editable implements Comparable<Entity> {
     }
 
     public void delete() {
-        //TODO
+        this.getParent().removeChild(this);
     }
 
 }

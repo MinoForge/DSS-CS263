@@ -139,16 +139,6 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         return out.toString();
     }
 
-    /** TODO IS THIS NEEDED?
-     * Sets title and description to the indices in edits.
-     * @param edits An array of Strings which contains the new title and description for this
-     *              Entity.
-     */
-    public void edit(String[] edits) {
-        setTitle(edits[0]);
-        setDescription(edits[1]);
-    }
-
     /**
      * Method compares this Entity with another Entity
      * @param e the Entity that is being compared
@@ -235,5 +225,22 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         labels.add("Title");
         labels.add("Description");
         return labels;
+    }
+
+    /**
+     * Returns the list of functions the class can perform.
+     * @return String Array List of the functions this Editable can perform.
+     */
+    public List<String> getFunc(){
+        List<String> funcs = new ArrayList<>();
+        funcs.add("delete");
+        funcs.add("add");
+        funcs.add("edit");
+        funcs.add("sortAlphA");
+        funcs.add("sortAlphD");
+        funcs.add("view");
+        funcs.add("move");
+
+        return funcs;
     }
 }

@@ -159,6 +159,7 @@ public class Theme extends Editable {
         List<String> options = new ArrayList<>();
         options.add("Delete Theme");
         options.add("Edit Theme");
+        options.add("Move Theme");
         options.add("Add Reference");
         options.add("View Directory");
         options.add("Sort References A-Z");
@@ -168,6 +169,25 @@ public class Theme extends Editable {
             options.add(child.getTitle());
         }
         return options;
+    }
+
+    /**
+     * Returns the list of functions the class can perform.
+     * @return String Array List of the functions this Entity can perform.
+     */
+    @Override
+    public List<String> getFunc(){
+        List<String> funcs = new ArrayList<>();
+        funcs.add("delete");
+        funcs.add("add");
+        funcs.add("edit");
+        funcs.add("sortAlphA");
+        funcs.add("sortAlphD");
+        funcs.add("view");
+        funcs.add("move");
+        funcs.add("moveTheme");
+
+        return funcs;
     }
 
     /**
@@ -183,6 +203,6 @@ public class Theme extends Editable {
     }
 
     public void delete() {
-    	//TODO
-	}
+        this.parent.removeChild(this);
+    }
 }

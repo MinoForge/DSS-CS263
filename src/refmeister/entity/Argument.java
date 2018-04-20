@@ -1,5 +1,6 @@
 package refmeister.entity;
 
+import refmeister.XML.FileManager;
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.*;
@@ -190,6 +191,23 @@ public class Argument extends Editable implements Relatable {
         options.add("Move Up");
         return options;
     }
+
+    /**
+     * Returns the list of functions the class can perform.
+     * @return String Array List of the functions this Editable can perform.
+     */
+    @Override
+    public List<String> getFunc(){
+        List<String> funcs = new ArrayList<>();
+        funcs.add("delete");
+        funcs.add("edit");
+        funcs.add("rate");
+        funcs.add("change");
+        funcs.add("view");
+        funcs.add("move");
+        return funcs;
+    }
+
     /**
      * Returns a list of attributes that contains the title and description of
      * the argument.
@@ -227,14 +245,17 @@ public class Argument extends Editable implements Relatable {
         return result;
     }
 
+    /**
     public void changeRating(String refTitle, float newRating){
         for(RatedRelation r : refArgs){
             if(r.getReference().getTitle().equals(refTitle)){
                 r.setRating(newRating);
             }
             else{
-                System.out.println("Reference Doesn't Exist.");
+                FileManager.getInstance().log(FileManager.Severity.LOG, "User input invalid " +
+                        refTitle);
             }
         }
     }
+    */
 }

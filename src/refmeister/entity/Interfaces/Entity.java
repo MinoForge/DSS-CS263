@@ -12,7 +12,6 @@ public interface Entity extends Saveable, Comparable<Entity>{
     String getDescription();
 
     Entity getParent();
-
     void registerChild(Entity e);
     Entity removeChild(Entity e);
     List<Entity> getEntityChildren();

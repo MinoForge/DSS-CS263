@@ -84,14 +84,14 @@ public class WorkingDirectory implements Displayable {
 //		    options.add("Parent Directory");
 //        }
         File[] allFiles = workingDir.listFiles();
-        for(File f: allFiles) {
-		    if (f.isDirectory()) {
-		        options.add(f.getName());
-            }
-            if (f.isFile() && f.getName().endsWith(".rl")) {
-		        options.add(f.getName());
-            }
-        }
+//        for(File f: allFiles) {
+//		    if (f.isDirectory()) {
+//		        options.add(f.getName());
+//            }
+//            if (f.isFile() && f.getName().endsWith(".rl")) {
+//		        options.add(f.getName());
+//            }
+//        }
 
         options.add("Create Library");
         options.add("Quit");

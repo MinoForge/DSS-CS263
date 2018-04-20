@@ -96,6 +96,7 @@ public class CLIDisplay implements Displayer {
     private boolean choose(int choice) {
         System.out.println("Choice: " + itemList.get(choice));
         List<String> funcList = control.getFuncs();
+        funcList.add("quit");
 
         for(String str: itemList)
         System.out.println(str);
@@ -216,6 +217,9 @@ public class CLIDisplay implements Displayer {
         switch (choice) {
             case "Quit":
                 return true;
+            case "load":
+                //todo
+                break;
             case "create":
                 String[] titleDescription = getTD();
                 control.createLibrary(titleDescription[0], titleDescription[1]);
@@ -277,6 +281,10 @@ public class CLIDisplay implements Displayer {
         int choice = getChoice(titles);
         return titles.get(choice);
 
+    }
+
+    private String getLibToLoad() {
+        return null; //TODO
     }
 
 

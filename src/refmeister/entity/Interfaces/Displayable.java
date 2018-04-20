@@ -6,6 +6,8 @@ import java.util.List;
 /**
  * This interface defines methods which must be implemented for the display of the program.
  * Currently only gets a String array for printing to the command line.
+ * @author DevSquad
+ * @version 20 April, 2018
  */
 
 public interface Displayable {

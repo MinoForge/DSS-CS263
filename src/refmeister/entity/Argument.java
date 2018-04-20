@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * The Argument class models an argument that would be associated with one or multiple References.
  * @author Brandon Townsend
- * @version 17, 4, 2018
+ * @version 20 April, 2018
  */
 public class Argument extends Editable implements Relatable {
 

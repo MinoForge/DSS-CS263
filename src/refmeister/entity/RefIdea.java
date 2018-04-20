@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * This is an intermediate class modeling the links associating a Reference and an Idea.
  * @author Red Team/DevSquad Supreme
- * @version 17, 4, 2018
+ * @version 20 April, 2018
  */
 class RefIdea implements Saveable, Relation {
 

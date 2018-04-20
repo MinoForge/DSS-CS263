@@ -15,7 +15,7 @@ import java.util.Scanner;
  * Models the command line interface. Handles some user input and works with the controller to
  * show the correct command line interface.
  * @author Peter Gardner
- * @version 19 April 2018
+ * @version 20 April, 2018
  */
 public class CLIDisplay implements Displayer {
 

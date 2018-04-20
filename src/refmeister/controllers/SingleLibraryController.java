@@ -11,7 +11,7 @@ import java.util.*;
  * The Controller class controls the flow of the program, saving and loading a full library, and
  * allows the user to communicate with the program using a menu.
  * @author Peter Gardner
- * @version 25, 3, 2018
+ * @version 20 April, 2018
  */
 
 public class SingleLibraryController implements Controller{

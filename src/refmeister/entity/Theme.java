@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * The Theme class models an Theme that would be listed in one Topic.
  * @author Caleb Dinehart
- * @version 25, 3, 2018
+ * @version 20 April, 2018
  */
 
 

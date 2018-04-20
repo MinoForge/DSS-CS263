@@ -18,6 +18,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Manages saving on a seperate thread.
+ * @author Wesley Rogers
+ * @version 20 April, 2018
  */
 public final class FileManager {
     /**

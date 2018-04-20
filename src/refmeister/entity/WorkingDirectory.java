@@ -14,7 +14,7 @@ import java.util.List;
  * removed from. Design Patterns: This could be a singleton very easily.
  *
  * @author Peter Gardner
- * @version 20, 4, 2018
+ * @version 20 April, 2018
  */
 
 public class WorkingDirectory implements Displayable {

@@ -242,6 +242,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         funcs.add("sortAlphD");
         funcs.add("view");
         funcs.add("move");
+        funcs.add("quit");
 
         return funcs;
     }

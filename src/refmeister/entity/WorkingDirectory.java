@@ -102,6 +102,7 @@ public class WorkingDirectory implements Displayable {
 	public List<String> getFunc() {
 		List<String> funcs = new ArrayList<String>();
 		funcs.add("create");
+		funcs.add("quit");
 		return funcs;
 	}
 }

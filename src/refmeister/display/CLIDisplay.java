@@ -56,6 +56,7 @@ public class CLIDisplay implements Displayer {
         if(choice != -1 && choice < itemList.size()) {
             return choose(choice);
         }
+
         return false;
 
     }
@@ -105,7 +106,6 @@ public class CLIDisplay implements Displayer {
     private boolean choose(int choice) {
         System.out.println("Choice: " + itemList.get(choice));
         List<String> funcList = control.getFuncs();
-        funcList.add("quit");
 //
 //        for(String str: itemList)
 //        System.out.println(str);
@@ -224,7 +224,7 @@ public class CLIDisplay implements Displayer {
      */
     public boolean functionality (String choice) {
         switch (choice) {
-            case "Quit":
+            case "quit":
                 return true;
             case "load":
                 //todo

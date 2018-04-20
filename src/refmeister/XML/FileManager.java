@@ -192,7 +192,6 @@ public final class FileManager {
             s.append("\n\t");
             s.append(st.toString());
         }
-        System.out.println(s);
         log(severity, s.toString());
     }
 

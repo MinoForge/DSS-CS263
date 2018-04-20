@@ -64,7 +64,6 @@ public class SingleLibraryController implements Controller{
      */
 	public void loadLibrary(String title) {
         loadLibrary(new File(title));
-
     }
 
 	/**
@@ -84,18 +83,15 @@ public class SingleLibraryController implements Controller{
         edSelected.setAttribute(attrTitle, attrValue);
     }
 
-
     @Override
     public String[] getAttributeTitles() {
         return edSelected.listAttributeTitles().toArray(new String[0]);
     }
 
-
     @Override
     public String[] getAttributes() {
         return edSelected.listAttributes().toArray(new String[0]);
     }
-
 
     /**
      * Creates a new library with a specified title and description.
@@ -261,7 +257,6 @@ public class SingleLibraryController implements Controller{
     public void setWorkingDir(WorkingDirectory workingDir) {
         this.workingDir = workingDir;
     }
-
 
     public List<Entity> getParentEntities() {
         Entity temp = selected;

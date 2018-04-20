@@ -144,10 +144,29 @@ public class Topic extends Editable implements Comparable<Entity> {
         options.add("Sort Themes A-Z");
         options.add("Sort Themes Z-A");
         options.add("Move Up");
+        options.add("Quit");
         for(Entity child : children){
             options.add(child.getTitle());
         }
         return options;
+    }
+
+    /**
+     * Returns the list of functions the class can perform.
+     * @return String Array List of the functions this Editable can perform.
+     */
+    public List<String> getFunc(){
+        List<String> funcs = new ArrayList<>();
+        funcs.add("delete");
+        funcs.add("edit");
+        funcs.add("add");
+        funcs.add("view");
+        funcs.add("sortAlphA");
+        funcs.add("sortAlphD");
+        funcs.add("move");
+        funcs.add("quit");
+
+        return funcs;
     }
 
     /**

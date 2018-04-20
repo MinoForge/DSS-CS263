@@ -141,6 +141,23 @@ public class Library extends Editable {
     }
 
     /**
+     * Returns the list of functions the class can perform.
+     * @return String Array List of the functions this Editable can perform.
+     */
+    @Override
+    public List<String> getFunc(){
+        List<String> funcs = new ArrayList<>();
+        funcs.add("delete");
+        funcs.add("edit");
+        funcs.add("add");
+        funcs.add("view");
+        funcs.add("sortAlphA");
+        funcs.add("sortAlphD");
+        funcs.add("quit");
+
+        return funcs;
+    }
+    /**
      * Returns a list of attributes that contains the title and description of a library.
      * @return A list of attributes that contains the title and description of a library.
      */

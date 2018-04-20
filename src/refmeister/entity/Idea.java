@@ -148,6 +148,7 @@ public class Idea extends Editable implements Relatable {
         options.add("Change Relation");
         options.add("View Directory");
         options.add("Move Up");
+        options.add("Quit");
         return options;
     }
 

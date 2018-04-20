@@ -229,20 +229,6 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         return labels;
     }
 
-    /**
-     * Returns the list of functions the class can perform.
-     * @return String Array List of the functions this Editable can perform.
-     */
-    public List<String> getFunc(){
-        List<String> funcs = new ArrayList<>();
-        funcs.add("delete");
-        funcs.add("edit");
-        funcs.add("add");
-        funcs.add("sortAlphA");
-        funcs.add("sortAlphD");
-        funcs.add("view");
-        funcs.add("quit");
+    public abstract List<String> getFunc();
 
-        return funcs;
-    }
 }

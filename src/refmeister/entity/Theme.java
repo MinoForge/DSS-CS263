@@ -166,6 +166,7 @@ public class Theme extends Editable {
         options.add("Sort References A-Z");
         options.add("Sort References Z-A");
         options.add("Move Up");
+        options.add("Quit");
         for(Entity child : children){
             options.add(child.getTitle());
         }
@@ -180,13 +181,13 @@ public class Theme extends Editable {
     public List<String> getFunc(){
         List<String> funcs = new ArrayList<>();
         funcs.add("delete");
-        funcs.add("add");
         funcs.add("edit");
+        funcs.add("moveTheme");
+        funcs.add("add");
+        funcs.add("view");
         funcs.add("sortAlphA");
         funcs.add("sortAlphD");
-        funcs.add("view");
         funcs.add("move");
-        funcs.add("moveTheme");
 		funcs.add("quit");
 
         return funcs;

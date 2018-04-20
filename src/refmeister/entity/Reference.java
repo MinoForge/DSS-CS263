@@ -337,9 +337,11 @@ public class Reference extends Editable implements Relatable {
         options.add("Add Note");
         options.add("Add Idea");
         options.add("Add Argument");
-        options.add("Generate MLA Citation");
-        options.add("Generate APA Citation");
+        //options.add("Generate MLA Citation");
+        //options.add("Generate APA Citation");
         options.add("View Directory");
+        options.add("Move Up");
+        options.add("Quit");
         for (Entity e : getEntityChildren()) {
             options.add(e.getTitle());
         }
@@ -456,13 +458,16 @@ public class Reference extends Editable implements Relatable {
     public List<String> getFunc(){
         List<String> funcs = new ArrayList<>();
         funcs.add("delete");
-        funcs.add("add");
         funcs.add("edit");
+        funcs.add("addN");
+        funcs.add("addI");
+        funcs.add("addA");
         funcs.add("sortAlphA");
         funcs.add("sortAlphD");
         funcs.add("view");
         funcs.add("move");
-        funcs.add("generate");
+        funcs.add("quit");
+        //funcs.add("generate");
 
         return funcs;
     }

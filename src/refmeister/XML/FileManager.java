@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -50,6 +51,7 @@ public final class FileManager {
      */
     private final Lock loggerLock;
 
+    private ScheduledFuture<?> autosave;
     private final ScheduledThreadPoolExecutor executor;
 
     private FileManager(){
@@ -108,10 +110,11 @@ public final class FileManager {
      */
     public void start(boolean autosave){
         if(autosave) {
-            this.executor.schedule(() -> {
+            this.autosave = this.executor.schedule(() -> {
                 this.saveWithName(fileName + "-autosave.rl");
             }, 30, TimeUnit.SECONDS);
         }
+        executor.setRemoveOnCancelPolicy(true);
     }
 
     /**
@@ -134,8 +137,16 @@ public final class FileManager {
     public synchronized void stop(){
         this.libraryLock.lock();
         try {
+            if(autosave != null)
+                autosave.cancel(true);
+
             this.executor.shutdown();
-            this.executor.shutdownNow();
+
+            if(!this.executor.awaitTermination(10, TimeUnit.SECONDS)){
+                this.executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Failed to terminate!");
         } finally {
             this.libraryLock.unlock();
         }

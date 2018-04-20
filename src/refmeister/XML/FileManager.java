@@ -43,14 +43,14 @@ public final class FileManager {
      * The libraryLock for managing access to the library. THIS SHOULD <b>ALWAYS</b> BE LOCKED
      * WHEN READING OR WRITING TO THE LIBRARY TO ENSURE VALID LIBRARY STATE WHEN SAVING.
      */
-    private Lock libraryLock;
+    private final Lock libraryLock;
 
     /**
      * The lock for the l
      */
-    private Lock loggerLock;
+    private final Lock loggerLock;
 
-    private ScheduledThreadPoolExecutor executor;
+    private final ScheduledThreadPoolExecutor executor;
 
     private FileManager(){
         libraryLock = new ReentrantLock();
@@ -290,9 +290,9 @@ public final class FileManager {
         /**
          * The log name of the severity type
          */
-        private String name;
+        private final String name;
 
-        private Severity(String s){
+        Severity(String s){
             this.name = s;
         }
 

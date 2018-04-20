@@ -14,6 +14,7 @@ import java.util.List;
  * @author Peter Gardner, Caleb Dinehart
  * @version 25, 3, 2018
  */
+
 public class Library extends Editable {
 
     /** All references used in this Library. */

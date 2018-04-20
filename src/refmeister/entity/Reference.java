@@ -11,6 +11,7 @@ import java.util.*;
  * @author  DevSquad Supreme (Red Team)
  * @version 1.0
  */
+
 public class Reference extends Editable implements Relatable {
 
     /**
@@ -23,11 +24,6 @@ public class Reference extends Editable implements Relatable {
      * A list containing associations to all ideas that this reference is associated with.
      */
 	private List<Relation> relations;
-
-    /**
-     * The theme parent of this reference.
-     */
-	private Entity parent;
 
     private List<Entity> notes;
 
@@ -385,7 +381,9 @@ public class Reference extends Editable implements Relatable {
 
     private void destroy() {
         //TODO
+
     }
+
     /**
      * Returns the list of Relations for this Reference
      * @return the List of Relations for this Reference.
@@ -402,39 +400,38 @@ public class Reference extends Editable implements Relatable {
      * "description", or null otherwise.
      */
     public String getAttribute(String attribute){
-        if(attribute.equals("title")){
-            return this.getTitle();
-        }
-        else if(attribute.equals("description")) {
-            return this.getDescription();
-        }
-        else if(attribute.equals("notes")){
-            String result = "";
-            for(Entity note : notes){
-                result = note.getTitle() + "\n";
-            }
-            return result;
-        }
-        else if(attribute.equals("arguments")){
-            String result = "";
-            for(RatedRelation arg : args) {
-                if (arg instanceof Argument) {
-                    result = ((Argument) arg).getTitle() + "\n";
+        switch (attribute) {
+            case "title":
+                return this.getTitle();
+            case "description":
+                return this.getDescription();
+            case "notes": {
+                String result = "";
+                for (Entity note : notes) {
+                    result = note.getTitle() + "\n";
                 }
+                return result;
             }
-            return result;
-        }
-        else if(attribute.equals("ideas")){
-            String result = "";
-            for(Relation idea : ideas) {
-                if (idea instanceof Idea) {
-                    result = ((Idea) idea).getTitle() + "\n";
+            case "arguments": {
+                String result = "";
+                for (RatedRelation arg : args) {
+                    if (arg instanceof Argument) {
+                        result = ((Argument) arg).getTitle() + "\n";
+                    }
                 }
+                return result;
             }
-            return result;
-        }
-        else{
-            return null;
+            case "ideas": {
+                String result = "";
+                for (Relation idea : ideas) {
+                    if (idea instanceof Idea) {
+                        result = ((Idea) idea).getTitle() + "\n";
+                    }
+                }
+                return result;
+            }
+            default:
+                return null;
         }
     }
 

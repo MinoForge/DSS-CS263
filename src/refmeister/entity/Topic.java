@@ -14,6 +14,7 @@ import java.util.List;
  * @author Caleb Dinehart
  * @version 18, 4, 2018
  */
+
 public class Topic extends Editable implements Comparable<Entity> {
 
     /**

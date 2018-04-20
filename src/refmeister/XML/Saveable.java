@@ -29,14 +29,5 @@ public interface Saveable {
      */
     String getSaveString(XMLManager manager);
 
-    /**
-     * Gets whether this should be embedded late in the XML saving process or during library
-     * traversal.
-     * @return true if this should be embedded late, false otherwise
-     */
-    default boolean delayedEmbed(){
-        return false;
-    }
-
 
 }

@@ -1,15 +1,11 @@
 package refmeister.XML;
 
 import refmeister.entity.*;
-import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Interfaces.Relatable;
 import refmeister.entity.Interfaces.Relation;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -19,6 +15,7 @@ import java.util.stream.Stream;
  *
  * @author Wesley Rogers
  */
+
 public class XMLParser { //This is the second parser I've had to write this semester.
 
     /**
@@ -126,7 +123,7 @@ public class XMLParser { //This is the second parser I've had to write this seme
                 return matcher.group(1);
             }
         } else { //This is probably a closing tag or a section tag
-            Pattern tagType = Pattern.compile("^<\\/?(.*)>$");
+            Pattern tagType = Pattern.compile("^</?(.*)>$");
             Matcher matcher = tagType.matcher(tag);
             if(matcher.find()){
                 return matcher.group(1);
@@ -162,7 +159,7 @@ public class XMLParser { //This is the second parser I've had to write this seme
             case "topic":
                 if(!(parent instanceof Library))
                     throw new MalformedXMLException("topic parent not library");
-                return new Topic(title, desc, (Library) parent);
+                return new Topic(title, desc, parent);
 
             case "theme":
                 return new Theme(title, desc,(Topic) parent);

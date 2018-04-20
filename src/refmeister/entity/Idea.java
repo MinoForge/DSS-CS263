@@ -3,7 +3,6 @@ package refmeister.entity;
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.*;
-import refmeister.entity.Interfaces.Editable;
 
 import java.util.*;
 
@@ -12,6 +11,7 @@ import java.util.*;
  * @author Brandon Townsend
  * @version 17, 4, 2018
  */
+
 public class Idea extends Editable implements Relatable {
 
 	/** ArrayList of RefIdeas that show what this Idea instance is associated with. */
@@ -67,7 +67,7 @@ public class Idea extends Editable implements Relatable {
 	/**
 	 * Disassociates all of this Idea's RefIdeas from this Idea.
 	 */
-	public void destroy() {
+	public void delete() {
 		for(Relation ri : ideas) {
 			ri.destroy();
 		}

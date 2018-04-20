@@ -1,41 +1,11 @@
-*********** FOR CALEB -> REFLECTION FOR THE SPRINT *************
-- We didn't stick to our trello board backlog as much as we planned to.
-- Keeping a communal change log was a brilliant idea and super helpful/useful. That way, we didn't
-have to backtrack.
-- We(sley) learned a lot about file systems and interactions with threads.
-- We gained a better understanding of loose-coupling and while it was a large amount of code
-re-writing, it helped our program out in the end and will make future changes easier to implement.
-- We found that we did not need an interface for every entity class, we really only needed one
-interface for the entities.
-- Giving us feedback on our minutes early was very helpful for both the team morale and future
-planning in minutes.
-- ADD MORE?
+-Created CHANGELOG.txt to keep track of changes.
 
 
-
-
-
-
-
-
-
-
-
-Created CHANGELOG.txt to keep track of changes.
-Created controllers package.
-Moved Controller to Controllers.--Peter
-Created entityInterfaces package.--Peter
-Created interface classes for each Entity class in entity/Interfaces.--Peter
-Created interface class for Controller.--Peter
-Moved Editable, Displayable to entityInterfaces.--Peter
-Added exceptions to XMLParser if duplicate names are loaded from an XML File. --Wes
-Added comments to all of the new code/code that is updated.
-
-TODO: //[Class]: [Method]: [Changes]
-Please specify the method you made changes to under the classes name
 Controllers:
+    - Created controllers package.
+    - Moved Controller to Controllers.
     Controller:
-        - Added method signatures to interface
+        - Refactored to be an interface. Copied all code to SingleLibraryController.
     SingleLibraryController:
         - Wrote and implemented to Controller
         - Mostly deleted old code because it was very tightly coupled, and doing display stuff
@@ -51,14 +21,18 @@ Display:
     CLIDisplay:
         - Wrote all code in CLIDisplay
     Displayer:
-        - Wrote all method signatures in Displayer
+        - Wrote all method signatures in Displayer.
     GUIDisplay:
-        - The Class exists now.
-Entity Interfaces:
+        - The Class exists now. Not implemented past making sure that it is a JavaFX class.
+Created entity.Interfaces package.
+entity.Interfaces:
+    - Moved Editable, Displayable to entity.Interfaces
     Displayable:
         - Added listAttributes method signature.
         - Added listOptions method signature.
+        - Added getFunc method signature.
     Editable:
+        - Implements: Displayable, Saveable, Entity, Comparable<Entity>
         - Wrote the compareTo method.
         - Wrote registerChild method.
         - Wrote removeChild method.
@@ -75,6 +49,8 @@ Entity Interfaces:
         - Added compareTo method.
         - Added getEntityChildren method.
         - Added setParent method.
+        - Added sort method.
+        - Added delete method.
 
     RatedRelation:
         - Everything in this interface was made this sprint
@@ -83,30 +59,44 @@ Entity Interfaces:
         - Everything in this interface was made this sprint
         - Note: RefIdea and RefArg are the only classes that implent this interface
 
-    -- Created the Relatable interface.
+    Created the Relatable interface.
     Relatable:
         - Everything added in this interface
         - References, Ideas, and Arguments implement this interface
 
 Entity Classes:
+    - Added toString methods to all Entity classes.
+
     Argument:
         - Wrote an equals method.
         - Removed the registerRelation and removeRelation methods.
         - Added a default constructor.
+        - Implements/Overrides: delete, getSaveableChildren, getSaveString, createChild,
+            registerRatedRelation, registerRelation, removeRelation, removeRatedRelation,
+            listOptions, getFunc, listAttributes
     Idea:
         - Wrote an equals method.
         - Added a default constructor.
+        - Implements/Overrides: delete, getSaveableChildren, getSaveString, createChild,
+            registerRatedRelation, registerRelation, removeRelation, removeRatedRelation,
+            listOptions, getFunc, listAttributes, getRelations.
 
     Library:
         - Wrote the equals method.
         - Added a default constructor.
+        - Implements/Overrides: getFunc, listAttributes, delete, listOptions, createChild,
+            getSaveString, getSaveableChildren.
 
     Note:
         - Wrote the equals method.
         - Changed getChildren to getEntityChildren.
         - Added a default constructor.
+        - Implements/Overrides: getFunc, listAttributes, listOptions, getSaveString, createChild,
+            getSaveableChildren.
+
     RefArg:
         - Updated to fit with the new Relation interface.
+        - Implements/Overrides: destroy, getSaveableChildren, getSaveString.
 
     Reference:
         - Wrote the equals method.
@@ -115,15 +105,21 @@ Entity Classes:
         - Added the listOptions method.
         - Added a sort method to sort each of the types of children independently.
         - Added generateCitation methods but they are not fully implemented.
-        - Added
+        - Implements/Overrides: getSaveString, registerRelation, removeRelation,
+            registerRatedRelation, removeRatedRelation, sort, listAttributes, delete,
+            getRelations, getAttribute, getFunc, listOptions.
+
     RefIdea:
         - Updated to fit with the new Relation interface.
+        - Implements/Overrides: destroy, getSaveableChildren, getSaveString.
 
     Theme:
         - Wrote the equals method.
         - Added a default constructor.
         - Added a field library that contains the library that the theme is
           found in.
+        - Overrides/Implements: getReference, getEntityChildren, createChild, listOptions,
+          getFunc, listAttributes, delete, getSaveableChildren, getSaveString.
 
     Topic:
         - Wrote the equals method.
@@ -131,6 +127,8 @@ Entity Classes:
         - Changed getChildren to getEntityChildren.
         - Changed addTheme to registerChild.
         - Changed deleteTheme to removeChild.
+        - Overrides/Implements: getReference, getEntityChildren, createChild, listOptions,
+          getFunc, listAttributes, delete, getSaveableChildren, getSaveString.
 
     Other Comments:
         Removed the add method from all entity classes, now they all inherit
@@ -153,12 +151,13 @@ XML:
     MalformedXMLException:
         - Thrown when an XML file is malformed
 
-    Saveable:
+    Saveable: No change
 
     XMLManager:
         - Changes in tag order to use the looser coupled interfaces in grouping tags.
 
     XMLParser:
+        - Added exceptions to XMLParser if duplicate names are loaded from an XML File.
         - Changed to use a factory for creating entities and relations
         - Removed the saveLibrary method, moved to FileManager
         - Made loadLibrary not static, requires an instance to attempt to load a string
@@ -173,6 +172,5 @@ XML:
         - Added lock to error logging to allow for errors to be logged.
 
 Other:
-    - Every Instance of Editable changed to an instance of Entity
     - Remove Setters for Lists, except for References
     - Updated the UML Diagrams for our Entity classes.

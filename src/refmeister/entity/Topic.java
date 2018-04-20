@@ -69,19 +69,6 @@ public class Topic extends Editable implements Comparable<Entity> {
     }
 
     /**
-     * Returns a string representation of this topic.
-     * @return a string representation of this topic.
-     */
-    @Override
-    public String toString() {
-        return "Topic{" +
-                "title='" + getTitle() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", themes=" + children +
-                '}';
-    }
-
-    /**
      * Creates an XML tag for an editable object.
      * @param manager   The XMLManager that this traversal is being used with.
      * @return          A formatted XML String.
@@ -188,4 +175,17 @@ public class Topic extends Editable implements Comparable<Entity> {
         this.getParent().removeChild(this);
     }
 
+
+    /**
+     * Returns a string representation of this topic.
+     *
+     * @return a string representation of this topic.
+     */
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "parent=" + parent +
+                ", children=" + children +
+                '}';
+    }
 }

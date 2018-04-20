@@ -175,4 +175,11 @@ public class Library extends Editable {
     public void delete() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public String toString() {
+        return "Library{" +
+                "references=" + references +
+                '}';
+    }
 }

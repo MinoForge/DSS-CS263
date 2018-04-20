@@ -148,7 +148,16 @@ public class Argument extends Editable implements Relatable {
         return null;
     }
 
-    /**
+	@Override
+	public String toString() {
+		return "Argument{" +
+				"refArgs=" + refArgs +
+				", parent=" + parent +
+				", children=" + children +
+				'}';
+	}
+
+	/**
      * Sets up a RatedRelation to be associated with the refArgs list.
      * @param r the RatedRelation to be associated.
      */

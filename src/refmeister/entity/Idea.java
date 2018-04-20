@@ -198,6 +198,11 @@ public class Idea extends Editable implements Relatable {
     public List<Relation> getRelations(){
         return this.ideas;
     }
+
+	/**
+	 * Throws an exception, since Ideas do not have ratedRelations
+	 * @param r the RatedRelation to be associated.
+	 */
     public void registerRatedRelation(RatedRelation r){
         throw new UnsupportedOperationException();
     }
@@ -209,4 +214,13 @@ public class Idea extends Editable implements Relatable {
     public void removeRatedRelation(RatedRelation r){
         throw new UnsupportedOperationException();
     }
+
+	@Override
+	public String toString() {
+		return "Idea{" +
+				"ideas=" + ideas +
+				", parent=" + parent +
+				", children=" + children +
+				'}';
+	}
 }

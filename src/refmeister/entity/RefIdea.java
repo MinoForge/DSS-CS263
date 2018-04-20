@@ -15,6 +15,7 @@ import java.util.List;
  */
 class RefIdea implements Saveable, Relation {
 
+
 	/** The Reference to which this object is associating an Idea to. */
 	private Reference reference;
 	/** The Idea which this object is associating a Reference to. */
@@ -101,5 +102,13 @@ class RefIdea implements Saveable, Relation {
 		manager.addEntity(this.idea);
 		manager.addAssociation(xml);
 		return null;
+	}
+
+	@Override
+	public String toString() {
+		return "RefIdea{" +
+				"reference=" + reference +
+				", idea=" + idea +
+				'}';
 	}
 }

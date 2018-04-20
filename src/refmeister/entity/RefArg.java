@@ -132,4 +132,13 @@ class RefArg implements Saveable, RatedRelation {
 	    manager.addAssociation(xml);
 	    return null;
     }
+
+	@Override
+	public String toString() {
+		return "RefArg{" +
+				"reference=" + reference +
+				", argument=" + argument +
+				", rating=" + rating +
+				'}';
+	}
 }

@@ -206,7 +206,7 @@ public class CLIDisplay implements Displayer {
     public String[] getRefData() {
         String[] result = get("Enter section number > ", "Enter title of the paper > ",
                               "Enter publication > ", "Enter location > ",
-                              "Enter publisher's name > ", "Enter publication date > ",
+                              "Enter publisher's n1ame > ", "Enter publication date > ",
                               "Enter the page range > ", "Enter the URL > ",
                               "Enter the file path > ", "Enter the last accessed date > ",
                               "Enter the author(s) name [Last][MI][First] > ");

@@ -191,8 +191,8 @@ public class Argument extends Editable implements Relatable {
         List<String> funcs = new ArrayList<>();
         funcs.add("delete");
         funcs.add("edit");
-        funcs.add("rate");
         funcs.add("change");
+        funcs.add("rate");
         funcs.add("view");
         funcs.add("move");
         return funcs;

@@ -1,7 +1,7 @@
 package refmeister.entity.Interfaces;
 
 /**
- * Created by wesle on 4/4/201.
+ * Represents a relation that is weighted.
  */
 public interface RatedRelation extends Relation {
     float getRating();

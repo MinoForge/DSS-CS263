@@ -10,8 +10,6 @@ import refmeister.display.Displayer;
 import refmeister.entity.WorkingDirectory;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.*;
 
 
@@ -66,15 +64,19 @@ public class RefMeisterExec {
         FileManager.getInstance().start();
         FileManager.getInstance().log(FileManager.Severity.DEBUG, "Application Started");
 
-        boolean quit = false;
-        while(!quit) {
-            //testcode
+        try {
+            boolean quit = false;
+            while (!quit) {
+                //testcode
 //            System.out.println(i++);
 
-            display.displayCurrent();
-            quit = display.pickOption();
+                display.displayCurrent();
+                quit = display.pickOption();
+            }
+        } catch (Exception e){
+            FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, "Catastrophic error!");
+            FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, e);
         }
-
         FileManager.getInstance().log(FileManager.Severity.DEBUG, "Application Stop");
         FileManager.getInstance().stop();
     }

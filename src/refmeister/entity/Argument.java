@@ -1,5 +1,6 @@
 package refmeister.entity;
 
+import refmeister.XML.FileManager;
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
 import refmeister.entity.Interfaces.*;
@@ -13,6 +14,7 @@ import java.util.List;
  * @author Brandon Townsend
  * @version 17, 4, 2018
  */
+
 public class Argument extends Editable implements Relatable {
 
 	/** ArrayList of RefArgs that show what this Argument instance is associated with. */
@@ -65,6 +67,7 @@ public class Argument extends Editable implements Relatable {
 	public Argument() {
 	    throw new UnsupportedOperationException("Must specify at least a title for this Argument.");
     }
+
 	/**
 	 * Calculates the average of the ratings of all the RefArgs in arguments.
 	 * @return The average of the ratings of all the RefArgs in arguments.
@@ -78,16 +81,10 @@ public class Argument extends Editable implements Relatable {
 		return average / refArgs.size();
 	}
 
-
-	public void delete() {
-		destroy();
-	}
-
-
 	/**
 	 * Disassociates all of this Argument's RefArgs from this argument.
 	 */
-	public void destroy() {
+	public void delete() {
 		for(RatedRelation ra : refArgs) {
 			ra.destroy();
 		}
@@ -152,17 +149,10 @@ public class Argument extends Editable implements Relatable {
         return null;
     }
 
-	/**
-	 * This method associates a refArg to this Argument.
-	 * @param refArg The refArg being associated.
-	 */
-	void registerRefArg(RefArg refArg) {
-        this.refArgs.add(refArg);
-	}
-
 	public void registerRatedRelation(RatedRelation r){
         this.refArgs.add(r);
     }
+
     @Override
     public void registerRelation(Relation r) {
         throw new UnsupportedOperationException("no no no");
@@ -176,6 +166,7 @@ public class Argument extends Editable implements Relatable {
     public void removeRatedRelation(RatedRelation r){
         this.refArgs.removeIf(r::equals);
     }
+
     /**
      * Returns a list of strings that will be displayed for the menu.
      * @return A list of strings that will be displayed for the menu.
@@ -190,6 +181,23 @@ public class Argument extends Editable implements Relatable {
         options.add("Move Up");
         return options;
     }
+
+    /**
+     * Returns the list of functions the class can perform.
+     * @return String Array List of the functions this Editable can perform.
+     */
+    @Override
+    public List<String> getFunc(){
+        List<String> funcs = new ArrayList<>();
+        funcs.add("delete");
+        funcs.add("edit");
+        funcs.add("rate");
+        funcs.add("change");
+        funcs.add("view");
+        funcs.add("move");
+        return funcs;
+    }
+
     /**
      * Returns a list of attributes that contains the title and description of
      * the argument.
@@ -223,18 +231,7 @@ public class Argument extends Editable implements Relatable {
      * @return the List of Relations for this argument.
      */
     public List<Relation> getRelations(){
-        List<Relation> result = new ArrayList<>(this.refArgs);
-        return result;
+        return new ArrayList<>(this.refArgs);
     }
 
-    public void changeRating(String refTitle, float newRating){
-        for(RatedRelation r : refArgs){
-            if(r.getReference().getTitle().equals(refTitle)){
-                r.setRating(newRating);
-            }
-            else{
-                System.out.println("Reference Doesn't Exist.");
-            }
-        }
-    }
 }

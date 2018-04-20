@@ -1,8 +1,5 @@
 package refmeister.display;
 
-import refmeister.controllers.Controller;
-import refmeister.entity.Interfaces.Displayable;
-
 public interface Displayer {
 
     /**
@@ -10,7 +7,7 @@ public interface Displayer {
      */
     void displayCurrent();
 
-    void editMenu();
+    String[] editMenu();
 
 
     /**

@@ -14,6 +14,7 @@ import java.util.List;
  * @author Caleb Dinehart
  * @version 18, 4, 2018
  */
+
 public class Topic extends Editable implements Comparable<Entity> {
 
     /**
@@ -163,7 +164,7 @@ public class Topic extends Editable implements Comparable<Entity> {
     }
 
     public void delete() {
-        //TODO
+        this.getParent().removeChild(this);
     }
 
 }

@@ -2,9 +2,8 @@ package refmeister.display;
 
 import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
-import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Interfaces.RatedRelation;
 import refmeister.entity.Interfaces.Relatable;
+import refmeister.entity.Interfaces.Entity;
 
 
 import java.io.IOException;
@@ -70,21 +69,15 @@ public class CLIDisplay implements Displayer {
     /**
      * Allows the menu to be edited based on the attributes passed to it.
      */
-    public void editMenu() {
-        String[] newVals = editMenu(control.getAttributeTitles(), control.getAttributes());
-        for(int i = 0; i < newVals.length; i++) {
-            if(newVals[i] != null) {
-                System.out.println(newVals[i] + ": " + newVals[i+1]);
-                control.editAttribute(newVals[i].toLowerCase(), newVals[++i]);
-            }
-        }
+    public String[] editMenu() {
+        return editMenu(control.getAttributeTitles(), control.getAttributes());
     }
 
     /**
      * This method is used to edit an array of variables which are passed to it.
-     * @param optionNames The names of the items you are editing.
+     * @param optionNames   The names of the items you are editing.
      * @param currentValues The values of the items you are editing, before they have been touched.
-     * @return
+     * @return              The new values
      */
     private String[] editMenu(String[] optionNames, String[] currentValues) {
         for(String str: optionNames)
@@ -115,7 +108,16 @@ public class CLIDisplay implements Displayer {
      */
     private boolean choose(int choice) {
         System.out.println("Choice: " + itemList.get(choice));
-        return functionality(itemList.get(choice));
+        List<String> funcList = control.getFuncs();
+
+        for(String str: itemList)
+        System.out.println(str);
+
+        for(String str: funcList)
+        System.out.println(str);
+
+
+        return functionality(funcList.get(choice));
     }
 
 
@@ -202,7 +204,7 @@ public class CLIDisplay implements Displayer {
     public double getRating() {
 
             String strChoice;
-            double choice = -1;
+            double choice;
 
             System.out.print("Please enter a real number x, such that 0<=x<=5 (If invalid input, "+
                     "defaults to 3): ");
@@ -212,18 +214,18 @@ public class CLIDisplay implements Displayer {
                 if (0 <= choice && choice <= 5) {
                     return choice;
                 }
-            } catch (NumberFormatException nfe) {}
+            } catch (NumberFormatException nfe) {
+                FileManager.getInstance().log(FileManager.Severity.LOG, "User input invalid " +
+                        "number, got: " + strChoice);
+            }
             return 3;
     }
 
     /**
      * Scans in input from the user and sets it as a reference's data.
-     * @return an array of strings that contains the questions users will answer to fill in the
-     * data a reference needed.
+     * @return the reference data
      */
     public String[] getRefData() {
-        //scanIn is defined globally, just need the user input mapped into the right places and
-        //returned.
         String[] result = get("Enter section number > ", "Enter title of the paper > ",
                               "Enter publication > ", "Enter location > ",
                               "Enter publisher's name > ", "Enter publication date > ",
@@ -246,45 +248,57 @@ public class CLIDisplay implements Displayer {
         switch (choice) {
             case "Quit":
                 return true;
-            case "Create Library":
+            case "create":
                 String[] titleDescription = getTD();
-
                 control.createLibrary(titleDescription[0], titleDescription[1]);
                 break;
-            case "Edit":
-                editMenu();
+            case "edit":
+                String[] newVals = editMenu();
+                control.sendFunc("edit", newVals);
                 break;
-            case "Move Up":
+            case "move":
                 control.traverseUp();
                 break;
-            case "SortAlphA":
+            case "sortAlphA":
                 control.sendFunc("sort", "a-z");
                 break;
-            case "SortAlphD":
+            case "sortAlphD":
                 control.sendFunc("sort", "z-a");
                 break;
-            case "Delete":
+            case "delete":
                 control.delete();
                 break;
-            case "Change Rating":
+            case "rate":
                 String relateTitle = selectFromRelatable(); //replace this
                 control.sendFunc("rate", "" + (getRating()), relateTitle);
                 break;
-            case "View Directory":
+            case "view":
                 control.viewDir();
                 break;
-            case "Change Relation": //TODO put in SLC
-                control.sendFunc("changeRelation", get("Name of new Relation"));
+            case "change": //TODO put in SLC
+                control.sendFunc("change", get("Name of new Relation"));
                 break;
-            case "Add": //TODO put in SLC
+            case "add":
                 control.sendFunc("add", getTD());
                 break;
-            case "RefData": //TODO put in SLC
-                control.sendFunc("");
+            case "refdata": //TODO put in SLC
+                control.sendFunc("refdata", getRefData());
                 break;
+            case "moveTheme":
+                control.sendFunc("moveTheme", selectFromTopics());
             }
+
             return false;
         }
+
+    private String selectFromTopics() {
+        List<String> titles = new ArrayList<String>();
+        for(Entity e: control.getParentEntities()) {
+            titles.add(e.getTitle());
+        }
+        int choice = getChoice(titles);
+        return titles.get(choice);
+    }
 
     /**
      *

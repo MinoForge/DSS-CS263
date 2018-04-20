@@ -29,10 +29,19 @@ public class Reference extends Editable implements Relatable {
      */
 	private Entity parent;
 
+    /**
+     * A list of Reference's children that are notes.
+     */
     private List<Entity> notes;
 
+    /**
+     * A list of Reference's children that are ideas.
+     */
     private List<Relation> ideas;
 
+    /**
+     * A list of Reference's children that are arguments.
+     */
     private List<RatedRelation> args;
 
     /**

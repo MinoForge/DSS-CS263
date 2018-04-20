@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Models the command line interface. Handles some user input and works with the controller to
+ * show the correct command line interface.
+ * @author Peter Gardner
+ * @version 19 April 2018
+ */
 public class CLIDisplay implements Displayer {
 
     /** The main controller for the program. **/
@@ -61,7 +67,9 @@ public class CLIDisplay implements Displayer {
 
     }
 
-    //TODO
+    /**
+     * Allows the menu to be edited based on the attributes passed to it.
+     */
     public void editMenu() {
         String[] newVals = editMenu(control.getAttributeTitles(), control.getAttributes());
         for(int i = 0; i < newVals.length; i++) {
@@ -100,6 +108,11 @@ public class CLIDisplay implements Displayer {
         return nameAndVals;
     }
 
+    /**
+     * Prints out the name of the choice the user selected and calls functionality on that choice.
+     * @param choice The integer value that correlates to the choice the user makes.
+     * @return The call to functionality based on the choice.
+     */
     private boolean choose(int choice) {
         System.out.println("Choice: " + itemList.get(choice));
         return functionality(itemList.get(choice));
@@ -137,7 +150,9 @@ public class CLIDisplay implements Displayer {
         return choice;
     }
 
-
+    /**
+     * Clears the screen (linux command line). Even on different operating systems!
+     */
     private static void clrscr() {
         try {
             if (System.getProperty("os.name").contains("Windows"))
@@ -149,16 +164,29 @@ public class CLIDisplay implements Displayer {
         }
     }
 
-
+    /**
+     * Returns a string array that contains the title and description of an entity.
+     * @return a string array that contains the title and description of an entity.
+     */
     public String[] getTD() {
         return get("Title", "Description");
     }
 
+    /**
+     * Prints out a single string passed to it and gets the next line the user inputs.
+     * @param desc The string to be printed out.
+     * @return The line the user inputs.
+     */
     private String get(String desc) {
         System.out.print(desc + ": ");
         return scanIn.nextLine();
     }
 
+    /**
+     *
+     * @param descs
+     * @return
+     */
     private String[] get(String... descs) {
         String[] result = new String[descs.length];
         for(int i = 0; i < descs.length; i++) {
@@ -167,6 +195,10 @@ public class CLIDisplay implements Displayer {
         return result;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getRating() {
 
             String strChoice;
@@ -186,7 +218,8 @@ public class CLIDisplay implements Displayer {
 
     /**
      * Scans in input from the user and sets it as a reference's data.
-     *
+     * @return an array of strings that contains the questions users will answer to fill in the
+     * data a reference needed.
      */
     public String[] getRefData() {
         //scanIn is defined globally, just need the user input mapped into the right places and
@@ -253,6 +286,10 @@ public class CLIDisplay implements Displayer {
             return false;
         }
 
+    /**
+     *
+     * @return
+     */
     private String selectFromRelatable() {
         List<Relatable> relatables = control.getRatedRelatables();
         List<String> titles = new ArrayList<String>();

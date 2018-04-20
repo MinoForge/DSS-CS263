@@ -11,10 +11,10 @@ import java.util.List;
 
 /**
  * The WorkingDirectory class models the directory that a library will be added, modified, and
- * removed from.
+ * removed from. Design Patterns: This could be a singleton very easily.
  *
  * @author Peter Gardner
- * @version 25, 3, 2018
+ * @version 20, 4, 2018
  */
 
 public class WorkingDirectory implements Displayable {
@@ -123,5 +123,12 @@ public class WorkingDirectory implements Displayable {
 		funcs.add("create");
 		funcs.add("quit");
 		return funcs;
+	}
+
+	@Override
+	public String toString() {
+		return "WorkingDirectory{" +
+				"workingDir=" + workingDir +
+				'}';
 	}
 }

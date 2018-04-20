@@ -474,4 +474,16 @@ public class Reference extends Editable implements Relatable {
         return options;
     }
 
+    @Override
+    public String toString() {
+        return "Reference{" +
+                "refData=" + Arrays.toString(refData) +
+                ", relations=" + relations +
+                ", ideas=" + ideas +
+                ", args=" + args +
+                ", parent=" + parent +
+                ", children=" + children +
+                '}';
+    }
+
 }

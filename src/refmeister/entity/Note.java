@@ -118,7 +118,15 @@ public class Note extends Editable {
         return options;
     }
 
-    /**
+	@Override
+	public String toString() {
+		return "Note{" +
+				"parent=" + parent +
+				", children=" + children +
+				'}';
+	}
+
+	/**
      * Returns the list of functions the class can perform.
      * @return String Array List of the functions this Editable can perform.
      */

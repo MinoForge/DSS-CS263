@@ -34,6 +34,8 @@ public class RefMeisterExec {
         Displayer display = null;
         WorkingDirectory wDir = null;
 
+
+        //For setting the working directory via command line tags on startup.
         int argIndex = 0;
         while(argIndex < args.length) {
             if(args[argIndex].equals("-dir")) {

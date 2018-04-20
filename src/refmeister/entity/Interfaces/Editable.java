@@ -14,7 +14,7 @@ import java.util.List;
  * Editable is an abstract class which our other classes will implement. If the child class has a
  * title, description, etc. it will extend Editable.
  * @author Peter Gardner, Caleb Dinehart
- * @version 26, 3, 2018
+ * @version 20 April, 2018
  */
 
 public abstract class Editable implements Displayable, Saveable, Entity, Comparable<Entity>{

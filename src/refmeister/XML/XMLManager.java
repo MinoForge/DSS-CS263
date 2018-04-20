@@ -12,6 +12,7 @@ import java.util.*;
  * XMLManager wraps and formats a library into a nice XML output.
  *
  * @author Wesley Rogers
+ * @version 20 April, 2018
  */
 public class XMLManager {
     /**

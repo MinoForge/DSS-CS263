@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * This is an intermediate class modeling the links associating a Reference and an Argument.
  * @author Red Team/DevSquad Supreme
- * @version 25, 3, 2018
+ * @version 20 April, 2018
  */
 class RefArg implements Saveable, RatedRelation {
 

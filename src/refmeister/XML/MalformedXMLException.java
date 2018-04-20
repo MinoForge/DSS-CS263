@@ -4,6 +4,7 @@ package refmeister.XML;
  * An exception designed to be thrown when an error is found while parsing XML.
  *
  * @author Wesley Rogers
+ * @version 20 April, 2018
  */
 
 public class MalformedXMLException extends RuntimeException {

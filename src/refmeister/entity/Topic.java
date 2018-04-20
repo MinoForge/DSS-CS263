@@ -12,7 +12,7 @@ import java.util.List;
  * The Topic class models a topic that is a child of a library and may have many themes for
  * children.
  * @author Caleb Dinehart
- * @version 18, 4, 2018
+ * @version 20 April, 2018
  */
 
 public class Topic extends Editable implements Comparable<Entity> {

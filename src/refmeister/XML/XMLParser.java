@@ -14,6 +14,7 @@ import java.util.stream.Stream;
  * A class managing the loading and saving of an instance of refmeister using the XML file format.
  *
  * @author Wesley Rogers
+ * @version 20 April, 2018
  */
 
 public class XMLParser { //This is the second parser I've had to write this semester.

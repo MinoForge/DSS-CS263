@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * The Idea class models an Idea that would be listed in one or multiple References.
  * @author Brandon Townsend
- * @version 17, 4, 2018
+ * @version 20 April, 2018
  */
 
 public class Idea extends Editable implements Relatable {

@@ -17,7 +17,7 @@ import java.nio.file.*;
  * The main executable for the RefMeister application. Creates a controller and begins running.
  *
  * @author Peter Gardner
- * @version 26, 3, 2018
+ * @version 20 April, 2018
  *
  */
 public class RefMeisterExec {

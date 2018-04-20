@@ -25,9 +25,12 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
 	private String description;
 	/** The parent of an Editable object if it is specified to have a parent. */
 	protected Entity parent;
-
+    /** The list of Entity children that are specified to be an Editable's children. */
     protected List<Entity> children;
 
+    /**
+     * Creates an Editable that sets children to an empty array list.
+     */
     public Editable(){
         this.children = new ArrayList<>();
     }
@@ -208,7 +211,6 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * their titles.
      * @param order Specifies either ascending or descending order.
      */
-
     public void sort(String order) {
         List<Entity> kids = getEntityChildren();
         if(order.toLowerCase().equals("a-z")) {
@@ -219,9 +221,14 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         this.setChildren(kids);
     }
 
+    /**
+     * Setter to assign the List of children.
+     * @param kids the new List of Entities to be set as children.
+     */
     public void setChildren(List<Entity> kids){
         this.children = kids;
     }
+
     /**
      * Returns an Array List of the attribute labels
      * @return the Array List of Strings of the labels
@@ -233,6 +240,10 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
         return labels;
     }
 
+    /**
+     * Returns the list of functions the Editable object can perform.
+     * @return List of Strings of the functions the Editable object can perform.
+     */
     public abstract List<String> getFunc();
 
 }

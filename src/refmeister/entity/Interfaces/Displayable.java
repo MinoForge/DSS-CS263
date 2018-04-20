@@ -30,5 +30,9 @@ public interface Displayable {
      */
 	List<String> listOptions();
 
+	/**
+	 * Returns the list of functions the displayable object can perform.
+	 * @return List of Strings of the functions the displayable object can perform.
+	 */
 	List<String> getFunc();
 }

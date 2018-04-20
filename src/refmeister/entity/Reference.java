@@ -26,16 +26,6 @@ public class Reference extends Editable implements Relatable {
 	private List<Relation> relations;
 
     /**
-     * The theme parent of this reference.
-     */
-	private Entity parent;
-
-    /**
-     * A list of Reference's children that are notes.
-     */
-    private List<Entity> notes;
-
-    /**
      * A list of Reference's children that are ideas.
      */
     private List<Relation> ideas;
@@ -60,7 +50,6 @@ public class Reference extends Editable implements Relatable {
 		setTitle(title);
 		setDescription(desc);
 		this.refData = refData;
-		this.notes = notes;
 		this.parent = parent;
         this.ideas = ideas;
         this.args = args;
@@ -225,7 +214,8 @@ public class Reference extends Editable implements Relatable {
 	@Override
 	public List<Saveable> getSaveableChildren() {
         List<Saveable> out = new ArrayList<>(children);
-        out.addAll(relations);
+        out.addAll(this.ideas);
+        out.addAll(this.args);
 	    return out;
 	}
 
@@ -254,18 +244,18 @@ public class Reference extends Editable implements Relatable {
     }
 
     public Entity createArgument(String title, String description){
-        for(Entity t : children) {
-            if (t.getTitle().equals(title)) {
-                return t;
+        for(RatedRelation t : args) {
+            if (t.getEntity().getTitle().equals(title)) {
+                return t.getEntity();
             }
         }
         return new Argument(title, description);
     }
 
     public Entity createIdea(String title, String description){
-        for(Entity t : children){
-            if (t.getTitle().equals(title)) {
-                return t;
+        for(Relation t : ideas){
+            if (t.getEntity().getTitle().equals(title)) {
+                return t.getEntity();
             }
         }
         return new Idea(title, description);
@@ -336,22 +326,12 @@ public class Reference extends Editable implements Relatable {
      */
     @Override
     public void sort(String order) {
-         for(Entity e : getEntityChildren()) {
-             if(e instanceof Note)
-                 notes.add(e);
-             if(e instanceof Argument)
-                 if(e instanceof RatedRelation)
-                    args.add((RatedRelation) e);
-             if(e instanceof Idea)
-                 if(e instanceof Relation)
-                    ideas.add((Relation) e);
-         }
          if(order.toLowerCase().equals("a-z")) {
-             notes.sort(Comparator.naturalOrder());
+             children.sort(Comparator.naturalOrder());
              args.sort((ra, rb) -> ra.getEntity().compareTo(rb.getEntity()));
              ideas.sort((ra, rb) -> ra.getEntity().compareTo(rb.getEntity()));
          } else if(order.toLowerCase().equals("z-a")) {
-             notes.sort(Comparator.reverseOrder());
+             children.sort(Comparator.naturalOrder());
              args.sort((ra, rb) -> -ra.getEntity().compareTo(rb.getEntity()));
              ideas.sort((ra, rb) -> -ra.getEntity().compareTo(rb.getEntity()));
          }
@@ -403,7 +383,7 @@ public class Reference extends Editable implements Relatable {
                 return this.getDescription();
             case "notes": {
                 String result = "";
-                for (Entity note : notes) {
+                for (Entity note : children) {
                     result = note.getTitle() + "\n";
                 }
                 return result;

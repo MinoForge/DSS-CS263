@@ -70,8 +70,8 @@ public final class FileManager {
      * @param msg   the message to write
      */
     private void writeError(Severity s, String msg){
-        loggerLock.lock();
         try {
+            loggerLock.lock();
             File autosave = new File(directory.getDirectory(), "refmeister.log");
             FileWriter fw = new FileWriter(autosave, true);
             String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
@@ -89,8 +89,8 @@ public final class FileManager {
      * @param s the file name
      */
     private void saveWithName(String s){
-        libraryLock.lock();
         try {
+            libraryLock.lock();
             XMLManager man = new XMLManager(library);
             File autosave = new File(directory.getDirectory(), s);
             FileWriter fw = new FileWriter(autosave);
@@ -109,9 +109,7 @@ public final class FileManager {
     public void start(boolean autosave){
         if(autosave) {
             this.executor.schedule(() -> {
-                libraryLock.lock();
                 this.saveWithName(fileName + "-autosave.rl");
-                libraryLock.unlock();
             }, 30, TimeUnit.SECONDS);
         }
     }
@@ -175,12 +173,7 @@ public final class FileManager {
      * @param msg       the message
      */
     public synchronized void log(Severity severity, String msg){
-        this.loggerLock.lock();
-        try{
-            this.executor.submit(() -> writeError(severity, msg));
-        } finally {
-            this.loggerLock.unlock();
-        }
+        this.executor.submit(() -> writeError(severity, msg));
     }
 
     /**
@@ -205,9 +198,9 @@ public final class FileManager {
      */
     public boolean load(File file){
         boolean out = true;
-        libraryLock.lock();
 
         XMLParser p = new XMLParser();
+        libraryLock.lock();
         try(Scanner input = new Scanner(file)){
             input.useDelimiter("\\Z");
             String xml = input.next();
@@ -256,8 +249,9 @@ public final class FileManager {
                     log(Severity.MINOR_ERROR, "Failed deleting file: " + fileName + "-autosave.rl");
             } catch (SecurityException e){
                 log(Severity.MAJOR_ERROR, e);
+            } finally {
+                loggerLock.unlock();
             }
-            loggerLock.unlock();
         });
     }
 

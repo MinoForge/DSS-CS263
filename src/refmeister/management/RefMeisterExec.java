@@ -56,7 +56,7 @@ public class RefMeisterExec {
         Controller control = new SingleLibraryController(wDir);
         display = new CLIDisplay(control);
 
-        FileManager.getInstance().start(false);
+        FileManager.getInstance().start(true);
         FileManager.getInstance().log(FileManager.Severity.DEBUG, "Application Started");
 
         try {

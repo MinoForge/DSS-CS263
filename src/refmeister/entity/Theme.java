@@ -160,11 +160,11 @@ public class Theme extends Editable {
         List<String> options = new ArrayList<>();
         options.add("Delete Theme");
         options.add("Edit Theme");
-        options.add("Move Theme");
         options.add("Add Reference");
-        options.add("View Directory");
         options.add("Sort References A-Z");
         options.add("Sort References Z-A");
+        options.add("View Directory");
+        options.add("Move Theme");
         options.add("Move Up");
         for(Entity child : children){
             options.add(child.getTitle());
@@ -178,16 +178,8 @@ public class Theme extends Editable {
      */
     @Override
     public List<String> getFunc(){
-        List<String> funcs = new ArrayList<>();
-        funcs.add("delete");
-        funcs.add("add");
-        funcs.add("edit");
-        funcs.add("sortAlphA");
-        funcs.add("sortAlphD");
-        funcs.add("view");
-        funcs.add("move");
-        funcs.add("moveTheme");
-		funcs.add("quit");
+        List<String> funcs = super.getFunc();
+        funcs.add(6, "moveTheme");
 
         return funcs;
     }

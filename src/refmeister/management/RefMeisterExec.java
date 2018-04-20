@@ -56,7 +56,7 @@ public class RefMeisterExec {
         Controller control = new SingleLibraryController(wDir);
         display = new CLIDisplay(control);
 
-        FileManager.getInstance().start();
+        FileManager.getInstance().start(false);
         FileManager.getInstance().log(FileManager.Severity.DEBUG, "Application Started");
 
         try {
@@ -66,7 +66,8 @@ public class RefMeisterExec {
                 quit = display.pickOption();
 //                System.out.println(quit);
             }
-        } catch (Exception e){
+        } catch (Throwable e){
+            System.out.println("Catastrophic error!");
             FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, "Catastrophic error!");
             FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, e);
         }

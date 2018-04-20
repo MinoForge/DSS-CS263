@@ -143,7 +143,7 @@ public class SingleLibraryController implements Controller{
                 if(selected instanceof Relatable) {
                     Relatable rel = (Relatable)selected;
                     List<Relation> listRelations = rel.getRelations();
-                    listRelations.removeIf(o-> !(o instanceof RatedRelation));
+                    listRelations.removeIf(o -> !(o instanceof RatedRelation));
                     listRelations.removeIf(o -> !(o.getEntity().getTitle().equals(param[1])));
                     if(!listRelations.isEmpty()){
                         RatedRelation r = (RatedRelation) listRelations.get(0);
@@ -152,7 +152,8 @@ public class SingleLibraryController implements Controller{
                 }
                 break;
             case "add":
-                edSelected.createChild(param[0], param[1]);
+                Entity ent = edSelected.createChild(param[0], param[1]);
+                setSelected(ent);
                 break;
             case "edit":
                 for(int i = 0; i < param.length; i++) {

@@ -130,9 +130,9 @@ public class Library extends Editable {
         options.add("Delete Library");
         options.add("Edit Library");
         options.add("Add Topic");
-        options.add("View Directory");
         options.add("Sort Topics A-Z");
         options.add("Sort Topics Z-A");
+        options.add("View Directory");
         options.add("Quit");
         for(Entity child : children){
             options.add(child.getTitle());

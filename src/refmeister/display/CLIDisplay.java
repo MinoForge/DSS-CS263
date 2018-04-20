@@ -62,7 +62,16 @@ public class CLIDisplay implements Displayer {
 
     //TODO
     public String[] editMenu() {
+        displayAttributes();
         return editMenu(control.getAttributeTitles(), control.getAttributes());
+    }
+
+    public void displayAttributes() {
+        String[] attrTitles = control.getAttributeTitles();
+        String[] atts = control.getAttributes();
+        for(int i = 0; i < atts.length; i++) {
+            System.out.println(attrTitles + ": " + atts);
+        }
     }
 
     /**
@@ -97,12 +106,12 @@ public class CLIDisplay implements Displayer {
         System.out.println("Choice: " + itemList.get(choice));
         List<String> funcList = control.getFuncs();
         funcList.add("quit");
-
-        for(String str: itemList)
-        System.out.println(str);
-
-        for(String str: funcList)
-        System.out.println(str);
+//
+//        for(String str: itemList)
+//        System.out.println(str);
+//
+//        for(String str: funcList)
+//        System.out.println(str);
 
 
         return functionality(funcList.get(choice));

@@ -62,9 +62,6 @@ public class RefMeisterExec {
         try {
             boolean quit = false;
             while (!quit) {
-                //testcode
-//            System.out.println(i++);
-
                 display.displayCurrent();
                 quit = display.pickOption();
             }

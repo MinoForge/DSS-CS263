@@ -181,8 +181,8 @@ public class Theme extends Editable {
     public List<String> getFunc(){
         List<String> funcs = new ArrayList<>();
         funcs.add("delete");
-        funcs.add("add");
         funcs.add("edit");
+        funcs.add("add");
         funcs.add("sortAlphA");
         funcs.add("sortAlphD");
         funcs.add("view");

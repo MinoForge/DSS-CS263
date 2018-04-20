@@ -329,25 +329,6 @@ public class Reference extends Editable implements Relatable {
         this.args.remove(r);
     }
 
-    @Override
-    public List<String> listOptions() {
-        List<String> options = new ArrayList<>();
-        options.add("Delete Reference");
-        options.add("Edit Reference");
-        options.add("Add Note");
-        options.add("Add Idea");
-        options.add("Add Argument");
-        //options.add("Generate MLA Citation");
-        //options.add("Generate APA Citation");
-        options.add("View Directory");
-        options.add("Move Up");
-        options.add("Quit");
-        for (Entity e : getEntityChildren()) {
-            options.add(e.getTitle());
-        }
-        return options;
-    }
-
     /**
      * Sorts all of references children (Notes, Arguments and Ideas) in ascending or descending
      * order based on their titles.
@@ -470,6 +451,25 @@ public class Reference extends Editable implements Relatable {
         //funcs.add("generate");
 
         return funcs;
+    }
+
+    @Override
+    public List<String> listOptions() {
+        List<String> options = new ArrayList<>();
+        options.add("Delete Reference");
+        options.add("Edit Reference");
+        options.add("Add Note");
+        options.add("Add Idea");
+        options.add("Add Argument");
+        options.add("Sort A-Z");
+        options.add("Sort Z-A");
+        options.add("View Directory");
+        options.add("Move Up");
+        options.add("Quit");
+        for (Entity e : getEntityChildren()) {
+            options.add(e.getTitle());
+        }
+        return options;
     }
 
 }

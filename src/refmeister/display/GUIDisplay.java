@@ -42,8 +42,14 @@ public class GUIDisplay extends Application implements Displayer{
         this.control = null;
     }
 
+    public static void main(String[] args){
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.titleWindow = primaryStage;
+        this.appWindow = primaryStage;
         control = new SingleLibraryController(new WorkingDirectory());
         Pane root = new VBox();
 
@@ -68,8 +74,6 @@ public class GUIDisplay extends Application implements Displayer{
         title.getChildren().add(loadButton);
         title.getChildren().add(newButton);
         title.setStyle("-fx-background-color: DARKSLATEGRAY;");
-
-        Pane root = new HBox();
 
         //Pane titleBar = TitleBarPane.getPane("RefMeister",
         //        new boolean[]{true, true, true});

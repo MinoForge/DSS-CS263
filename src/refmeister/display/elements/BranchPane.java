@@ -23,16 +23,16 @@ public class BranchPane extends VBox{
     private String[] titles;
 
     /** Holds the single instance of this branch pane. */
-    private static Pane obj;
+    private static BranchPane obj;
 
     /**
      * Default constructor for a BranchPane object.
      */
-    public BranchPane() {
+    private BranchPane() {
         this(new String[DEFAULT_SIZE]);
     }
 
-    public BranchPane(String[] titles) {
+    private BranchPane(String[] titles) {
         this.titles = titles;
         setSpacing(3);
         setAlignment(Pos.TOP_CENTER);
@@ -43,7 +43,7 @@ public class BranchPane extends VBox{
      * Returns the current instance of BranchPane.
      * @return the current instance of BranchPane.
      */
-    public static Pane getInstance() {
+    public static BranchPane getInstance() {
         if(obj == null) {
             synchronized (Pane.class) {
                 if(obj == null) {
@@ -52,6 +52,10 @@ public class BranchPane extends VBox{
             }
         }
         return obj;
+    }
+
+    public static void setBranchPane(String[] titles) {
+        obj = new BranchPane(titles);
     }
 
     /**

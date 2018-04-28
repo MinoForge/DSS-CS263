@@ -19,6 +19,8 @@ import refmeister.entity.WorkingDirectory;
 
 import java.io.File;
 
+import static java.sql.JDBCType.INTEGER;
+
 /**
  * TODO Have not done the GUI yet -> On track to complete this the third sprint.
  */
@@ -47,14 +49,29 @@ public class GUIDisplay extends Application implements Displayer{
         Scene titleScene = new Scene(title, 500, 150);
         theStage.setScene(titleScene);
         Button loadButton = new Button("Load Library");
-        loadButton.setRotate(180);
+        loadButton.setStyle("-fx-text-fill: bisque;" +
+                "-fx-background-color: transparent;" +
+                "-fx-font-size: 16;" +
+                "-fx-font-weight: bold;" +
+                "-fx-border-color: bisque;" +
+                "-fx-border-radius: 5 5 5 5 ;" +
+                "-fx-padding: 5 40 5 40;");
+        loadButton.setOnMouseMoved(e -> loadButton.setStyle
+                ("-fx-font-underline: true"));
         Button newButton  = new Button("Create New Library");
-        newButton.setRotate(180);
+        newButton.setStyle("-fx-text-fill: bisque;" +
+                "-fx-background-color: #2F4F4F;" +
+                "-fx-font-size: 16;" +
+                "-fx-font-weight: bold;" +
+                "-fx-border-color: bisque;" +
+                "-fx-border-radius: 5 5 5 5 ;" +
+                "-fx-padding: 5 15 5 15;");
         Text welcome = new Text("Welcome To RefMeister");
         welcome.setFill(Color.BISQUE);
-        welcome.setStyle("-fx-font: 40px Serif;");
+        welcome.setStyle("-fx-font: 42px Serif;");
 
         title.setAlignment(Pos.CENTER);
+        title.setSpacing(7);
         title.getChildren().add(welcome);
         title.getChildren().add(loadButton);
         title.getChildren().add(newButton);
@@ -77,14 +94,15 @@ public class GUIDisplay extends Application implements Displayer{
     private void openApp(){
         BorderPane root = new BorderPane();
 
-        //Pane mainWindow = new HBox();
-        Pane branchHistory = new BranchPane(new String[] {"Library",
+        BranchPane branchHistory = BranchPane.getInstance();
+        branchHistory.setBranchPane(new String[] {"Library",
                 "Topic", "Theme", "Reference", "Notes"});
+        branchHistory = BranchPane.getInstance();
         branchHistory.setBackground(new Background(new BackgroundFill(
                 Color.DARKSLATEGREY, new CornerRadii(0), Insets.EMPTY)));
         branchHistory.toFront();
-        branchHistory.setMaxSize(200, 570);
-        branchHistory.setMinSize(200, 570);
+        branchHistory.prefHeightProperty().bind(root.heightProperty());
+        branchHistory.setMinSize(200, 500);
         ((BranchPane) branchHistory).updateBranchPane();
         root.setLeft(branchHistory);
 
@@ -93,8 +111,6 @@ public class GUIDisplay extends Application implements Displayer{
         multiList.prefWidthProperty().bind(root.widthProperty());
         multiList.prefHeightProperty().bind(root.heightProperty());
         root.setCenter(multiList);
-
-        //root.getChildren().add(mainWindow);
 
         Scene currScene = new Scene(root, 800, 600);
         theStage.hide();

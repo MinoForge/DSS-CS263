@@ -137,10 +137,9 @@ public final class FileManager {
      * Stops the file saving thread.
      */
     public synchronized void stop(){
-        this.libraryLock.lock();
         try {
             if(autosave != null)
-                autosave.cancel(true);
+                autosave.cancel(false);
 
             this.executor.shutdown();
 
@@ -148,9 +147,9 @@ public final class FileManager {
                 this.executor.shutdownNow();
             }
         } catch (InterruptedException e) {
-            System.out.println("Failed to terminate!");
-        } finally {
-            this.libraryLock.unlock();
+            System.err.println("Failed to terminate!");
+            this.executor.shutdownNow();
+
         }
     }
 

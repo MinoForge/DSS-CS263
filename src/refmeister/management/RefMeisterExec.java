@@ -73,6 +73,7 @@ public class RefMeisterExec {
             FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, "Catastrophic error!");
             FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, e);
         }
+        control.saveLibrary();
         FileManager.getInstance().log(FileManager.Severity.DEBUG, "Application Stop");
         FileManager.getInstance().stop();
     }

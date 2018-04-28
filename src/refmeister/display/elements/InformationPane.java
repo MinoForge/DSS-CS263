@@ -26,7 +26,7 @@ public class InformationPane extends TabPane {
     public List<Node> createTabs(String... titles){
         ArrayList<Node> panes = new ArrayList<>();
 
-        Color[] colors = {Color.KHAKI, Color.CHOCOLATE};
+        Color[] colors = {Color.KHAKI, Color.CHOCOLATE, Color.BROWN.darker().darker()};
 
         for(int i = 0; i < titles.length; i++){
             String title = titles[i];

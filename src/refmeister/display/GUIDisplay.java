@@ -1,10 +1,11 @@
 package refmeister.display;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -19,12 +20,12 @@ import refmeister.entity.WorkingDirectory;
 
 import java.io.File;
 
-import static java.sql.JDBCType.INTEGER;
-
 /**
  * TODO Have not done the GUI yet -> On track to complete this the third sprint.
  */
 public class GUIDisplay extends Application implements Displayer{
+    private String VERSION = "1.0 alpha";
+
     private Controller control;
     private Stage theStage;
 
@@ -103,14 +104,20 @@ public class GUIDisplay extends Application implements Displayer{
         branchHistory.toFront();
         branchHistory.prefHeightProperty().bind(root.heightProperty());
         branchHistory.setMinSize(200, 500);
+        branchHistory.setMinSize(200, 500);
         ((BranchPane) branchHistory).updateBranchPane();
+        branchHistory.prefHeightProperty().bind(root.heightProperty());
         root.setLeft(branchHistory);
 
         InformationPane multiList = InformationPane.getInstance();
-        multiList.createTabs("Data1", "data2");
+        multiList.createTabs("White", "Brown", "Black");
         multiList.prefWidthProperty().bind(root.widthProperty());
         multiList.prefHeightProperty().bind(root.heightProperty());
         root.setCenter(multiList);
+
+        root.setTop(getMenuBar());
+
+        //root.getChildren().add(mainWindow);
 
         Scene currScene = new Scene(root, 800, 600);
         theStage.hide();
@@ -148,9 +155,43 @@ public class GUIDisplay extends Application implements Displayer{
         fc.setInitialDirectory(this.control.getWorkingDirectory().getDirectory());
         File input = fc.showOpenDialog(this.theStage);
 
-        if(!control.loadLibrary(input)){
+        if(input != null && !control.loadLibrary(input)){
             FileManager.getInstance().log(FileManager.Severity.MINOR_ERROR, "Load failed");
-            control.createLibrary();
         }
+    }
+
+    private MenuBar getMenuBar(){
+        MenuBar out = new MenuBar();
+
+        Menu file = new Menu("File");
+        Menu edit = new Menu("Edit");
+        Menu help = new Menu("Help");
+
+        MenuItem save = new MenuItem("Save");
+        MenuItem load = new MenuItem("Load");
+        MenuItem exit = new MenuItem("Exit");
+
+        save.setOnAction((ev) -> control.saveLibrary());
+        load.setOnAction((ev) -> selectLibrary());
+        exit.setOnAction((ev) -> Platform.exit());
+
+        file.getItems().addAll(save, load, exit);
+
+        MenuItem version = new MenuItem("About");
+        version.setOnAction((ev) -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("RefMeister About Us");
+            alert.setHeaderText(null);
+            alert.setContentText("Refmeister is a Reference Manager designed by Peter Gardner, " +
+                    "Caleb Dinehart, Brandon Townsend, and Wesley Rogers.\n\nThe current " +
+                    "Refmeister version is " + VERSION + ".");
+
+            alert.showAndWait();
+        });
+
+        help.getItems().addAll(version);
+
+        out.getMenus().addAll(file, edit, help);
+        return out;
     }
 }

@@ -3,15 +3,21 @@ package refmeister.display.elements;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import org.w3c.dom.css.Rect;
 
-import javax.swing.*;
 
 public class TitleBarPane extends AnchorPane {
 
@@ -23,18 +29,22 @@ public class TitleBarPane extends AnchorPane {
 
     private static final String DEFAULT_TITLE = "Java Window";
 
+    private static final double BAR_HEIGHT = 20d;
+
+    private static final double BUTTON_WIDTH = 50d;
+
     private static AnchorPane titleBar;
 
     private String title;
 
     private Node[] buttons;
 
-    public TitleBarPane() {
-        this(DEFAULT_TITLE, new boolean[]{true, false, true});
+    public TitleBarPane(Scene currentStage) {
+        this(DEFAULT_TITLE, new boolean[]{true, false, true}, currentStage);
     }
 
-    public TitleBarPane(String title) {
-        this(title, new boolean[]{true, false, true});
+    public TitleBarPane(String title, Scene currentStage) {
+        this(title, new boolean[]{true, false, true}, currentStage);
     }
 
     /**
@@ -42,15 +52,31 @@ public class TitleBarPane extends AnchorPane {
      * @param title The text displayed at the left of the TitleBarPane.
      * @param windowOpts Whether the TitleBarPane should have exit, maximize, minimize.
      */
-    public TitleBarPane(String title, boolean[] windowOpts) {
+    public TitleBarPane(String title, boolean[] windowOpts, Scene currentStage) {
+
+        Rectangle backNode = new Rectangle(currentStage.getWidth(), BAR_HEIGHT);
+        backNode.setFill(Color.DARKGRAY);
+
+        AnchorPane.setTopAnchor(backNode, 0d);
+        AnchorPane.setLeftAnchor(backNode, 0d);
+        AnchorPane.setRightAnchor(backNode, 0d);
+        this.getChildren().add(backNode);
 
         this.title = title;
-        Node titleNode = new Text(10, 50, this.title);
-        AnchorPane.setTopAnchor(titleNode, 5d);
+        Text textTitle = new Text(30d, BAR_HEIGHT-1, title);
+        textTitle.setFont(new Font("Verdana", 14));
+        Node titleNode = textTitle;
+
+        AnchorPane.setTopAnchor(titleNode, 1d);
         AnchorPane.setLeftAnchor(titleNode, 10d);
-        AnchorPane.setBottomAnchor(titleNode, 5d);
+        AnchorPane.setBottomAnchor(titleNode, 0d);
         this.getChildren().add(titleNode);
         this.buttons = new Node[3];
+
+
+
+
+
         setWindowOpts(windowOpts);
         for(int i = 0; i < buttons.length; i++) {
             if(buttons[i] != null) {
@@ -63,7 +89,7 @@ public class TitleBarPane extends AnchorPane {
         this.title = title;
     }
 
-    public void setWindowOpts(boolean[] opts) {
+    private void setWindowOpts(boolean[] opts) {
         int offset = 0;
         int bIndex = 0;
         if(opts.length != 3) {
@@ -82,20 +108,20 @@ public class TitleBarPane extends AnchorPane {
     }
 
     private void makeExitB(int offset) {
-        Node exitNode = new Rectangle(60d, 30d, Color.RED);
+        Node exitNode = new Rectangle(BUTTON_WIDTH, BAR_HEIGHT, Color.RED);
 
-        AnchorPane.setRightAnchor(exitNode, offset * 30d);
+        AnchorPane.setRightAnchor(exitNode, 0d);
         AnchorPane.setTopAnchor(exitNode, 0d);
 
-        Node crossOne = new Rectangle(20d, 4d, Color.BLACK);
-        Node crossTwo = new Rectangle(20d, 4d, Color.BLACK);
+        Node crossOne = new Rectangle(20d, 4d, Color.WHITE);
+        Node crossTwo = new Rectangle(20d, 4d, Color.WHITE);
         crossOne.setRotate(45);
         crossTwo.setRotate(135);
 
-        AnchorPane.setTopAnchor(crossOne, 15d*Math.sin(45d));
-        AnchorPane.setRightAnchor(crossOne, (offset+1) * 30d - 20d * Math.cos(45d));
-        AnchorPane.setTopAnchor(crossTwo, 15d*Math.sin(45d));
-        AnchorPane.setRightAnchor(crossTwo, (offset+1) * 30d - 20d * Math.cos(45d));
+        AnchorPane.setTopAnchor(crossOne, BAR_HEIGHT/2 *Math.sin(45d));
+        AnchorPane.setRightAnchor(crossOne, (offset+1) * BUTTON_WIDTH/2 - 20d * Math.cos(45d));
+        AnchorPane.setTopAnchor(crossTwo, BAR_HEIGHT/2 * Math.sin(45d));
+        AnchorPane.setRightAnchor(crossTwo, (offset+1) * BUTTON_WIDTH/2 - 20d * Math.cos(45d));
 
 
         Node[] exitButtons = new Node[]{exitNode, crossOne, crossTwo};
@@ -107,12 +133,12 @@ public class TitleBarPane extends AnchorPane {
     }
 
     private void makeMaxiB(int offset) {
-        Node maxiBackNode = new Rectangle(60d, 30d, Color.GREEN);
-        AnchorPane.setRightAnchor(maxiBackNode, offset * 60d);
+        Node maxiBackNode = new Rectangle(BUTTON_WIDTH, BAR_HEIGHT, Color.GREEN);
+        AnchorPane.setRightAnchor(maxiBackNode, offset * BUTTON_WIDTH);
         AnchorPane.setTopAnchor(maxiBackNode, 0d);
 
-        Node maxiNode = new Rectangle(50d, 20d, Color.BLACK);
-        AnchorPane.setRightAnchor(maxiNode, offset * 60d + 5d);
+        Node maxiNode = new Rectangle(BUTTON_WIDTH - 10, BAR_HEIGHT - 5d, Color.BLACK);
+        AnchorPane.setRightAnchor(maxiNode, offset * BUTTON_WIDTH + 5d);
         AnchorPane.setTopAnchor(maxiNode, 5d);
 
         Node[] maxiButtons = setOpacity(new Node[]{maxiBackNode, maxiNode}, .1f, 1);
@@ -124,13 +150,13 @@ public class TitleBarPane extends AnchorPane {
     }
 
     private void makeMiniB(int offset) {
-        Node miniBackNode = new Rectangle(60d, 30d, Color.BLUE);
-        AnchorPane.setRightAnchor(miniBackNode, offset * 60d);
+        Node miniBackNode = new Rectangle(BUTTON_WIDTH, BAR_HEIGHT, Color.BLUE);
+        AnchorPane.setRightAnchor(miniBackNode, offset * BUTTON_WIDTH);
         AnchorPane.setTopAnchor(miniBackNode, 0d);
 
-        Node miniNode = new Rectangle(60d, 5d, Color.BLACK);
-        AnchorPane.setRightAnchor(miniNode, offset * 60d);
-        AnchorPane.setTopAnchor(miniNode, 25d);
+        Node miniNode = new Rectangle(BUTTON_WIDTH, 5d, Color.BLACK);
+        AnchorPane.setRightAnchor(miniNode, offset * BUTTON_WIDTH);
+        AnchorPane.setTopAnchor(miniNode, BAR_HEIGHT - 5);
 
         Node[] miniButtons = setOpacity(new Node[]{miniBackNode, miniNode}, .1f, 1);
         for(Node n: miniButtons) {
@@ -157,33 +183,33 @@ public class TitleBarPane extends AnchorPane {
         return nodes;
     }
 
-    public static Pane getPane() {
+    public static Pane getPane(Scene currentStage) {
         if(titleBar != null) {
             return titleBar;
         } else {
-            titleBar = new TitleBarPane();
+            titleBar = new TitleBarPane(currentStage);
             return titleBar;
         }
     }
 
-    public static Pane getPane(String windowTitle) {
+    public static Pane getPane(String windowTitle, Scene currentStage) {
         if(titleBar != null && titleBar instanceof TitleBarPane) {
             ((TitleBarPane)titleBar).setTitle(windowTitle);
             return titleBar;
         } else {
-            titleBar = new TitleBarPane(windowTitle);
+            titleBar = new TitleBarPane(windowTitle, currentStage);
             return titleBar;
         }
     }
 
-    public static Pane getPane(String windowTitle, boolean[] windowOpts) {
+    public static Pane getPane(String windowTitle, boolean[] windowOpts, Scene currentStage) {
         if(titleBar != null && titleBar instanceof TitleBarPane) {
             ((TitleBarPane)titleBar).setTitle(windowTitle);
             ((TitleBarPane)titleBar).setWindowOpts(windowOpts);
 
             return titleBar;
         } else {
-            titleBar = new TitleBarPane(windowTitle, windowOpts);
+            titleBar = new TitleBarPane(windowTitle, windowOpts, currentStage);
             return titleBar;
         }
     }

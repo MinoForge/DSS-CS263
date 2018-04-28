@@ -24,9 +24,7 @@ import java.io.File;
  */
 public class GUIDisplay extends Application implements Displayer{
     private Controller control;
-    private Scene currScene;
     private Stage theStage;
-    private Scene titleScene;
 
     public GUIDisplay(){
         this.control = null;
@@ -46,7 +44,7 @@ public class GUIDisplay extends Application implements Displayer{
         FileManager.getInstance().start(true);
 
         Pane mainWindow = new HBox();
-        titleScene = new Scene(title, 500, 150);
+        Scene titleScene = new Scene(title, 500, 150);
         theStage.setScene(titleScene);
         Button loadButton = new Button("Load Library");
         loadButton.setRotate(180);
@@ -79,21 +77,16 @@ public class GUIDisplay extends Application implements Displayer{
     private void openApp(){
         BorderPane root = new BorderPane();
 
-        Pane branchHistory = new BranchPane();
         //Pane mainWindow = new HBox();
-        Pane branchHistory = new BranchPane(new String[] {"Library"});
+        Pane branchHistory = new BranchPane(new String[] {"Library",
+                "Topic", "Theme", "Reference", "Notes"});
         branchHistory.setBackground(new Background(new BackgroundFill(
                 Color.DARKSLATEGREY, new CornerRadii(0), Insets.EMPTY)));
         branchHistory.toFront();
         branchHistory.setMaxSize(200, 570);
         branchHistory.setMinSize(200, 570);
-        mainWindow.getChildren().add(branchHistory);
-        ((BranchPane) branchHistory).setBranchTitles(new String[] {"Library",
-                "Topics", "Themes", "References", "Notes"});
         ((BranchPane) branchHistory).updateBranchPane();
-        root.getChildren().add(branchHistory);
         root.setLeft(branchHistory);
-
 
         InformationPane multiList = InformationPane.getInstance();
         multiList.createTabs("Data1", "data2");
@@ -103,7 +96,7 @@ public class GUIDisplay extends Application implements Displayer{
 
         //root.getChildren().add(mainWindow);
 
-        currScene = new Scene(root, 800, 600);
+        Scene currScene = new Scene(root, 800, 600);
         theStage.hide();
 
         theStage.setTitle("RefMeister");

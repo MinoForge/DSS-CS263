@@ -1,9 +1,9 @@
 package refmeister.controllers;
 
-import refmeister.entity.Interfaces.Displayable;
-import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.Interfaces.Entity;
 import refmeister.entity.Interfaces.Relatable;
+import refmeister.entity.WorkingDirectory;
+
 import java.io.File;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public interface Controller {
      * Loads a library from a specified file.
      * @param file The specified file to load from.
      */
-    void loadLibrary(File file);
+    boolean loadLibrary(File file);
 
     /**
      * Returns an array of strings that contain the titles of the entities.
@@ -114,5 +114,7 @@ public interface Controller {
      * @return a list of strings that is returned from dispSelected's getFunc() method.
      */
     List<String> getFuncs();
+
+    WorkingDirectory getWorkingDirectory();
 
 }

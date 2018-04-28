@@ -71,14 +71,15 @@ public class SingleLibraryController implements Controller{
 
 	/**
 	 * Loads a library from a specified file.
-	 * @param file The specified file to load from.
-	 */
-	public void loadLibrary(File file) {
+     * @param file The specified file to load from.
+     */
+	public boolean loadLibrary(File file) {
         boolean loadSuccess = FileManager.getInstance().load(file);
         if(loadSuccess) {
             currentLib = FileManager.getInstance().getLibrary();
         }
-	}
+        return loadSuccess;
+    }
 
     /**
      * Sets the attribute of an entity to a string passed in.
@@ -156,6 +157,7 @@ public class SingleLibraryController implements Controller{
      * @param param all the information that the user sends in.
      */
     public void sendFunc(String func, String[] param) {
+        FileManager.getInstance().getLibraryLock().lock();
         switch (func) {
             case "select":
                 for(Entity e: selected.getEntityChildren()) {
@@ -233,6 +235,7 @@ public class SingleLibraryController implements Controller{
 
 
         }
+        FileManager.getInstance().getLibraryLock().unlock();
     }
 
     /**
@@ -337,4 +340,8 @@ public class SingleLibraryController implements Controller{
         return dispSelected.getFunc();
     }
 
+    @Override
+    public WorkingDirectory getWorkingDirectory() {
+        return workingDir;
+    }
 }

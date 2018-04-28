@@ -1,6 +1,7 @@
 package refmeister.display.elements;
 
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -100,7 +101,7 @@ public class TitleBarPane extends AnchorPane {
         Node[] exitButtons = new Node[]{exitNode, crossOne, crossTwo};
         setOpacity(exitButtons, .1f, 1);
         for(Node n: exitButtons) {
-            n.setOnMouseReleased(e -> System.exit(0));
+            n.setOnMouseReleased(e -> Platform.exit());
         }
         this.getChildren().addAll(exitButtons);
     }

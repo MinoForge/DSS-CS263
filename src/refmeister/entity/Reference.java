@@ -135,11 +135,14 @@ public class Reference extends Editable implements Relatable {
 	 * @return A String containing the MLA citation.
 	 */
 	public String generateMLA() {
+	    if(refData == null || refData[0][0] == null){
+	        return "";
+        }
 	    StringBuilder cite = new StringBuilder();
 	    for(int i = 0; i < refData[0].length; i++) {
 	        cite.append(refData[0][i]);
 	        cite.append(", ");
-	        if(!refData[1][i].equals("")) {
+	        if(!(refData[1][i] == null)) {
 	            cite.append(". ");
             }
             cite.append(refData[2][i]);
@@ -164,11 +167,18 @@ public class Reference extends Editable implements Relatable {
      * @return A String containing the APA citation.
      */
     public String generateAPA() {
+        if(refData == null) {
+            return "";
+        } else {
+            if(refData[0][0] == null) {
+                return "";
+            }
+        }
 	    StringBuilder cite = new StringBuilder();
         for(int i = 0; i < refData[0].length; i++) {
             cite.append(refData[0][i]);
             cite.append(", ");
-            if(!refData[1][i].equals("")) {
+            if(!(refData[1][i] == null)) {
                 cite.append(". ");
             }
             cite.append(refData[2][i]);
@@ -438,11 +448,14 @@ public class Reference extends Editable implements Relatable {
         List<String> funcs = new ArrayList<>();
         funcs.add("delete");
         funcs.add("edit");
+        funcs.add("generate");
         funcs.add("addN");
         funcs.add("addI");
         funcs.add("addA");
         funcs.add("sortAlphA");
         funcs.add("sortAlphD");
+        funcs.add("APA");
+        funcs.add("MLA");
         funcs.add("view");
         funcs.add("move");
         funcs.add("quit");
@@ -460,11 +473,14 @@ public class Reference extends Editable implements Relatable {
         List<String> options = new ArrayList<>();
         options.add("Delete Reference");
         options.add("Edit Reference");
+        options.add("Edit Reference Data");
         options.add("Add Note");
         options.add("Add Idea");
         options.add("Add Argument");
         options.add("Sort A-Z");
         options.add("Sort Z-A");
+        options.add("Generate APA Citation");
+        options.add("Generate MLA Citation");
         options.add("View Directory");
         options.add("Move Up");
         options.add("Quit");

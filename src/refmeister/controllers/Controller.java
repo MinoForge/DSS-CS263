@@ -117,4 +117,5 @@ public interface Controller {
 
     WorkingDirectory getWorkingDirectory();
 
+    Entity getSelected();
 }

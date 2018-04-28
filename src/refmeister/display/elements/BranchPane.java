@@ -17,7 +17,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class BranchPane extends VBox{
     /** Default size of a branch pane's array of titles. */
-    private final int DEFAULT_SIZE = 10;
+    private static final int DEFAULT_SIZE = 10;
 
     /** Titles of the branches being displayed. */
     private String[] titles;
@@ -29,7 +29,7 @@ public class BranchPane extends VBox{
      * Default constructor for a BranchPane object.
      */
     public BranchPane() {
-        this(new String[10]);
+        this(new String[DEFAULT_SIZE]);
     }
 
     public BranchPane(String[] titles) {
@@ -54,14 +54,20 @@ public class BranchPane extends VBox{
         return obj;
     }
 
+    /**
+     * Sets the new titles for each of the Branch.
+     * @param titles The new string of titles to be set.
+     */
     public void setBranchTitles(String[] titles) {
         this.titles = titles;
     }
 
     /**
-     * Updates Branch Pane's children.
+     * Updates the output of this branch pane's children.
+     * @return Returns an array of the buttons that can be accessed.
      */
-    public void updateBranchPane() {
+    public Node[] updateBranchPane() {
+        Node[] buttons = new Button[this.titles.length];
         for(int i = 0; i < this.titles.length; i++) {
             obj.getChildren().add(new Rectangle(3, 25, Color.BISQUE));
             Node button = new Button((titles[i]));
@@ -71,7 +77,9 @@ public class BranchPane extends VBox{
                     "-fx-border-color: bisque;" +
                     "-fx-border-radius: 5 5 5 5 ;" +
                     "-fx-padding: 5 15 5 15;");
+            buttons[i] = button;
             obj.getChildren().add(button);
         }
+        return buttons;
     }
 }

@@ -80,14 +80,15 @@ public class GUIDisplay extends Application implements Displayer{
         //root.getChildren().add(titleBar);
 
         //Pane mainWindow = new HBox();
-        Pane branchHistory = new BranchPane(new String[] {"Library",
-                "Topic", "Theme", "Reference", "Notes"});
+        Pane branchHistory = new BranchPane(new String[] {"Library"});
         branchHistory.setBackground(new Background(new BackgroundFill(
                 Color.DARKSLATEGREY, new CornerRadii(0), Insets.EMPTY)));
         branchHistory.toFront();
         branchHistory.setMaxSize(200, 570);
         branchHistory.setMinSize(200, 570);
         mainWindow.getChildren().add(branchHistory);
+        ((BranchPane) branchHistory).setBranchTitles(new String[] {"Library",
+                "Topics", "Themes", "References", "Notes"});
         ((BranchPane) branchHistory).updateBranchPane();
         root.getChildren().add(branchHistory);
 

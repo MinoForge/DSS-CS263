@@ -29,8 +29,7 @@ public class BranchPane extends VBox{
      * Default constructor for a BranchPane object.
      */
     public BranchPane() {
-        titles = new String[DEFAULT_SIZE];
-        obj = this;
+        this(new String[10]);
     }
 
     public BranchPane(String[] titles) {

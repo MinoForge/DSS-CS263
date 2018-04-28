@@ -3,12 +3,18 @@ package refmeister.display;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import refmeister.XML.FileManager;
@@ -29,6 +35,8 @@ public class GUIDisplay extends Application implements Displayer{
     private Controller control;
     private Scene currScene;
     private Stage appWindow;
+    private Stage titleWindow;
+    private Scene titleScene;
 
     public GUIDisplay(){
         this.control = null;
@@ -39,25 +47,46 @@ public class GUIDisplay extends Application implements Displayer{
         control = new SingleLibraryController(new WorkingDirectory());
         Pane root = new VBox();
 
-        Pane titleBar = TitleBarPane.getPane("RefMeister",
-                new boolean[]{true, true, true});
-        root.getChildren().add(titleBar);
+        VBox title = new VBox();
 
         FileManager.getInstance().start(true);
 
         Pane mainWindow = new HBox();
+        titleScene = new Scene(title, 500, 150);
+        titleWindow.setScene(titleScene);
+        Button loadButton = new Button("Load Library");
+        loadButton.setRotate(180);
+        Button newButton  = new Button("Create New Library");
+        newButton.setRotate(180);
+        Text welcome = new Text("Welcome To RefMeister");
+        welcome.setFill(Color.BISQUE);
+        welcome.setStyle("-fx-font: 40px Serif;");
+
+        titleWindow.show();
+        title.setAlignment(Pos.CENTER);
+        title.getChildren().add(welcome);
+        title.getChildren().add(loadButton);
+        title.getChildren().add(newButton);
+        title.setStyle("-fx-background-color: DARKSLATEGRAY;");
+
+        Pane root = new HBox();
+
+        //Pane titleBar = TitleBarPane.getPane("RefMeister",
+        //        new boolean[]{true, true, true});
+        //root.getChildren().add(titleBar);
+
+        //Pane mainWindow = new HBox();
         Pane branchHistory = new BranchPane();
         branchHistory.setBackground(new Background(new BackgroundFill(
                 Color.BLACK, new CornerRadii(0), Insets.EMPTY)));
         branchHistory.toFront();
         branchHistory.setMaxSize(200, 570);
         branchHistory.setMinSize(200, 570);
-        mainWindow.getChildren().add(branchHistory);
+        root.getChildren().add(branchHistory);
 
 
         Pane mainArea = new VBox();
         Pane titleDesc = new TitleDescriptionPane();
-
         Pane options = new OptionsPane();
         titleDesc.getChildren().add(options);
         mainArea.getChildren().add(titleDesc);
@@ -69,16 +98,14 @@ public class GUIDisplay extends Application implements Displayer{
 
         mainArea.getChildren().add(multiList);
 
-        mainWindow.getChildren().add(mainArea);
+        root.getChildren().add(mainArea);
 
-        root.getChildren().add(mainWindow);
+        //root.getChildren().add(mainWindow);
 
         currScene = new Scene(root, 800, 600);
 
 
-
-
-        appWindow = new Stage();
+        appWindow.setTitle("RefMeister");
 
         appWindow.setScene(currScene);
         ResizeHelper.addResizeListener(appWindow);
@@ -89,7 +116,7 @@ public class GUIDisplay extends Application implements Displayer{
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         FileManager.getInstance().stop();
     }
 

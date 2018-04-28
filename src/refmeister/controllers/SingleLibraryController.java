@@ -174,7 +174,7 @@ public class SingleLibraryController implements Controller{
             case "sort":
                 selected.sort(param[0]);
                 break;
-            case "rate"://TODO could replace with a call to arg.changeRating
+            case "rate":
                 if(selected instanceof Relatable) {
                     Relatable rel = (Relatable)selected;
                     List<Relation> listRelations = rel.getRelations();
@@ -230,12 +230,35 @@ public class SingleLibraryController implements Controller{
                         "to be related to other entities.");
                 break;//TODO
             case "generate":
+                int index = 0;
+                sendRefData(param);
                 System.out.println("Not implemented yet.");
                 break; //TODO
 
 
         }
         FileManager.getInstance().getLibraryLock().unlock();
+    }
+
+
+    //TODO This is very broken PETER OR BRANDON
+    //The Data comes in properly
+    private void sendRefData(String[] refData) {
+        int index;
+        String[][] refArray = new String[13][10];
+        for(index = 3; index < 10; index++) { //Gets all the paper stuff out
+            refArray[index][0] = refData[index - 3];
+        }
+
+        int j = 0;
+        for(; index+2 < refData.length; index++, j++) {
+            refArray[j%3][j/3] = refData[index];
+        }
+
+
+
+        Reference ref = (Reference)selected;
+        ref.setRefData(refArray);
     }
 
     /**

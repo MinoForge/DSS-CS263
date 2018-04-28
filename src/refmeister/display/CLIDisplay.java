@@ -4,6 +4,7 @@ import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
 import refmeister.entity.Interfaces.Relatable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Reference;
 
 
 import java.io.IOException;
@@ -251,13 +252,38 @@ public class CLIDisplay implements Displayer {
      * @return the reference data
      */
     public String[] getRefData() {
-        String[] result = get("Enter section number > ", "Enter title of the paper > ",
+        String[] paperInfo = get("Enter section number > ", "Enter title of the paper > ",
                               "Enter publication > ", "Enter location > ",
-                              "Enter publisher's n1ame > ", "Enter publication date > ",
+                              "Enter publisher's name > ", "Enter publication date > ",
                               "Enter the page range > ", "Enter the URL > ",
-                              "Enter the file path > ", "Enter the last accessed date > ",
-                              "Enter the author(s) name [Last][MI][First] > ");
-                                // ^^ TODO PETER loop through the end to get all the others.
+                              "Enter the file path > ", "Enter the last accessed date > ");
+        ArrayList<String> authorInfo = new ArrayList<>();
+        boolean moreAuthors = true;
+        do {
+            String[] authorName = get("Enter the author(s) name [Last] > ",
+                                      "Enter the author(s) name [MI]",
+                                      "Enter the author(s) [First]");
+
+            for(int i = 0; i < authorName.length; i++) {
+                authorInfo.add(authorName[i]);
+                //todo if(authorName == null); moreAuthors = false;
+
+            }
+            moreAuthors = false;
+        } while(moreAuthors);
+
+        String[] authorArray = authorInfo.toArray(new String[0]);
+        String[] result = new String[paperInfo.length + authorArray.length];
+
+        int index = 0;
+        for(String s: paperInfo) {
+            result[index++] = s;
+        }
+        for(String s: authorArray) {
+            result[index++] = s;
+        }
+
+        // ^^ TODO PETER loop through the end to get all the others.
                                 //  with <3 - Brandon & with </3 - Caleb
         return result;
     }
@@ -321,13 +347,23 @@ public class CLIDisplay implements Displayer {
             case "addI":
                 control.sendFunc("addI", getTD());
                 break;
-            case "refdata": //TODO put in SLC
-                control.sendFunc("refdata", getRefData());
+            case "generate": //TODO put in SLC
+                String[] refData = getRefData();
+                control.sendFunc("generate", refData);
+                for(String s: refData) {
+                    System.out.println(s);
+                }
                 break;
             case "moveTheme":
                 control.sendFunc("moveTheme", selectFromTopics());
-            }
-
+                break;
+            case "MLA":
+                System.out.println(((Reference)control.getSelected()).generateMLA());
+                break;
+            case "APA":
+                System.out.println(((Reference)control.getSelected()).generateAPA());
+                break;
+        }
             return false;
         }
 

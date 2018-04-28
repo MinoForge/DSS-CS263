@@ -58,6 +58,9 @@ public class BranchPane extends VBox{
         this.titles = titles;
     }
 
+    /**
+     * Updates Branch Pane's children.
+     */
     public void updateBranchPane() {
         for(int i = 0; i < this.titles.length; i++) {
             obj.getChildren().add(new Rectangle(3, 25, Color.BISQUE));

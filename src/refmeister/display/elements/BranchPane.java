@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,28 +19,15 @@ import java.util.List;
  * @version 28 April 2018
  */
 public class BranchPane extends VBox{
-    /** Default size of a branch pane's array of titles. */
-    private static final int DEFAULT_SIZE = 10;
-
-    /** Titles of the branches being displayed. */
-    private List<String> titles;
-
     /** Holds the single instance of this branch pane. */
     private static BranchPane obj;
 
-    /**
-     * Default constructor for a BranchPane object.
-     */
-    private BranchPane() {
-        this(new String[DEFAULT_SIZE]);
-    }
 
     /**
      * Constructor in which a string array of titles are passed in. Spacing
      * and alignment are also set up properly.
-     * @param titles The string array of titles to set.
      */
-    private BranchPane(String[] titles) {
+    private BranchPane() {
         setSpacing(3);
         obj = this;
         this.getStylesheets().add(getClass().getResource("../resources/branchPane.css")
@@ -66,11 +54,12 @@ public class BranchPane extends VBox{
      * Updates the output of this branch pane's children.
      * @return Returns an array of the buttons that can be accessed.
      */
-    public Node[] updateBranchPane() {
-        Node[] buttons = new Button[this.titles.length];
-        for(int i = 0; i < this.titles.length; i++) {
+    public Node[] updateBranchPane(List<String> titles) {
+        new BranchPane();
+        Node[] buttons = new Button[titles.size()];
+        for(int i = 0; i < titles.size(); i++) {
             obj.getChildren().add(new Rectangle(3, 25, Color.BISQUE));
-            Node button = new Button((titles[i]));
+            Node button = new Button((titles.get(i)));
             buttons[i] = button;
             obj.getChildren().add(button);
         }

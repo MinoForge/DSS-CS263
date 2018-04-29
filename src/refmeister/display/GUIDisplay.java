@@ -27,6 +27,8 @@ import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.WorkingDirectory;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Models and displays the GUI for the RefMeister program.
@@ -105,15 +107,20 @@ public class GUIDisplay extends Application implements Displayer{
 
         // Set up of the Branch Pane
         BranchPane branchHistory = BranchPane.getInstance();
-        BranchPane.setBranchPane(new String[] {"Library",
-                "Topic", "Theme", "Reference", "Notes"});
+        // TODO Comment out the testTitles. Only there for testing purposes.
+        List<String> testTitles = new ArrayList<>();
+        testTitles.add("Library Title");
+        testTitles.add("Topic Title");
+        testTitles.add("Theme Title");
+        testTitles.add("Reference Title");
+        testTitles.add("Notes/Arg/Idea Title");
+        branchHistory.updateBranchPane(testTitles);
         branchHistory = BranchPane.getInstance();
         branchHistory.setBackground(new Background(new BackgroundFill(
                 Color.DARKSLATEGREY, new CornerRadii(0), Insets.EMPTY)));
         branchHistory.toFront();
         //branchHistory.prefHeightProperty().bind(root.heightProperty());
         branchHistory.setMinSize(200, 500);
-        ((BranchPane) branchHistory).updateBranchPane();
         branchHistory.prefHeightProperty().bind(root.heightProperty());
         root.setLeft(branchHistory);
 
@@ -228,7 +235,7 @@ public class GUIDisplay extends Application implements Displayer{
     }
 
     private Pane getBranchPane() {
-        BranchPane.getInstance().setBranchTitles(control.getBranch());
+        BranchPane.getInstance().updateBranchPane(control.getBranch());
         return BranchPane.getInstance();
     }
 

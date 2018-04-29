@@ -62,8 +62,6 @@ public class GUIDisplay extends Application implements Displayer{
 
         Button loadButton = new Button("Load Library");
         Button newButton  = new Button("Create New Library");
-        newButton.applyCss();
-        loadButton.applyCss();
 
         Label welcome = new Label("Welcome To RefMeister");
         welcome.getStyleClass().clear();
@@ -94,6 +92,7 @@ public class GUIDisplay extends Application implements Displayer{
     private void openApp(){
         BorderPane root = new BorderPane();
 
+        // Set up of the Branch Pane
         BranchPane branchHistory = BranchPane.getInstance();
         BranchPane.setBranchPane(new String[] {"Library",
                 "Topic", "Theme", "Reference", "Notes"});
@@ -101,18 +100,20 @@ public class GUIDisplay extends Application implements Displayer{
         branchHistory.setBackground(new Background(new BackgroundFill(
                 Color.DARKSLATEGREY, new CornerRadii(0), Insets.EMPTY)));
         branchHistory.toFront();
-        branchHistory.prefHeightProperty().bind(root.heightProperty());
+        //branchHistory.prefHeightProperty().bind(root.heightProperty());
         branchHistory.setMinSize(200, 500);
         ((BranchPane) branchHistory).updateBranchPane();
         branchHistory.prefHeightProperty().bind(root.heightProperty());
         root.setLeft(branchHistory);
 
+        // Set up of the Information Pane
         InformationPane multiList = InformationPane.getInstance();
         multiList.createTabs("White", "Brown", "Black");
         multiList.prefWidthProperty().bind(root.widthProperty());
         multiList.prefHeightProperty().bind(root.heightProperty());
         root.setCenter(multiList);
 
+        // Set up of the Menu Bar
         root.setTop(getMenuBar());
 
         //root.getChildren().add(mainWindow);

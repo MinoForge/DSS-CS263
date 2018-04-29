@@ -22,6 +22,9 @@ public class OptionsPane extends TilePane {
     private static OptionsPane optPane;
 
     private OptionsPane(Button[] options) {
+        this.getStylesheets().add(getClass().getResource
+                ("../resources/optionsPane.css").toExternalForm());
+        this.getStyleClass().add("optionspane");
         this.getChildren().addAll(options);
     }
 
@@ -35,10 +38,17 @@ public class OptionsPane extends TilePane {
 
     public void setOpts(List<String> optList) {
         Button[] options = new Button[optList.size()];
-        for(int i = 0; i < optList.size(); i++) {
-//            options[i] = new Button("", optPane.getIcon(optList.get(i)));
-            options[i] = new Button(optList.get(i).charAt(0) + "", optPane.getIcon(optList.get(i)));
-        }
+        //for(int i = 0; i < optList.size(); i++) {
+            //options[i] = new Button("", optPane.getIcon(optList.get(i)));
+            //options[i] = new Button(optList.get(i).charAt(0) + "", optPane
+                   // .getIcon(optList.get(i)));
+        //}
+        // TODO Peter I want to see if this will work without the for loop
+        options[0] = new Button();
+        options[0].getStyleClass().add("delete-button");
+        options[1] = new Button();
+        options[1].getStyleClass().add("save-button");
+
 
         optPane = new OptionsPane(options);
 

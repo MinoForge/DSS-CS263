@@ -15,7 +15,11 @@ public class OptionsPane extends TilePane {
     private static OptionsPane optPane;
 
     private OptionsPane(Button[] options) {
-        this.getChildren().addAll(options);
+        if(options != null) {
+            for (Button b : options) {
+                this.getChildren().add(b);
+            }
+        }
     }
 
     public static OptionsPane getInstance() {
@@ -30,7 +34,9 @@ public class OptionsPane extends TilePane {
         Button[] options = new Button[optList.size()];
         for(int i = 0; i < optList.size(); i++) {
 //            options[i] = new Button("", optPane.getIcon(optList.get(i)));
-            options[i] = new Button(optList.get(i).charAt(0) + "", optPane.getIcon(optList.get(i)));
+            options[i] = new Button(optList.get(i).charAt(0) + "");
+            //,
+            //optPane.getIcon(optList.get(i))
         }
 
         optPane = new OptionsPane(options);
@@ -39,7 +45,7 @@ public class OptionsPane extends TilePane {
     }
 
     private Node getIcon(String iconName) {
-        Image icon = new Image("/images/" + iconName + ".png");
+        Image icon = new Image("/resources/" + iconName + ".png");
         Node result = new ImageView(icon);
         return result;
     }

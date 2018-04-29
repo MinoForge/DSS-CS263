@@ -400,6 +400,9 @@ public class SingleLibraryController implements Controller{
     }
 
     public List<String> getBranch() {
+        if(selected == null) {
+            return new ArrayList<String>();
+        }
         ArrayList<String> branch = new ArrayList<>();
         Entity temp = selected;
         branch.add(temp.getTitle());

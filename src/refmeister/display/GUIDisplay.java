@@ -78,11 +78,13 @@ public class GUIDisplay extends Application implements Displayer{
                 .toExternalForm());
 
         Button loadButton = new Button("Load Library");
-        Button newButton  = new Button("Create New Library");
+        Button newButton = makeNewButton();
 
         Label welcome = new Label("Welcome To RefMeister");
         welcome.getStyleClass().clear();
         welcome.getStyleClass().add("title");
+
+
 
         title.getChildren().add(welcome);
         title.getChildren().add(loadButton);
@@ -93,53 +95,11 @@ public class GUIDisplay extends Application implements Displayer{
 
         loadButton.setOnAction((ev) -> {
             this.selectLibrary();
-            openApp();
+//            openApp();
+            update();
         });
 
-        newButton.setOnAction((ev) -> {
-            Dialog<Pair<String, String>> dialog = new Dialog();
-            dialog.setHeaderText("Enter Information");
-            ButtonType done = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
-            dialog.getDialogPane().getButtonTypes().addAll(done, ButtonType.CANCEL);
 
-            GridPane grid = new GridPane();
-            grid.setHgap(2);
-            grid.setVgap(1);
-           // grid.setPadding(new Insets(20, 150, 10,10));
-
-            TextField title1 = new TextField();
-            title1.setPromptText("Title");
-            TextField description = new TextField();
-            description.setPromptText("Description");
-            description.setMinSize(250, 100);
-
-            grid.add(new Text("Title:"), 0, 0,1 ,1);
-            grid.add(title1, 1,0, 1, 1);
-            grid.add(new Text("Description:"), 0, 1, 1, 1);
-            grid.add(description, 1, 1, 1, 1);
-
-            RowConstraints row1 = new RowConstraints();
-            row1.setPercentHeight(50);
-            RowConstraints row2 = new RowConstraints();
-            row2.setPercentHeight(50);
-
-            ColumnConstraints col1 = new ColumnConstraints();
-            col1.setPercentWidth(25);
-            ColumnConstraints col2 = new ColumnConstraints();
-            col2.setPercentWidth(75);
-
-            grid.getColumnConstraints().addAll(col1, col2);
-            grid.getRowConstraints().addAll(row1, row2);
-
-            dialog.getDialogPane().setContent(grid);
-
-            dialog.showAndWait();
-
-
-            control.createLibrary(title1.getText(), description.getText());
-            //this.update();
-            openApp();
-        });
 
         theStage.setScene(theScene);
         theStage.show();
@@ -314,5 +274,53 @@ public class GUIDisplay extends Application implements Displayer{
     }
 
 
+    private Button makeNewButton() {
+        Button newButton = new Button("Create New Library");
+        newButton.setOnAction((ev) -> {
+            Dialog<Pair<String, String>> dialog = new Dialog();
+            dialog.setHeaderText("Enter Information");
+            ButtonType done = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(done, ButtonType.CANCEL);
+
+            GridPane grid = new GridPane();
+            grid.setHgap(2);
+            grid.setVgap(1);
+            // grid.setPadding(new Insets(20, 150, 10,10));
+
+            TextField title1 = new TextField();
+            title1.setPromptText("Title");
+            TextField description = new TextField();
+            description.setPromptText("Description");
+            description.setMinSize(250, 100);
+
+            grid.add(new Text("Title:"), 0, 0,1 ,1);
+            grid.add(title1, 1,0, 1, 1);
+            grid.add(new Text("Description:"), 0, 1, 1, 1);
+            grid.add(description, 1, 1, 1, 1);
+
+            RowConstraints row1 = new RowConstraints();
+            row1.setPercentHeight(50);
+            RowConstraints row2 = new RowConstraints();
+            row2.setPercentHeight(50);
+
+            ColumnConstraints col1 = new ColumnConstraints();
+            col1.setPercentWidth(25);
+            ColumnConstraints col2 = new ColumnConstraints();
+            col2.setPercentWidth(75);
+
+            grid.getColumnConstraints().addAll(col1, col2);
+            grid.getRowConstraints().addAll(row1, row2);
+
+            dialog.getDialogPane().setContent(grid);
+
+            dialog.showAndWait();
+
+
+            control.createLibrary(title1.getText(), description.getText());
+            this.update();
+//            openApp();
+        });
+        return newButton;
+    }
 
 }

@@ -57,7 +57,7 @@ public class BranchPane extends VBox{
     public Node[] updateBranchPane(List<String> titles) {
         new BranchPane();
         Node[] buttons = new Button[titles.size()];
-        for(int i = 0; i < titles.size(); i++) {
+        for(int i = titles.size() - 1; i >= 0; i--) {
             obj.getChildren().add(new Rectangle(3, 25, Color.BISQUE));
             Node button = new Button((titles.get(i)));
             buttons[i] = button;

@@ -12,22 +12,13 @@ public class OptionsPane extends TilePane {
 
     private static OptionsPane optPane;
 
-    Button[] optionButtons;
-
-/**
- * Models an Options Pane to show the options that you have when looking at a
- * selected item.
- * @author
- * @version 28 April 2018
- */
-public class OptionsPane extends HBox {
-    private OptionsPane() {
-        setSpacing(3);
+    private OptionsPane(Button[] options) {
+        this.getChildren().addAll(options);
     }
 
     public static OptionsPane getInstance() {
         if(optPane == null) {
-            return new OptionsPane();
+            return new OptionsPane(null);
         }
         return optPane;
     }
@@ -38,6 +29,8 @@ public class OptionsPane extends HBox {
         for(int i = 0; i < optList.size(); i++) {
             options[i] = new Button("", optPane.getIcon(optList.get(i)));
         }
+
+        optPane = new OptionsPane(options);
 
 
     }

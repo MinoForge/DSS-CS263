@@ -46,6 +46,7 @@ public class GUIDisplay extends Application implements Displayer{
 
     /** The stage that we build our scenes in. */
     private Stage theStage;
+    private Scene theScene;
 
 
     /**
@@ -71,8 +72,8 @@ public class GUIDisplay extends Application implements Displayer{
 
         FileManager.getInstance().start(true);
 
-        Scene titleScene = new Scene(title, 500, 150);
-        titleScene.getStylesheets().add(this.getClass().getResource("resources/titleScene.css")
+        theScene = new Scene(title, 500, 150);
+        theScene.getStylesheets().add(this.getClass().getResource("resources/titleScene.css")
                 .toExternalForm());
 
         Button loadButton = new Button("Load Library");
@@ -139,7 +140,7 @@ public class GUIDisplay extends Application implements Displayer{
             openApp();
         });
 
-        theStage.setScene(titleScene);
+        theStage.setScene(theScene);
         theStage.show();
 
     }
@@ -275,14 +276,19 @@ public class GUIDisplay extends Application implements Displayer{
     public void update() {
         BorderPane updated = new BorderPane();
         updated.setLeft(getBranchPane());
-        TilePane optPane = getOptionsPane();
-        VBox titleDesc = getTitleDescriptionPane(optPane);
 
+        VBox centerPane = new VBox();
 
-        updated.setCenter();
+        Pane optPane = getOptionsPane();
+        Pane titleDesc = getTitleDescriptionPane(optPane);
+        centerPane.getChildren().add(titleDesc);
 
+        Pane multiList = getMulti();
+        centerPane.getChildren().add(multiList);
+        updated.setCenter(centerPane);
 
-        Scene newScene = new Scene()
+        theScene.setRoot(updated);
+
     }
 
     private Pane getBranchPane() {
@@ -291,7 +297,7 @@ public class GUIDisplay extends Application implements Displayer{
     }
 
     private Pane getTitleDescriptionPane(Pane optPane) {
-        TitleDescriptionPane.getInstance().setAttributes(control.getAttributes(), optPane);
+        TitleDescriptionPane.getInstance().setTitleDescPane(control.getAttributes(), optPane);
         return TitleDescriptionPane.getInstance();
     }
 
@@ -299,6 +305,13 @@ public class GUIDisplay extends Application implements Displayer{
         OptionsPane.getInstance().setOpts(control.getFuncs());
         return OptionsPane.getInstance();
     }
+
+    private Pane getMulti() {
+        //TODO implement updating data inside
+//        return InformationPane.getInstance();
+        return null;
+    }
+
 
 
 }

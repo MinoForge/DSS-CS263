@@ -8,6 +8,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.List;
+
+
 /**
  * The left most box in the window that shows the branch structure of the
  * current directory you're in.
@@ -19,7 +22,7 @@ public class BranchPane extends VBox{
     private static final int DEFAULT_SIZE = 10;
 
     /** Titles of the branches being displayed. */
-    private String[] titles;
+    private List<String> titles;
 
     /** Holds the single instance of this branch pane. */
     private static BranchPane obj;
@@ -37,7 +40,6 @@ public class BranchPane extends VBox{
      * @param titles The string array of titles to set.
      */
     private BranchPane(String[] titles) {
-        this.titles = titles;
         setSpacing(3);
         obj = this;
         this.getStylesheets().add(getClass().getResource("../resources/branchPane.css")
@@ -58,14 +60,6 @@ public class BranchPane extends VBox{
             }
         }
         return obj;
-    }
-
-    /**
-     * Sets up a new branch pane based on titles passed into it.
-     * @param titles The titles from which to build a new branch pane.
-     */
-    public static void setBranchPane(String[] titles) {
-        obj = new BranchPane(titles);
     }
 
     /**

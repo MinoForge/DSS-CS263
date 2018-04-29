@@ -41,11 +41,7 @@ public class BranchPane extends VBox{
      */
     public static BranchPane getInstance() {
         if(obj == null) {
-            synchronized (Pane.class) {
-                if(obj == null) {
-                    obj = new BranchPane();
-                }
-            }
+            obj = new BranchPane();
         }
         return obj;
     }

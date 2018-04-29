@@ -1,11 +1,11 @@
 .button{
     -fx-background-color: transparent;
-    -fx-background-image: url('../resources/trashcan.png');
+    -fx-background-image: url('../trashcan.png');
 }
 
 .button:hover {
     -fx-background-color: transparent;
-    -fx-background-image: url('../resources/trashcanOpen.png');
+    -fx-background-image: url('../trashcanOpen.png');
 }
 
 .optionspane {

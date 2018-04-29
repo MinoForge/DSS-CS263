@@ -22,7 +22,7 @@ public class OptionsPane extends TilePane {
  */
 public class OptionsPane extends HBox {
     private OptionsPane() {
-
+        setSpacing(3);
     }
 
     public static OptionsPane getInstance() {

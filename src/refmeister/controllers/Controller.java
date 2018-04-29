@@ -1,5 +1,6 @@
 package refmeister.controllers;
 
+import refmeister.display.elements.RefSubject;
 import refmeister.entity.Interfaces.Entity;
 import refmeister.entity.Interfaces.Relatable;
 import refmeister.entity.WorkingDirectory;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Brandon Townsend
  * @version 20 April, 2018
  */
-public interface Controller {
+public interface Controller extends RefSubject {
 
     /**
      * Returns a list of options for the display that is currently selected.
@@ -118,4 +119,6 @@ public interface Controller {
     WorkingDirectory getWorkingDirectory();
 
     Entity getSelected();
+
+    List<String> getBranch();
 }

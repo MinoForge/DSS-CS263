@@ -1,10 +1,12 @@
 package refmeister.controllers;
 
 import refmeister.XML.FileManager;
+import refmeister.display.elements.RefObserver;
 import refmeister.entity.*;
 import refmeister.entity.Interfaces.*;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -30,6 +32,8 @@ public class SingleLibraryController implements Controller{
     /** The current object the controller is pointing to, typecast as a Displayable. */
 	private Displayable dispSelected;
 
+	private ArrayList<RefObserver> observers;
+
 
     /**
      * Constructor for the Controller class. Sets a specified WorkingDirectory to the workingDir
@@ -39,6 +43,7 @@ public class SingleLibraryController implements Controller{
 	public SingleLibraryController(WorkingDirectory workingDir) {
 	    this.workingDir = workingDir;
 	    this.dispSelected = workingDir;
+	    this.observers = new ArrayList<>();
     }
 
     /**
@@ -238,6 +243,7 @@ public class SingleLibraryController implements Controller{
 
         }
         FileManager.getInstance().getLibraryLock().unlock();
+        notifyObservers();
     }
 
 
@@ -366,5 +372,37 @@ public class SingleLibraryController implements Controller{
     @Override
     public WorkingDirectory getWorkingDirectory() {
         return workingDir;
+    }
+
+    @Override
+    public boolean addObserver(RefObserver ro) {
+        observers.add(ro);
+        return true;
+    }
+
+    @Override
+    public boolean removeObserver(RefObserver ro) {
+        boolean remove = true;
+        for(int i = 0; i < observers.size(); i++) {
+            if(ro == observers.get(i)) {
+                observers.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void notifyObservers() {
+        for(RefObserver ro: observers) {
+            ro.update();
+        }
+    }
+
+    public List<String> getBranch() {
+        Deque<String> branch = new ArrayDeque<>();
+        while(selected.getParent() != null) {
+
+        }
     }
 }

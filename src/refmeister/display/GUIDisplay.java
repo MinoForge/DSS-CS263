@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -279,7 +280,7 @@ public class GUIDisplay extends Application implements Displayer{
 
         VBox centerPane = new VBox();
 
-        Pane optPane = getOptionsPane();
+        OptionsPane optPane = getOptionsPane();
         Pane titleDesc = getTitleDescriptionPane(optPane);
         centerPane.getChildren().add(titleDesc);
 
@@ -296,12 +297,12 @@ public class GUIDisplay extends Application implements Displayer{
         return BranchPane.getInstance();
     }
 
-    private Pane getTitleDescriptionPane(Pane optPane) {
+    private Pane getTitleDescriptionPane(OptionsPane optPane) {
         TitleDescriptionPane.getInstance().setTitleDescPane(control.getAttributes(), optPane);
         return TitleDescriptionPane.getInstance();
     }
 
-    private Pane getOptionsPane() {
+    private OptionsPane getOptionsPane() {
         OptionsPane.getInstance().setOpts(control.getFuncs());
         return OptionsPane.getInstance();
     }

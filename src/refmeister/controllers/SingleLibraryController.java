@@ -400,9 +400,15 @@ public class SingleLibraryController implements Controller{
     }
 
     public List<String> getBranch() {
-        Deque<String> branch = new ArrayDeque<>();
-        while(selected.getParent() != null) {
-
+        ArrayList<String> branch = new ArrayList<>();
+        Entity temp = selected;
+        branch.add(temp.getTitle());
+        while(temp.getParent() != null) {
+            temp = temp.getParent();
+            branch.add(temp.getTitle());
         }
+        return branch;
     }
+
+
 }

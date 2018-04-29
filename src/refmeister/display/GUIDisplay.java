@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Pair;
 import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
 import refmeister.controllers.SingleLibraryController;
@@ -45,6 +46,7 @@ public class GUIDisplay extends Application implements Displayer{
 
     /** The stage that we build our scenes in. */
     private Stage theStage;
+    private Scene theScene;
 
 
     /**
@@ -70,8 +72,8 @@ public class GUIDisplay extends Application implements Displayer{
 
         FileManager.getInstance().start(true);
 
-        Scene titleScene = new Scene(title, 500, 150);
-        titleScene.getStylesheets().add(this.getClass().getResource("resources/titleScene.css")
+        theScene = new Scene(title, 500, 150);
+        theScene.getStylesheets().add(this.getClass().getResource("resources/titleScene.css")
                 .toExternalForm());
 
         Button loadButton = new Button("Load Library");
@@ -94,11 +96,51 @@ public class GUIDisplay extends Application implements Displayer{
         });
 
         newButton.setOnAction((ev) -> {
-            control.createLibrary();
+            Dialog<Pair<String, String>> dialog = new Dialog();
+            dialog.setHeaderText("Enter Information");
+            ButtonType done = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(done, ButtonType.CANCEL);
+
+            GridPane grid = new GridPane();
+            grid.setHgap(2);
+            grid.setVgap(1);
+           // grid.setPadding(new Insets(20, 150, 10,10));
+
+            TextField title1 = new TextField();
+            title1.setPromptText("Title");
+            TextField description = new TextField();
+            description.setPromptText("Description");
+            description.setMinSize(250, 100);
+
+            grid.add(new Text("Title:"), 0, 0,1 ,1);
+            grid.add(title1, 1,0, 1, 1);
+            grid.add(new Text("Description:"), 0, 1, 1, 1);
+            grid.add(description, 1, 1, 1, 1);
+
+            RowConstraints row1 = new RowConstraints();
+            row1.setPercentHeight(50);
+            RowConstraints row2 = new RowConstraints();
+            row2.setPercentHeight(50);
+
+            ColumnConstraints col1 = new ColumnConstraints();
+            col1.setPercentWidth(25);
+            ColumnConstraints col2 = new ColumnConstraints();
+            col2.setPercentWidth(75);
+
+            grid.getColumnConstraints().addAll(col1, col2);
+            grid.getRowConstraints().addAll(row1, row2);
+
+            dialog.getDialogPane().setContent(grid);
+
+            dialog.showAndWait();
+
+
+            control.createLibrary(title1.getText(), description.getText());
+            //this.update();
             openApp();
         });
 
-        theStage.setScene(titleScene);
+        theStage.setScene(theScene);
         theStage.show();
 
     }
@@ -130,7 +172,12 @@ public class GUIDisplay extends Application implements Displayer{
         multiList.createTabs("White", "Brown", "Black");
         multiList.prefWidthProperty().bind(root.widthProperty());
         multiList.prefHeightProperty().bind(root.heightProperty());
-        root.setCenter(multiList);
+
+        VBox centerBox = new VBox();
+
+        centerBox.getChildren().addAll( multiList);
+
+        root.setCenter(centerBox);
 
         // Set up of the Menu Bar
         root.setTop(getMenuBar());
@@ -229,14 +276,19 @@ public class GUIDisplay extends Application implements Displayer{
     public void update() {
         BorderPane updated = new BorderPane();
         updated.setLeft(getBranchPane());
-        TilePane optPane = getOptionsPane();
-        VBox titleDesc = getTitleDescriptionPane(optPane);
 
+        VBox centerPane = new VBox();
 
-        updated.setCenter();
+        Pane optPane = getOptionsPane();
+        Pane titleDesc = getTitleDescriptionPane(optPane);
+        centerPane.getChildren().add(titleDesc);
 
+        Pane multiList = getMulti();
+        centerPane.getChildren().add(multiList);
+        updated.setCenter(centerPane);
 
-        Scene newScene = new Scene()
+        theScene.setRoot(updated);
+
     }
 
     private Pane getBranchPane() {
@@ -245,7 +297,7 @@ public class GUIDisplay extends Application implements Displayer{
     }
 
     private Pane getTitleDescriptionPane(Pane optPane) {
-        TitleDescriptionPane.getInstance().setAttributes(control.getAttributes(), optPane);
+        TitleDescriptionPane.getInstance().setTitleDescPane(control.getAttributes(), optPane);
         return TitleDescriptionPane.getInstance();
     }
 
@@ -253,6 +305,13 @@ public class GUIDisplay extends Application implements Displayer{
         OptionsPane.getInstance().setOpts(control.getFuncs());
         return OptionsPane.getInstance();
     }
+
+    private Pane getMulti() {
+        //TODO implement updating data inside
+//        return InformationPane.getInstance();
+        return null;
+    }
+
 
 
 }

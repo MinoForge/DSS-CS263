@@ -39,8 +39,10 @@ public class BranchPane extends VBox{
     private BranchPane(String[] titles) {
         this.titles = titles;
         setSpacing(3);
-        setAlignment(Pos.TOP_CENTER);
         obj = this;
+        this.getStylesheets().add(getClass().getResource("../resources/branchPane.css")
+                .toExternalForm());
+        this.getStyleClass().add("branchpane");
     }
 
     /**
@@ -75,12 +77,6 @@ public class BranchPane extends VBox{
         for(int i = 0; i < this.titles.length; i++) {
             obj.getChildren().add(new Rectangle(3, 25, Color.BISQUE));
             Node button = new Button((titles[i]));
-            button.setStyle("-fx-text-fill: bisque;" +
-                    "-fx-background-color: #2F4F4F;" +
-                    "-fx-font-size: 14;" +
-                    "-fx-border-color: bisque;" +
-                    "-fx-border-radius: 5 5 5 5 ;" +
-                    "-fx-padding: 5 15 5 15;");
             buttons[i] = button;
             obj.getChildren().add(button);
         }

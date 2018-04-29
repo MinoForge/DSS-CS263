@@ -1,0 +1,17 @@
+.button{
+    -fx-text-fill: bisque;
+    -fx-background-color: transparent;
+    -fx-font-size: 14;
+    -fx-border-color: bisque;
+    -fx-border-radius: 5 5 5 5;
+    -fx-padding: 5 15 5 15;
+}
+
+.button:hover {
+    -fx-background-color: derive(#2F4F4F, 25%);
+    -fx-underline: true;
+}
+
+.branchpane {
+    -fx-alignment: top_center;
+}

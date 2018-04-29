@@ -3,13 +3,11 @@ package refmeister.display;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
@@ -58,37 +56,25 @@ public class GUIDisplay extends Application implements Displayer{
 
         FileManager.getInstance().start(true);
 
-        Pane mainWindow = new HBox();
         Scene titleScene = new Scene(title, 500, 150);
-        theStage.setScene(titleScene);
-        Button loadButton = new Button("Load Library");
-        loadButton.setStyle("-fx-text-fill: bisque;" +
-                "-fx-background-color: transparent;" +
-                "-fx-font-size: 16;" +
-                "-fx-font-weight: bold;" +
-                "-fx-border-color: bisque;" +
-                "-fx-border-radius: 5 5 5 5 ;" +
-                "-fx-padding: 5 40 5 40;");
-        loadButton.setOnMouseMoved(e -> loadButton.setStyle
-                ("-fx-font-underline: true"));
-        Button newButton  = new Button("Create New Library");
-        newButton.setStyle("-fx-text-fill: bisque;" +
-                "-fx-background-color: #2F4F4F;" +
-                "-fx-font-size: 16;" +
-                "-fx-font-weight: bold;" +
-                "-fx-border-color: bisque;" +
-                "-fx-border-radius: 5 5 5 5 ;" +
-                "-fx-padding: 5 15 5 15;");
-        Text welcome = new Text("Welcome To RefMeister");
-        welcome.setFill(Color.BISQUE);
-        welcome.setStyle("-fx-font: 42px Serif;");
+        titleScene.getStylesheets().add(this.getClass().getResource("resources/titleScene.css")
+                .toExternalForm());
 
-        title.setAlignment(Pos.CENTER);
-        title.setSpacing(7);
+        Button loadButton = new Button("Load Library");
+        Button newButton  = new Button("Create New Library");
+        newButton.applyCss();
+        loadButton.applyCss();
+
+        Label welcome = new Label("Welcome To RefMeister");
+        welcome.getStyleClass().clear();
+        welcome.getStyleClass().add("title");
+
         title.getChildren().add(welcome);
         title.getChildren().add(loadButton);
         title.getChildren().add(newButton);
-        title.setStyle("-fx-background-color: DARKSLATEGRAY;");
+
+        title.getStyleClass().clear();
+        title.getStyleClass().add("vbox");
 
         loadButton.setOnAction((ev) -> {
             this.selectLibrary();
@@ -100,6 +86,7 @@ public class GUIDisplay extends Application implements Displayer{
             openApp();
         });
 
+        theStage.setScene(titleScene);
         theStage.show();
 
     }

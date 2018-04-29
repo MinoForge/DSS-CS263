@@ -1,0 +1,11 @@
+.button{
+    -fx-background-image: url('trashcan.png');
+}
+
+.button:hover {
+    -fx-background-image: url('trashcanOpen.png');
+}
+
+.optionspane {
+    -fx-alignment: center;
+}

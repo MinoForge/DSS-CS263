@@ -8,6 +8,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * The left most box in the window that shows the branch structure of the
@@ -16,27 +19,20 @@ import javafx.scene.shape.Rectangle;
  * @version 28 April 2018
  */
 public class BranchPane extends VBox{
-    /** Default size of a branch pane's array of titles. */
-    private static final int DEFAULT_SIZE = 10;
-
-    /** Titles of the branches being displayed. */
-    private String[] titles;
-
     /** Holds the single instance of this branch pane. */
     private static BranchPane obj;
 
+
     /**
-     * Default constructor for a BranchPane object.
+     * Constructor in which a string array of titles are passed in. Spacing
+     * and alignment are also set up properly.
      */
     private BranchPane() {
-        this(new String[DEFAULT_SIZE]);
-    }
-
-    private BranchPane(String[] titles) {
-        this.titles = titles;
         setSpacing(3);
-        setAlignment(Pos.TOP_CENTER);
         obj = this;
+        this.getStylesheets().add(getClass().getResource("../resources/branchPane.css")
+                .toExternalForm());
+        this.getStyleClass().add("branchpane");
     }
 
     /**
@@ -54,33 +50,16 @@ public class BranchPane extends VBox{
         return obj;
     }
 
-    public static void setBranchPane(String[] titles) {
-        obj = new BranchPane(titles);
-    }
-
-    /**
-     * Sets the new titles for each of the Branch.
-     * @param titles The new string of titles to be set.
-     */
-    public void setBranchTitles(String[] titles) {
-        this.titles = titles;
-    }
-
     /**
      * Updates the output of this branch pane's children.
      * @return Returns an array of the buttons that can be accessed.
      */
-    public Node[] updateBranchPane() {
-        Node[] buttons = new Button[this.titles.length];
-        for(int i = 0; i < this.titles.length; i++) {
+    public Node[] updateBranchPane(List<String> titles) {
+        new BranchPane();
+        Node[] buttons = new Button[titles.size()];
+        for(int i = 0; i < titles.size(); i++) {
             obj.getChildren().add(new Rectangle(3, 25, Color.BISQUE));
-            Node button = new Button((titles[i]));
-            button.setStyle("-fx-text-fill: bisque;" +
-                    "-fx-background-color: #2F4F4F;" +
-                    "-fx-font-size: 14;" +
-                    "-fx-border-color: bisque;" +
-                    "-fx-border-radius: 5 5 5 5 ;" +
-                    "-fx-padding: 5 15 5 15;");
+            Node button = new Button((titles.get(i)));
             buttons[i] = button;
             obj.getChildren().add(button);
         }

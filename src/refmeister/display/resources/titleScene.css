@@ -1,0 +1,25 @@
+.button {
+    -fx-text-fill: bisque;
+    -fx-background-color: transparent;
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-border-color: bisque;
+    -fx-border-radius: 5 5 5 5;
+    -fx-padding: 5 15 5 15;
+}
+
+.button:hover {
+    -fx-underline: true;
+    -fx-background-color: derive(#2F4F4F, 25%);
+}
+
+.vbox {
+    -fx-background-color: darkslategray;
+    -fx-alignment: center;
+    -fx-spacing: 7;
+}
+
+.title {
+    -fx-font: 42px "Serif";
+    -fx-text-fill: bisque;
+}

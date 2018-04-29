@@ -3,18 +3,28 @@ package refmeister.display;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
 import refmeister.controllers.SingleLibraryController;
 import refmeister.display.elements.*;
 import refmeister.display.specialHandlers.ImageBuilder;
 import refmeister.display.specialHandlers.ResizeHelper;
+import refmeister.entity.Interfaces.Editable;
 import refmeister.entity.WorkingDirectory;
 
 import java.io.File;
@@ -27,6 +37,7 @@ public class GUIDisplay extends Application implements Displayer{
 
     private Controller control;
     private Stage theStage;
+
 
     public GUIDisplay(){
         this.control = null;
@@ -186,4 +197,35 @@ public class GUIDisplay extends Application implements Displayer{
         out.getMenus().addAll(file, edit, help);
         return out;
     }
+
+
+    public void update() {
+        BorderPane updated = new BorderPane();
+        updated.setLeft(getBranchPane());
+        TilePane optPane = getOptionsPane();
+        VBox titleDesc = getTitleDescriptionPane(optPane);
+
+
+        updated.setCenter();
+
+
+        Scene newScene = new Scene()
+    }
+
+    private Pane getBranchPane() {
+        BranchPane.getInstance().setBranchTitles(control.getBranch());
+        return BranchPane.getInstance();
+    }
+
+    private Pane getTitleDescriptionPane(Pane optPane) {
+        TitleDescriptionPane.getInstance().setAttributes(control.getAttributes(), optPane);
+        return TitleDescriptionPane.getInstance();
+    }
+
+    private Pane getOptionsPane() {
+        OptionsPane.getInstance().setOpts(control.getFuncs());
+        return OptionsPane.getInstance();
+    }
+
+
 }

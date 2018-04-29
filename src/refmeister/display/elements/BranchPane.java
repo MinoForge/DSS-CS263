@@ -8,6 +8,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.List;
+
 
 /**
  * The left most box in the window that shows the branch structure of the
@@ -20,7 +22,7 @@ public class BranchPane extends VBox{
     private static final int DEFAULT_SIZE = 10;
 
     /** Titles of the branches being displayed. */
-    private String[] titles;
+    private List<String> titles;
 
     /** Holds the single instance of this branch pane. */
     private static BranchPane obj;
@@ -33,7 +35,6 @@ public class BranchPane extends VBox{
     }
 
     private BranchPane(String[] titles) {
-        this.titles = titles;
         setSpacing(3);
         obj = this;
         this.getStylesheets().add(getClass().getResource("../resources/branchPane.css")
@@ -56,22 +57,6 @@ public class BranchPane extends VBox{
         return obj;
     }
 
-    public static void setBranchPane(String[] titles) {
-        obj = new BranchPane(titles);
-    }
-
-    /**
-     * Sets the new titles for each of the Branch.
-     * @param titles The new string of titles to be set.
-     */
-    public void setBranchTitles(String[] titles) {
-        this.titles = titles;
-    }
-
-    /**
-     * Updates the output of this branch pane's children.
-     * @return Returns an array of the buttons that can be accessed.
-     */
     public Node[] updateBranchPane() {
         Node[] buttons = new Button[this.titles.length];
         for(int i = 0; i < this.titles.length; i++) {

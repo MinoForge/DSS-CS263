@@ -21,18 +21,30 @@ import refmeister.entity.WorkingDirectory;
 import java.io.File;
 
 /**
- * TODO Have not done the GUI yet -> On track to complete this the third sprint.
+ * Models and displays the GUI for the RefMeister program.
+ * @author DevSquad Supreme (Red Team)
+ * @version 28 April 2018
  */
 public class GUIDisplay extends Application implements Displayer{
+    /** Current Version of the RefMeister program. */
     private String VERSION = "1.0 alpha";
 
+    /** Holds a reference to the Controller object that controls our display. */
     private Controller control;
+
+    /** The stage that we build our scenes in. */
     private Stage theStage;
 
+    /**
+     * Default Constructor for our GUI display.
+     */
     public GUIDisplay(){
         this.control = null;
     }
 
+    /**
+     * Driver to run the GUI display.
+     */
     public static void main(String[] args){
         launch(args);
     }
@@ -96,14 +108,13 @@ public class GUIDisplay extends Application implements Displayer{
         BorderPane root = new BorderPane();
 
         BranchPane branchHistory = BranchPane.getInstance();
-        branchHistory.setBranchPane(new String[] {"Library",
+        BranchPane.setBranchPane(new String[] {"Library",
                 "Topic", "Theme", "Reference", "Notes"});
         branchHistory = BranchPane.getInstance();
         branchHistory.setBackground(new Background(new BackgroundFill(
                 Color.DARKSLATEGREY, new CornerRadii(0), Insets.EMPTY)));
         branchHistory.toFront();
         branchHistory.prefHeightProperty().bind(root.heightProperty());
-        branchHistory.setMinSize(200, 500);
         branchHistory.setMinSize(200, 500);
         ((BranchPane) branchHistory).updateBranchPane();
         branchHistory.prefHeightProperty().bind(root.heightProperty());
@@ -149,6 +160,10 @@ public class GUIDisplay extends Application implements Displayer{
         return false;
     }
 
+    /**
+     * Allows the user to open a library that has previously been built and
+     * loads it.
+     */
     public void selectLibrary(){
         FileChooser fc = new FileChooser();
         fc.setTitle("Open Library");
@@ -160,6 +175,10 @@ public class GUIDisplay extends Application implements Displayer{
         }
     }
 
+    /**
+     * Retrieves and returns the current Menu Bar for the program.
+     * @return the current menu bar to display.
+     */
     private MenuBar getMenuBar(){
         MenuBar out = new MenuBar();
 

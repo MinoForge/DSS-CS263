@@ -1,5 +1,5 @@
 .button{
-    -fx-background-image: url('trashcan.png');
+    -fx-background-image: url('../elements/trashcan.png');
 }
 
 .button:hover {

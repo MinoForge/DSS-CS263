@@ -8,12 +8,6 @@ import refmeister.entity.Interfaces.Entity;
 
 import java.util.List;
 
-public class OptionsPane extends TilePane {
-
-    private static OptionsPane optPane;
-
-    Button[] optionButtons;
-
 /**
  * Models an Options Pane to show the options that you have when looking at a
  * selected item.
@@ -21,9 +15,10 @@ public class OptionsPane extends TilePane {
  * @version 28 April 2018
  */
 public class OptionsPane extends HBox {
-    private OptionsPane() {
-        setSpacing(3);
-    }
+
+    private static OptionsPane optPane;
+
+    Button[] optionButtons;
 
     public static OptionsPane getInstance() {
         if(optPane == null) {

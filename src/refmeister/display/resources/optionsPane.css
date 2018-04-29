@@ -1,0 +1,18 @@
+.delete-button{
+    -fx-background-color: transparent;
+    -fx-background-image: url('../trashcan.png');
+}
+
+.delete-button:hover {
+    -fx-background-color: transparent;
+    -fx-background-image: url('../trashcanOpen.png');
+}
+
+.save-button{
+    -fx-background-color: transparent;
+    -fx-background-image: url('../save.png');
+}
+
+.optionspane {
+    -fx-alignment: center;
+}

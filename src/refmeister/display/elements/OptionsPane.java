@@ -5,11 +5,18 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import refmeister.entity.Interfaces.Entity;
 
 import java.util.List;
 
+/**
+ * Models an Options Pane to show the options that you have when looking at a
+ * selected item.
+ * @author
+ * @version 28 April 2018
+ */
 public class OptionsPane extends TilePane {
 
     private static OptionsPane optPane;
@@ -20,6 +27,9 @@ public class OptionsPane extends TilePane {
                 this.getChildren().add(b);
             }
         }
+        this.getStylesheets().add(getClass().getResource
+                ("../resources/optionsPane.css").toExternalForm());
+        this.getStyleClass().add("optionspane");
     }
 
     public static OptionsPane getInstance() {
@@ -38,6 +48,11 @@ public class OptionsPane extends TilePane {
             //,
             //optPane.getIcon(optList.get(i))
         }
+
+//        options[0] = new Button();
+//        options[0].getStyleClass().add("delete-button");
+//        options[1] = new Button();
+//        options[1].getStyleClass().add("save-button");
 
         optPane = new OptionsPane(options);
 

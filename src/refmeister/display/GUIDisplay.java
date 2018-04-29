@@ -157,7 +157,8 @@ public class GUIDisplay extends Application implements Displayer{
 
         MenuItem save = new MenuItem("Save", ImageBuilder.buildImage(getClass()
                 .getResourceAsStream("./resources/save.png"), 0.5));
-        MenuItem load = new MenuItem("Load");
+        MenuItem load = new MenuItem("Load", ImageBuilder.buildImage(getClass()
+                .getResourceAsStream("./resources/import.png"), 0.5));
         MenuItem exit = new MenuItem("Exit", ImageBuilder.buildImage(getClass()
                 .getResourceAsStream("./resources/exitRight.png"), 0.5));
 
@@ -167,7 +168,8 @@ public class GUIDisplay extends Application implements Displayer{
 
         file.getItems().addAll(save, load, exit);
 
-        MenuItem version = new MenuItem("About us");
+        MenuItem version = new MenuItem("About us", ImageBuilder.buildImage(getClass()
+                .getResourceAsStream("./resources/information.png"), 0.5));
         version.setOnAction((ev) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("RefMeister About Us");

@@ -13,6 +13,7 @@ import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
 import refmeister.controllers.SingleLibraryController;
 import refmeister.display.elements.*;
+import refmeister.display.specialHandlers.ImageBuilder;
 import refmeister.display.specialHandlers.ResizeHelper;
 import refmeister.entity.WorkingDirectory;
 
@@ -154,9 +155,11 @@ public class GUIDisplay extends Application implements Displayer{
         Menu edit = new Menu("Edit");
         Menu help = new Menu("Help");
 
-        MenuItem save = new MenuItem("Save");
+        MenuItem save = new MenuItem("Save", ImageBuilder.buildImage(getClass()
+                .getResourceAsStream("./resources/save.png"), 0.5));
         MenuItem load = new MenuItem("Load");
-        MenuItem exit = new MenuItem("Exit");
+        MenuItem exit = new MenuItem("Exit", ImageBuilder.buildImage(getClass()
+                .getResourceAsStream("./resources/exitRight.png"), 0.5));
 
         save.setOnAction((ev) -> control.saveLibrary());
         load.setOnAction((ev) -> selectLibrary());
@@ -164,7 +167,7 @@ public class GUIDisplay extends Application implements Displayer{
 
         file.getItems().addAll(save, load, exit);
 
-        MenuItem version = new MenuItem("About");
+        MenuItem version = new MenuItem("About us");
         version.setOnAction((ev) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("RefMeister About Us");

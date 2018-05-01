@@ -30,16 +30,16 @@ public class InformationPane extends TabPane {
             String title = titles[i];
             Pane p = new Pane();
 
-            //todo remove penis
-            Ellipse e = new Ellipse(45, 80, 10, 50);
-            e.setFill(colors[i]);
-            p.getChildren().addAll(new Circle(30, 120, 15, colors[i]), new Circle(60,120, 15,
-                            colors[i]), e);
-            Tab t = new Tab(title, p);
-            t.setClosable(false);
-            this.getTabs().add(t);
-            //p.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
-            panes.add(p);
+//            //todo remove penis
+//            Ellipse e = new Ellipse(45, 80, 10, 50);
+//            e.setFill(colors[i]);
+//            p.getChildren().addAll(new Circle(30, 120, 15, colors[i]), new Circle(60,120, 15,
+//                            colors[i]), e);
+//            Tab t = new Tab(title, p);
+//            t.setClosable(false);
+//            this.getTabs().add(t);
+//            //p.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
+//            panes.add(p);
 
         }
 

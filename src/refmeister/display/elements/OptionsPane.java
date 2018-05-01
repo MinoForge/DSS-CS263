@@ -17,11 +17,12 @@ import java.util.List;
  * @author
  * @version 28 April 2018
  */
-public class OptionsPane extends TilePane {
+public class OptionsPane extends HBox {
 
     private static OptionsPane optPane;
 
     private OptionsPane(Button[] options) {
+        super();
         if(options != null) {
             for (Button b : options) {
                 this.getChildren().add(b);
@@ -30,6 +31,7 @@ public class OptionsPane extends TilePane {
         this.getStylesheets().add(getClass().getResource
                 ("../resources/optionsPane.css").toExternalForm());
         this.getStyleClass().add("optionspane");
+        optPane = this;
     }
 
     public static OptionsPane getInstance() {

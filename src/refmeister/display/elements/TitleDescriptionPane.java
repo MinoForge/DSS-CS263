@@ -30,6 +30,8 @@ public class TitleDescriptionPane extends VBox {
         this(option, "TITLE","DESCRIPTION");
     }
 
+
+
     private TitleDescriptionPane(OptionsPane option ,String... attributes) {
         AnchorPane anchor = new AnchorPane();
         this.option = option;
@@ -38,8 +40,12 @@ public class TitleDescriptionPane extends VBox {
             this.title = new Label(attributes[0]);
             this.desc = new Label(attributes[1]);
             AnchorPane.setLeftAnchor(this.title, 10.0);
-            AnchorPane.setRightAnchor(this.option, 10.0);
-            anchor.getChildren().addAll(this.title, this.option);
+            if(this.option != null) {
+                AnchorPane.setRightAnchor(this.option, 10.0);
+            }
+            if(this.option != null) {
+                anchor.getChildren().addAll(this.title, this.option);
+            }
             this.getChildren().addAll(anchor, this.desc);
         }
         else {
@@ -80,6 +86,8 @@ public class TitleDescriptionPane extends VBox {
             if(i == 2)
                 this.rating = new Label(attributes[i]);
         }
+
+        this.obj = new TitleDescriptionPane(options, attributes);
 
         this.option = options;
     }

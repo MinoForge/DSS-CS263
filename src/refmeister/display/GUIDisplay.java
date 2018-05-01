@@ -67,6 +67,7 @@ public class GUIDisplay extends Application implements Displayer{
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.theStage = primaryStage;
+        theStage.setTitle("RefMeister");
         control = new SingleLibraryController(new WorkingDirectory());
 
         VBox title = new VBox();
@@ -102,6 +103,7 @@ public class GUIDisplay extends Application implements Displayer{
 
 
         theStage.setScene(theScene);
+
         theStage.show();
 
     }
@@ -238,17 +240,20 @@ public class GUIDisplay extends Application implements Displayer{
         BorderPane updated = new BorderPane();
         updated.setLeft(getBranchPane());
 
+        updated.setTop(getMenuBar());
+
         VBox centerPane = new VBox();
 
         OptionsPane optPane = getOptionsPane();
         Pane titleDesc = getTitleDescriptionPane(optPane);
         centerPane.getChildren().add(titleDesc);
 
-        Pane multiList = getMulti();
+        Parent multiList = getMulti();
         centerPane.getChildren().add(multiList);
         updated.setCenter(centerPane);
 
         theScene.setRoot(updated);
+        theStage.setTitle("RefMeister : " + control.getBranch().get(control.getBranch().size()-1));
 
     }
 
@@ -263,14 +268,18 @@ public class GUIDisplay extends Application implements Displayer{
     }
 
     private OptionsPane getOptionsPane() {
+//        System.out.println(control.getFuncs()); //Returning properly
         OptionsPane.getInstance().setOpts(control.getFuncs());
         return OptionsPane.getInstance();
     }
 
-    private Pane getMulti() {
-        //TODO implement updating data inside
-//        return InformationPane.getInstance();
-        return null;
+    private Parent getMulti() {
+        String tabName = "";
+        if(control.getSelected().getEntityChildren() != null && control.getSelected().getEntityChildren().size() > 0) {
+            tabName = control.getSelected().getEntityChildren().get(0).getClass().getSimpleName();
+        }
+        InformationPane.getInstance().createTabs(tabName);
+        return InformationPane.getInstance();
     }
 
 

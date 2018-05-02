@@ -1,6 +1,6 @@
 package refmeister.controllers;
 
-import refmeister.display.elements.RefSubject;
+import refmeister.display.elements.Interfaces.RefSubject;
 import refmeister.entity.Interfaces.Entity;
 import refmeister.entity.Interfaces.Relatable;
 import refmeister.entity.WorkingDirectory;
@@ -120,5 +120,7 @@ public interface Controller extends RefSubject {
 
     Entity getSelected();
 
-    List<String> getBranch();
+    List<Entity> getBranch();
+
+    void setSelected(Entity e);
 }

@@ -1,4 +1,6 @@
-package refmeister.display.elements;
+package refmeister.display.elements.Interfaces;
+
+import refmeister.display.elements.Interfaces.RefObserver;
 
 /**
  * Models a Subject in the Observer Design pattern. Implements the adding of
@@ -7,7 +9,7 @@ package refmeister.display.elements;
  * @author Brandon Townsend
  * @version 28 April 2018
  */
-public interface RefSubject {
+public interface RefSubject<T extends RefObserver> {
 
     /**
      * Adds an observer to its list of observers.
@@ -27,5 +29,5 @@ public interface RefSubject {
      * Notifies each observer in this subjects list of observers. This will
      * cause each observer to call their update method.
      */
-    void notifyObservers();
+    void notifyObservers(Object arg);
 }

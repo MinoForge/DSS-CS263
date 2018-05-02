@@ -1,4 +1,4 @@
-package refmeister.display.elements;
+package refmeister.display.elements.Interfaces;
 
 /**
  * Models an Observer in the Observer design pattern. Updates when a subject

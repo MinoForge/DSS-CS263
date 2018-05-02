@@ -3,6 +3,7 @@ package refmeister.display.elements;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -36,12 +37,12 @@ public class TitleDescriptionPane extends VBox {
         AnchorPane anchor = new AnchorPane();
         this.option = option;
 
+        this.title = new Label(attributes[0]);
+        this.desc = new Label(attributes[1]);
         if(attributes.length < 3){
-            this.title = new Label(attributes[0]);
-            this.desc = new Label(attributes[1]);
-            AnchorPane.setLeftAnchor(this.title, 10.0);
+            AnchorPane.setLeftAnchor(this.title, 5.0);
             if(this.option != null) {
-                AnchorPane.setRightAnchor(this.option, 10.0);
+                AnchorPane.setRightAnchor(this.option, .0);
             }
             if(this.option != null) {
                 anchor.getChildren().addAll(this.title, this.option);
@@ -49,13 +50,15 @@ public class TitleDescriptionPane extends VBox {
             this.getChildren().addAll(anchor, this.desc);
         }
         else {
-            this.title = new Label(attributes[0]);
-            this.desc = new Label(attributes[1]);
+
             this.rating = new Label(attributes[2]);
-            AnchorPane.setLeftAnchor(this.title, 10.0);
-            AnchorPane.setRightAnchor(this.option, 10.0);
-            anchor.getChildren().addAll(this.title, this.option);
-            this.getChildren().addAll(anchor, this.desc, this.rating);
+            HBox left = new HBox();
+            left.getChildren().addAll(title, rating);
+            AnchorPane.setLeftAnchor(left, 5.0);
+            AnchorPane.setRightAnchor(this.option, .0);
+
+            anchor.getChildren().addAll(left, this.option);
+            this.getChildren().addAll(anchor, this.desc);
         }
         obj = this;
 
@@ -87,7 +90,7 @@ public class TitleDescriptionPane extends VBox {
                 this.rating = new Label(attributes[i]);
         }
 
-        this.obj = new TitleDescriptionPane(options, attributes);
+        TitleDescriptionPane.obj = new TitleDescriptionPane(options, attributes);
 
         this.option = options;
     }

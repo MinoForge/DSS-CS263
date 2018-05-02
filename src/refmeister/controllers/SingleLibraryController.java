@@ -1,12 +1,11 @@
 package refmeister.controllers;
 
 import refmeister.XML.FileManager;
-import refmeister.display.elements.RefObserver;
+import refmeister.display.elements.Interfaces.RefObserver;
 import refmeister.entity.*;
 import refmeister.entity.Interfaces.*;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -243,7 +242,7 @@ public class SingleLibraryController implements Controller{
 
         }
         FileManager.getInstance().getLibraryLock().unlock();
-        notifyObservers();
+        notifyObservers(null);
     }
 
 
@@ -339,6 +338,7 @@ public class SingleLibraryController implements Controller{
         } else {
             dispSelected = null;
         }
+        notifyObservers(null);
     }
 
     /**
@@ -393,22 +393,22 @@ public class SingleLibraryController implements Controller{
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers(Object arg) {
         for(RefObserver ro: observers) {
             ro.update();
         }
     }
 
-    public List<String> getBranch() {
+    public List<Entity> getBranch() {
         if(selected == null) {
-            return new ArrayList<String>();
+            return new ArrayList<Entity>();
         }
-        ArrayList<String> branch = new ArrayList<>();
+        ArrayList<Entity> branch = new ArrayList<>();
         Entity temp = selected;
-        branch.add(temp.getTitle());
+        branch.add(temp);
         while(temp.getParent() != null) {
             temp = temp.getParent();
-            branch.add(temp.getTitle());
+            branch.add(temp);
         }
         return branch;
     }

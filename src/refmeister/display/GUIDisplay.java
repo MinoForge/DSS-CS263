@@ -4,11 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,15 +14,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Pair;
 import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
 import refmeister.controllers.SingleLibraryController;
 import refmeister.display.elements.*;
+import refmeister.display.elements.Interfaces.OptionsObserver;
+import refmeister.display.elements.Interfaces.RefObserver;
 import refmeister.display.specialHandlers.ImageBuilder;
 import refmeister.display.specialHandlers.ResizeHelper;
-import refmeister.entity.Interfaces.Editable;
+import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Reference;
 import refmeister.entity.WorkingDirectory;
 
 import java.io.File;
@@ -38,7 +36,7 @@ import java.util.List;
  * @author DevSquad Supreme (Red Team)
  * @version 28 April 2018
  */
-public class GUIDisplay extends Application implements Displayer{
+public class GUIDisplay extends Application implements Displayer, RefObserver, OptionsObserver {
     /** Current Version of the RefMeister program. */
     private String VERSION = "1.0 alpha";
 
@@ -112,7 +110,7 @@ public class GUIDisplay extends Application implements Displayer{
         BorderPane root = new BorderPane();
 
         // Set up of the Branch Pane
-        BranchPane branchHistory = BranchPane.getInstance();
+        BranchPane branchHistory = BranchPane.getInstance(control);
         // TODO Comment out the testTitles. Only there for testing purposes.
         List<String> testTitles = new ArrayList<>();
         testTitles.add("Library Title");
@@ -120,10 +118,9 @@ public class GUIDisplay extends Application implements Displayer{
         testTitles.add("Theme Title");
         testTitles.add("Reference Title");
         testTitles.add("Notes/Arg/Idea Title");
-        branchHistory.updateBranchPane(testTitles);
-        branchHistory = BranchPane.getInstance();
-        branchHistory.setBackground(new Background(new BackgroundFill(
-                Color.DARKSLATEGREY, new CornerRadii(0), Insets.EMPTY)));
+        branchHistory.updateBranchPane();
+        branchHistory = BranchPane.getInstance(control);
+
         branchHistory.toFront();
         //branchHistory.prefHeightProperty().bind(root.heightProperty());
         branchHistory.setMinSize(200, 500);
@@ -253,13 +250,13 @@ public class GUIDisplay extends Application implements Displayer{
         updated.setCenter(centerPane);
 
         theScene.setRoot(updated);
-        theStage.setTitle("RefMeister : " + control.getBranch().get(control.getBranch().size()-1));
+        theStage.setTitle("RefMeister : " + control.getBranch().get(control.getBranch().size()-1).getTitle());
 
     }
 
     private Pane getBranchPane() {
-        BranchPane.getInstance().updateBranchPane(control.getBranch());
-        return BranchPane.getInstance();
+        BranchPane.getInstance(control).updateBranchPane();
+        return BranchPane.getInstance(control);
     }
 
     private Pane getTitleDescriptionPane(OptionsPane optPane) {
@@ -286,7 +283,7 @@ public class GUIDisplay extends Application implements Displayer{
     private Button makeNewButton() {
         Button newButton = new Button("Create New Library");
         newButton.setOnAction((ev) -> {
-            Dialog<Pair<String, String>> dialog = new Dialog();
+            Dialog<Pair<String, String>> dialog = new Dialog<>();
             dialog.setHeaderText("Enter Information");
             ButtonType done = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
             dialog.getDialogPane().getButtonTypes().addAll(done, ButtonType.CANCEL);
@@ -332,4 +329,84 @@ public class GUIDisplay extends Application implements Displayer{
         return newButton;
     }
 
+    public void selectOption(String option) {
+        switch (option) {
+//            case "create":
+//                String[] titleDescription = getTD();
+//                control.createLibrary(titleDescription[0], titleDescription[1]);
+//                break;
+            case "edit":
+                String[] newVals = editMenu();
+                control.sendFunc("edit", newVals);
+                break;
+//            case "move":
+//                //Commented code is attempted work-around for Relatables without parents.
+//
+//                if(control.getRatedRelatables() != null) { //this line checks if control.selected
+//                    String relates = selectFromRelatable();//is Relatable.
+//                    control.sendFunc("select", relates);
+//                }
+//                control.traverseUp();
+//                break;
+            case "sortAlphA":
+                control.sendFunc("sort", "a-z");
+                break;
+            case "sortAlphD":
+                control.sendFunc("sort", "z-a");
+                break;
+            case "delete":
+                control.delete();
+                break;
+            case "rate": //TODO make dialog for this
+//                String relateTitle = selectFromRelatable(); //replace this
+//                control.sendFunc("rate", "" + (getRating()), relateTitle);
+                break;
+//            case "view":
+//                control.viewDir();
+//                break;
+//            case "change": //TODO put in SLC
+//                control.sendFunc("change", get("Name of new Relation"));
+//                break;
+            case "add":
+//                control.sendFunc("add", getTD());
+                break;
+            case "addA":
+//                control.sendFunc("addA", getTD());
+                break;
+            case "addI":
+//                control.sendFunc("addI", getTD());
+                break;
+            case "generate": //TODO put in SLC
+//                String[] refData = getRefData();
+//                control.sendFunc("generate", refData);
+//                for(String s: refData) {
+//                    System.out.println(s);
+//                }
+//                break;
+//            case "moveTheme":
+//                control.sendFunc("moveTheme", selectFromTopics());
+//                break;
+            case "MLA":
+                System.out.println(((Reference)control.getSelected()).generateMLA());
+                break;
+            case "APA":
+                System.out.println(((Reference)control.getSelected()).generateAPA());
+                break;
+        }
+    }
+
+    private String[] get(String... descs) {
+        String[] result = new String[descs.length];
+        for(int i = 0; i < descs.length; i++) {
+            result[i] = get(descs[i]);
+        }
+        return result;
+    }
+
+    //TODO fix this for GUI(generify the Dialog Box used to create new library)
+    private String get(String desc) {
+//        System.out.print(desc + ": ");
+//        return scanIn.nextLine();
+        return null;
+    }
 }

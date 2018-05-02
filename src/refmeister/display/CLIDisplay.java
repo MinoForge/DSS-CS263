@@ -297,6 +297,9 @@ public class CLIDisplay implements Displayer {
      */
     public boolean functionality (String choice) {
         switch (choice) {
+            case "select":
+
+
             case "quit":
                 return true;
             case "load":

@@ -76,8 +76,9 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         theScene.getStylesheets().add(this.getClass().getResource("resources/titleScene.css")
                 .toExternalForm());
 
+        Button newButton = new Button("Create New Library");
         Button loadButton = new Button("Load Library");
-        Button newButton = makeNewButton();
+        createDialog(newButton, "Enter Library Information", "Title", "Description");
 
         Label welcome = new Label("Welcome To RefMeister");
         welcome.getStyleClass().clear();
@@ -95,7 +96,9 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         loadButton.setOnAction((ev) -> {
             this.selectLibrary();
 //            openApp();
-            update();
+            if(control.getSelected() != null) {
+                update();
+            }
         });
 
 
@@ -135,7 +138,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
         VBox centerBox = new VBox();
 
-        centerBox.getChildren().addAll( multiList);
+        centerBox.getChildren().addAll(multiList);
 
         root.setCenter(centerBox);
 
@@ -280,11 +283,11 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
     }
 
 
-    private Button makeNewButton() {
-        Button newButton = new Button("Create New Library");
+    private Button createDialog(Button newButton, String dialogLabel, String... labels) {
+
         newButton.setOnAction((ev) -> {
             Dialog<Pair<String, String>> dialog = new Dialog<>();
-            dialog.setHeaderText("Enter Information");
+            dialog.setHeaderText(dialogLabel);
             ButtonType done = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
             dialog.getDialogPane().getButtonTypes().addAll(done, ButtonType.CANCEL);
 
@@ -292,22 +295,29 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
             grid.setHgap(2);
             grid.setVgap(1);
             // grid.setPadding(new Insets(20, 150, 10,10));
+            RowConstraints[] rConstraints = new RowConstraints[labels.length];
+            TextField[] tFields = new TextField[labels.length];
+            double rowPercent = 100/labels.length;
 
-            TextField title1 = new TextField();
-            title1.setPromptText("Title");
-            TextField description = new TextField();
-            description.setPromptText("Description");
-            description.setMinSize(250, 100);
-
-            grid.add(new Text("Title:"), 0, 0,1 ,1);
-            grid.add(title1, 1,0, 1, 1);
-            grid.add(new Text("Description:"), 0, 1, 1, 1);
-            grid.add(description, 1, 1, 1, 1);
-
-            RowConstraints row1 = new RowConstraints();
-            row1.setPercentHeight(50);
-            RowConstraints row2 = new RowConstraints();
-            row2.setPercentHeight(50);
+            for(int i = 0; i < labels.length; i++) {
+                String text = labels[i];
+                grid.add(new Text(text + ": "), 0, i, 1, 1);
+                tFields[i] = new TextField();
+                tFields[i].setPromptText(text);
+                grid.add(tFields[i], 1, i, 1, 1);
+                rConstraints[i] = new RowConstraints();
+                rConstraints[i].setPercentHeight(rowPercent);
+            }
+//            TextField title1 = new TextField();
+////            title1.setPromptText();
+//            TextField description = new TextField();
+//            description.setPromptText("Description");
+//            description.setMinSize(250, 100);
+//
+//            grid.add(new Text("Title:"), 0, 0,1 ,1);
+//            grid.add(title1, 1,0, 1, 1);
+//            grid.add(new Text("Description:"), 0, 1, 1, 1);
+//            grid.add(description, 1, 1, 1, 1);
 
             ColumnConstraints col1 = new ColumnConstraints();
             col1.setPercentWidth(25);
@@ -315,30 +325,48 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
             col2.setPercentWidth(75);
 
             grid.getColumnConstraints().addAll(col1, col2);
-            grid.getRowConstraints().addAll(row1, row2);
+            grid.getRowConstraints().addAll(rConstraints);
 
             dialog.getDialogPane().setContent(grid);
 
             dialog.showAndWait();
 
+            String[] fieldResults = new String[tFields.length];
+            for(int i = 0; i < tFields.length; i++) {
+                fieldResults[i] = tFields[i].getText();
+            }
 
-            control.createLibrary(title1.getText(), description.getText());
+            dialogAction(dialogLabel, fieldResults);
+//            control.createLibrary(title1.getText(), description.getText());
+
             this.update();
 //            openApp();
         });
         return newButton;
     }
 
-    public void selectOption(String option) {
+    private void dialogAction(String option, String... params) {
+        if(params != null) {
+            switch(option) {
+                case "Enter Library Information":
+                    if(params[0] != null && !params[0].equals("")) {
+                        control.createLibrary(params[0], params[1]);
+                    }
+                    break;
+
+            }
+        }
+    }
+
+    public void selectOption(String option, Object... args) {
         switch (option) {
 //            case "create":
-//                String[] titleDescription = getTD();
-//                control.createLibrary(titleDescription[0], titleDescription[1]);
-//                break;
+
             case "edit":
-                String[] newVals = editMenu();
-                control.sendFunc("edit", newVals);
+                createDialog((Button)args[0], "Edit information", "Title", "Description");
                 break;
+//                control.sendFunc("edit", newVals);
+//                break;
 //            case "move":
 //                //Commented code is attempted work-around for Relatables without parents.
 //
@@ -408,5 +436,70 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 //        System.out.print(desc + ": ");
 //        return scanIn.nextLine();
         return null;
+    }
+
+    /**
+     * Prompts the user for input for a rating to give to a RelatedRelation.
+     * @return The float double that that user entered, or 3.
+     */
+//    public double setRating() {
+//
+////        String strChoice;
+////        double choice;
+////
+////        System.out.print("Please enter a real number x, such that 0<=x<=5 (If invalid input, "+
+////                "defaults to 3): ");
+//////        strChoice = scanIn.nextLine();
+////        try {
+//////            choice = Integer.parseInt(strChoice);
+//////            if (0 <= choice && choice <= 5) {
+////                return choice;
+//////            }
+////        } catch (NumberFormatException nfe) {
+////            FileManager.getInstance().log(FileManager.Severity.LOG, "User input invalid " +
+////                    "number, got: " + strChoice);
+////        }
+////        return 3;
+//    }
+
+    /**
+     * Scans in input from the user and sets it as a reference's data.
+     * @return the reference data
+     */
+    public String[] getRefData() {
+        String[] paperInfo = get("Enter section number > ", "Enter title of the paper > ",
+                "Enter publication > ", "Enter location > ",
+                "Enter publisher's name > ", "Enter publication date > ",
+                "Enter the page range > ", "Enter the URL > ",
+                "Enter the file path > ", "Enter the last accessed date > ");
+        ArrayList<String> authorInfo = new ArrayList<>();
+        boolean moreAuthors = true;
+        do {
+            String[] authorName = get("Enter the author(s) name [Last] > ",
+                    "Enter the author(s) name [MI]",
+                    "Enter the author(s) [First]");
+
+            for(int i = 0; i < authorName.length; i++) {
+                authorInfo.add(authorName[i]);
+                //todo if(authorName == null); moreAuthors = false;
+
+            }
+            moreAuthors = false;
+        } while(moreAuthors);
+
+        String[] authorArray = authorInfo.toArray(new String[0]);
+        String[] result = new String[paperInfo.length + authorArray.length];
+
+        int index = 0;
+        for(String s: paperInfo) {
+            result[index++] = s;
+        }
+        for(String s: authorArray) {
+            result[index++] = s;
+        }
+
+        // ^^ TODO PETER loop through the end to get all the others.
+        //  with <3 - Brandon & with </3 - Caleb
+        return result;
     }
 }

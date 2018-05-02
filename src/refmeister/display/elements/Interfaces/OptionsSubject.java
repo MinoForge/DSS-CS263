@@ -20,5 +20,5 @@ public interface OptionsSubject<T extends OptionsObserver> {
      * Notifies each observer in this subjects list of observers. This will
      * cause each observer to call their selectOption method.
      */
-    void notifyObservers(String option);
+    void notifyObservers(String option, Object... args);
 }

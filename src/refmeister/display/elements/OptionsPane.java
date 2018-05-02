@@ -57,8 +57,11 @@ public class OptionsPane extends HBox
 //            options[i] = new Button("", optPane.getIcon(optList.get(i)));
             switch(opt) {
                 case "edit":
-                    options[i].setOnMouseClicked(e -> notifyObservers("edit"));
-                    break;
+                    Button b = options[i];
+                    b.setOnMouseClicked(e -> notifyObservers("edit", b));
+//                    options[i].setOnMouseClicked(e -> notifyObservers("edit"));
+//                    break;
+
                 case "delete":
                     options[i].setOnMouseClicked(e -> notifyObservers("delete"));
                     break;
@@ -119,7 +122,7 @@ public class OptionsPane extends HBox
     }
 
     @Override
-    public void notifyObservers(String option) {
+    public void notifyObservers(String option, Object... args) {
         for(OptionsObserver oo: obs) {
             oo.selectOption(option);
         }

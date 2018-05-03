@@ -138,16 +138,17 @@ public class SingleLibraryController implements Controller{
      * Deletes a Library from memory and from the hard disk, and returns the view to the working
      * Directory.
      */
-    public void deleteRoot() {
+    public void deleteRoot() { //todo modified. file managing stuff could be broken now
+        System.out.println("DELETING LIBRARY");
         FileManager.getInstance().deleteFile();
-        viewDir();
+        setSelected(null);
     }
 
     /**
      * Calls helper functions to delete the currently selected entity.
      */
     public void delete() {
-        if(selected.getParent() == null) {
+        if(selected instanceof Library) {
             deleteRoot();
         } else {
             sendFunc("delete", null);
@@ -191,6 +192,9 @@ public class SingleLibraryController implements Controller{
                 }
                 break;
             case "add":
+                if(selected == null) {
+                    createLibrary(param[0], param[1]);
+                }
                 Entity ent = edSelected.createChild(param[0], param[1]);
                 setSelected(ent);
                 break;

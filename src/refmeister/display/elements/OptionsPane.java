@@ -5,10 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
-import refmeister.controllers.Controller;
 import refmeister.display.elements.Interfaces.*;
+import refmeister.entity.Interfaces.Displayable;
 import refmeister.entity.Interfaces.Entity;
 
 import java.util.ArrayList;
@@ -25,9 +23,11 @@ public class OptionsPane extends HBox
 
     private static OptionsPane optPane;
 
+    private Entity theEntity;
+
     private ArrayList<OptionsObserver> obs;
 
-    private OptionsPane(Button[] options) {
+    private OptionsPane(Button[] options, Entity entity) {
         super();
         if(options != null) {
             for (Button b : options) {
@@ -38,17 +38,20 @@ public class OptionsPane extends HBox
                 ("../resources/optionsPane.css").toExternalForm());
         this.getStyleClass().add("optionspane");
         optPane = this;
+        theEntity = entity;
+        obs = new ArrayList<OptionsObserver>();
     }
 
     public static OptionsPane getInstance() {
         if(optPane == null) {
-            return new OptionsPane(null);
+            return new OptionsPane(null, null);
         }
         return optPane;
     }
 
 
-    public void setOpts(List<String> optList) {
+    public void setOpts(Entity entity) {
+        List<String> optList = ((Displayable)entity).getFunc();
         Button[] options = new Button[optList.size()];
         for(int i = 0; i < optList.size(); i++) {
 
@@ -57,11 +60,8 @@ public class OptionsPane extends HBox
 //            options[i] = new Button("", optPane.getIcon(optList.get(i)));
             switch(opt) {
                 case "edit":
-                    Button b = options[i];
-                    b.setOnMouseClicked(e -> notifyObservers("edit", b));
-//                    options[i].setOnMouseClicked(e -> notifyObservers("edit"));
-//                    break;
-
+                    options[i].setOnAction(e -> notifyObservers("edit"));
+                    break;
                 case "delete":
                     options[i].setOnMouseClicked(e -> notifyObservers("delete"));
                     break;
@@ -100,9 +100,7 @@ public class OptionsPane extends HBox
 //        options[1] = new Button();
 //        options[1].getStyleClass().add("save-button");
 
-        optPane = new OptionsPane(options);
-
-
+        optPane = new OptionsPane(options, entity);
     }
 
     private Node getIcon(String iconName) {
@@ -123,6 +121,8 @@ public class OptionsPane extends HBox
 
     @Override
     public void notifyObservers(String option, Object... args) {
+        System.out.println(option);
+        System.out.println(obs.get(0));
         for(OptionsObserver oo: obs) {
             oo.selectOption(option);
         }

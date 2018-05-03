@@ -23,7 +23,9 @@ import refmeister.display.elements.Interfaces.OptionsObserver;
 import refmeister.display.elements.Interfaces.RefObserver;
 import refmeister.display.specialHandlers.ImageBuilder;
 import refmeister.display.specialHandlers.ResizeHelper;
+import refmeister.entity.Interfaces.Displayable;
 import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.Library;
 import refmeister.entity.Reference;
 import refmeister.entity.WorkingDirectory;
 
@@ -64,10 +66,19 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+
         this.theStage = primaryStage;
         theStage.setTitle("RefMeister");
         control = new SingleLibraryController(new WorkingDirectory());
 
+        update();
+
+
+
+    }
+
+    private Stage displayOnOpen() {
         VBox title = new VBox();
 
         FileManager.getInstance().start(true);
@@ -78,7 +89,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
         Button newButton = new Button("Create New Library");
         Button loadButton = new Button("Load Library");
-        createDialog(newButton, "Enter Library Information", "Title", "Description");
+        newButton.setOnMouseClicked(e -> selectOption("create"));
 
         Label welcome = new Label("Welcome To RefMeister");
         welcome.getStyleClass().clear();
@@ -105,56 +116,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
         theStage.setScene(theScene);
 
-        theStage.show();
-
-    }
-
-    private void openApp(){
-        BorderPane root = new BorderPane();
-
-        // Set up of the Branch Pane
-        BranchPane branchHistory = BranchPane.getInstance(control);
-        // TODO Comment out the testTitles. Only there for testing purposes.
-        List<String> testTitles = new ArrayList<>();
-        testTitles.add("Library Title");
-        testTitles.add("Topic Title");
-        testTitles.add("Theme Title");
-        testTitles.add("Reference Title");
-        testTitles.add("Notes/Arg/Idea Title");
-        branchHistory.updateBranchPane();
-        branchHistory = BranchPane.getInstance(control);
-
-        branchHistory.toFront();
-        //branchHistory.prefHeightProperty().bind(root.heightProperty());
-        branchHistory.setMinSize(200, 500);
-        branchHistory.prefHeightProperty().bind(root.heightProperty());
-        root.setLeft(branchHistory);
-
-        // Set up of the Information Pane
-        InformationPane multiList = InformationPane.getInstance();
-        multiList.createTabs("White", "Brown", "Black");
-        multiList.prefWidthProperty().bind(root.widthProperty());
-        multiList.prefHeightProperty().bind(root.heightProperty());
-
-        VBox centerBox = new VBox();
-
-        centerBox.getChildren().addAll(multiList);
-
-        root.setCenter(centerBox);
-
-        // Set up of the Menu Bar
-        root.setTop(getMenuBar());
-
-        //root.getChildren().add(mainWindow);
-
-        Scene currScene = new Scene(root, 800, 600);
-        theStage.hide();
-
-        theStage.setTitle("RefMeister");
-
-        theStage.setScene(currScene);
-        ResizeHelper.addResizeListener(theStage);
-        theStage.show();
+        return theStage;
     }
 
     @Override
@@ -237,24 +199,30 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
 
     public void update() {
-        BorderPane updated = new BorderPane();
-        updated.setLeft(getBranchPane());
+        if(control.getSelected() == null) {
+            theStage = displayOnOpen();
+            theStage.show();
+        } else {
 
-        updated.setTop(getMenuBar());
+            BorderPane updated = new BorderPane();
+            Pane branchP = getBranchPane();
+            updated.setLeft(branchP);
 
-        VBox centerPane = new VBox();
+            updated.setTop(getMenuBar());
 
-        OptionsPane optPane = getOptionsPane();
-        Pane titleDesc = getTitleDescriptionPane(optPane);
-        centerPane.getChildren().add(titleDesc);
+            VBox centerPane = new VBox();
 
-        Parent multiList = getMulti();
-        centerPane.getChildren().add(multiList);
-        updated.setCenter(centerPane);
+            OptionsPane optPane = getOptionsPane();
+            Pane titleDesc = getTitleDescriptionPane(optPane);
+            centerPane.getChildren().add(titleDesc);
 
-        theScene.setRoot(updated);
-        theStage.setTitle("RefMeister : " + control.getBranch().get(control.getBranch().size()-1).getTitle());
+            Parent multiList = getMulti();
+            centerPane.getChildren().add(multiList);
+            updated.setCenter(centerPane);
 
+            theScene.setRoot(updated);
+            theStage.setTitle("RefMeister : " + control.getBranch().get(control.getBranch().size() - 1).getTitle());
+        }
     }
 
     private Pane getBranchPane() {
@@ -268,8 +236,8 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
     }
 
     private OptionsPane getOptionsPane() {
-//        System.out.println(control.getFuncs()); //Returning properly
-        OptionsPane.getInstance().setOpts(control.getFuncs());
+        OptionsPane.getInstance().addObserver(this);
+        OptionsPane.getInstance().setOpts(control.getSelected());
         return OptionsPane.getInstance();
     }
 
@@ -283,66 +251,50 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
     }
 
 
-    private Button createDialog(Button newButton, String dialogLabel, String... labels) {
+    public String[] createDialog(String dialogLabel, String... labels) {
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setHeaderText(dialogLabel);
+        ButtonType done = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(done, ButtonType.CANCEL);
 
-        newButton.setOnAction((ev) -> {
-            Dialog<Pair<String, String>> dialog = new Dialog<>();
-            dialog.setHeaderText(dialogLabel);
-            ButtonType done = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
-            dialog.getDialogPane().getButtonTypes().addAll(done, ButtonType.CANCEL);
+        GridPane grid = new GridPane();
+        grid.setHgap(2);
+        grid.setVgap(1);
+        // grid.setPadding(new Insets(20, 150, 10,10));
+        RowConstraints[] rConstraints = new RowConstraints[labels.length];
+        TextField[] tFields = new TextField[labels.length];
+        double rowPercent = 100/labels.length;
 
-            GridPane grid = new GridPane();
-            grid.setHgap(2);
-            grid.setVgap(1);
-            // grid.setPadding(new Insets(20, 150, 10,10));
-            RowConstraints[] rConstraints = new RowConstraints[labels.length];
-            TextField[] tFields = new TextField[labels.length];
-            double rowPercent = 100/labels.length;
+        for(int i = 0; i < labels.length; i++) {
+            String text = labels[i];
+            grid.add(new Text(text + ": "), 0, i, 1, 1);
+            tFields[i] = new TextField();
+            tFields[i].setPromptText(text);
+            grid.add(tFields[i], 1, i, 1, 1);
+            rConstraints[i] = new RowConstraints();
+            rConstraints[i].setPercentHeight(rowPercent);
+        }
 
-            for(int i = 0; i < labels.length; i++) {
-                String text = labels[i];
-                grid.add(new Text(text + ": "), 0, i, 1, 1);
-                tFields[i] = new TextField();
-                tFields[i].setPromptText(text);
-                grid.add(tFields[i], 1, i, 1, 1);
-                rConstraints[i] = new RowConstraints();
-                rConstraints[i].setPercentHeight(rowPercent);
-            }
-//            TextField title1 = new TextField();
-////            title1.setPromptText();
-//            TextField description = new TextField();
-//            description.setPromptText("Description");
-//            description.setMinSize(250, 100);
-//
-//            grid.add(new Text("Title:"), 0, 0,1 ,1);
-//            grid.add(title1, 1,0, 1, 1);
-//            grid.add(new Text("Description:"), 0, 1, 1, 1);
-//            grid.add(description, 1, 1, 1, 1);
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPercentWidth(25);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPercentWidth(75);
 
-            ColumnConstraints col1 = new ColumnConstraints();
-            col1.setPercentWidth(25);
-            ColumnConstraints col2 = new ColumnConstraints();
-            col2.setPercentWidth(75);
+        grid.getColumnConstraints().addAll(col1, col2);
+        grid.getRowConstraints().addAll(rConstraints);
 
-            grid.getColumnConstraints().addAll(col1, col2);
-            grid.getRowConstraints().addAll(rConstraints);
+        dialog.getDialogPane().setContent(grid);
 
-            dialog.getDialogPane().setContent(grid);
+        dialog.showAndWait();
 
-            dialog.showAndWait();
+        String[] fieldResults = new String[tFields.length * 2];
+        int j = 0;
+        for(int i = 0; i < tFields.length * 2; i++, j++) {
+            fieldResults[i] = labels[j];
+            fieldResults[++i] = tFields[j].getText();
+        }
 
-            String[] fieldResults = new String[tFields.length];
-            for(int i = 0; i < tFields.length; i++) {
-                fieldResults[i] = tFields[i].getText();
-            }
-
-            dialogAction(dialogLabel, fieldResults);
-//            control.createLibrary(title1.getText(), description.getText());
-
-            this.update();
-//            openApp();
-        });
-        return newButton;
+        return fieldResults;
     }
 
     private void dialogAction(String option, String... params) {
@@ -350,32 +302,39 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
             switch(option) {
                 case "Enter Library Information":
                     if(params[0] != null && !params[0].equals("")) {
-                        control.createLibrary(params[0], params[1]);
+
+                        control.createLibrary(params[1], params[3]);
                     }
                     break;
-
+                case "Edit Information":
+                    for(int i = 0; i < params.length; i++) {
+                        if(params[i+1].equals("")) {
+                            params[i+1] = control.getAttributes()[(i+1)/2];
+                        }
+                        control.editAttribute(params[i++], params[i]);
+                    }
+                    break;
             }
         }
     }
 
     public void selectOption(String option, Object... args) {
+        String[] dResult = null;
         switch (option) {
-//            case "create":
-
+            case "create":
+                dResult = createDialog("Enter Library Information",
+                        "Title", "Description");
+                control.createLibrary(dResult[1], dResult[3]);
             case "edit":
-                createDialog((Button)args[0], "Edit information", "Title", "Description");
+                dResult = createDialog("Edit Information", "Title", "Description");
+                for(int i = 0; i < dResult.length; i++) {
+                    if(dResult[i+1].equals("")) {
+                        dResult[i+1] = control.getAttributes()[(i+1)/2];
+                    }
+                    control.editAttribute(dResult[i++], dResult[i]);
+                }
+                control.sendFunc("edit", dResult);
                 break;
-//                control.sendFunc("edit", newVals);
-//                break;
-//            case "move":
-//                //Commented code is attempted work-around for Relatables without parents.
-//
-//                if(control.getRatedRelatables() != null) { //this line checks if control.selected
-//                    String relates = selectFromRelatable();//is Relatable.
-//                    control.sendFunc("select", relates);
-//                }
-//                control.traverseUp();
-//                break;
             case "sortAlphA":
                 control.sendFunc("sort", "a-z");
                 break;
@@ -384,19 +343,15 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
                 break;
             case "delete":
                 control.delete();
+                update();
                 break;
             case "rate": //TODO make dialog for this
 //                String relateTitle = selectFromRelatable(); //replace this
 //                control.sendFunc("rate", "" + (getRating()), relateTitle);
                 break;
-//            case "view":
-//                control.viewDir();
-//                break;
-//            case "change": //TODO put in SLC
-//                control.sendFunc("change", get("Name of new Relation"));
-//                break;
             case "add":
-//                control.sendFunc("add", getTD());
+                dResult = createDialog("New Information", "Title", "Description");
+//                control.sendFunc("add", );
                 break;
             case "addA":
 //                control.sendFunc("addA", getTD());

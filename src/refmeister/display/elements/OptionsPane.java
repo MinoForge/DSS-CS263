@@ -155,12 +155,6 @@ public class OptionsPane extends TilePane implements OptionsSubject {
         b.setGraphic(hov);
     }
 
-    /*private Node getIcon(String iconName) {
-        Image icon = new Image("/resources/" + iconName + ".png");
-        Node result = new ImageView(icon);
-        return result;
-    }*/
-
     /**
      * Adds an observer to view this subject.
      * @param oo The OptionsObserver object to be added.

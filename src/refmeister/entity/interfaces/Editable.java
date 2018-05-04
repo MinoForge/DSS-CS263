@@ -215,9 +215,14 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      */
     public void sort(String order) {
         List<Entity> kids = getEntityChildren();
-        if(order.toLowerCase().equals("a-z")) {
-            kids.sort(Comparator.naturalOrder());
-        } else if(order.toLowerCase().equals("z-a")) {
+        if(order == null) {
+            kids = kids.subList(1, kids.size());
+        } else {
+            kids = kids.subList(0, kids.size());
+        }
+        if(order != null && order.toLowerCase().equals("a-z")) {
+            kids.sort(null);
+        } else if(order != null && order.toLowerCase().equals("z-a")) {
             kids.sort(Comparator.reverseOrder());
         }
         this.setChildren(kids);

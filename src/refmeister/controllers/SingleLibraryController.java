@@ -201,7 +201,7 @@ public class SingleLibraryController implements Controller{
                     System.out.println(param[0] + " :: " + param[1]);
                     ent = edSelected.createChild(param[0], param[1]);
                     setSelected(ent);
-
+                    sendFunc("Sort", new String[]{null});
 
                 }
                 break;

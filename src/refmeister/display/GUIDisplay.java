@@ -137,7 +137,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
      */
     @Override
     public void stop() {
-        System.out.println("Entering stop");
+//        System.out.println("Entering stop");
         FileManager.getInstance().stop();
     }
 
@@ -396,10 +396,10 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
                 update();
                 break;
             case "Sort A-Z":
-                control.sendFunc("Sort A-Z", "a-z");
+                control.sendFunc("Sort", "a-z");
                 break;
             case "Sort Z-A":
-                control.sendFunc("Sort Z-A", "z-a");
+                control.sendFunc("Sort", "z-a");
                 break;
             case "Delete":
                 control.delete();

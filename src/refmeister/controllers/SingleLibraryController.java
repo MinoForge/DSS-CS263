@@ -193,11 +193,16 @@ public class SingleLibraryController implements Controller{
                 }
                 break;
             case "add":
+                Entity ent;
                 if(selected == null) {
+//                    System.out.println("Hi there");
                     createLibrary(param[0], param[1]);
+                } else {
+                    System.out.println(param[0] + " :: " + param[1]);
+                    ent = edSelected.createChild(param[0], param[1]);
+                    setSelected(ent);
+
                 }
-                Entity ent = edSelected.createChild(param[0], param[1]);
-                setSelected(ent);
                 break;
             case "addA":
                 ent = null;

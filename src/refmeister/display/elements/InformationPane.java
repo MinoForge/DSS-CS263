@@ -56,9 +56,13 @@ public class InformationPane extends TabPane implements RefPane {
             String title = titles[i];
             Pane p = new VBox();
 
-            Node[] labels = new Label[children.size()];
+            Node[] labels = new Button[children.size()];
             for (int j = 1; j < labels.length; j++) { //Magic number. Do not change
-                labels[j] = new Label(childTitles.get(j));
+                labels[j] = new Button(childTitles.get(j));
+                Entity ent = children.get(j);
+                labels[j].setOnMouseClicked(e -> {
+                    control.sendFunc("Select", ent.getTitle());
+                });
                 p.getChildren().add(labels[j]);
             }
 

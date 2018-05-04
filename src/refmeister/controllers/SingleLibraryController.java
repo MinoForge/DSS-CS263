@@ -163,96 +163,99 @@ public class SingleLibraryController implements Controller{
      * @param param all the information that the user sends in.
      */
     public void sendFunc(String func, String[] param) {
-        FileManager.getInstance().getLibraryLock().lock();
-        switch (func) {
-            case "Select":
-                for(Entity e: selected.getEntityChildren()) {
-                    if(e.getTitle().equals(param[0])) {
-                        setSelected(e);
+        try {
+            FileManager.getInstance().getLibraryLock().lock();
+            switch (func) {
+                case "Select":
+                    for (Entity e : selected.getEntityChildren()) {
+                        if (e.getTitle().equals(param[0])) {
+                            setSelected(e);
+                        }
                     }
-                }
-            break;
-            case "Delete":
-                Entity temp = selected;
-                setSelected(temp.getParent());
-                selected.removeChild(temp);
-                break;
-            case "Sort":
-                selected.sort(param[0]);
-                break;
-            case "Rate":
-                if(selected instanceof Relatable) {
-                    Relatable rel = (Relatable)selected;
-                    List<Relation> listRelations = rel.getRelations();
-                    listRelations.removeIf(o -> !(o instanceof RatedRelation));
-                    listRelations.removeIf(o -> !(o.getEntity().getTitle().equals(param[1])));
-                    if(!listRelations.isEmpty()){
-                        RatedRelation r = (RatedRelation) listRelations.get(0);
-                        r.setRating(Float.parseFloat(param[0]));
+                    break;
+                case "Delete":
+                    Entity temp = selected;
+                    setSelected(temp.getParent());
+                    selected.removeChild(temp);
+                    break;
+                case "Sort":
+                    selected.sort(param[0]);
+                    break;
+                case "Rate":
+                    if (selected instanceof Relatable) {
+                        Relatable rel = (Relatable) selected;
+                        List<Relation> listRelations = rel.getRelations();
+                        listRelations.removeIf(o -> !(o instanceof RatedRelation));
+                        listRelations.removeIf(o -> !(o.getEntity().getTitle().equals(param[1])));
+                        if (!listRelations.isEmpty()) {
+                            RatedRelation r = (RatedRelation) listRelations.get(0);
+                            r.setRating(Float.parseFloat(param[0]));
+                        }
                     }
-                }
-                break;
-            case "Add":
-                Entity ent;
-                if(selected == null) {
+                    break;
+                case "Add":
+                    Entity ent;
+                    if (selected == null) {
 //                    System.out.println("Hi there");
-                    createLibrary(param[0], param[1]);
-                } else {
-                    System.out.println(param[0] + " :: " + param[1]);
-                    ent = edSelected.createChild(param[0], param[1]);
+                        createLibrary(param[0], param[1]);
+                    } else {
+                        System.out.println(param[0] + " :: " + param[1]);
+                        ent = edSelected.createChild(param[0], param[1]);
+                        setSelected(ent);
+
+
+                    }
+                    break;
+                case "Add Argument":
+                    ent = null;
+                    if (selected instanceof Reference) {//hard-code
+                        Reference rel = (Reference) selected;
+                        ent = (rel.createIdea(param[0], param[1]));
+                    }
                     setSelected(ent);
-
-
-                }
-                break;
-            case "Add Argument":
-                ent = null;
-                if(selected instanceof Reference) {//hard-code
-                    Reference rel = (Reference)selected;
-                    ent = (rel.createIdea(param[0], param[1]));
-                }
-                setSelected(ent);
-                break;
-            case "Add Idea":
-                ent = null;
-                if(selected instanceof Reference) {//hard-code
-                    Reference rel = (Reference)selected;
-                    ent = (rel.createIdea(param[0], param[1]));
-                }
-                setSelected(ent);
-                break;
-            case "Edit":
-                for(int i = 0; i < param.length; i++) {
-                    editAttribute(param[i], param[++i]);
-                }
+                    break;
+                case "Add Idea":
+                    ent = null;
+                    if (selected instanceof Reference) {//hard-code
+                        Reference rel = (Reference) selected;
+                        ent = (rel.createIdea(param[0], param[1]));
+                    }
+                    setSelected(ent);
+                    break;
+                case "Edit":
+                    for (int i = 0; i < param.length; i++) {
+                        editAttribute(param[i], param[++i]);
+                    }
 //                edSelected.setTitle(param[0]);
 //                edSelected.setDescription(param[1]);
-                break;
-            case "moveTheme":
-                temp = selected;
-                traverseUp();
-                traverseUp();
-                List<Entity> topics = selected.getEntityChildren();
-                for(Entity e: topics) {
-                    if(e.getTitle().equals(param[0])) {
-                        e.registerChild(temp);
+                    break;
+                case "moveTheme":
+                    temp = selected;
+                    traverseUp();
+                    traverseUp();
+                    List<Entity> topics = selected.getEntityChildren();
+                    for (Entity e : topics) {
+                        if (e.getTitle().equals(param[0])) {
+                            e.registerChild(temp);
+                        }
                     }
-                }
-                setSelected(temp);
-                break;
-            case "Change":
-                System.out.println("Not implemented yet. Will be able to reassign entities which are related," +
-                        "to be related to other entities.");
-                break;//TODO
-            case "Edit Reference Data":
-                int index = 0;
-                sendRefData(param);
-                System.out.println("Not implemented yet.");
-                break; //TODO
+                    setSelected(temp);
+                    break;
+                case "Change":
+                    System.out.println("Not implemented yet. Will be able to reassign entities which are related," +
+                            "to be related to other entities.");
+                    break;//TODO
+                case "Edit Reference Data":
+                    int index = 0;
+                    sendRefData(param);
+                    System.out.println("Not implemented yet.");
+                    break; //TODO
 
 
+            }
+        } finally {
+            FileManager.getInstance().getLibraryLock().unlock();
         }
-        FileManager.getInstance().getLibraryLock().unlock();
         notifyObservers(null);
     }
 

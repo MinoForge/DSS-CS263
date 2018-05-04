@@ -137,7 +137,6 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
      */
     @Override
     public void stop() {
-        System.out.println("Entering stop");
         FileManager.getInstance().stop();
     }
 
@@ -412,7 +411,11 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
                 if (dResult[1].equals("")) {
                     dResult[1] = "DEFAULT";
                 }
-                control.sendFunc("Add", dResult[1], dResult[3]);
+                try {
+                    control.sendFunc("Add", dResult[1], dResult[3]);
+                } catch (Exception e){
+                    FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, e);
+                }
                 break;
             case "Add Argument":
 //                control.sendFunc("Add Argument", getTD());

@@ -59,7 +59,7 @@ public final class FileManager {
     private FileManager(){
         libraryLock = new ReentrantLock();
         loggerLock = new ReentrantLock();
-        this.executor = new ScheduledThreadPoolExecutor(1);
+        this.executor = new ScheduledThreadPoolExecutor(2);
         this.fileName = "default";
         try {
             this.directory = new WorkingDirectory();
@@ -98,7 +98,8 @@ public final class FileManager {
             XMLManager man = new XMLManager(library);
             File autosave = new File(directory.getDirectory(), s);
             FileWriter fw = new FileWriter(autosave);
-            fw.write(man.getXML());
+            String xml = man.getXML();
+            fw.write(xml);
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,6 +113,9 @@ public final class FileManager {
      */
     public void start(boolean autosave){
         if(autosave) {
+            if(this.autosave != null){
+                this.autosave.cancel(false);
+            }
             this.autosave = this.executor.schedule(() -> {
                 this.saveWithName(fileName + "-autosave.rl");
             }, 30, TimeUnit.SECONDS);
@@ -139,9 +143,7 @@ public final class FileManager {
      */
     public synchronized void stop(){
         try {
-            //this.log(Severity.DEBUG, "Application stopped");
-
-            System.out.println("Attempting to stop. ");
+            this.log(Severity.DEBUG, "Application stopped");
 
             if(autosave != null) {
                 this.executor.execute(()->this.saveWithName(fileName + "-autosave.rl"));
@@ -149,12 +151,10 @@ public final class FileManager {
             }
 
             this.executor.shutdown();
-            System.out.println("System shutdown");
-            if(!this.executor.awaitTermination(10, TimeUnit.SECONDS)){
+            System.out.println(executor.getQueue());
+            if(!this.executor.awaitTermination(30, TimeUnit.SECONDS)){
+                System.err.println("Forcing Shutdown");
                 this.executor.shutdownNow();
-                System.err.println("System forcibly terminated.");
-            } else {
-                System.out.println("Closed nicely");
             }
         } catch (InterruptedException e) {
             System.err.println("Failed to terminate!");

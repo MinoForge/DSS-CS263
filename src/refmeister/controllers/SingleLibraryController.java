@@ -81,6 +81,7 @@ public class SingleLibraryController implements Controller{
         boolean loadSuccess = FileManager.getInstance().load(file);
         if(loadSuccess) {
             currentLib = FileManager.getInstance().getLibrary();
+            setSelected(currentLib);
         }
         return loadSuccess;
     }

@@ -116,6 +116,7 @@ public final class FileManager {
                 this.saveWithName(fileName + "-autosave.rl");
             }, 30, TimeUnit.SECONDS);
         }
+        log(Severity.DEBUG, "Application started with autosave=" + autosave);
         executor.setRemoveOnCancelPolicy(true);
     }
 
@@ -138,8 +139,12 @@ public final class FileManager {
      */
     public synchronized void stop(){
         try {
-            if(autosave != null)
+            this.log(Severity.DEBUG, "Application stopped");
+
+            if(autosave != null) {
+                this.executor.execute(()->this.saveWithName(fileName + "-autosave.rl"));
                 autosave.cancel(false);
+            }
 
             this.executor.shutdown();
 
@@ -149,7 +154,6 @@ public final class FileManager {
         } catch (InterruptedException e) {
             System.err.println("Failed to terminate!");
             this.executor.shutdownNow();
-
         }
     }
 

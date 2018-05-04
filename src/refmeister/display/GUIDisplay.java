@@ -326,6 +326,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
             Entity e = ((Editable) control.getSelected()).createChild("NULL", "NULL");
             tabName = control.getSelected().getEntityChildren().get(0).getClass().
                     getSimpleName() + "s"; //Stupid magic to get 'Topics' for instance,
+
             control.getSelected().removeChild(e);
         }
         InformationPane.getInstance(control).createTabs(tabName);
@@ -343,8 +344,8 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
     public String[] createDialog(String dialogLabel, String... labels) {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setHeaderText(dialogLabel);
-        ButtonType done = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(done, ButtonType.CANCEL);
+
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
         GridPane grid = new GridPane();
         grid.setHgap(2);
@@ -373,7 +374,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
         dialog.getDialogPane().setContent(grid);
 
-        dialog.showAndWait();
+        dialog.showAndWait(); //todo MAKE CANCEL WORK
 
         String[] fieldResults = new String[tFields.length * 2];
         int j = 0;
@@ -381,7 +382,6 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
             fieldResults[i] = labels[j];
             fieldResults[++i] = tFields[j].getText();
         }
-
         return fieldResults;
     }
 

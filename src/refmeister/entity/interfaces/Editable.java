@@ -6,9 +6,7 @@ import refmeister.entity.Argument;
 import refmeister.entity.Idea;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Editable is an abstract class which our other classes will implement. If the child class has a
@@ -215,17 +213,17 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      */
     public void sort(String order) {
         List<Entity> kids = getEntityChildren();
-        if(order == null) {
-            kids = kids.subList(1, kids.size());
-        } else {
-            kids = kids.subList(0, kids.size());
-        }
+        Entity temp = kids.remove(0);
+
         if(order != null && order.toLowerCase().equals("a-z")) {
             kids.sort(null);
         } else if(order != null && order.toLowerCase().equals("z-a")) {
             kids.sort(Comparator.reverseOrder());
         }
-        this.setChildren(kids);
+        List<Entity> sorted = new ArrayList<>();
+        sorted.add(temp);
+        sorted.addAll(kids);
+        this.setChildren(sorted);
     }
 
     /**

@@ -1,5 +1,12 @@
 package refmeister.display.elements.Interfaces;
 
+/**
+ * Models a subject in the Observer Design pattern. Implements the adding of
+ * observers to a list of observers, removing observers, and notifying the
+ * list of observers.
+ * @author DevSquadSupreme (Red Team)
+ * @version 3 May 2018
+ */
 public interface OptionsSubject<T extends OptionsObserver> {
 
     /**

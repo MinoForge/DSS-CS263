@@ -199,6 +199,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
             BorderPane updated = new BorderPane();
             Pane branchP = getBranchPane();
+            branchP.setMaxWidth(250);
             updated.setLeft(branchP);
 
             updated.setTop(getMenuBar());
@@ -215,6 +216,8 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
             theScene.setRoot(updated);
             theStage.setTitle("RefMeister : " + control.getBranch().get(control.getBranch().size() - 1).getTitle());
+
+            theStage.setMinWidth(1000);
         }
     }
 

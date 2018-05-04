@@ -39,6 +39,8 @@ public class TitleDescriptionPane extends VBox {
 
         this.title = new Label(attributes[0]);
         this.desc = new Label(attributes[1]);
+        this.title.setMaxWidth(250);
+
         if(attributes.length < 3){
             AnchorPane.setLeftAnchor(this.title, 5.0);
             if(this.option != null) {

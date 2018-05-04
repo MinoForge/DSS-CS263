@@ -57,8 +57,9 @@ public class OptionsPane extends HBox
 
             String opt = optList.get(i);
             options[i] = new Button(opt);
+            //options[i] = new Button("", optPane.getIcon(optList.get(i)));
             options[i].getStyleClass().add(".button");
- //           options[i] = new Button("", optPane.getIcon(optList.get(i)));
+
             switch(opt) {
                 case "edit":
                     options[i].setOnAction(e -> notifyObservers("edit"));
@@ -105,7 +106,7 @@ public class OptionsPane extends HBox
     }
 
     private Node getIcon(String iconName) {
-        Image icon = new Image("/resources/" + iconName + ".png");
+        Image icon = new Image("../resources/" + iconName + ".png");
         Node result = new ImageView(icon);
         return result;
     }

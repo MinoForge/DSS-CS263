@@ -62,7 +62,7 @@ public class XMLParser { //This is the second parser I've had to write this seme
         boolean relations = false;
         for(String tag : lines){// are aligned
             if(!(tag.startsWith("<") && tag.endsWith(">")))
-                throw new MalformedXMLException("Non-tag in parsed file");
+                throw new MalformedXMLException("Non-tag in parsed file: " + tag);
 
             if(isOpeningTag(tag)){
                 String tagType = getTagType(tag);

@@ -118,6 +118,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
             this.selectLibrary();
 //            openApp();
             if (control.getSelected() != null) {
+                theStage.hide();
                 update();
             }
         });
@@ -250,6 +251,9 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
             theStage.setTitle("RefMeister : " + control.getBranch().get(control.getBranch().size() - 1).getTitle());
 
             theStage.setMinWidth(1000);
+            if(!theStage.isShowing()){
+                theStage.show();
+            }
         }
     }
 

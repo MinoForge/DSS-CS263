@@ -82,12 +82,11 @@ public class OptionsPane extends TilePane implements OptionsSubject {
             options[i] = new Button(opt);
             options[i].setPrefWidth(Double.MAX_VALUE);
             options[i].setPrefHeight(Double.MAX_VALUE);
-
- //           options[i] = new Button("", optPane.getIcon(optList.get(i)));
+            options[i] = new Button("");
             switch(opt) {
                 case "Edit":
                     options[i].setOnAction(e -> notifyObservers("Edit"));
-//                    buttonImg(options[i], "../resources/toolPencil.png");
+                    buttonImg(options[i], "../resources/toolPencil.png");
                     break;
                 case "Delete":
                     options[i].setOnMouseClicked(e -> notifyObservers("Delete"));
@@ -105,15 +104,15 @@ public class OptionsPane extends TilePane implements OptionsSubject {
                     break;
                 case "Add":
                     options[i].setOnMouseClicked(e -> notifyObservers("Add"));
-//                    buttonImg(options[i], "../resources/DPAD.png");
+                    buttonImg(options[i], "../resources/DPAD.png");
                     break;
                 case "Add Argument":
                     options[i].setOnMouseClicked(e -> notifyObservers("Add Argument"));
-//                    buttonImg(options[i], "../resources/DPAD.png");
+                    buttonImg(options[i], "../resources/DPAD.png");
                     break;
                 case "Add Idea":
                     options[i].setOnMouseClicked(e -> notifyObservers("Add Idea"));
-//                    buttonImg(options[i], "../resources/DPAD.png");
+                    buttonImg(options[i], "../resources/DPAD.png");
                     break;
                 case "Edit Reference Data":
                     options[i].setOnMouseClicked(e -> notifyObservers("Edit Reference Data"));

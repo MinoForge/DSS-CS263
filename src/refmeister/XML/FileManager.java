@@ -218,8 +218,13 @@ public final class FileManager {
         XMLParser p = new XMLParser();
         libraryLock.lock();
         try(Scanner input = new Scanner(file)){
-            input.useDelimiter("\\Z");
-            String xml = input.next();
+            StringBuilder b = new StringBuilder();
+            input.useDelimiter("\n");
+            input.forEachRemaining(s -> {
+                b.append(s);
+                b.append("\n");
+            });
+            String xml = b.toString();
             this.library = p.loadLibrary(xml);
         } catch (FileNotFoundException|MalformedXMLException e) {
             log(Severity.MINOR_ERROR, e);

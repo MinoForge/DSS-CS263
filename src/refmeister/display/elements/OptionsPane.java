@@ -131,6 +131,12 @@ public class OptionsPane extends TilePane implements OptionsSubject {
         optPane = new OptionsPane(options, entity);
     }
 
+    /**
+     * Updates the image if a mouse hovers over the button
+     * @param b The button whose image is being updated.
+     * @param old The old image to be replaced.
+     * @param newImg The new image to be displayed.
+     */
     private void imageHover(Button b, String old, String newImg){
         ImageView norm = new ImageView(new Image(getClass().getResourceAsStream(old), 25,25,
                 true, false));
@@ -141,6 +147,11 @@ public class OptionsPane extends TilePane implements OptionsSubject {
         b.setOnMouseExited((ev) -> b.setGraphic(norm));
     }
 
+    /**
+     * Retrieves an image from memory.
+     * @param b The button who contains the image.
+     * @param img The image to retrieve.
+     */
     private void buttonImg(Button b, String img){
         ImageView hov = new ImageView(new Image(getClass().getResourceAsStream(img), 25, 25,
                 true, false));

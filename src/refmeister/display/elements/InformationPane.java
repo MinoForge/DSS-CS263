@@ -24,18 +24,16 @@ import java.util.List;
 public class InformationPane extends TabPane implements RefPane {
     /** Holds an instance of this InformationPane. */
     private static InformationPane instance;
+    /** Holds the instance of the controller. */
+    private Controller control;
 
     /**
      * Default Constructor that calls the Constructor of a TabPane.
      */
-    private InformationPane(){
-    private Controller control;
-
     private InformationPane(Controller control){
         super();
         this.control = control;
     }
-
 
     /**
      * Creates the tabs for the currently selected entity object. Each tab
@@ -83,6 +81,10 @@ public class InformationPane extends TabPane implements RefPane {
         return instance;
     }
 
+    /**
+     * Returns the controller instance of this InformationPane.
+     * @return The controller instance of this InformationPane.
+     */
     @Override
     public Controller getControl() {
         return control;

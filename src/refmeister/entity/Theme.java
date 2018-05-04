@@ -180,15 +180,11 @@ public class Theme extends Editable {
     @Override
     public List<String> getFunc(){
         List<String> funcs = new ArrayList<>();
-        funcs.add("delete");
-        funcs.add("edit");
-        funcs.add("add");
-        funcs.add("sortAlphA");
-        funcs.add("sortAlphD");
-        funcs.add("view");
-        funcs.add("move");
-        funcs.add("moveTheme");
-		funcs.add("quit");
+        funcs.add("Delete");
+        funcs.add("Edit");
+        funcs.add("Add");
+        funcs.add("Sort A-Z");
+        funcs.add("Sort Z-A");
 
         return funcs;
     }
@@ -209,7 +205,7 @@ public class Theme extends Editable {
 	 * Removes this theme from it's parents list of children.
 	 */
 	public void delete() {
-        this.parent.removeChild(this);
+        this.getParent().removeChild(this);
     }
 
 

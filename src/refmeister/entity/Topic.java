@@ -127,11 +127,8 @@ public class Topic extends Editable implements Comparable<Entity> {
         options.add("Delete Topic");
         options.add("Edit Topic");
         options.add("Add Theme");
-        options.add("View Directory");
         options.add("Sort Themes A-Z");
         options.add("Sort Themes Z-A");
-        options.add("Move Up");
-        options.add("Quit");
         for(Entity child : children){
             options.add(child.getTitle());
         }
@@ -144,14 +141,11 @@ public class Topic extends Editable implements Comparable<Entity> {
      */
     public List<String> getFunc(){
         List<String> funcs = new ArrayList<>();
-        funcs.add("delete");
-        funcs.add("edit");
-        funcs.add("add");
-        funcs.add("view");
-        funcs.add("sortAlphA");
-        funcs.add("sortAlphD");
-        funcs.add("move");
-        funcs.add("quit");
+        funcs.add("Delete");
+        funcs.add("Edit");
+        funcs.add("Add");
+        funcs.add("Sort A-Z");
+        funcs.add("Sort Z-A");
 
         return funcs;
     }

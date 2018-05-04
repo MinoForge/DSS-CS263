@@ -113,8 +113,6 @@ public class Note extends Editable {
         List<String> options = new ArrayList<>();
         options.add("Delete Note");
         options.add("Edit Note");
-        options.add("View Directory");
-        options.add("Move Up");
         return options;
     }
 
@@ -133,11 +131,8 @@ public class Note extends Editable {
     @Override
     public List<String> getFunc(){
         List<String> funcs = new ArrayList<>();
-        funcs.add("delete");
-        funcs.add("edit");
-        funcs.add("view");
-        funcs.add("move");
-		funcs.add("quit");
+        funcs.add("Delete");
+        funcs.add("Edit");
 
         return funcs;
     }

@@ -8,16 +8,22 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * A Pane that contains the title, description, and options buttons for the
+ * entity we are currently looking at.
+ * @author DevSquadSupreme (Red Team)
+ * @version 4 May 2018
+ */
 public class TitleDescriptionPane extends VBox {
-
+    /** The title of the current entity. */
     private Label title;
-
+    /** The description of the current entity. */
     private Label desc;
-
+    /** The rating of the current description if it has one. */
     private Label rating;
-
+    /** The list of options buttons that each entity has. */
     private OptionsPane option;
-
+    /** The current instance of a TitleDescriptionPane. */
     private static TitleDescriptionPane obj;
 
     /**
@@ -27,18 +33,32 @@ public class TitleDescriptionPane extends VBox {
         this(null, "TITLE", "DESCRIPTION");
     }
 
+    /**
+     * Constructor that gets passed the list of options buttons that can be
+     * used by the current entity.
+     * @param option The OptionsPane that contains all of the options that
+     *               are open to this entity.
+     */
     private TitleDescriptionPane(OptionsPane option){
         this(option, "TITLE","DESCRIPTION");
     }
 
-
-
+    /**
+     * Constructor that gets passed the list of options buttons that can be
+     * used by the current entity and a list of the attributes that the
+     * entity has.
+     * @param option The OptionsPane that contains all of the options that
+     *               are open to this entity.
+     * @param attributes The list of attributes that the entity has.
+     */
     private TitleDescriptionPane(OptionsPane option ,String... attributes) {
         AnchorPane anchor = new AnchorPane();
         this.option = option;
 
         this.title = new Label(attributes[0]);
         this.desc = new Label(attributes[1]);
+        this.title.setMaxWidth(250);
+
         if(attributes.length < 3){
             AnchorPane.setLeftAnchor(this.title, 5.0);
             if(this.option != null) {
@@ -50,7 +70,6 @@ public class TitleDescriptionPane extends VBox {
             this.getChildren().addAll(anchor, this.desc);
         }
         else {
-
             this.rating = new Label(attributes[2]);
             HBox left = new HBox();
             left.getChildren().addAll(title, rating);
@@ -61,7 +80,6 @@ public class TitleDescriptionPane extends VBox {
             this.getChildren().addAll(anchor, this.desc);
         }
         obj = this;
-
     }
 
 
@@ -80,6 +98,12 @@ public class TitleDescriptionPane extends VBox {
         return obj;
     }
 
+    /**
+     * Sets the attributes of the entity that is currently being displayed by
+     * the TitleDescriptionPane.
+     * @param attributes The string array containing the new attribute values.
+     * @param options The OptionsPane containing the new options values.
+     */
     public void setTitleDescPane(String[] attributes, OptionsPane options) {
         for(int i = 0; i < attributes.length; i++){
             if(i == 0)

@@ -94,18 +94,7 @@ public class WorkingDirectory implements Displayable {
 	@Override
 	public List<String> listOptions() {
 		List<String> options = new ArrayList<>();
-//		if(workingDir.getParentFile().exists()) { TODO
-//		    options.add("Parent Directory");
-//        }
         File[] allFiles = workingDir.listFiles();
-//        for(File f: allFiles) {
-//		    if (f.isDirectory()) {
-//		        options.add(f.getName());
-//            }
-//            if (f.isFile() && f.getName().endsWith(".rl")) {
-//		        options.add(f.getName());
-//            }
-//        }
 
         options.add("Create Library");
         options.add("Quit");
@@ -120,8 +109,8 @@ public class WorkingDirectory implements Displayable {
      */
 	public List<String> getFunc() {
 		List<String> funcs = new ArrayList<String>();
-		funcs.add("create");
-		funcs.add("quit");
+		funcs.add("Create");
+		funcs.add("Quit");
 		return funcs;
 	}
 

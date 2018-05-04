@@ -168,6 +168,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * @return  this object
      */
     public Entity removeChild(Entity e){
+
         if(e.getEntityChildren().isEmpty()){
             if(e instanceof Argument){
                 //((Argument) e).removeRelation();
@@ -179,9 +180,10 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
             return this;
         }
         for(Entity t : e.getEntityChildren()){
-            removeChild(t);
+            t.delete();
         }
         e.getEntityChildren().clear();
+        children.remove(e);
         return this;
     }
     /**

@@ -8,6 +8,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,21 +26,22 @@ public class InformationPane extends TabPane {
         ArrayList<Node> panes = new ArrayList<>();
 
         Color[] colors = {Color.KHAKI, Color.CHOCOLATE, Color.BROWN.darker().darker()};
-
-        for(int i = 0; i < titles.length; i++){
-            String title = titles[i];
+        System.out.println(Arrays.toString(titles));
+        this.getTabs().clear();
+        for(int i = 0; i < 3; i++){
+            String title = "Penis";
             Pane p = new Pane();
 
-//            //todo remove penis
-//            Ellipse e = new Ellipse(45, 80, 10, 50);
-//            e.setFill(colors[i]);
-//            p.getChildren().addAll(new Circle(30, 120, 15, colors[i]), new Circle(60,120, 15,
-//                            colors[i]), e);
-//            Tab t = new Tab(title, p);
-//            t.setClosable(false);
-//            this.getTabs().add(t);
-//            //p.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
-//            panes.add(p);
+            //todo remove penis
+            Ellipse e = new Ellipse(45, 80, 10, 50);
+            e.setFill(colors[i]);
+            p.getChildren().addAll(new Circle(30, 120, 15, colors[i]), new Circle(60,120, 15,
+                            colors[i]), e);
+            Tab t = new Tab(title, p);
+            t.setClosable(false);
+            this.getTabs().add(t);
+            //p.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
+            panes.add(p);
 
         }
 

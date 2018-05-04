@@ -71,7 +71,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         this.theStage = primaryStage;
         theStage.setTitle("RefMeister");
         control = new SingleLibraryController(new WorkingDirectory());
-
+        control.addObserver(this);
         update();
 
 
@@ -260,7 +260,6 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         GridPane grid = new GridPane();
         grid.setHgap(2);
         grid.setVgap(1);
-        // grid.setPadding(new Insets(20, 150, 10,10));
         RowConstraints[] rConstraints = new RowConstraints[labels.length];
         TextField[] tFields = new TextField[labels.length];
         double rowPercent = 100/labels.length;
@@ -336,7 +335,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
                     }
                     control.editAttribute(dResult[i++], dResult[i]);
                 }
-                control.sendFunc("edit", dResult);
+                update();
                 break;
             case "sortAlphA":
                 control.sendFunc("sort", "a-z");
@@ -354,7 +353,10 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
                 break;
             case "add":
                 dResult = createDialog("New Information", "Title", "Description");
-//                control.sendFunc("add", );
+                if(dResult[1].equals("")) {
+                    dResult[1] = "DEFAULT";
+                }
+                control.sendFunc("add", dResult[1], dResult[3]);
                 break;
             case "addA":
 //                control.sendFunc("addA", getTD());

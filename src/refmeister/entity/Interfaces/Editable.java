@@ -178,10 +178,10 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
             e.setParent(null);
             return this;
         }
-        for(Entity t : children){
+        for(Entity t : e.getEntityChildren()){
             removeChild(t);
         }
-        children.clear();
+        e.getEntityChildren().clear();
         return this;
     }
     /**

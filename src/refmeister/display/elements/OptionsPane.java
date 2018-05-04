@@ -189,8 +189,8 @@ public class OptionsPane extends TilePane implements OptionsSubject {
      */
     @Override
     public void notifyObservers(String option, Object... args) {
-        System.out.println(option);
-        System.out.println(obs.get(0));
+//        System.out.println(option);
+//        System.out.println(obs.get(0));
         for(OptionsObserver oo: obs) {
             oo.selectOption(option);
         }

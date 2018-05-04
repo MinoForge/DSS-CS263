@@ -16,20 +16,31 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by wesle on 4/28/2018
+ * Pane that models the tabs to show the children of the currently selected
+ * entity object.
+ * @author DevSquad Supreme (Red Team)
+ * @version 4 May 2018
  */
 public class InformationPane extends TabPane implements RefPane {
+    /** Holds an instance of this InformationPane. */
     private static InformationPane instance;
-
+    /** Holds the instance of the controller. */
     private Controller control;
 
+    /**
+     * Default Constructor that calls the Constructor of a TabPane.
+     */
     private InformationPane(Controller control){
         super();
         this.control = control;
     }
 
-
-
+    /**
+     * Creates the tabs for the currently selected entity object. Each tab
+     * represents a child of that entity object.
+     * @param titles The titles of all of the entities children.
+     * @return A list of the tabs to add.
+     */
     public List<Node> createTabs(String... titles){
         ArrayList<Node> panes = new ArrayList<>();
 
@@ -59,6 +70,10 @@ public class InformationPane extends TabPane implements RefPane {
         return panes;
     }
 
+    /**
+     * Returns the current instance of this InformationPane.
+     * @return The current instance of this InformationPane.
+     */
     public static InformationPane getInstance(Controller control) {
         if(instance == null) {
             instance = new InformationPane(control);
@@ -66,6 +81,10 @@ public class InformationPane extends TabPane implements RefPane {
         return instance;
     }
 
+    /**
+     * Returns the controller instance of this InformationPane.
+     * @return The controller instance of this InformationPane.
+     */
     @Override
     public Controller getControl() {
         return control;

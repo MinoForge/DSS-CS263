@@ -28,16 +28,15 @@ import java.util.List;
 public class BranchPane extends VBox implements RefSubject, RefPane {
     /** Holds the single instance of this branch pane. */
     private static BranchPane obj;
-
+    /** List of observers that are observing this BranchPane. */
     private ArrayList<RefObserver> obs;
-
+    /** A reference to the controller. */
     private Controller control;
-
-
 
     /**
      * Constructor in which a string array of titles are passed in. Spacing
      * and alignment are also set up properly.
+     * @param control The controller to be assigned to the control field.
      */
     private BranchPane(Controller control) {
         this.control = control;
@@ -81,7 +80,11 @@ public class BranchPane extends VBox implements RefSubject, RefPane {
         return buttons;
     }
 
-
+    /**
+     * Adds a
+     * @param ro The RefObserver object to be added.
+     * @return
+     */
     @Override
     public boolean addObserver(RefObserver ro) {
         if(!obs.contains(ro)) {
@@ -91,16 +94,29 @@ public class BranchPane extends VBox implements RefSubject, RefPane {
         return false;
     }
 
+    /**
+     *
+     * @param ro The RefObserver object to be removed.
+     * @return
+     */
     @Override
     public boolean removeObserver(RefObserver ro) {
         return obs.remove(ro);
     }
 
+    /**
+     * TODO
+     * @param buttonPressed
+     */
     @Override
     public void notifyObservers(Object buttonPressed) {
 
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public Controller getControl() {
         return control;
     }

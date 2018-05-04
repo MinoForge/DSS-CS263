@@ -23,13 +23,20 @@ import java.util.List;
  * @version 28 April 2018
  */
 public class OptionsPane extends TilePane implements OptionsSubject {
-
+    /** Holds the instance of the current OptionsPane. */
     private static OptionsPane optPane;
-
+    /** The entity for which we are displaying the options it can have. */
     private Entity theEntity;
-
+    /** List of the observers that will be notified by changes in this
+     * subject. */
     private ArrayList<OptionsObserver> obs;
 
+    /**
+     * Constructor for an OptionsPane that gets a list of buttons
+     * representing the options and the entity to which those options belong.
+     * @param options List of buttons representing the options.
+     * @param entity Entity to which the passed options belong.
+     */
     private OptionsPane(Button[] options, Entity entity) {
         super();
         if(options != null) {
@@ -50,6 +57,10 @@ public class OptionsPane extends TilePane implements OptionsSubject {
         obs = new ArrayList<OptionsObserver>();
     }
 
+    /**
+     * Returns the current instance of this OptionsPane.
+     * @return The current instance of this OptionsPane.
+     */
     public static OptionsPane getInstance() {
         if(optPane == null) {
             return new OptionsPane(null, null);
@@ -57,7 +68,11 @@ public class OptionsPane extends TilePane implements OptionsSubject {
         return optPane;
     }
 
-
+    /**
+     * Allows the user to select an option and notifies the observers based
+     * on the option selected.
+     * @param entity The entity whose options we are able to select.
+     */
     public void setOpts(Entity entity) {
         List<String> optList = ((Displayable)entity).getFunc();
         Button[] options = new Button[optList.size()];
@@ -111,15 +126,15 @@ public class OptionsPane extends TilePane implements OptionsSubject {
                     break;
             }
         }
-//TODO put all these styles inside the switch statement
-//        options[0] = new Button();
-//        options[0].getStyleClass().add("delete-button");
-//        options[1] = new Button();
-//        options[1].getStyleClass().add("save-button");
-
         optPane = new OptionsPane(options, entity);
     }
 
+    /**
+     * Updates the image if a mouse hovers over the button
+     * @param b The button whose image is being updated.
+     * @param old The old image to be replaced.
+     * @param newImg The new image to be displayed.
+     */
     private void imageHover(Button b, String old, String newImg){
         ImageView norm = new ImageView(new Image(getClass().getResourceAsStream(old), 25,25,
                 true, false));
@@ -130,28 +145,48 @@ public class OptionsPane extends TilePane implements OptionsSubject {
         b.setOnMouseExited((ev) -> b.setGraphic(norm));
     }
 
+    /**
+     * Retrieves an image from memory.
+     * @param b The button who contains the image.
+     * @param img The image to retrieve.
+     */
     private void buttonImg(Button b, String img){
         ImageView hov = new ImageView(new Image(getClass().getResourceAsStream(img), 25, 25,
                 true, false));
         b.setGraphic(hov);
     }
 
-    private Node getIcon(String iconName) {
+    /*private Node getIcon(String iconName) {
         Image icon = new Image("/resources/" + iconName + ".png");
         Node result = new ImageView(icon);
         return result;
-    }
+    }*/
 
+    /**
+     * Adds an observer to view this subject.
+     * @param oo The OptionsObserver object to be added.
+     * @return true if added, false otherwise.
+     */
     @Override
     public boolean addObserver(OptionsObserver oo) {
         return obs.add(oo);
     }
 
+    /**
+     * Removes an observer from viewing this subject.
+     * @param oo The OptionsObserver object to be removed.
+     * @return true if removed, false otherwise.
+     */
     @Override
     public boolean removeObserver(OptionsObserver oo) {
         return obs.remove(oo);
     }
 
+    /**
+     * Notifies each observer that is viewing this subject.
+     * @param option The string of the option we are selecting.
+     * @param args
+     */
     @Override
     public void notifyObservers(String option, Object... args) {
         System.out.println(option);

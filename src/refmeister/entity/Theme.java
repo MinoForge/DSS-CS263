@@ -209,7 +209,7 @@ public class Theme extends Editable {
 	 * Removes this theme from it's parents list of children.
 	 */
 	public void delete() {
-        this.parent.removeChild(this);
+        this.getParent().removeChild(this);
     }
 
 

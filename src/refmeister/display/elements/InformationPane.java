@@ -3,9 +3,13 @@ package refmeister.display.elements;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
+import refmeister.controllers.Controller;
+import refmeister.display.elements.Interfaces.RefPane;
+import refmeister.entity.interfaces.Entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,43 +18,56 @@ import java.util.List;
 /**
  * Created by wesle on 4/28/2018
  */
-public class InformationPane extends TabPane {
+public class InformationPane extends TabPane implements RefPane {
     private static InformationPane instance;
 
-    private InformationPane(){
+    private Controller control;
+
+    private InformationPane(Controller control){
         super();
+        this.control = control;
     }
+
 
 
     public List<Node> createTabs(String... titles){
         ArrayList<Node> panes = new ArrayList<>();
 
-        Color[] colors = {Color.KHAKI, Color.CHOCOLATE, Color.BROWN.darker().darker()};
-        System.out.println(Arrays.toString(titles));
-        this.getTabs().clear();
-        for(int i = 0; i < 3; i++){
-            String title = "Penis";
-            Pane p = new Pane();
+        instance.getTabs().clear();
 
-            //todo remove penis
-            Ellipse e = new Ellipse(45, 80, 10, 50);
-            e.setFill(colors[i]);
-            p.getChildren().addAll(new Circle(30, 120, 15, colors[i]), new Circle(60,120, 15,
-                            colors[i]), e);
+
+        List<Entity> children = control.getSelected().getEntityChildren();
+        List<String> childTitles = new ArrayList<>();
+        for(Entity e: children) {
+            childTitles.add(e.getTitle());
+        }
+        for(int i = 0; i < titles.length; i++) {
+            String title = titles[i];
+            Pane p = new VBox();
+
+            Node[] labels = new Label[children.size()];
+            for (int j = 1; j < labels.length; j++) { //Magic number. Do not change
+                labels[j] = new Label(childTitles.get(j));
+                p.getChildren().add(labels[j]);
+            }
+
             Tab t = new Tab(title, p);
+            instance.getTabs().add(t);
             t.setClosable(false);
-            this.getTabs().add(t);
-            //p.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
-            panes.add(p);
-
         }
 
         return panes;
     }
 
-    public static InformationPane getInstance() {
-        if(instance == null)
-            instance = new InformationPane();
+    public static InformationPane getInstance(Controller control) {
+        if(instance == null) {
+            instance = new InformationPane(control);
+        }
         return instance;
+    }
+
+    @Override
+    public Controller getControl() {
+        return control;
     }
 }

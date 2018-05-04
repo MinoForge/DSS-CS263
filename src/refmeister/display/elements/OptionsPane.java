@@ -72,7 +72,7 @@ public class OptionsPane extends TilePane implements OptionsSubject {
             switch(opt) {
                 case "edit":
                     options[i].setOnAction(e -> notifyObservers("edit"));
-                    buttonImg(options[i], "../resources/toolPencil.png");
+//                    buttonImg(options[i], "../resources/toolPencil.png");
                     break;
                 case "delete":
                     options[i].setOnMouseClicked(e -> notifyObservers("delete"));
@@ -90,15 +90,15 @@ public class OptionsPane extends TilePane implements OptionsSubject {
                     break;
                 case "add":
                     options[i].setOnMouseClicked(e -> notifyObservers("add"));
-                    buttonImg(options[i], "../resources/DPAD.png");
+//                    buttonImg(options[i], "../resources/DPAD.png");
                     break;
                 case "addA":
                     options[i].setOnMouseClicked(e -> notifyObservers("addA"));
-                    buttonImg(options[i], "../resources/DPAD.png");
+//                    buttonImg(options[i], "../resources/DPAD.png");
                     break;
                 case "addI":
                     options[i].setOnMouseClicked(e -> notifyObservers("addI"));
-                    buttonImg(options[i], "../resources/DPAD.png");
+//                    buttonImg(options[i], "../resources/DPAD.png");
                     break;
                 case "generate":
                     options[i].setOnMouseClicked(e -> notifyObservers("generate"));

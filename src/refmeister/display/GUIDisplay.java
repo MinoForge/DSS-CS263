@@ -22,6 +22,8 @@ import refmeister.display.elements.Interfaces.RefObserver;
 import refmeister.display.specialhandlers.ImageBuilder;
 import refmeister.entity.Reference;
 import refmeister.entity.WorkingDirectory;
+import refmeister.entity.interfaces.Editable;
+import refmeister.entity.interfaces.Entity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -76,7 +78,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
         FileManager.getInstance().start(true);
 
-        theScene = new Scene(title, 750, 250);
+        theScene = new Scene(title, 800, 600);
         theScene.getStylesheets().add(this.getClass().getResource("resources/titleScene.css")
                 .toExternalForm());
 
@@ -236,11 +238,18 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
     private Parent getMulti() {
         String tabName = "";
-        if(control.getSelected().getEntityChildren() != null && control.getSelected().getEntityChildren().size() > 0) {
-            tabName = control.getSelected().getEntityChildren().get(0).getClass().getSimpleName();
+        if(control.getSelected().getEntityChildren() != null &&
+                control.getSelected().getEntityChildren().size() > 0) {
+            tabName = control.getSelected().getEntityChildren().get(0).getClass().getSimpleName()
+                    + "s";
+        } else {
+            Entity e = ((Editable)control.getSelected()).createChild("NULL", "NULL");
+            tabName = control.getSelected().getEntityChildren().get(0).getClass().
+                    getSimpleName() + "s"; //Stupid magic to get 'Topics' for instance,
+            control.getSelected().removeChild(e);
         }
-        InformationPane.getInstance().createTabs(tabName);
-        return InformationPane.getInstance();
+        InformationPane.getInstance(control).createTabs(tabName);
+        return InformationPane.getInstance(control);
     }
 
 
@@ -318,7 +327,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
                 dResult = createDialog("Enter Library Information",
                         "Title", "Description");
                 control.createLibrary(dResult[1], dResult[3]);
-                update();
+//                update();
                 break;
             case "edit":
                 dResult = createDialog("Edit Information", "Title", "Description");

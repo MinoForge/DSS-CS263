@@ -1,4 +1,4 @@
-package refmeister.entity.Interfaces;
+package refmeister.entity.interfaces;
 
 /**
  * Represents a relation that is weighted.

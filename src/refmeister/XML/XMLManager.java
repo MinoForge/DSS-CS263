@@ -1,6 +1,6 @@
 package refmeister.XML;
 
-import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.interfaces.Entity;
 import refmeister.entity.Library;
 
 import java.util.*;

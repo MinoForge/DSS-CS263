@@ -2,8 +2,8 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.Relatable;
-import refmeister.entity.Interfaces.Relation;
+import refmeister.entity.interfaces.Relatable;
+import refmeister.entity.interfaces.Relation;
 
 import java.util.Collections;
 import java.util.List;

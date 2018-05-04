@@ -1,17 +1,17 @@
-.delete-button{
-    -fx-background-color: transparent;
-    -fx-background-image: url('../trashcan.png');
+.button {
+    -fx-text-fill: darkslategray;
+
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+    -fx-border-color: darkslategray;
+    -fx-border-radius: 4 4 4 4;
+    -fx-padding: 5 15 5 15;
+}
+.button:hover{
+    -fx-underline: true;
+    -fx-background-color: derive(#2F4F4F, 2500%);
 }
 
-.delete-button:hover {
-    -fx-background-color: transparent;
-    -fx-background-image: url('../trashcanOpen.png');
-}
-
-.save-button{
-    -fx-background-color: transparent;
-    -fx-background-image: url('../save.png');
-}
 
 .optionspane {
     -fx-alignment: center;

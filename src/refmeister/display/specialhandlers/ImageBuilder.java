@@ -1,11 +1,10 @@
-package refmeister.display.specialHandlers;
+package refmeister.display.specialhandlers;
 
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.InputStream;
-import java.net.URL;
 
 /**
  * Created by wesle on 4/28/2018

@@ -2,7 +2,7 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.RatedRelation;
+import refmeister.entity.interfaces.RatedRelation;
 
 import java.util.Collections;
 import java.util.List;

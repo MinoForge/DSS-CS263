@@ -2,8 +2,8 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Interfaces.Editable;
+import refmeister.entity.interfaces.Entity;
+import refmeister.entity.interfaces.Editable;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;

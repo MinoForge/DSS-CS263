@@ -1,8 +1,8 @@
 package refmeister.XML;
 
 import refmeister.entity.*;
-import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Interfaces.Relation;
+import refmeister.entity.interfaces.Entity;
+import refmeister.entity.interfaces.Relation;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;

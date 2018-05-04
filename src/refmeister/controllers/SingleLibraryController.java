@@ -3,7 +3,7 @@ package refmeister.controllers;
 import refmeister.XML.FileManager;
 import refmeister.display.elements.Interfaces.RefObserver;
 import refmeister.entity.*;
-import refmeister.entity.Interfaces.*;
+import refmeister.entity.interfaces.*;
 
 import java.io.*;
 import java.util.*;

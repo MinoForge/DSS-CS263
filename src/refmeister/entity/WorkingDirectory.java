@@ -1,6 +1,6 @@
 package refmeister.entity;
 
-import refmeister.entity.Interfaces.Displayable;
+import refmeister.entity.interfaces.Displayable;
 import refmeister.management.RefMeisterExec;
 
 import java.io.File;

@@ -2,7 +2,7 @@ package refmeister.entity;
 
 import refmeister.XML.Saveable;
 import refmeister.XML.XMLManager;
-import refmeister.entity.Interfaces.*;
+import refmeister.entity.interfaces.*;
 
 import java.util.*;
 

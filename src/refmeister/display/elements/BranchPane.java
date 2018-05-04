@@ -13,7 +13,7 @@ import refmeister.controllers.Controller;
 import refmeister.display.elements.Interfaces.RefObserver;
 import refmeister.display.elements.Interfaces.RefPane;
 import refmeister.display.elements.Interfaces.RefSubject;
-import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.interfaces.Entity;
 
 import java.util.ArrayList;
 import java.util.List;

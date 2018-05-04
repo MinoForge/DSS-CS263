@@ -2,7 +2,6 @@ package refmeister.display;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -21,17 +19,12 @@ import refmeister.controllers.SingleLibraryController;
 import refmeister.display.elements.*;
 import refmeister.display.elements.Interfaces.OptionsObserver;
 import refmeister.display.elements.Interfaces.RefObserver;
-import refmeister.display.specialHandlers.ImageBuilder;
-import refmeister.display.specialHandlers.ResizeHelper;
-import refmeister.entity.Interfaces.Displayable;
-import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Library;
+import refmeister.display.specialhandlers.ImageBuilder;
 import refmeister.entity.Reference;
 import refmeister.entity.WorkingDirectory;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Models and displays the GUI for the RefMeister program.
@@ -83,7 +76,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
         FileManager.getInstance().start(true);
 
-        theScene = new Scene(title, 500, 150);
+        theScene = new Scene(title, 750, 250);
         theScene.getStylesheets().add(this.getClass().getResource("resources/titleScene.css")
                 .toExternalForm());
 

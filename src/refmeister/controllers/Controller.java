@@ -1,8 +1,8 @@
 package refmeister.controllers;
 
 import refmeister.display.elements.Interfaces.RefSubject;
-import refmeister.entity.Interfaces.Entity;
-import refmeister.entity.Interfaces.Relatable;
+import refmeister.entity.interfaces.Entity;
+import refmeister.entity.interfaces.Relatable;
 import refmeister.entity.WorkingDirectory;
 
 import java.io.File;

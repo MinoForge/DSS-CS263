@@ -6,8 +6,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import refmeister.display.elements.Interfaces.*;
-import refmeister.entity.Interfaces.Displayable;
-import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.interfaces.Displayable;
+import refmeister.entity.interfaces.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class OptionsPane extends HBox
         }
         this.getStylesheets().add(getClass().getResource
                 ("../resources/optionsPane.css").toExternalForm());
-        this.getStyleClass().add("optionspane");
+        this.getStyleClass().add("");
         optPane = this;
         theEntity = entity;
         obs = new ArrayList<OptionsObserver>();
@@ -56,8 +56,9 @@ public class OptionsPane extends HBox
         for(int i = 0; i < optList.size(); i++) {
 
             String opt = optList.get(i);
-            options[i] = new Button(opt.charAt(0) + "");
-//            options[i] = new Button("", optPane.getIcon(optList.get(i)));
+            options[i] = new Button(opt);
+            options[i].getStyleClass().add(".button");
+ //           options[i] = new Button("", optPane.getIcon(optList.get(i)));
             switch(opt) {
                 case "edit":
                     options[i].setOnAction(e -> notifyObservers("edit"));

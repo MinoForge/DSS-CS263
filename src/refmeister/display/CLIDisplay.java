@@ -2,8 +2,8 @@ package refmeister.display;
 
 import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
-import refmeister.entity.Interfaces.Relatable;
-import refmeister.entity.Interfaces.Entity;
+import refmeister.entity.interfaces.Relatable;
+import refmeister.entity.interfaces.Entity;
 import refmeister.entity.Reference;
 
 

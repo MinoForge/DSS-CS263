@@ -1,4 +1,4 @@
-package refmeister.display.specialHandlers;
+package refmeister.display.specialhandlers;
 
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;

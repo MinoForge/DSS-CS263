@@ -304,6 +304,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
                     if(params[0] != null && !params[0].equals("")) {
 
                         control.createLibrary(params[1], params[3]);
+                        update();
                     }
                     break;
                 case "Edit Information":
@@ -325,6 +326,8 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
                 dResult = createDialog("Enter Library Information",
                         "Title", "Description");
                 control.createLibrary(dResult[1], dResult[3]);
+                update();
+                break;
             case "edit":
                 dResult = createDialog("Edit Information", "Title", "Description");
                 for(int i = 0; i < dResult.length; i++) {

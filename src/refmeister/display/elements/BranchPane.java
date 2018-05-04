@@ -25,13 +25,13 @@ import java.util.List;
  * @author Brandon Townsend
  * @version 28 April 2018
  */
-public class BranchPane extends VBox implements RefSubject, RefPane {
+public class BranchPane extends VBox implements RefPane {
     /** Holds the single instance of this branch pane. */
     private static BranchPane obj;
     /** List of observers that are observing this BranchPane. */
     private ArrayList<RefObserver> obs;
     /** A reference to the controller. */
-    private Controller control;
+    private final Controller control;
 
     /**
      * Constructor in which a string array of titles are passed in. Spacing
@@ -78,39 +78,6 @@ public class BranchPane extends VBox implements RefSubject, RefPane {
             obj.getChildren().add(button);
         }
         return buttons;
-    }
-
-    /**
-     * Adds a
-     * @param ro The RefObserver object to be added.
-     * @return
-     */
-    @Override
-    public boolean addObserver(RefObserver ro) {
-        if(!obs.contains(ro)) {
-            obs.add(ro);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     *
-     * @param ro The RefObserver object to be removed.
-     * @return
-     */
-    @Override
-    public boolean removeObserver(RefObserver ro) {
-        return obs.remove(ro);
-    }
-
-    /**
-     * TODO
-     * @param buttonPressed
-     */
-    @Override
-    public void notifyObservers(Object buttonPressed) {
-
     }
 
     /**

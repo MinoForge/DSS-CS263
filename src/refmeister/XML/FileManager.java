@@ -116,9 +116,8 @@ public final class FileManager {
             if(this.autosave != null){
                 this.autosave.cancel(false);
             }
-            this.autosave = this.executor.schedule(() -> {
-                this.saveWithName(fileName + "-autosave.rl");
-            }, 30, TimeUnit.SECONDS);
+            this.autosave = this.executor.schedule(() ->
+                    this.saveWithName(fileName + "-autosave.rl"), 30, TimeUnit.SECONDS);
         }
         log(Severity.DEBUG, "Application started with autosave=" + autosave);
         executor.setRemoveOnCancelPolicy(true);

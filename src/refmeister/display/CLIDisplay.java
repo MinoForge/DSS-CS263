@@ -21,13 +21,13 @@ import java.util.Scanner;
 public class CLIDisplay implements Displayer {
 
     /** The main controller for the program. **/
-    private Controller control;
+    private final Controller control;
 
     /** The current list of options as a String[] array. **/
     private List<String> itemList;
 
     /** The scanner which may be accessed from everywhere, to avoid annoying Scanner behavior **/
-    private Scanner scanIn;
+    private final Scanner scanIn;
 
     /**
      * A constructor which starts a display connected to the controller passed to it.
@@ -83,7 +83,7 @@ public class CLIDisplay implements Displayer {
      * Prints out the current attributes of a specified entity. This will usually be the title
      * and description of an entity.
      */
-    public void displayAttributes() {
+    private void displayAttributes() {
 
         String[] attrTitles = control.getAttributeTitles();
         if(attrTitles != null) {
@@ -195,7 +195,7 @@ public class CLIDisplay implements Displayer {
      * Returns a string array that contains the title and description of an entity.
      * @return a string array that contains the title and description of an entity.
      */
-    public String[] getTD() {
+    private String[] getTD() {
         return get("Title", "Description");
     }
 
@@ -227,7 +227,7 @@ public class CLIDisplay implements Displayer {
      * Prompts the user for input for a rating to give to a RelatedRelation.
      * @return The float double that that user entered, or 3.
      */
-    public double getRating() {
+    private double getRating() {
 
             String strChoice;
             double choice;
@@ -251,7 +251,7 @@ public class CLIDisplay implements Displayer {
      * Scans in input from the user and sets it as a reference's data.
      * @return the reference data
      */
-    public String[] getRefData() {
+    private String[] getRefData() {
         String[] paperInfo = get("Enter section number > ", "Enter title of the paper > ",
                               "Enter publication > ", "Enter location > ",
                               "Enter publisher's name > ", "Enter publication date > ",
@@ -295,7 +295,7 @@ public class CLIDisplay implements Displayer {
      * @param choice The functionality being requested.
      * @return true if "quit" is the choice
      */
-    public boolean functionality (String choice) {
+    private boolean functionality (String choice) {
         switch (choice) {
             case "select":
 

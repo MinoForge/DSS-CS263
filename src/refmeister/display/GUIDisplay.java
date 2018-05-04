@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 import refmeister.XML.FileManager;
+import refmeister.XML.XMLManager;
+import refmeister.XML.XMLParser;
 import refmeister.controllers.Controller;
 import refmeister.controllers.SingleLibraryController;
 import refmeister.display.elements.*;
@@ -28,6 +30,9 @@ import refmeister.entity.interfaces.Editable;
 import refmeister.entity.interfaces.Entity;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -39,7 +44,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
     /**
      * Current Version of the RefMeister program.
      */
-    private String VERSION = "1.0 alpha";
+    private String VERSION = "0.7 alpha";
 
     /**
      * Holds a reference to the Controller object that controls our display.
@@ -76,7 +81,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
      * future updates.
      *
      * @param primaryStage The primary stage to be displayed.
-     * @throws Exception
+     * @throws Exception On stage errors
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -89,17 +94,40 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
     }
 
     private void onClose(WindowEvent ev){
-        Alert alert = new Alert(Alert.AlertType.NONE);
-        alert.setContentText("You are about to exit. Would you like to save?");
-        alert.getButtonTypes().clear();
-        alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-        alert.showAndWait().ifPresent( e -> {
-            if(e == ButtonType.CANCEL){
-                ev.consume();
-            } else if (e == ButtonType.YES){
-                control.saveLibrary();
-            } //else e == no so we don't do anything
-        });
+        boolean changed = false;
+        try {
+            String fileName = FileManager.getInstance().getFileName();
+            File save = new File(
+                    control.getWorkingDirectory().getDirectory(), fileName + ".rl");
+            File autosave = new File(
+                    control.getWorkingDirectory().getDirectory(), fileName + "-autosave.rl");
+            FileReader autoReader = new FileReader(autosave);
+            FileReader savedReader = new FileReader(save);
+
+
+            while(autoReader.ready() || savedReader.ready()) {
+                if(autoReader.read() != savedReader.read()) {
+                    changed = true;
+                }
+            }
+        } catch(IOException e) {
+            FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, e);
+        }
+
+
+        if(control.getSelected() != null && changed) {
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            alert.setContentText("You are about to exit. Would you like to save?");
+            alert.getButtonTypes().clear();
+            alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+            alert.showAndWait().ifPresent(e -> {
+                if (e == ButtonType.CANCEL) {
+                    ev.consume();
+                } else if (e == ButtonType.YES) {
+                    control.saveLibrary();
+                } //else e == no so we don't do anything
+            });
+        }
     }
 
     /**
@@ -188,7 +216,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
      * Allows the user to open a library that has previously been built and
      * loads it.
      */
-    public void selectLibrary() {
+    private void selectLibrary() {
         FileChooser fc = new FileChooser();
         fc.setTitle("Open Library");
         fc.setInitialDirectory(this.control.getWorkingDirectory().getDirectory());
@@ -208,7 +236,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         MenuBar out = new MenuBar();
 
         Menu file = new Menu("File");
-        Menu edit = new Menu("Edit");
+//        Menu edit = new Menu("Edit");
         Menu help = new Menu("Help");
 
         MenuItem save = new MenuItem("Save", ImageBuilder.buildImage(getClass()
@@ -238,7 +266,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         });
 
         help.getItems().addAll(version);
-        out.getMenus().addAll(file, edit, help);
+        out.getMenus().addAll(file, help);
         return out;
     }
 
@@ -341,7 +369,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
      *                    inputs it is receiving from the user.
      * @return A string array that contains the user input.
      */
-    public String[] createDialog(String dialogLabel, String... labels) {
+    private String[] createDialog(String dialogLabel, String... labels) {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setHeaderText(dialogLabel);
 
@@ -392,13 +420,12 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
      * @param args   The list of the observers to update.
      */
     public void selectOption(String option, Object... args) {
-        String[] dResult = null;
+        String[] dResult;
         switch (option) {
             case "Create":
                 dResult = createDialog("Enter Library Information",
                         "Title", "Description");
                 control.createLibrary(dResult[1], dResult[3]);
-//                update();
                 break;
             case "Edit":
                 dResult = createDialog("Edit Information", "Title", "Description");
@@ -434,10 +461,28 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
                 }
                 break;
             case "Add Argument":
-//                control.sendFunc("Add Argument", getTD());
+                dResult = createDialog("New Information", "Title", "Description");
+                if (dResult[1].equals("")) {
+                    dResult[1] = "DEFAULT";
+                }
+                control.sendFunc("Add Argument", dResult[1], dResult[3]);
+                try {
+                    control.sendFunc("Add Argument", dResult[1], dResult[3]);
+                } catch (Exception e){
+                    FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, e);
+                }
                 break;
             case "Add Idea":
-//                control.sendFunc("Add Argument", getTD());
+                dResult = createDialog("New Information", "Title", "Description");
+                if (dResult[1].equals("")) {
+                    dResult[1] = "DEFAULT";
+                }
+                control.sendFunc("Add Idea", dResult[1], dResult[3]);
+                try {
+                    control.sendFunc("Add Idea", dResult[1], dResult[3]);
+                } catch (Exception e){
+                    FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, e);
+                }
                 break;
             case "Edit Reference Data": //TODO put in SLC
 /*                String[] refData = getRefData();
@@ -458,29 +503,3 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         }
     }
 }
-
-    /**
-     * Adds the strings from descs into an array and returns it.
-     * @param descs The strings to place in an array
-     * @return The string array populated by the list of strings.
-     */
-/*    private String[] get(String... descs) {
-        String[] result = new String[descs.length];
-        for(int i = 0; i < descs.length; i++) {
-            result[i] = get(descs[i]);
-        }
-        return result;
-    }
-
-    /**
-     * As of now, just returns null
-     * @param desc
-     * @return null
-     */
-/*    //TODO fix this for GUI(generify the Dialog Box used to create new library)
-    private String get(String desc) {
-//        System.out.print(desc + ": ");
-//        return scanIn.nextLine();
-        return null;
-    }
-}*/

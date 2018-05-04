@@ -25,8 +25,6 @@ import java.util.List;
 public class OptionsPane extends TilePane implements OptionsSubject {
     /** Holds the instance of the current OptionsPane. */
     private static OptionsPane optPane;
-    /** The entity for which we are displaying the options it can have. */
-    private Entity theEntity;
     /** List of the observers that will be notified by changes in this
      * subject. */
     private ArrayList<OptionsObserver> obs;
@@ -52,7 +50,6 @@ public class OptionsPane extends TilePane implements OptionsSubject {
         this.setPrefColumns(4);
         this.setPrefTileWidth(100);
         this.setPrefTileHeight(40);
-        theEntity = entity;
         this.setAlignment(Pos.CENTER_RIGHT);
         obs = new ArrayList<OptionsObserver>();
     }

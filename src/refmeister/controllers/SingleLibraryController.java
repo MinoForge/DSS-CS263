@@ -200,10 +200,8 @@ public class SingleLibraryController implements Controller{
                 case "Add":
                     Entity ent;
                     if (selected == null) {
-//                    System.out.println("Hi there");
                         createLibrary(param[0], param[1]);
                     } else {
-                        System.out.println(param[0] + " :: " + param[1]);
                         ent = edSelected.createChild(param[0], param[1]);
                         setSelected(ent);
                         sendFunc("Sort", new String[]{null});
@@ -374,8 +372,7 @@ public class SingleLibraryController implements Controller{
         Entity temp = selected;
         traverseUp();
         traverseUp();
-        List<Entity> list = selected.getEntityChildren();
-        return list;
+        return selected.getEntityChildren();
     }
 
     /**

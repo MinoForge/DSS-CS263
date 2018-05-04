@@ -26,7 +26,7 @@ public class InformationPane extends TabPane implements RefPane {
     /** Holds an instance of this InformationPane. */
     private static InformationPane instance;
     /** Holds the instance of the controller. */
-    private Controller control;
+    private final Controller control;
 
     /**
      * Default Constructor that calls the Constructor of a TabPane.
@@ -66,9 +66,8 @@ public class InformationPane extends TabPane implements RefPane {
             for (int j = 1; j < labels.length; j++) { //Magic number. Do not change
                 labels[j] = new Button(childTitles.get(j));
                 Entity ent = children.get(j);
-                labels[j].setOnMouseClicked(e -> {
-                    control.sendFunc("Select", ent.getTitle());
-                });
+                labels[j].setOnMouseClicked(e ->
+                        control.sendFunc("Select", ent.getTitle()));
                 p.getChildren().add(labels[j]);
             }
 

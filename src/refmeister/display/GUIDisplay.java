@@ -84,7 +84,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
         Button newButton = new Button("Create New Library");
         Button loadButton = new Button("Load Library");
-        newButton.setOnMouseClicked(e -> selectOption("create"));
+        newButton.setOnMouseClicked(e -> selectOption("Create"));
 
         Label welcome = new Label("Welcome To RefMeister");
         welcome.getStyleClass().clear();
@@ -298,38 +298,16 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         return fieldResults;
     }
 
-    private void dialogAction(String option, String... params) {
-        if(params != null) {
-            switch(option) {
-                case "Enter Library Information":
-                    if(params[0] != null && !params[0].equals("")) {
-
-                        control.createLibrary(params[1], params[3]);
-                        update();
-                    }
-                    break;
-                case "Edit Information":
-                    for(int i = 0; i < params.length; i++) {
-                        if(params[i+1].equals("")) {
-                            params[i+1] = control.getAttributes()[(i+1)/2];
-                        }
-                        control.editAttribute(params[i++], params[i]);
-                    }
-                    break;
-            }
-        }
-    }
-
     public void selectOption(String option, Object... args) {
         String[] dResult = null;
         switch (option) {
-            case "create":
+            case "Create":
                 dResult = createDialog("Enter Library Information",
                         "Title", "Description");
                 control.createLibrary(dResult[1], dResult[3]);
 //                update();
                 break;
-            case "edit":
+            case "Edit":
                 dResult = createDialog("Edit Information", "Title", "Description");
                 for(int i = 0; i < dResult.length; i++) {
                     if(dResult[i+1].equals("")) {
@@ -339,34 +317,32 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
                 }
                 update();
                 break;
-            case "sortAlphA":
-                control.sendFunc("sort", "a-z");
+            case "Sort A-Z":
+                control.sendFunc("Sort A-Z", "a-z");
                 break;
-            case "sortAlphD":
-                control.sendFunc("sort", "z-a");
+            case "Sort Z-A":
+                control.sendFunc("Sort Z-A", "z-a");
                 break;
-            case "delete":
+            case "Delete":
                 control.delete();
                 update();
                 break;
-            case "rate": //TODO make dialog for this
-//                String relateTitle = selectFromRelatable(); //replace this
-//                control.sendFunc("rate", "" + (getRating()), relateTitle);
+            case "Rate": //TODO make dialog for this
                 break;
-            case "add":
+            case "Add":
                 dResult = createDialog("New Information", "Title", "Description");
                 if(dResult[1].equals("")) {
                     dResult[1] = "DEFAULT";
                 }
-                control.sendFunc("add", dResult[1], dResult[3]);
+                control.sendFunc("Add", dResult[1], dResult[3]);
                 break;
-            case "addA":
+            case "Add Argument":
 //                control.sendFunc("addA", getTD());
                 break;
-            case "addI":
+            case "Add Idea":
 //                control.sendFunc("addI", getTD());
                 break;
-            case "generate": //TODO put in SLC
+            case "Edit Reference Data": //TODO put in SLC
 //                String[] refData = getRefData();
 //                control.sendFunc("generate", refData);
 //                for(String s: refData) {

@@ -165,22 +165,22 @@ public class SingleLibraryController implements Controller{
     public void sendFunc(String func, String[] param) {
         FileManager.getInstance().getLibraryLock().lock();
         switch (func) {
-            case "select":
+            case "Select":
                 for(Entity e: selected.getEntityChildren()) {
                     if(e.getTitle().equals(param[0])) {
                         setSelected(e);
                     }
                 }
             break;
-            case "delete":
+            case "Delete":
                 Entity temp = selected;
                 setSelected(temp.getParent());
                 temp.delete();
                 break;
-            case "sort":
+            case "Sort":
                 selected.sort(param[0]);
                 break;
-            case "rate":
+            case "Rate":
                 if(selected instanceof Relatable) {
                     Relatable rel = (Relatable)selected;
                     List<Relation> listRelations = rel.getRelations();
@@ -192,7 +192,7 @@ public class SingleLibraryController implements Controller{
                     }
                 }
                 break;
-            case "add":
+            case "Add":
                 Entity ent;
                 if(selected == null) {
 //                    System.out.println("Hi there");
@@ -204,7 +204,7 @@ public class SingleLibraryController implements Controller{
 
                 }
                 break;
-            case "addA":
+            case "Add Argument":
                 ent = null;
                 if(selected instanceof Reference) {//hard-code
                     Reference rel = (Reference)selected;
@@ -212,7 +212,7 @@ public class SingleLibraryController implements Controller{
                 }
                 setSelected(ent);
                 break;
-            case "addI":
+            case "Add Idea":
                 ent = null;
                 if(selected instanceof Reference) {//hard-code
                     Reference rel = (Reference)selected;
@@ -220,7 +220,7 @@ public class SingleLibraryController implements Controller{
                 }
                 setSelected(ent);
                 break;
-            case "edit":
+            case "Edit":
                 for(int i = 0; i < param.length; i++) {
                     editAttribute(param[i], param[++i]);
                 }
@@ -239,11 +239,11 @@ public class SingleLibraryController implements Controller{
                 }
                 setSelected(temp);
                 break;
-            case "change":
+            case "Change":
                 System.out.println("Not implemented yet. Will be able to reassign entities which are related," +
                         "to be related to other entities.");
                 break;//TODO
-            case "generate":
+            case "Edit Reference Data":
                 int index = 0;
                 sendRefData(param);
                 System.out.println("Not implemented yet.");

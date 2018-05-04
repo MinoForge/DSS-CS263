@@ -70,38 +70,38 @@ public class OptionsPane extends TilePane implements OptionsSubject {
 
  //           options[i] = new Button("", optPane.getIcon(optList.get(i)));
             switch(opt) {
-                case "edit":
-                    options[i].setOnAction(e -> notifyObservers("edit"));
+                case "Edit":
+                    options[i].setOnAction(e -> notifyObservers("Edit"));
 //                    buttonImg(options[i], "../resources/toolPencil.png");
                     break;
-                case "delete":
-                    options[i].setOnMouseClicked(e -> notifyObservers("delete"));
+                case "Delete":
+                    options[i].setOnMouseClicked(e -> notifyObservers("Delete"));
                     imageHover(options[i], "../resources/trashcan.png",
                             "../resources/trashcanOpen.png");
                     break;
-                case "sortAlphA":
-                    options[i].setOnMouseClicked(e -> notifyObservers("sortAlphA"));
+                case "Sort A-Z":
+                    options[i].setOnMouseClicked(e -> notifyObservers("Sort A-Z"));
                     break;
-                case "sortAlphD":
-                    options[i].setOnMouseClicked(e -> notifyObservers("sortAlphD"));
+                case "Sort Z-A":
+                    options[i].setOnMouseClicked(e -> notifyObservers("Sort Z-A"));
                     break;
-                case "rate":
-                    options[i].setOnMouseClicked(e -> notifyObservers("rate"));
+                case "Rate":
+                    options[i].setOnMouseClicked(e -> notifyObservers("Rate"));
                     break;
-                case "add":
-                    options[i].setOnMouseClicked(e -> notifyObservers("add"));
+                case "Add":
+                    options[i].setOnMouseClicked(e -> notifyObservers("Add"));
 //                    buttonImg(options[i], "../resources/DPAD.png");
                     break;
-                case "addA":
-                    options[i].setOnMouseClicked(e -> notifyObservers("addA"));
+                case "Add Argument":
+                    options[i].setOnMouseClicked(e -> notifyObservers("Add Argument"));
 //                    buttonImg(options[i], "../resources/DPAD.png");
                     break;
-                case "addI":
-                    options[i].setOnMouseClicked(e -> notifyObservers("addI"));
+                case "Add Idea":
+                    options[i].setOnMouseClicked(e -> notifyObservers("Add Idea"));
 //                    buttonImg(options[i], "../resources/DPAD.png");
                     break;
-                case "generate":
-                    options[i].setOnMouseClicked(e -> notifyObservers("generate"));
+                case "Edit Reference Data":
+                    options[i].setOnMouseClicked(e -> notifyObservers("Edit Reference Data"));
                     break;
                 case "MLA":
                     options[i].setOnMouseClicked(e -> notifyObservers("MLA"));
@@ -109,8 +109,6 @@ public class OptionsPane extends TilePane implements OptionsSubject {
                 case "APA":
                     options[i].setOnMouseClicked(e -> notifyObservers("APA"));
                     break;
-                case "quit":
-                    options[i].setOnAction((ev)->Platform.exit());
             }
         }
 //TODO put all these styles inside the switch statement

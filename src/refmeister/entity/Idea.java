@@ -154,9 +154,6 @@ public class Idea extends Editable implements Relatable {
         options.add("Delete Idea");
         options.add("Edit Idea");
         options.add("Change Relation");
-        options.add("View Directory");
-        options.add("Move Up");
-        options.add("Quit");
         return options;
     }
 
@@ -167,12 +164,9 @@ public class Idea extends Editable implements Relatable {
     @Override
     public List<String> getFunc(){
         List<String> funcs = new ArrayList<>();
-        funcs.add("delete");
-        funcs.add("edit");
-        funcs.add("change");
-        funcs.add("view");
-        funcs.add("move");
-		funcs.add("quit");
+        funcs.add("Delete");
+        funcs.add("Edit");
+        funcs.add("Change");
 
         return funcs;
     }

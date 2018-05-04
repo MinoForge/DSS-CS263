@@ -132,8 +132,6 @@ public class Library extends Editable {
         options.add("Add Topic");
         options.add("Sort Topics A-Z");
         options.add("Sort Topics Z-A");
-        options.add("View Directory");
-        options.add("Quit");
         for(Entity child : children){
             options.add(child.getTitle());
         }
@@ -147,13 +145,11 @@ public class Library extends Editable {
     @Override
     public List<String> getFunc(){
         List<String> funcs = new ArrayList<>();
-        funcs.add("delete");
-        funcs.add("edit");
-        funcs.add("add");
-        funcs.add("sortAlphA");
-        funcs.add("sortAlphD");
-        funcs.add("view");
-        funcs.add("quit");
+        funcs.add("Delete");
+        funcs.add("Edit");
+        funcs.add("Add");
+        funcs.add("Sort A-Z");
+        funcs.add("Sort Z-A");
 
         return funcs;
     }

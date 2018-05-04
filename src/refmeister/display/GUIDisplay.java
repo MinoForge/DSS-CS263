@@ -1,5 +1,6 @@
 package refmeister.display;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -132,6 +133,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
      */
     @Override
     public void stop() {
+        System.out.println("Entering stop");
         FileManager.getInstance().stop();
     }
 

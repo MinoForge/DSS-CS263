@@ -152,8 +152,8 @@ public class SingleLibraryController implements Controller{
         if(selected instanceof Library) {
             deleteRoot();
         } else {
-            sendFunc("delete", null);
-            setSelected(selected.getParent());
+            sendFunc("Delete", null);
+//            setSelected(selected.getParent());
         }
     }
 
@@ -175,7 +175,7 @@ public class SingleLibraryController implements Controller{
             case "Delete":
                 Entity temp = selected;
                 setSelected(temp.getParent());
-                temp.delete();
+                selected.removeChild(temp);
                 break;
             case "Sort":
                 selected.sort(param[0]);
@@ -201,6 +201,7 @@ public class SingleLibraryController implements Controller{
                     System.out.println(param[0] + " :: " + param[1]);
                     ent = edSelected.createChild(param[0], param[1]);
                     setSelected(ent);
+
 
                 }
                 break;

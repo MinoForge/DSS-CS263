@@ -178,10 +178,10 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
             }
             e.setParent(null);
             return this;
+
+
         }
-        for(Entity t : e.getEntityChildren()){
-            t.delete();
-        }
+
         e.getEntityChildren().clear();
         children.remove(e);
         return this;
@@ -246,6 +246,15 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * Returns the list of functions the Editable object can perform.
      * @return List of Strings of the functions the Editable object can perform.
      */
-    public abstract List<String> getFunc();
+    public List<String> getFunc() {
+        List<String> funcs = new ArrayList<>();
+        funcs.add("Delete");
+        funcs.add("Edit");
+        funcs.add("Add");
+        funcs.add("Sort A-Z");
+        funcs.add("Sort Z-A");
+
+        return funcs;
+    }
 
 }

@@ -174,22 +174,6 @@ public class Theme extends Editable {
     }
 
     /**
-     * Returns the list of functions the class can perform.
-     * @return String Array List of the functions this Entity can perform.
-     */
-    @Override
-    public List<String> getFunc(){
-        List<String> funcs = new ArrayList<>();
-        funcs.add("Delete");
-        funcs.add("Edit");
-        funcs.add("Add");
-        funcs.add("Sort A-Z");
-        funcs.add("Sort Z-A");
-
-        return funcs;
-    }
-
-    /**
      * Returns a list of attributes that contains the title and description of a theme.
      * @return A list of attributes that contains the title and description of a theme.
      */

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 /**
  * Models and displays the GUI for the RefMeister program.
  * @author DevSquad Supreme (Red Team)
- * @version 28 April 2018
+ * @version 4 May 2018
  */
 public class GUIDisplay extends Application implements Displayer, RefObserver, OptionsObserver {
     /** Current Version of the RefMeister program. */
@@ -40,6 +40,8 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
     /** The stage that we build our scenes in. */
     private Stage theStage;
+
+    /** The scene that we are currently looking at. */
     private Scene theScene;
 
 
@@ -57,20 +59,25 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         launch(args);
     }
 
+    /**
+     * Sets up a primary starting stage for the program and prepares it for
+     * future updates.
+     * @param primaryStage The primary stage to be displayed.
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-
         this.theStage = primaryStage;
         theStage.setTitle("RefMeister");
         control = new SingleLibraryController(new WorkingDirectory());
         control.addObserver(this);
         update();
-
-
-
     }
 
+    /**
+     * The GUI to be displayed when the program first opens up.
+     * @return The stage to be displayed when first opening.
+     */
     private Stage displayOnOpen() {
         VBox title = new VBox();
 
@@ -88,8 +95,6 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         welcome.getStyleClass().clear();
         welcome.getStyleClass().add("title");
 
-
-
         title.getChildren().add(welcome);
         title.getChildren().add(loadButton);
         title.getChildren().add(newButton);
@@ -105,28 +110,39 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
             }
         });
 
-
-
         theStage.setScene(theScene);
-
         return theStage;
     }
 
+    /**
+     * TODO
+     */
     @Override
     public void stop() {
         FileManager.getInstance().stop();
     }
 
+    /**
+     * TODO
+     */
     @Override
     public void displayCurrent() {
         launch();
     }
 
+    /**
+     * As of right now, editing the menu just returns null
+     * @return null
+     */
     @Override
     public String[] editMenu() {
         return null;
     }
 
+    /**
+     * As of right now, picking and option just returns false;
+     * @return false
+     */
     @Override
     public boolean pickOption() {
         return false;
@@ -185,18 +201,19 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         });
 
         help.getItems().addAll(version);
-
         out.getMenus().addAll(file, edit, help);
         return out;
     }
 
-
+    /**
+     * Updates the stage to display the correct elements on it according to
+     * user changes.
+     */
     public void update() {
         if(control.getSelected() == null) {
             theStage = displayOnOpen();
             theStage.show();
         } else {
-
             BorderPane updated = new BorderPane();
             Pane branchP = getBranchPane();
             branchP.setMaxWidth(250);
@@ -221,22 +238,40 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         }
     }
 
+    /**
+     * Returns the current BranchPane.
+     * @return the current BranchPane.
+     */
     private Pane getBranchPane() {
         BranchPane.getInstance(control).updateBranchPane();
         return BranchPane.getInstance(control);
     }
 
+    /**
+     * Returns the current TitleDescriptionPane.
+     * @param optPane optionsPane to be updated with the TitleDescriptio Pane.
+     * @return The current TitleDescriptionPane.
+     */
     private Pane getTitleDescriptionPane(OptionsPane optPane) {
         TitleDescriptionPane.getInstance().setTitleDescPane(control.getAttributes(), optPane);
         return TitleDescriptionPane.getInstance();
     }
 
+    /**
+     * Returns the current OptionsPane.
+     * @return The current OptionsPane.
+     */
     private OptionsPane getOptionsPane() {
         OptionsPane.getInstance().addObserver(this);
         OptionsPane.getInstance().setOpts(control.getSelected());
         return OptionsPane.getInstance();
     }
 
+    /**
+     * Returns an InformationPane that contains all the tabs that represent
+     * its children.
+     * @return The InformationPane containing all of its children as tabs.
+     */
     private Parent getMulti() {
         String tabName = "";
         if(control.getSelected().getEntityChildren() != null && control.getSelected().getEntityChildren().size() > 0) {
@@ -246,7 +281,13 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         return InformationPane.getInstance();
     }
 
-
+    /**
+     * Creates a dialog box to popup when user input is needed.
+     * @param dialogLabel Label for the dialog box.
+     * @param labels List of labels that the dialog box will need for the
+     *               inputs it is receiving from the user.
+     * @return A string array that contains the user input.
+     */
     public String[] createDialog(String dialogLabel, String... labels) {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setHeaderText(dialogLabel);
@@ -292,6 +333,11 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         return fieldResults;
     }
 
+    /**
+     * Allows editing of an entities information.
+     * @param option The entity to edit.
+     * @param params The information about that entity to edit.
+     */
     private void dialogAction(String option, String... params) {
         if(params != null) {
             switch(option) {
@@ -314,6 +360,11 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         }
     }
 
+    /**
+     * Allows the user to select an option from the list of options buttons.
+     * @param option The option of the observer to update.
+     * @param args The list of the observers to update.
+     */
     public void selectOption(String option, Object... args) {
         String[] dResult = null;
         switch (option) {
@@ -379,6 +430,11 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         }
     }
 
+    /**
+     * Adds the strings from descs into an array and returns it.
+     * @param descs The strings to place in an array
+     * @return The string array populated by the list of strings.
+     */
     private String[] get(String... descs) {
         String[] result = new String[descs.length];
         for(int i = 0; i < descs.length; i++) {
@@ -387,6 +443,11 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         return result;
     }
 
+    /**
+     * As of now, just returns null
+     * @param desc
+     * @return null
+     */
     //TODO fix this for GUI(generify the Dialog Box used to create new library)
     private String get(String desc) {
 //        System.out.print(desc + ": ");
@@ -398,25 +459,25 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
      * Prompts the user for input for a rating to give to a RelatedRelation.
      * @return The float double that that user entered, or 3.
      */
-//    public double setRating() {
-//
-////        String strChoice;
-////        double choice;
-////
-////        System.out.print("Please enter a real number x, such that 0<=x<=5 (If invalid input, "+
-////                "defaults to 3): ");
-//////        strChoice = scanIn.nextLine();
-////        try {
-//////            choice = Integer.parseInt(strChoice);
-//////            if (0 <= choice && choice <= 5) {
-////                return choice;
-//////            }
-////        } catch (NumberFormatException nfe) {
-////            FileManager.getInstance().log(FileManager.Severity.LOG, "User input invalid " +
-////                    "number, got: " + strChoice);
-////        }
-////        return 3;
-//    }
+/*    public double setRating() {
+
+        String strChoice;
+        double choice;
+
+        System.out.print("Please enter a real number x, such that 0<=x<=5 (If invalid input, "+
+                "defaults to 3): ");
+        strChoice = scanIn.nextLine();
+        try {
+            choice = Integer.parseInt(strChoice);
+            if (0 <= choice && choice <= 5) {
+                return choice;
+            }
+        } catch (NumberFormatException nfe) {
+            FileManager.getInstance().log(FileManager.Severity.LOG, "User input invalid " +
+                    "number, got: " + strChoice);
+        }
+        return 3;
+    }*/
 
     /**
      * Scans in input from the user and sets it as a reference's data.

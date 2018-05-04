@@ -33,8 +33,6 @@ public class BranchPane extends VBox implements RefSubject, RefPane {
     /** A reference to the controller. */
     private Controller control;
 
-
-
     /**
      * Constructor in which a string array of titles are passed in. Spacing
      * and alignment are also set up properly.
@@ -107,7 +105,7 @@ public class BranchPane extends VBox implements RefSubject, RefPane {
     }
 
     /**
-     *
+     * TODO
      * @param buttonPressed
      */
     @Override
@@ -116,7 +114,7 @@ public class BranchPane extends VBox implements RefSubject, RefPane {
     }
 
     /**
-     *
+     * TODO
      * @return
      */
     public Controller getControl() {

@@ -1,5 +1,6 @@
 package refmeister.display.elements;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
@@ -33,6 +34,8 @@ public class InformationPane extends TabPane implements RefPane {
     private InformationPane(Controller control){
         super();
         this.control = control;
+        this.getStylesheets().add(getClass().getResource
+                ("../resources/infoPane.css").toExternalForm());
     }
 
     /**
@@ -55,6 +58,9 @@ public class InformationPane extends TabPane implements RefPane {
         for(int i = 0; i < titles.length; i++) {
             String title = titles[i];
             Pane p = new VBox();
+
+            p.setPadding(new Insets(10, 10, 10, 10));
+
 
             Node[] labels = new Button[children.size()];
             for (int j = 1; j < labels.length; j++) { //Magic number. Do not change

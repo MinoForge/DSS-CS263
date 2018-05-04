@@ -62,7 +62,11 @@ public class SingleLibraryController implements Controller{
      * method creates a new one to save the current library to.
      */
 	public void saveLibrary() {
-        FileManager.getInstance().save(currentLib);
+	    if(currentLib != null) {
+            FileManager.getInstance().save(currentLib);
+        } else {
+	        FileManager.getInstance().log(FileManager.Severity.LOG, "User attempted to save with nothing loaded");
+        }
     }
 
     /**

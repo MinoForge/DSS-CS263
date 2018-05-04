@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 import refmeister.XML.FileManager;
 import refmeister.controllers.Controller;
@@ -83,7 +84,22 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         theStage.setTitle("RefMeister");
         control = new SingleLibraryController(new WorkingDirectory());
         control.addObserver(this);
+        theStage.setOnCloseRequest(this::onClose);
         update();
+    }
+
+    private void onClose(WindowEvent ev){
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        alert.setContentText("You are about to exit. Would you like to save?");
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        alert.showAndWait().ifPresent( e -> {
+            if(e == ButtonType.CANCEL){
+                ev.consume();
+            } else if (e == ButtonType.YES){
+                control.saveLibrary();
+            } //else e == no so we don't do anything
+        });
     }
 
     /**

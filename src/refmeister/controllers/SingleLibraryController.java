@@ -174,7 +174,7 @@ public class SingleLibraryController implements Controller{
             break;
             case "delete":
                 Entity temp = selected;
-                traverseUp();
+                setSelected(temp.getParent());
                 temp.delete();
                 break;
             case "sort":

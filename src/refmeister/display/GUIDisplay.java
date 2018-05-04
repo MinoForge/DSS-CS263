@@ -124,6 +124,10 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         });
 
         theStage.setScene(theScene);
+        theStage.setMinWidth(800);
+        theStage.setMinHeight(600);
+        theStage.setWidth(800);
+        theStage.setHeight(600);
         return theStage;
     }
 

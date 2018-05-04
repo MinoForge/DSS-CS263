@@ -139,7 +139,9 @@ public final class FileManager {
      */
     public synchronized void stop(){
         try {
-            this.log(Severity.DEBUG, "Application stopped");
+            //this.log(Severity.DEBUG, "Application stopped");
+
+            System.out.println("Attempting to stop. ");
 
             if(autosave != null) {
                 this.executor.execute(()->this.saveWithName(fileName + "-autosave.rl"));
@@ -147,9 +149,12 @@ public final class FileManager {
             }
 
             this.executor.shutdown();
-
+            System.out.println("System shutdown");
             if(!this.executor.awaitTermination(10, TimeUnit.SECONDS)){
                 this.executor.shutdownNow();
+                System.err.println("System forcibly terminated.");
+            } else {
+                System.out.println("Closed nicely");
             }
         } catch (InterruptedException e) {
             System.err.println("Failed to terminate!");

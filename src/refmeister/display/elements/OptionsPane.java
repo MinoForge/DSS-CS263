@@ -82,7 +82,7 @@ public class OptionsPane extends TilePane implements OptionsSubject {
             options[i] = new Button(opt);
             options[i].setPrefWidth(Double.MAX_VALUE);
             options[i].setPrefHeight(Double.MAX_VALUE);
-            options[i] = new Button("");
+            options[i] = new Button(opt);
             switch(opt) {
                 case "Edit":
                     options[i].setOnAction(e -> notifyObservers("Edit"));

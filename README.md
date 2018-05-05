@@ -5,7 +5,7 @@ Authors: Wesley Rogers, Peter Gardner, Brandon Townsend, Caleb Dinehart
 
 Version 1.0 alpha, built May 4, 2018
 
-#How to Run
+# How to Run
 
 Run the program through the GUIDisplay Class.
 Once opened, the program brings up a title screen to begin. You may either

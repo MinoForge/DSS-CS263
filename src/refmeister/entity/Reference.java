@@ -85,7 +85,7 @@ public class Reference extends Editable implements Relatable {
      * @param parent        the parent of this reference
      */
 	public Reference(String title, String description, Theme parent) {
-		this(title, description, new String[13][], new ArrayList<Relation>(),
+		this(title, description, new String[13][1], new ArrayList<Relation>(),
 				new ArrayList<Entity>(), new ArrayList<RatedRelation>(), parent);
 	}
 
@@ -233,7 +233,7 @@ public class Reference extends Editable implements Relatable {
 	 * @return The list of this Entity's children.
 	 */
 	public List<Entity> getEntityChildren() {
-		return children;
+		return new ArrayList<>(children);
 	}
 
 	/**
@@ -490,7 +490,7 @@ public class Reference extends Editable implements Relatable {
                 ", relations=" + relations +
                 ", ideas=" + ideas +
                 ", args=" + args +
-                ", parent=" + parent +
+                ", parent=" + parent.getClass().getName() + "@" + Integer.toHexString(parent.hashCode()) +
                 ", children=" + children +
                 '}';
     }

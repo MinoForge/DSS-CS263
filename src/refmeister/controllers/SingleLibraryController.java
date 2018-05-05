@@ -33,6 +33,11 @@ public class SingleLibraryController implements Controller{
 
 	private ArrayList<RefObserver> observers;
 
+    /**
+     * Represents if this library has been modified since last save
+     */
+	private boolean dirtyBit;
+
 
     /**
      * Constructor for the Controller class. Sets a specified WorkingDirectory to the workingDir
@@ -43,6 +48,10 @@ public class SingleLibraryController implements Controller{
 	    this.workingDir = workingDir;
 	    this.dispSelected = workingDir;
 	    this.observers = new ArrayList<>();
+    }
+
+    public boolean isDirty() {
+        return dirtyBit;
     }
 
     /**
@@ -64,6 +73,7 @@ public class SingleLibraryController implements Controller{
 	public void saveLibrary() {
 	    if(currentLib != null) {
             FileManager.getInstance().save(currentLib);
+            dirtyBit = false;
         } else {
 	        FileManager.getInstance().log(FileManager.Severity.LOG, "User attempted to save with nothing loaded");
         }
@@ -178,6 +188,7 @@ public class SingleLibraryController implements Controller{
                     }
                     break;
                 case "Delete":
+                    dirtyBit = true;
                     Entity temp = selected;
                     setSelected(temp.getParent());
                     selected.removeChild(temp);
@@ -187,6 +198,7 @@ public class SingleLibraryController implements Controller{
                     break;
                 case "Rate":
                     if (selected instanceof Relatable) {
+                        dirtyBit = true;
                         Relatable rel = (Relatable) selected;
                         List<Relation> listRelations = rel.getRelations();
                         listRelations.removeIf(o -> !(o instanceof RatedRelation));
@@ -198,6 +210,7 @@ public class SingleLibraryController implements Controller{
                     }
                     break;
                 case "Add":
+                    dirtyBit = true;
                     Entity ent;
                     if (selected == null) {
                         createLibrary(param[0], param[1]);
@@ -209,14 +222,16 @@ public class SingleLibraryController implements Controller{
                     break;
                 case "Add Argument":
                     ent = null;
+                    dirtyBit = true;
                     if (selected instanceof Reference) {//hard-code
                         Reference rel = (Reference) selected;
-                        ent = (rel.createIdea(param[0], param[1]));
+                        ent = (rel.createArgument(param[0], param[1]));
                     }
                     setSelected(ent);
                     break;
                 case "Add Idea":
                     ent = null;
+                    dirtyBit = true;
                     if (selected instanceof Reference) {//hard-code
                         Reference rel = (Reference) selected;
                         ent = (rel.createIdea(param[0], param[1]));
@@ -224,6 +239,7 @@ public class SingleLibraryController implements Controller{
                     setSelected(ent);
                     break;
                 case "Edit":
+                    dirtyBit = true;
                     for (int i = 0; i < param.length; i++) {
                         editAttribute(param[i], param[++i]);
                     }
@@ -231,6 +247,7 @@ public class SingleLibraryController implements Controller{
 //                edSelected.setDescription(param[1]);
                     break;
                 case "moveTheme":
+                    dirtyBit = true;
                     temp = selected;
                     traverseUp();
                     traverseUp();
@@ -243,11 +260,13 @@ public class SingleLibraryController implements Controller{
                     setSelected(temp);
                     break;
                 case "Change":
+                    dirtyBit = true;
                     System.out.println("Not implemented yet. Will be able to reassign entities which are related," +
                             "to be related to other entities.");
                     break;//TODO
                 case "Edit Reference Data":
                     int index = 0;
+                    dirtyBit = true;
                     sendRefData(param);
                     System.out.println("Not implemented yet.");
                     break; //TODO

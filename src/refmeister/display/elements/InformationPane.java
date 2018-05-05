@@ -63,7 +63,7 @@ public class InformationPane extends TabPane implements RefPane {
 
 
             Node[] labels = new Button[children.size()];
-            for (int j = 1; j < labels.length; j++) { //Magic number. Do not change
+            for (int j = 0; j < labels.length; j++) { //Magic number. Do not change
                 labels[j] = new Button(childTitles.get(j));
                 Entity ent = children.get(j);
                 labels[j].setOnMouseClicked(e ->

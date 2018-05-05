@@ -123,4 +123,6 @@ public interface Controller extends RefSubject {
     List<Entity> getBranch();
 
     void setSelected(Entity e);
+
+    boolean isDirty();
 }

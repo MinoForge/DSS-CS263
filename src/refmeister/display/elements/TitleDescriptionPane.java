@@ -1,5 +1,6 @@
 package refmeister.display.elements;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -54,6 +55,8 @@ public class TitleDescriptionPane extends VBox {
     private TitleDescriptionPane(OptionsPane option ,String... attributes) {
         AnchorPane anchor = new AnchorPane();
         this.option = option;
+
+        this.setPadding(new Insets(10));
 
         this.title = new Label(attributes[0]);
         this.desc = new Label(attributes[1]);

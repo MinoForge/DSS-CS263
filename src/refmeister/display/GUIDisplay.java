@@ -3,12 +3,15 @@ package refmeister.display;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -90,32 +93,12 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         control = new SingleLibraryController(new WorkingDirectory());
         control.addObserver(this);
         theStage.setOnCloseRequest(this::onClose);
+        theStage.getIcons().add(new Image(getClass().getResourceAsStream("resources/icon.png")));
         update();
     }
 
     private void onClose(WindowEvent ev){
-        boolean changed = false;
-        try {
-            String fileName = FileManager.getInstance().getFileName();
-            File save = new File(
-                    control.getWorkingDirectory().getDirectory(), fileName + ".rl");
-            File autosave = new File(
-                    control.getWorkingDirectory().getDirectory(), fileName + "-autosave.rl");
-            FileReader autoReader = new FileReader(autosave);
-            FileReader savedReader = new FileReader(save);
-
-
-            while(autoReader.ready() || savedReader.ready()) {
-                if(autoReader.read() != savedReader.read()) {
-                    changed = true;
-                }
-            }
-        } catch(IOException e) {
-            FileManager.getInstance().log(FileManager.Severity.MAJOR_ERROR, e);
-        }
-
-
-        if(control.getSelected() != null && changed) {
+        if(control.getSelected() != null && control.isDirty()) {
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.setContentText("You are about to exit. Would you like to save?");
             alert.getButtonTypes().clear();
@@ -260,7 +243,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
             alert.setHeaderText(null);
             alert.setContentText("Refmeister is a Reference Manager designed by Peter Gardner, " +
                     "Caleb Dinehart, Brandon Townsend, and Wesley Rogers.\n\nThe current " +
-                    "Refmeister version is " + VERSION + ".");
+                    "Refmeister version is " + VERSION + "\n\n\n Image credit goes to Kenney Game Assets");
 
             alert.showAndWait();
         });
@@ -281,7 +264,7 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         } else {
             BorderPane updated = new BorderPane();
             Pane branchP = getBranchPane();
-            branchP.setMaxWidth(250);
+
             updated.setLeft(branchP);
 
             updated.setTop(getMenuBar());
@@ -373,8 +356,6 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setHeaderText(dialogLabel);
 
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-
         GridPane grid = new GridPane();
         grid.setHgap(2);
         grid.setVgap(1);
@@ -391,6 +372,8 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
             rConstraints[i] = new RowConstraints();
             rConstraints[i].setPercentHeight(rowPercent);
         }
+
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(25);

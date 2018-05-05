@@ -67,7 +67,7 @@ public interface Entity extends Saveable, Comparable<Entity>{
     /**
      * Compares this Entity to another entity that is passed in.
      * @param o The entity to be compared against.
-     * @return an integer based on whether o is <, > or == this entity.
+     * @return an integer based on whether o is &lt;, &gt; or == this entity.
      */
     @Override
     int compareTo(Entity o);

@@ -3,10 +3,7 @@ package refmeister.display.elements;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import refmeister.controllers.Controller;
@@ -25,13 +22,15 @@ import java.util.List;
  * @author Brandon Townsend
  * @version 28 April 2018
  */
-public class BranchPane extends VBox implements RefPane {
+public class BranchPane extends Pane implements RefPane {
     /** Holds the single instance of this branch pane. */
     private static BranchPane obj;
     /** List of observers that are observing this BranchPane. */
     private ArrayList<RefObserver> obs;
     /** A reference to the controller. */
     private final Controller control;
+
+    private VBox inner;
 
     /**
      * Constructor in which a string array of titles are passed in. Spacing
@@ -40,13 +39,16 @@ public class BranchPane extends VBox implements RefPane {
      */
     private BranchPane(Controller control) {
         this.control = control;
-        setSpacing(3);
-
+        inner = new VBox();
+        inner.setSpacing(3);
+        inner.setPadding(new Insets(0, 10, 10, 10));
         this.setBackground(new Background(new BackgroundFill(
                 Color.DARKSLATEGREY, new CornerRadii(0), Insets.EMPTY)));
         this.getStylesheets().add(getClass().getResource("../resources/branchPane.css")
                 .toExternalForm());
         this.getStyleClass().add("branchpane");
+        inner.getStyleClass().add("branchpane");
+        getChildren().add(inner);
         obj = this;
     }
 
@@ -70,12 +72,12 @@ public class BranchPane extends VBox implements RefPane {
         List<Entity> branch = control.getBranch();
         Node[] buttons = new Button[branch.size()];
         for(int i = branch.size() - 1; i >= 0; i--) {
-            obj.getChildren().add(new Rectangle(3, 25, Color.BISQUE));
+            obj.inner.getChildren().add(new Rectangle(3, 25, Color.BISQUE));
             Entity temp = branch.get(i);
-            Node button = new Button(temp.getTitle());
+            Button button = new Button(temp.getTitle());
             buttons[i] = button;
             button.setOnMouseClicked(e -> control.setSelected(temp));
-            obj.getChildren().add(button);
+            obj.inner.getChildren().add(button);
         }
         return buttons;
     }

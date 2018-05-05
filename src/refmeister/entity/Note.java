@@ -73,7 +73,7 @@ public class Note extends Editable {
      */
     @Override
     public List<Entity> getEntityChildren(){
-        return null;
+        return new ArrayList<>();
     }
 	/**
 	 * Gets the XML representation of this saveable object. Saveable objects that are association
@@ -119,7 +119,7 @@ public class Note extends Editable {
 	@Override
 	public String toString() {
 		return "Note{" +
-				"parent=" + parent +
+				//"parent=" + parent +
 				", children=" + children +
 				'}';
 	}

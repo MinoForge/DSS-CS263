@@ -166,8 +166,7 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      * @return  this object
      */
     public Entity removeChild(Entity e){
-
-        if(e.getEntityChildren().isEmpty()){
+        if(e != null && e.getEntityChildren().isEmpty()){
             if(e instanceof Argument){
                 //((Argument) e).removeRelation();
             }
@@ -175,12 +174,8 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
                 //((Idea) e).removeRelation();
             }
             e.setParent(null);
-            return this;
-
-
         }
 
-        e.getEntityChildren().clear();
         children.remove(e);
         return this;
     }
@@ -213,16 +208,14 @@ public abstract class Editable implements Displayable, Saveable, Entity, Compara
      */
     public void sort(String order) {
         List<Entity> kids = getEntityChildren();
-        Entity temp = kids.remove(0);
+        System.out.println(kids);
 
         if(order != null && order.toLowerCase().equals("a-z")) {
-            kids.sort(null);
+            kids.sort(Comparator.naturalOrder());
         } else if(order != null && order.toLowerCase().equals("z-a")) {
             kids.sort(Comparator.reverseOrder());
         }
-        List<Entity> sorted = new ArrayList<>();
-        sorted.add(temp);
-        sorted.addAll(kids);
+        List<Entity> sorted = new ArrayList<>(kids);
         this.setChildren(sorted);
     }
 

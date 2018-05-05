@@ -231,7 +231,13 @@ public class GUIDisplay extends Application implements Displayer, RefObserver, O
 
         save.setOnAction((ev) -> control.saveLibrary());
         load.setOnAction((ev) -> selectLibrary());
-        exit.setOnAction((ev) -> Platform.exit());
+        exit.setOnAction((ev) -> {
+            WindowEvent e = new WindowEvent(null, null);
+            onClose(e);
+            if(!e.isConsumed()){
+                Platform.exit();
+            }
+        });
 
         file.getItems().addAll(save, load, exit);
 

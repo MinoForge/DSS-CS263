@@ -150,7 +150,7 @@ public final class FileManager {
             }
 
             this.executor.shutdown();
-            System.out.println(executor.getQueue());
+
             if(!this.executor.awaitTermination(30, TimeUnit.SECONDS)){
                 System.err.println("Forcing Shutdown");
                 this.executor.shutdownNow();

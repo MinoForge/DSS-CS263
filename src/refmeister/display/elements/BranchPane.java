@@ -85,8 +85,6 @@ public class BranchPane extends Pane implements RefPane {
             obj.inner.getChildren().add(button);
             Tooltip tTip = new Tooltip("Select " + temp.getTitle());
             Tooltip.install(button, tTip);
-
-            obj.getChildren().add(button);
         }
         return buttons;
     }

@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
@@ -80,6 +81,8 @@ public class OptionsPane extends TilePane implements OptionsSubject {
             options[i].setPrefWidth(Double.MAX_VALUE);
             options[i].setPrefHeight(Double.MAX_VALUE);
             options[i] = new Button(opt);
+            Tooltip tip = new Tooltip(opt);
+            Tooltip.install(options[i], tip);
             switch(opt) {
                 case "Edit":
                     options[i].setOnAction(e -> notifyObservers("Edit"));

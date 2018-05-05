@@ -124,5 +124,5 @@ public interface Controller extends RefSubject {
 
     void setSelected(Entity e);
 
-    boolean isDirty();
+    boolean isDirty(); // Maybe it needs a bath
 }

@@ -1,176 +1,72 @@
--Created CHANGELOG.txt to keep track of changes.
-
-
 Controllers:
-    - Created controllers package.
-    - Moved Controller to Controllers.
     Controller:
-        - Refactored to be an interface. Copied all code to SingleLibraryController.
-    SingleLibraryController:
-        - Wrote and implemented to Controller
-        - Mostly deleted old code because it was very tightly coupled, and doing display stuff
-            that is now handled by CLIDisplay.
+        - Added isDirty() to determine if the library has been modified
 
-    WorkingDirectory:
-        - Moved to Entity package
-        - Added default constructor
-        - Implemented new methods in Displayable.
+    SingleLibraryController:
+        - Added a dirtyBit field, and implementation of isDirty, along with updating when needed
+        - Added a lock and unlock around sendFunc(), inside finally so that deadlock on exit doesn't occur.
+        - Ensured that a library cannot be edited while being saved.
 
 
 Display:
-    CLIDisplay:
-        - Wrote all code in CLIDisplay
-    Displayer:
-        - Wrote all method signatures in Displayer.
     GUIDisplay:
-        - The Class exists now. Not implemented past making sure that it is a JavaFX class.
-Created entity.Interfaces package.
+        - Added code to open a title screen
+        - Added code to generate toolbar, each pane below, and formatting
+        - Added code to prompt the user before exiting without saving
+        - Added code/css to generally beautify things.
+
+    elements:
+        Interfaces:
+            - Added Observer/Subject interfaces
+            - Added RefMeister pane interface
+
+        BranchPane:
+            - Added BranchPane (Leftmost pane to represent branch of tree structure)
+            - Used to hold the current branch of the tree we're on along with buttons to go up
+            - Added functionality to buttons
+
+        InformationPane:
+            - Added InformationPane (Center pane to hold data)
+            - Added TabPane to hold children
+            - Added buttons for children
+
+        TitleDescriptionPane:
+            - Added Added TitleDescriptionPane to hold Title and Description
+            - Added Title and description anchored to the edges with a touch of padding
+            - Added OptionPane (below) to hold the buttons
+
+        OptionPane:
+            - Added OptionsPane to hold action buttons
+            - Added animations to some buttons
+
+    resources:
+        - Added Package
+        - Added several images from Kenney Game Assets, used in various places
+        - Added simple css for most panes, allowing for slightly simplified code
+
+
 entity.Interfaces:
-    - Moved Editable, Displayable to entity.Interfaces
-    Displayable:
-        - Added listAttributes method signature.
-        - Added listOptions method signature.
-        - Added getFunc method signature.
-    Editable:
-        - Implements: Displayable, Saveable, Entity, Comparable<Entity>
-        - Wrote the compareTo method.
-        - Wrote registerChild method.
-        - Wrote removeChild method.
-        - Changed the field parent from private to protected.
-        - Added the protected field children.
-        - Added a getChildren method.
-        - Added a sort method to sort children in ascending or descending order.
-        - Added listAttributeTitles method
-        - Added abstract method getFunc
+    - Added sort in Editable
+    - Added sendFunc to send a function call to an object
 
-    Entity:
-        - Moved the registerRelation and removeRelation method signatures
-          to the Relatable interface.
-        - Added compareTo method.
-        - Added getEntityChildren method.
-        - Added setParent method.
-        - Added sort method.
-        - Added delete method.
-
-    RatedRelation:
-        - Everything in this interface was made this sprint
-        - Note: RefArg is the only class that implements this interface
-    Relation:
-        - Everything in this interface was made this sprint
-        - Note: RefIdea and RefArg are the only classes that implent this interface
-
-    Created the Relatable interface.
-    Relatable:
-        - Everything added in this interface
-        - References, Ideas, and Arguments implement this interface
 
 Entity Classes:
-    - Added toString methods to all Entity classes.
+    - Made note.getChildren return an empty list since null is bad
+    - Implemented sendFunc where not fully covered in editable
+    - No other major changes
 
-    Argument:
-        - Wrote an equals method.
-        - Removed the registerRelation and removeRelation methods.
-        - Added a default constructor.
-        - Implements/Overrides: delete, getSaveableChildren, getSaveString, createChild,
-            registerRatedRelation, registerRelation, removeRelation, removeRatedRelation,
-            listOptions, getFunc, listAttributes
-    Idea:
-        - Wrote an equals method.
-        - Added a default constructor.
-        - Implements/Overrides: delete, getSaveableChildren, getSaveString, createChild,
-            registerRatedRelation, registerRelation, removeRelation, removeRatedRelation,
-            listOptions, getFunc, listAttributes, getRelations.
 
-    Library:
-        - Wrote the equals method.
-        - Added a default constructor.
-        - Implements/Overrides: getFunc, listAttributes, delete, listOptions, createChild,
-            getSaveString, getSaveableChildren.
-
-    Note:
-        - Wrote the equals method.
-        - Changed getChildren to getEntityChildren.
-        - Added a default constructor.
-        - Implements/Overrides: getFunc, listAttributes, listOptions, getSaveString, createChild,
-            getSaveableChildren.
-
-    RefArg:
-        - Updated to fit with the new Relation interface.
-        - Implements/Overrides: destroy, getSaveableChildren, getSaveString.
-
-    Reference:
-        - Wrote the equals method.
-        - Added code for generating MLA and APA citations.
-        - Added a default constructor.
-        - Added the listOptions method.
-        - Added a sort method to sort each of the types of children independently.
-        - Added generateCitation methods but they are not fully implemented.
-        - Implements/Overrides: getSaveString, registerRelation, removeRelation,
-            registerRatedRelation, removeRatedRelation, sort, listAttributes, delete,
-            getRelations, getAttribute, getFunc, listOptions.
-
-    RefIdea:
-        - Updated to fit with the new Relation interface.
-        - Implements/Overrides: destroy, getSaveableChildren, getSaveString.
-
-    Theme:
-        - Wrote the equals method.
-        - Added a default constructor.
-        - Added a field library that contains the library that the theme is
-          found in.
-        - Overrides/Implements: getReference, getEntityChildren, createChild, listOptions,
-          getFunc, listAttributes, delete, getSaveableChildren, getSaveString.
-
-    Topic:
-        - Wrote the equals method.
-        - Removed the registerRelation and removeRelation methods.
-        - Changed getChildren to getEntityChildren.
-        - Changed addTheme to registerChild.
-        - Changed deleteTheme to removeChild.
-        - Overrides/Implements: getReference, getEntityChildren, createChild, listOptions,
-          getFunc, listAttributes, delete, getSaveableChildren, getSaveString.
-
-    Other Comments:
-        Removed the add method from all entity classes, now they all inherit
-        registerChild and createChild from Editable. This is also true of the remove methods,
-        they now all implement removeChild.
-        - Added a default constructor.
-        - Removed each class's child list and moved it to Editable
-        - Added a default constructor to all Entity Classes.
-        - Removed all getEntityChildren methods was added to Editable superclass
-        - Add to all entity classes a createChild class
-        - Implemented listOptions and listAttributes in all entity classes
-        - getFunc was added to every entity class
-        - listOptions was added to every class
 Management:
-    RefMeisterExec:
-        - Rewrote main()
-        - Supports specifying directory via command-line
+    - No Change
+
 
 XML:
-    MalformedXMLException:
-        - Thrown when an XML file is malformed
-
-    Saveable: No change
-
-    XMLManager:
-        - Changes in tag order to use the looser coupled interfaces in grouping tags.
-
-    XMLParser:
-        - Added exceptions to XMLParser if duplicate names are loaded from an XML File.
-        - Changed to use a factory for creating entities and relations
-        - Removed the saveLibrary method, moved to FileManager
-        - Made loadLibrary not static, requires an instance to attempt to load a string
-
     FileManager:
-        - Created
-        - Singleton with an alternate thread designed to allow the controller to not
-          stall while saving
-        - Locks implemented to prevent a library from being accessed mid-edit.
-        - Added code to allow for error logging
-        - Added code to allow errors to have a severity.
-        - Added lock to error logging to allow for errors to be logged.
+        - Moved to using a ScheduledThreadPoolExecutor so we handle less
+        - Started locking less, only when saving or modifying the library
+        - Fixed a deadlock issue on exit in cases where a thread would forget to unlock. Not here but this was related,
+          and it's not deadlocking anymore.
 
-Other:
-    - Remove Setters for Lists, except for References
-    - Updated the UML Diagrams for our Entity classes.
+General:
+    - Removed lots of debug code in favor of logging.
+    - Included a sample

@@ -3,6 +3,11 @@ package refmeister.display.elements;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -78,6 +83,10 @@ public class BranchPane extends Pane implements RefPane {
             buttons[i] = button;
             button.setOnMouseClicked(e -> control.setSelected(temp));
             obj.inner.getChildren().add(button);
+            Tooltip tTip = new Tooltip("Select " + temp.getTitle());
+            Tooltip.install(button, tTip);
+
+            obj.getChildren().add(button);
         }
         return buttons;
     }
